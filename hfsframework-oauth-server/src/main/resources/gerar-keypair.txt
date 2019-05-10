@@ -1,0 +1,33 @@
+set JAVA_HOME=C:\jdk-12.0.1
+set PATH=C:\jdk-12.0.1\bin;%PATH%
+
+cd C:\ambiente\workspace\hfsframework-oauth\src\main\resources
+
+keytool -genkeypair -alias jwt -keyalg RSA -keypass hfspass -keystore jwt.jks -storepass hfspass
+
+
+What is your first and last name?
+  [Unknown]:  henrique.souza
+What is the name of your organizational unit?
+  [Unknown]:  DISAD
+What is the name of your organization?
+  [Unknown]:  TRTRJ
+What is the name of your City or Locality?
+  [Unknown]:  RJ
+What is the name of your State or Province?
+  [Unknown]:  RJ
+What is the two-letter country code for this unit?
+  [Unknown]:  BR
+Is CN=henrique.souza, OU=DISAD, O=TRTRJ, L=RJ, ST=RJ, C=BR correct?
+  [no]:  yes
+
+Generating 2.048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+        for: CN=henrique.souza, OU=DISAD, O=TRTRJ, L=RJ, ST=RJ, C=BR
+
+
+
+keytool -list -rfc --keystore jwt.jks | openssl x509 -inform pem -pubkey > public.txt
+
+deixar somente a -----BEGIN PUBLIC KEY-----
+
+

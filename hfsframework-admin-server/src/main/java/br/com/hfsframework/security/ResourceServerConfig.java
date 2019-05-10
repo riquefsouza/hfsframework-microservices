@@ -1,0 +1,122 @@
+package br.com.hfsframework.security;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.DelegatingJwtClaimsSetVerifier;
+import org.springframework.security.oauth2.provider.token.store.IssuerClaimVerifier;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtClaimsSetVerifier;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+@Configuration
+@EnableResourceServer
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+    @Autowired
+    private CustomAccessTokenConverter customAccessTokenConverter;
+
+    private TokenStore tokenStore;
+    
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		http.
+		anonymous().disable()
+		.requestMatchers().antMatchers("/api/v1/**", "/swagger*", "/v2/**")
+		.and().authorizeRequests()
+		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")		
+		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+		
+		/*
+         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
+        .authorizeRequests().antMatchers("/swagger*", "/v2/**").access("#oauth2.hasScope('read')").anyRequest().permitAll();
+ 
+		 */
+		
+		/*
+			http.authorizeRequests()
+                .antMatchers(HttpMethod.GET, ROOT_PATTERN).access("#oauth2.hasScope('read')")
+                .antMatchers(HttpMethod.POST, ROOT_PATTERN).access("#oauth2.hasScope('write')")
+                .antMatchers(HttpMethod.PATCH, ROOT_PATTERN).access("#oauth2.hasScope('write')")
+                .antMatchers(HttpMethod.PUT, ROOT_PATTERN).access("#oauth2.hasScope('write')")
+                .antMatchers(HttpMethod.DELETE, ROOT_PATTERN).access("#oauth2.hasScope('write')");
+    }		  
+		 */
+	}
+	
+    @Override
+    public void configure(final ResourceServerSecurityConfigurer resources) {
+    	resources.tokenStore(tokenStore());
+    }
+
+    @Bean
+    public DefaultTokenServices tokenServices(final TokenStore tokenStore) {
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(tokenStore);
+        return tokenServices;
+    }
+    
+    @Bean
+    public TokenStore tokenStore() {
+    	if (tokenStore == null) {
+            tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
+        }
+        return tokenStore;
+    }
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setAccessTokenConverter(customAccessTokenConverter);
+        converter.setJwtClaimsSetVerifier(jwtClaimsSetVerifier());
+        //converter.setSigningKey("123");
+		converter.setVerifierKey(getPublicKeyAsString());
+		return converter;
+    }
+
+    private String getPublicKeyAsString() {
+		final Resource resource = new ClassPathResource("public.txt");
+		String publicKey = null;
+		try {
+			publicKey = IOUtils.toString(resource.getInputStream(), StandardCharsets.UTF_8);
+		} catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		return publicKey;
+    }
+
+    @Bean
+    public JwtClaimsSetVerifier jwtClaimsSetVerifier() {
+        return new DelegatingJwtClaimsSetVerifier(Arrays.asList(issuerClaimVerifier(), customJwtClaimVerifier()));
+    }
+
+    @Bean
+    public JwtClaimsSetVerifier issuerClaimVerifier() {
+        try {
+            return new IssuerClaimVerifier(new URL("http://localhost:8081"));
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Bean
+    public JwtClaimsSetVerifier customJwtClaimVerifier() {
+        return new CustomClaimVerifier();
+    }    
+}
