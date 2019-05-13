@@ -88,6 +88,19 @@ public class AdministrativeServerTest {
         		.get(HFSFRAMEWORK_ADMIN_SERVER + "/api/v1/parametroCategoria/1");
         assertEquals(200, response.getStatusCode());
         assertNotNull(response.jsonPath().get("descricao"));
+        log.info("DESCRICAO: " + response.jsonPath().get("descricao"));
     }
     
+    @Test
+    public void givenUser_whenUseHfsClient_thenOkForParametro() {
+        final String accessToken = obtainAccessToken("admin", "admin");
+
+        final Response response = RestAssured.given()
+        		.header("Authorization", "Bearer " + accessToken)
+        		.get(HFSFRAMEWORK_ADMIN_SERVER + "/api/v1/parametro");
+        assertEquals(200, response.getStatusCode());
+        //assertNotNull();
+        //log.info("PARAMETRO: " + );
+        response.jsonPath().prettyPrint();
+    }
 }

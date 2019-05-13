@@ -3,6 +3,10 @@ package br.com.hfsframework.admin.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ParametroCategoria {
 
 	private Long id;
@@ -11,18 +15,28 @@ public class ParametroCategoria {
 
 	private Long ordem;
 
+	@JsonManagedReference("parametro")
 	private List<Parametro> parametros;
 
 	public ParametroCategoria() {
+		super();
 		this.parametros = new ArrayList<Parametro>();
 		limpar();
 	}
 
+	@JsonCreator
+	public ParametroCategoria(@JsonProperty("parametroCategoria") Long id ) {
+		super();		
+	    this.id = id;
+	    this.parametros = new ArrayList<Parametro>();
+	}
+	
 	public ParametroCategoria(Long id, String descricao, Long ordem) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.ordem = ordem;
+		this.parametros = new ArrayList<Parametro>();
 	}
 
 	public void limpar() {
@@ -56,26 +70,12 @@ public class ParametroCategoria {
 		this.ordem = ordem;
 	}
 
-	public List<Parametro> getparametros() {
+	public List<Parametro> getParametros() {
 		return this.parametros;
 	}
 
-	public void setparametros(List<Parametro> parametros) {
+	public void setParametros(List<Parametro> parametros) {
 		this.parametros = parametros;
-	}
-
-	public Parametro addParametro(Parametro parametro) {
-		getparametros().add(parametro);
-		parametro.setParametroCategoria(this);
-
-		return parametro;
-	}
-
-	public Parametro removeAdmParametro(Parametro parametro) {
-		getparametros().remove(parametro);
-		parametro.setParametroCategoria(null);
-
-		return parametro;
 	}
 
 	@Override

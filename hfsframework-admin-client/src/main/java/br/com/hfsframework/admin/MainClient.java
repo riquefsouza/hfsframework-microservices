@@ -29,12 +29,36 @@ public class MainClient {
 	public void run() {
 		oauth2RestTemplate = OAuth2RestTemplateUtil.restTemplate(OAUTH_SERVER, "admin", "admin");
 
-		add();
-		getAll();
+		//add();
+		//getAll();
 		getById(3L);
-		update();
-		deleteById(4L);
-		getEntityById(3L);
+		//update();
+		//deleteById(4L);
+		//getEntityById(3L);
+		/*
+		URI uri;
+		try {
+			uri = new URI(ADMIN_SERVER+"/1");
+			
+			ResponseEntity<Parametro> result = oauth2RestTemplate.getForEntity(uri, Parametro.class);
+			log.info(result.getStatusCodeValue());
+	        log.info(result.getBody());
+	        
+		} catch (URISyntaxException e) {
+			log.error(e.getMessage());
+		}
+		*/
+		
+		/*
+		ResponseEntity<List<Parametro>> response = oauth2RestTemplate.exchange(ADMIN_SERVER, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Parametro>>() {});
+
+		List<Parametro> lista = response.getBody();
+		
+		for (Parametro parametro : lista) {
+			log.info(parametro.getDescricao());
+		}
+		*/
 	}
 
 	private void getAll() {
@@ -44,7 +68,7 @@ public class MainClient {
 				log.info(parametro);
 			}
 		} catch (RestClientException e) {
-			log.error(e.getMessage());
+			log.error(e.getMessage());			
 		}
 	}
 
@@ -56,6 +80,7 @@ public class MainClient {
 			log.info("parametro: " + parametro);
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 
 		return Optional.ofNullable(parametro);

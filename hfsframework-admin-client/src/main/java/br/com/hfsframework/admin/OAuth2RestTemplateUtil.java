@@ -8,6 +8,24 @@ import org.springframework.security.oauth2.client.token.grant.password.ResourceO
 
 public final class OAuth2RestTemplateUtil {
 
+	//private static final Logger log = LogManager.getLogger(OAuth2RestTemplateUtil.class);
+	
+	/*
+	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
+	
+    @Autowired
+    protected void setConverters(HttpMessageConverter<Object>[] converters) {
+        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
+            .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
+            .findAny()
+            .orElse(null);
+
+        if (this.mappingJackson2HttpMessageConverter==null) {
+        	log.error("the JSON message converter must not be null");
+        }
+    }
+    */
+	
 	public static OAuth2RestTemplate restTemplate(String server, String login, String password) {
 		
 		ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
@@ -25,7 +43,11 @@ public final class OAuth2RestTemplateUtil {
 		resourceDetails.setUsername(login);
 		resourceDetails.setPassword(password);
 
-		return new OAuth2RestTemplate(resourceDetails);
+		OAuth2RestTemplate rt = new OAuth2RestTemplate(resourceDetails);
+		//rt.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		//rt.getMessageConverters().add(new StringHttpMessageConverter());
+		
+		return rt;
 	}
 
 }

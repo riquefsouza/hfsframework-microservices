@@ -1,5 +1,10 @@
 package br.com.hfsframework.admin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+import br.com.hfsframework.admin.deserializer.ParametroCategoriaDeserializer;
+
 public class Parametro {
 
 	private Long id;
@@ -12,12 +17,20 @@ public class Parametro {
 
 	private Long idParametroCategoria;
 
+	@JsonDeserialize(using = ParametroCategoriaDeserializer.class)
+	@JsonBackReference("parametro")
 	private ParametroCategoria parametroCategoria;
 
 	public Parametro() {
+		super();
 		limpar();
 	}
 
+	public Parametro(Long id) {
+		super();
+	    this.id = id;
+	}
+	
 	public Parametro(Long id, String valor, String descricao, String codigo, Long idParametroCategoria) {
 		super();
 		this.id = id;
