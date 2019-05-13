@@ -17,8 +17,8 @@ public class Parametro {
 
 	private Long idParametroCategoria;
 
-	@JsonDeserialize(using = ParametroCategoriaDeserializer.class)
-	@JsonBackReference("parametro")
+	//@JsonDeserialize(using = ParametroCategoriaDeserializer.class)
+	//@JsonBackReference("parametro")
 	private ParametroCategoria parametroCategoria;
 
 	public Parametro() {

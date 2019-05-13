@@ -31,7 +31,7 @@ public class ParametroCategoriaDeserializer extends JsonDeserializer<ParametroCa
 		ParametroCategoria pc = new ParametroCategoria(id, descricao, ordem);
 		for (JsonNode item : parametros) {
 			parametro = new Parametro(item.asLong());
-			pc.getParametros().add(parametro);			
+			//pc.getParametros().add(parametro);			
 		}
 				
 		return pc;

@@ -15,28 +15,30 @@ public class ParametroCategoria {
 
 	private Long ordem;
 
-	@JsonManagedReference("parametro")
-	private List<Parametro> parametros;
+	//@JsonManagedReference("parametro")
+	private List<Long> parametros;
 
 	public ParametroCategoria() {
 		super();
-		this.parametros = new ArrayList<Parametro>();
+		this.parametros = new ArrayList<Long>();
 		limpar();
 	}
 
+	/*
 	@JsonCreator
 	public ParametroCategoria(@JsonProperty("parametroCategoria") Long id ) {
 		super();		
 	    this.id = id;
 	    this.parametros = new ArrayList<Parametro>();
 	}
+	*/
 	
 	public ParametroCategoria(Long id, String descricao, Long ordem) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
 		this.ordem = ordem;
-		this.parametros = new ArrayList<Parametro>();
+		this.parametros = new ArrayList<Long>();
 	}
 
 	public void limpar() {
@@ -70,11 +72,11 @@ public class ParametroCategoria {
 		this.ordem = ordem;
 	}
 
-	public List<Parametro> getParametros() {
+	public List<Long> getParametros() {
 		return this.parametros;
 	}
 
-	public void setParametros(List<Parametro> parametros) {
+	public void setParametros(List<Long> parametros) {
 		this.parametros = parametros;
 	}
 
