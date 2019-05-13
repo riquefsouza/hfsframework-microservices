@@ -36,8 +36,8 @@ public class DbConfig {
     @Value("classpath:schema.sql")
     private Resource schemaScript;
 
-    @Value("classpath:data.sql")
-    private Resource dataScript;
+    //@Value("classpath:data.sql")
+    //private Resource dataScript;
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -63,7 +63,7 @@ public class DbConfig {
     private DatabasePopulator databasePopulator() {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(schemaScript);
-        populator.addScript(dataScript);
+        //populator.addScript(dataScript);
         return populator;
     }
 	

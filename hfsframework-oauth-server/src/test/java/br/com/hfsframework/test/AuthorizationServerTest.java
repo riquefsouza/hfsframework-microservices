@@ -1,15 +1,16 @@
 package br.com.hfsframework.test;
 
 import static org.hamcrest.Matchers.is;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,6 +19,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.common.util.JacksonJsonParser;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -37,6 +40,8 @@ import br.com.hfsframework.config.TestWebConfig;
 @TestInstance(Lifecycle.PER_CLASS)
 public class AuthorizationServerTest {
 
+	private static final Logger log = LogManager.getLogger(AuthorizationServerTest.class);
+			
     @Autowired
     private WebApplicationContext wac;
 
@@ -50,6 +55,9 @@ public class AuthorizationServerTest {
 
     private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
  
+    @Autowired
+    private JwtTokenStore tokenStore;
+    
     @BeforeEach
     public void setup() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
@@ -77,11 +85,21 @@ public class AuthorizationServerTest {
         return jsonParser.parseMap(resultString).get("access_token").toString();
     }
     
-    @Test
-    public void givenToken_whenPostGetSecureRequest_thenOk() throws Exception {
-        final String accessToken = obtainAccessToken("admin", "admin");
-        
-        assertTrue(accessToken.length() > 600);
+	@Test
+    public void whenTokenDontContainIssuer_thenSuccess() throws Exception {
+    	final String accessToken = obtainAccessToken("admin", "admin");
+        final OAuth2Authentication auth = tokenStore.readAuthentication(accessToken);
+        log.info("TOKE VALUE: " + accessToken);
+        log.info("OAuth2: " + auth);
+        assertTrue(auth.isAuthenticated());
+        log.info("OAuth2 Authorities: " + auth.getAuthorities());
+        //log.info("OAuth2 Details: " + auth.getDetails());
+
+        //Map<String, Object> details = (Map<String, Object>) auth.getDetails();
+        //assertTrue(details.containsKey("authorities"));
+        //log.info("Authorities: " + details.get("authorities"));
+        //assertTrue(details.containsKey("organization"));
+        //log.info("Organization: " + details.get("organization"));
     }
     
     @Test

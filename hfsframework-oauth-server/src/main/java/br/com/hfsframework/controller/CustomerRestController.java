@@ -20,7 +20,7 @@ import br.com.hfsframework.domain.Customer;
 import br.com.hfsframework.service.CustomerService;
  
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class CustomerRestController {
 	
 	private static final Logger log = LogManager.getLogger(CustomerRestController.class);
@@ -28,13 +28,6 @@ public class CustomerRestController {
 	@Autowired
 	private CustomerService customerService;
  
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/crm-base/customers
-     * HTTP method: GET
-     * 
-     */	
 	@RequestMapping(value="/customers", method = RequestMethod.GET)
 	public ResponseEntity<?> getCustomers() {
 		
@@ -47,39 +40,18 @@ public class CustomerRestController {
 		return new ResponseEntity<>(customerList, HttpStatus.OK);
 	}
  
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/appName/customers/{customerId}
-     * HTTP method: GET
-     * 
-     */		
 	@RequestMapping(value="/customers/{customerId}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCustomer(@PathVariable long customerId) {
 		Optional<Customer> customer = customerService.getCustomer(customerId);
 		return new ResponseEntity<>(customer.get(), HttpStatus.OK);
 	}	
  
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/appName/customers
-     * HTTP method: POST
-     * 
-     */		
 	@RequestMapping(value="/customers", method = RequestMethod.POST)
 	public ResponseEntity<?> addCustomer(@RequestBody Customer customer) {
 		Customer newCustomer = customerService.addCustomer(customer);
 		return new ResponseEntity<>(newCustomer, HttpStatus.CREATED);
 	}
 	
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/appName/customers/customerId
-     * HTTP method: PUT
-     * 
-     */	
     @RequestMapping(value = "/customers/{customerId}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateCustomer(@PathVariable long customerId, 
     										@RequestBody Customer customer) {
@@ -87,13 +59,6 @@ public class CustomerRestController {
     	return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 	
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/appName/customers/customerId
-     * HTTP method: DELETE
-     * 
-     */
     @RequestMapping(value = "/customers/{customerId}", method = RequestMethod.DELETE)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteCustomer(@PathVariable long customerId) {
@@ -102,13 +67,6 @@ public class CustomerRestController {
     	return new ResponseEntity<>(HttpStatus.OK);
     }
  
-    /**
-     * 
-     * this method maps the following URL & http method
-     * URL: http://hostname:port/appName
-     * HTTP method: GET
-     * 
-     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<?> home() {
     	return new ResponseEntity<>("HFS REST API", HttpStatus.OK);

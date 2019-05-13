@@ -40,24 +40,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		anonymous().disable()
 		.requestMatchers().antMatchers("/api/v1/**", "/swagger*", "/v2/**")
 		.and().authorizeRequests()
-		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")		
+		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
 		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
-		
-		/*
-         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-        .authorizeRequests().antMatchers("/swagger*", "/v2/**").access("#oauth2.hasScope('read')").anyRequest().permitAll();
- 
-		 */
-		
-		/*
-			http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, ROOT_PATTERN).access("#oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PATCH, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PUT, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, ROOT_PATTERN).access("#oauth2.hasScope('write')");
-    }		  
-		 */
 	}
 	
     @Override

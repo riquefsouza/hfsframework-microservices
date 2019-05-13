@@ -25,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
-    	
-		http
+
+    	http
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
@@ -35,10 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 	  	.antMatchers("/sobre").permitAll() 
 	  	//.antMatchers("/api/v1/**").authenticated()
+        //.antMatchers("/api/v1/**").hasRole("ADMIN")
         //.antMatchers("/api/v1/**").hasRole("USER")
         .anyRequest().authenticated();
 	  	//.and().httpBasic();
-	  	//.realmName(REALM);
+	  	//.realmName(REALM);	  	  
     }
 
 	
