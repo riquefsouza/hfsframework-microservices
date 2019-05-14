@@ -26,13 +26,14 @@ public class Parametro {
 	    this.id = id;
 	}
 	
-	public Parametro(Long id, String valor, String descricao, String codigo, Long idParametroCategoria) {
+	public Parametro(Long id, String valor, String descricao, String codigo, Long idParametroCategoria, ParametroCategoria parametroCategoria) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.idParametroCategoria = idParametroCategoria;
+		this.parametroCategoria = parametroCategoria;
 	}
 
 	public void limpar() {

@@ -25,10 +25,16 @@ public class ParametroCategoria {
 	public ParametroCategoria(@JsonProperty("parametroCategoria") Long id ) {
 		super();		
 	    this.id = id;
-	    this.parametros = new ArrayList<Parametro>();
+	    this.parametros = new ArrayList<Long>();
 	}
 	*/
-	
+
+	public ParametroCategoria(Long id) {
+		super();
+		this.id = id;
+		this.parametros = new ArrayList<Long>();
+	}
+
 	public ParametroCategoria(Long id, String descricao, Long ordem) {
 		super();
 		this.id = id;
