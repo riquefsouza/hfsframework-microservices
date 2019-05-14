@@ -71,7 +71,12 @@ public class ParametroCategoria implements Serializable {
 		this.parametros = new ArrayList<Parametro>();
 		limpar();
 	}
-		
+
+	public ParametroCategoria(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public ParametroCategoria(Long id, String descricao, Long ordem) {
 		super();
 		this.id = id;
@@ -224,4 +229,10 @@ public class ParametroCategoria implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "ParametroCategoria [id=" + id + ", descricao=" + descricao + ", ordem=" + ordem + ", parametros="
+				+ parametros + "]";
+	}
+	
 }

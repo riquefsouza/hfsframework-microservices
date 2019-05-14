@@ -1,9 +1,9 @@
 package br.com.hfsframework.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -24,6 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import br.com.hfsframework.admin.domain.Parametro;
+import br.com.hfsframework.admin.domain.ParametroCategoria;
 import br.com.hfsframework.base.BaseOAuth2RestAssuredTest;
 import br.com.hfsframework.config.TestWebConfig;
 import io.restassured.RestAssured;
@@ -43,12 +44,12 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 	
 	private List<Parametro> objList = new ArrayList<Parametro>();
 	
-	@BeforeEach
+	@BeforeAll
     public void setup() throws Exception {
-    	objList.add(new Parametro(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L));
-    	objList.add(new Parametro(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L));
-    	objList.add(new Parametro(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L));
-    	objList.add(new Parametro(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L));
+    	objList.add(new Parametro(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new ParametroCategoria(69L)));
+    	objList.add(new Parametro(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new ParametroCategoria(69L)));
+    	objList.add(new Parametro(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new ParametroCategoria(69L)));
+    	objList.add(new Parametro(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new ParametroCategoria(69L)));
         
         accessToken = obtainAccessToken("admin", "admin");
     }
@@ -56,6 +57,8 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(1)
     public void addAll() throws Exception {
+    	log.info(TEST_ACTION.ADD_ALL);
+    	
     	this.objList.stream().forEach(bean -> 
 	        {
 				try {
@@ -69,7 +72,10 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 					
 					assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());			
 					assertEquals(CONTENT_TYPE, response.getContentType());
-
+					assertNotNull(response.jsonPath().getLong("id"));
+					bean.setId(response.jsonPath().getLong("id"));
+					
+					log.info(bean);
 					response.prettyPrint();
 					
 				} catch (Exception e) {
@@ -82,6 +88,8 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(2)
     public void getAll() throws Exception {
+    	log.info(TEST_ACTION.GET_ALL);
+    	
 		final Response response = RestAssured
 				.given().header("Authorization", "Bearer " + accessToken)
 				.contentType(CONTENT_TYPE)
@@ -95,7 +103,7 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 		assertThat(lst).hasSize(4);
 		assertEquals(lst.size(), 4);
 		assertNotNull(lst.get(0));
-		assertEquals(this.objList.get(0).getId(), from(content).getLong("[0].id"));
+		assertNotNull(from(content).getLong("[0].id"));
 		assertEquals(this.objList.get(0).getValor(), from(content).getString("[0].valor"));
 		assertEquals(this.objList.get(0).getDescricao(), from(content).getString("[0].descricao"));
 		assertEquals(this.objList.get(0).getCodigo(), from(content).getLong("[0].codigo"));
@@ -106,6 +114,8 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(3)
     public void getById() throws Exception {
+    	log.info(TEST_ACTION.GET_BY_ID);
+    	
     	this.objList.stream().forEach(bean -> 
         {
 			try {
@@ -133,11 +143,9 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(4)
     public void updateById() throws Exception {
-    	objList.clear();
-    	objList.add(new Parametro(1L, "Tribunal Regional do Trabalho da 1a. Região", "Nome do tribunal onde o sistema está instalado.", "NOME_TRIBUNAL", 1L));
-    	objList.add(new Parametro(2L, "TRT1", "Sigla do tribunal onde o sistema está instalado.", "SIGLA_TRIBUNAL", 1L));
-    	objList.add(new Parametro(3L, "080009", "Código númérico de 6 dígitos que identifica o órgão no SIAFI.", "CODIGO_UNIDADE_GESTORA", 1L));
-    	objList.add(new Parametro(4L, "102", "Código númérico de 3 dígitos da UG no código de barras da GRU.", "APELIDO_UNIDADE_GESTORA", 1L));
+    	log.info(TEST_ACTION.UPDATE_BY_ID);
+    	
+    	this.objList.stream().forEach(bean -> bean.setDescricao("DESC "+bean.getId()));
     	
     	this.objList.stream().forEach(bean -> 
 	        {
@@ -165,6 +173,8 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(5)
     public void deleteById() throws Exception {
+    	log.info(TEST_ACTION.DELETE_BY_ID);
+    	
     	this.objList.stream().forEach(bean -> 
     		{
 				try {
@@ -175,7 +185,6 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 							.delete(HFSFRAMEWORK_ADMIN_SERVER + "/parametro/" + bean.getId());
 					
 					assertEquals(HttpStatus.SC_OK, response.getStatusCode());			
-					assertEquals(CONTENT_TYPE, response.getContentType());
 
 					response.prettyPrint();
 					

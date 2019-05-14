@@ -1,9 +1,9 @@
 package br.com.hfsframework.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 	
 	private List<ParametroCategoria> objList = new ArrayList<ParametroCategoria>();
 	
-	@BeforeEach
+	@BeforeAll
     public void setup() throws Exception {
         objList.add(new ParametroCategoria(1L, "ALFA Parâmetros", 1L));
         objList.add(new ParametroCategoria(2L, "BETA Parâmetros", 2L));
@@ -56,6 +56,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(1)
     public void addAll() throws Exception {
+    	log.info(TEST_ACTION.ADD_ALL);
+    	
     	this.objList.stream().forEach(bean -> 
 	        {
 				try {
@@ -70,7 +72,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 					
 					assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());			
 					assertEquals(CONTENT_TYPE, response.getContentType());
-
+					assertNotNull(response.jsonPath().getLong("id"));
+					bean.setId(response.jsonPath().getLong("id"));
 					/*
 					mockMvc.perform(post("/parametroCategoria")
 							.header("Authorization", "Bearer " + accessToken).accept(contentType)
@@ -78,6 +81,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 					        .contentType(contentType))
 					        .andExpect(status().isOk());
 					*/
+					log.info(bean);					
 					response.prettyPrint();
 					
 				} catch (Exception e) {
@@ -90,6 +94,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(2)
     public void getAll() throws Exception {
+    	log.info(TEST_ACTION.GET_ALL);    	
+    	
 		final Response response = RestAssured
 				.given().header("Authorization", "Bearer " + accessToken)
 				.contentType(CONTENT_TYPE)
@@ -103,6 +109,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 		assertThat(lst).hasSize(4);
 		assertEquals(lst.size(), 4);
 		assertNotNull(lst.get(0));
+		assertNotNull(from(content).getLong("[0].id"));
 		assertEquals(this.objList.get(0).getId(), from(content).getLong("[0].id"));
 		assertEquals(this.objList.get(0).getDescricao(), from(content).getString("[0].descricao"));
 		assertEquals(this.objList.get(0).getOrdem(), from(content).getLong("[0].ordem"));
@@ -125,6 +132,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(3)
     public void getById() throws Exception {
+    	log.info(TEST_ACTION.GET_BY_ID);
+    	
     	this.objList.stream().forEach(bean -> 
         {
 			try {
@@ -135,7 +144,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 				
 				assertEquals(HttpStatus.SC_OK, response.getStatusCode());
 				assertEquals(CONTENT_TYPE, response.getContentType());
-				assertNotNull(response.jsonPath().get("id"));
+				assertNotNull(response.jsonPath().getLong("id"));
 				assertEquals(bean.getId(), response.jsonPath().getLong("id"));
 				assertNotNull(response.jsonPath().get("descricao"));
 				assertEquals(bean.getDescricao(), response.jsonPath().get("descricao"));
@@ -147,7 +156,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 		                .andExpect(content().contentType(contentType))
 		                .andExpect(jsonPath("$.id", is(bean.getId().intValue())))
 		                .andExpect(jsonPath("$.descricao", is(bean.getDescricao())));
-		        */        
+		        */
+
 				response.prettyPrint();
 				
 			} catch (Exception e) {
@@ -160,11 +170,9 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(4)
     public void updateById() throws Exception {
-    	objList.clear();
-        objList.add(new ParametroCategoria(1L, "Parâmetros do Tribunal", 1L));
-        objList.add(new ParametroCategoria(2L, "Parâmetros de Login", 2L));
-        objList.add(new ParametroCategoria(3L, "Parâmetros de E-mail", 3L));
-        objList.add(new ParametroCategoria(4L, "Parâmetros de Conexão de Rede", 4L));
+    	log.info(TEST_ACTION.UPDATE_BY_ID);
+    	    	
+    	this.objList.stream().forEach(bean -> bean.setDescricao("DESC "+bean.getId()));
     	
     	this.objList.stream().forEach(bean -> 
 	        {
@@ -186,8 +194,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 					        .content(this.json(bean))
 					        .contentType(contentType))
 					        .andExpect(status().isOk());
-					 */
-					
+					 */					
 					response.prettyPrint();
 					
 				} catch (Exception e) {
@@ -200,6 +207,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(5)
     public void deleteById() throws Exception {
+    	log.info(TEST_ACTION.DELETE_BY_ID);
+    	
     	this.objList.stream().forEach(bean -> 
     		{
 				try {
@@ -209,15 +218,13 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 							.contentType(CONTENT_TYPE)
 							.delete(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria/" + bean.getId());
 					
-					assertEquals(HttpStatus.SC_OK, response.getStatusCode());			
-					assertEquals(CONTENT_TYPE, response.getContentType());
+					assertEquals(HttpStatus.SC_OK, response.getStatusCode());
 					
-					/*
-			        mockMvc.perform(delete("/parametroCategoria/"+bean.getId())
-			        		.header("Authorization", "Bearer " + accessToken).accept(contentType))
-			                .andExpect(status().isNoContent());
-			        */
 					
+			        //mockMvc.perform(delete("/parametroCategoria/"+bean.getId())
+			        	//	.header("Authorization", "Bearer " + accessToken).accept(contentType))
+			              //  .andExpect(status().isNoContent());
+			        					
 					response.prettyPrint();
 					
 				} catch (Exception e) {
@@ -226,5 +233,5 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 			}
 		);
     }
-	
+
 }

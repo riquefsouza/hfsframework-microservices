@@ -28,6 +28,15 @@ public abstract class BaseOAuth2RestAssuredTest {
 	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 	
 	protected String accessToken;
+	
+	protected enum TEST_ACTION {
+	       ADD_ALL, GET_ALL, GET_BY_ID, UPDATE_BY_ID, DELETE_BY_ID;
+		
+		@Override
+		public String toString() {			
+			return "############" + this.name() + "############";
+		}
+	} 
     
     @Autowired
     protected void setConverters(HttpMessageConverter<Object>[] converters) {
@@ -60,7 +69,6 @@ public abstract class BaseOAuth2RestAssuredTest {
         		.contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         		.params(params)
         		.accept(CONTENT_TYPE)
-        		//.accept(ContentType.JSON)
         		.when().post(HFSFRAMEWORK_OAUTH_SERVER);
         return response.jsonPath().getString("access_token");
         

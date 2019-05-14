@@ -1,10 +1,5 @@
 package br.com.hfsframework.admin.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import br.com.hfsframework.admin.deserializer.ParametroCategoriaDeserializer;
-
 public class Parametro {
 
 	private Long id;

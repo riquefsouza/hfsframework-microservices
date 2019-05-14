@@ -80,13 +80,14 @@ public class Parametro implements Serializable {
 	 * @param codigo the codigo
 	 * @param idParametroCategoria the id parametro categoria
 	 */
-	public Parametro(Long id, String valor, String descricao, String codigo, Long idParametroCategoria) {
+	public Parametro(Long id, String valor, String descricao, String codigo, Long idParametroCategoria, ParametroCategoria parametroCategoria) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.valor = valor;
 		this.idParametroCategoria = idParametroCategoria;
+		this.parametroCategoria = parametroCategoria;
 	}
 
 	/**
@@ -245,5 +246,10 @@ public class Parametro implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Parametro [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", valor=" + valor
+				+ ", idParametroCategoria=" + idParametroCategoria + ", parametroCategoria=" + parametroCategoria + "]";
+	}
 
 }
