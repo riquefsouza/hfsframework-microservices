@@ -2,7 +2,6 @@ package br.com.hfsframework.test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -17,72 +16,29 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.oauth2.common.util.JacksonJsonParser;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.context.WebApplicationContext;
 
+import br.com.hfsframework.base.BaseOAuth2RestTest;
 import br.com.hfsframework.config.TestWebConfig;
 
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration()
 @ContextConfiguration(classes = {TestWebConfig.class})
 @TestInstance(Lifecycle.PER_CLASS)
-public class AuthorizationServerTest {
+public class AuthorizationServerTest extends BaseOAuth2RestTest {
 
 	private static final Logger log = LogManager.getLogger(AuthorizationServerTest.class);
 			
     @Autowired
-    private WebApplicationContext wac;
-
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
-
-    private MockMvc mockMvc;
-
-    private static final String CLIENT_ID = "hfsClient";
-    private static final String CLIENT_SECRET = "hfsSecret";
-
-    private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
- 
-    @Autowired
     private JwtTokenStore tokenStore;
     
     @BeforeEach
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
-    }
-    
-    private String obtainAccessToken(String username, String password) throws Exception {
-        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", "password");
-        params.add("client_id", CLIENT_ID);
-        params.add("username", username);
-        params.add("password", password);
-
-        ResultActions result = mockMvc.perform(
-        		post("/oauth/token")
-       					.contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-       					.params(params)
-       					.with(httpBasic(CLIENT_ID, CLIENT_SECRET))
-       					.accept(CONTENT_TYPE))
-        		.andExpect(status().isOk())
-        		.andExpect(content().contentType(CONTENT_TYPE));
-        
-        String resultString = result.andReturn().getResponse().getContentAsString();
-
-        JacksonJsonParser jsonParser = new JacksonJsonParser();
-        return jsonParser.parseMap(resultString).get("access_token").toString();
+    public void setup() throws Exception {
+        super.setup("admin", "admin");
     }
     
 	@Test

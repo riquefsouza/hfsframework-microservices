@@ -2,13 +2,13 @@ package br.com.hfsframework.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static io.restassured.path.json.JsonPath.from;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +19,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -48,36 +43,12 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 	
 	private List<ParametroCategoria> objList = new ArrayList<ParametroCategoria>();
 	
-	private String accessToken;
-	
-	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
-    
-    @Autowired
-    protected void setConverters(HttpMessageConverter<Object>[] converters) {
-
-        this.mappingJackson2HttpMessageConverter = Arrays.asList(converters).stream()
-            .filter(hmc -> hmc instanceof MappingJackson2HttpMessageConverter)
-            .findAny()
-            .orElse(null);
-
-        assertNotNull(this.mappingJackson2HttpMessageConverter, 
-        		"the JSON message converter must not be null");
-    }
-	
-	protected String json(Object o) throws IOException {
-	    MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-	    this.mappingJackson2HttpMessageConverter.write(
-	            o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
-	    return mockHttpOutputMessage.getBodyAsString();
-	}
-
-	
 	@BeforeEach
     public void setup() throws Exception {
-        objList.add(new ParametroCategoria(1L, "Parâmetros do Tribunal", 1L));
-        objList.add(new ParametroCategoria(2L, "Parâmetros de Login", 2L));
-        objList.add(new ParametroCategoria(3L, "Parâmetros de E-mail", 3L));
-        objList.add(new ParametroCategoria(4L, "Parâmetros de Conexão de Rede", 4L));
+        objList.add(new ParametroCategoria(1L, "ALFA Parâmetros", 1L));
+        objList.add(new ParametroCategoria(2L, "BETA Parâmetros", 2L));
+        objList.add(new ParametroCategoria(3L, "GAMA Parâmetros", 3L));
+        objList.add(new ParametroCategoria(4L, "TETA Parâmetros", 4L));
         
         accessToken = obtainAccessToken("admin", "admin");
     }
@@ -85,9 +56,8 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
     @Test
     @Order(1)
     public void addAll() throws Exception {
-    	ParametroCategoria bean = new ParametroCategoria(1L, "Parâmetros do Tribunal", 1L);
-    	//this.objList.stream().forEach(bean -> 
-	      //  {
+    	this.objList.stream().forEach(bean -> 
+	        {
 				try {
 					String sjson = this.json(bean);
 					
@@ -98,9 +68,7 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 							.when().body(sjson)
 							.post(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria");
 					
-					log.info("STATUS CODE: " + response.getStatusCode());
-					log.info("STATUS STR: " + status().isCreated().toString());
-					assertEquals(201, response.getStatusCode());			
+					assertEquals(HttpStatus.SC_CREATED, response.getStatusCode());			
 					assertEquals(CONTENT_TYPE, response.getContentType());
 
 					/*
@@ -110,14 +78,153 @@ public class ParametroCategoriaRestTest extends BaseOAuth2RestAssuredTest {
 					        .contentType(contentType))
 					        .andExpect(status().isOk());
 					*/
-					log.info(bean.getId() + " - " + bean.getDescricao());
+					response.prettyPrint();
 					
 				} catch (Exception e) {
 					log.error(e.getMessage());
 				}
-			//}
-    	//);
+			}
+    	);
     }
 
+    @Test
+    @Order(2)
+    public void getAll() throws Exception {
+		final Response response = RestAssured
+				.given().header("Authorization", "Bearer " + accessToken)
+				.contentType(CONTENT_TYPE)
+				.get(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria");
+						
+		assertEquals(HttpStatus.SC_OK, response.getStatusCode());			
+		assertEquals(CONTENT_TYPE, response.getContentType());
+		
+		String content = response.asString();
+		List<String> lst = from(content).getList("");
+		assertThat(lst).hasSize(4);
+		assertEquals(lst.size(), 4);
+		assertNotNull(lst.get(0));
+		assertEquals(this.objList.get(0).getId(), from(content).getLong("[0].id"));
+		assertEquals(this.objList.get(0).getDescricao(), from(content).getString("[0].descricao"));
+		assertEquals(this.objList.get(0).getOrdem(), from(content).getLong("[0].ordem"));
+		
+    	/*
+        mockMvc.perform(get("/parametroCategoria")
+        		.header("Authorization", "Bearer " + accessToken).accept(contentType))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(this.objList.size())))
+                .andExpect(jsonPath("$[0].id", is(this.objList.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].descricao", is(this.objList.get(0).getDescricao())))
+                .andExpect(jsonPath("$[1].id", is(this.objList.get(1).getId().intValue())))
+                .andExpect(jsonPath("$[1].descricao", is(this.objList.get(1).getDescricao())));
+        */
+		
+		response.prettyPrint();
+    }
+
+    @Test
+    @Order(3)
+    public void getById() throws Exception {
+    	this.objList.stream().forEach(bean -> 
+        {
+			try {
+				final Response response = RestAssured.given()
+						.header("Authorization", "Bearer " + accessToken)
+						.contentType(ContentType.JSON)
+						.get(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria/" + bean.getId());
+				
+				assertEquals(HttpStatus.SC_OK, response.getStatusCode());
+				assertEquals(CONTENT_TYPE, response.getContentType());
+				assertNotNull(response.jsonPath().get("id"));
+				assertEquals(bean.getId(), response.jsonPath().getLong("id"));
+				assertNotNull(response.jsonPath().get("descricao"));
+				assertEquals(bean.getDescricao(), response.jsonPath().get("descricao"));
+				
+				/*
+		        mockMvc.perform(get("/parametroCategoria/" + bean.getId())
+		        		.header("Authorization", "Bearer " + accessToken).accept(contentType))
+		                .andExpect(status().isOk())
+		                .andExpect(content().contentType(contentType))
+		                .andExpect(jsonPath("$.id", is(bean.getId().intValue())))
+		                .andExpect(jsonPath("$.descricao", is(bean.getDescricao())));
+		        */        
+				response.prettyPrint();
+				
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+		}
+	);
+    }
+    
+    @Test
+    @Order(4)
+    public void updateById() throws Exception {
+    	objList.clear();
+        objList.add(new ParametroCategoria(1L, "Parâmetros do Tribunal", 1L));
+        objList.add(new ParametroCategoria(2L, "Parâmetros de Login", 2L));
+        objList.add(new ParametroCategoria(3L, "Parâmetros de E-mail", 3L));
+        objList.add(new ParametroCategoria(4L, "Parâmetros de Conexão de Rede", 4L));
+    	
+    	this.objList.stream().forEach(bean -> 
+	        {
+				try {
+					String sjson = this.json(bean);
+					
+					final Response response = RestAssured
+							.given().header("Authorization", "Bearer " + accessToken)
+							.contentType(CONTENT_TYPE)
+							.when().body(sjson)
+							.put(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria/" + bean.getId());
+					
+					assertEquals(HttpStatus.SC_OK, response.getStatusCode());			
+					assertEquals(CONTENT_TYPE, response.getContentType());
+										
+					/*
+					mockMvc.perform(put("/parametroCategoria/"+bean.getId())
+							.header("Authorization", "Bearer " + accessToken).accept(contentType)
+					        .content(this.json(bean))
+					        .contentType(contentType))
+					        .andExpect(status().isOk());
+					 */
+					
+					response.prettyPrint();
+					
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+			}
+    	);
+    }
+
+    @Test
+    @Order(5)
+    public void deleteById() throws Exception {
+    	this.objList.stream().forEach(bean -> 
+    		{
+				try {
+					
+					final Response response = RestAssured
+							.given().header("Authorization", "Bearer " + accessToken)
+							.contentType(CONTENT_TYPE)
+							.delete(HFSFRAMEWORK_ADMIN_SERVER + "/parametroCategoria/" + bean.getId());
+					
+					assertEquals(HttpStatus.SC_OK, response.getStatusCode());			
+					assertEquals(CONTENT_TYPE, response.getContentType());
+					
+					/*
+			        mockMvc.perform(delete("/parametroCategoria/"+bean.getId())
+			        		.header("Authorization", "Bearer " + accessToken).accept(contentType))
+			                .andExpect(status().isNoContent());
+			        */
+					
+					response.prettyPrint();
+					
+				} catch (Exception e) {
+					log.error(e.getMessage());
+				}
+			}
+		);
+    }
 	
 }

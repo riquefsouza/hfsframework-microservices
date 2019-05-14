@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -40,10 +42,28 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(createMappingJackson2HttpMessageConverter());
+        converters.add(createXmlHttpMessageConverter());
+    }
+
+    @Bean
+    public HttpMessageConverter<Object> createMappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(new ObjectMapper());
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        converters.add(converter);
+        return converter;
     }
+    
+    @Bean
+    public HttpMessageConverter<Object> createXmlHttpMessageConverter() {
+        MarshallingHttpMessageConverter xmlConverter = 
+          new MarshallingHttpMessageConverter();
+ 
+        XStreamMarshaller xstreamMarshaller = new XStreamMarshaller();
+        xmlConverter.setMarshaller(xstreamMarshaller);
+        xmlConverter.setUnmarshaller(xstreamMarshaller);
+ 
+        return xmlConverter;
+    }
+
 }

@@ -11,6 +11,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -50,7 +52,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(createMappingJackson2HttpMessageConverter());
-       // converters.add(createXmlHttpMessageConverter());
+        converters.add(createXmlHttpMessageConverter());
     }
 
     @Bean
@@ -61,7 +63,6 @@ public class AppConfig implements WebMvcConfigurer {
         return converter;
     }
     
-    /*
     @Bean
     public HttpMessageConverter<Object> createXmlHttpMessageConverter() {
         MarshallingHttpMessageConverter xmlConverter = 
@@ -73,5 +74,5 @@ public class AppConfig implements WebMvcConfigurer {
  
         return xmlConverter;
     }
-    */    
+
 }

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +33,7 @@ public class TestWebConfig implements WebMvcConfigurer, ApplicationContextAware 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(createMappingJackson2HttpMessageConverter());
-       // converters.add(createXmlHttpMessageConverter());
+        converters.add(createXmlHttpMessageConverter());
     }
 
     @Bean
@@ -42,7 +44,6 @@ public class TestWebConfig implements WebMvcConfigurer, ApplicationContextAware 
         return converter;
     }
     
-    /*
     @Bean
     public HttpMessageConverter<Object> createXmlHttpMessageConverter() {
         MarshallingHttpMessageConverter xmlConverter = 
@@ -54,6 +55,5 @@ public class TestWebConfig implements WebMvcConfigurer, ApplicationContextAware 
  
         return xmlConverter;
     }
-    */    
     
 }

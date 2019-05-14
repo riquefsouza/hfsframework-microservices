@@ -23,6 +23,7 @@
 		<maven.resources.plugin>3.1.0</maven.resources.plugin>
 		
 		<org.springframework.version>5.1.6.RELEASE</org.springframework.version>		
+		<spring-data-rest-webmvc.version>3.1.6.RELEASE</spring-data-rest-webmvc.version>
 		<jackson.version>2.9.8</jackson.version>
 		
 		<spring-data-jpa.version>2.1.6.RELEASE</spring-data-jpa.version>
@@ -130,6 +131,11 @@
 		    <version>${org.springframework.version}</version>
 		</dependency>		
 		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-oxm</artifactId>
+		    <version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring-data-jpa.version}</version>
@@ -138,6 +144,11 @@
 		    <groupId>org.springframework.hateoas</groupId>
 		    <artifactId>spring-hateoas</artifactId>
 		    <version>0.25.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-webmvc</artifactId>
+			<version>${spring-data-rest-webmvc.version}</version>
 		</dependency>
 				
 		<!-- #################### SPRING SECURITY #################### -->		
@@ -224,6 +235,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.12</version>
+		</dependency>
+
+		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
@@ -295,6 +312,12 @@
 		    <version>2.3.28</version>
 		</dependency>
 
+		<dependency>
+		    <groupId>com.thoughtworks.xstream</groupId>
+		    <artifactId>xstream</artifactId>
+		    <version>1.4.11.1</version>
+		</dependency>
+
 		<!-- #################### LOG #################### -->
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
@@ -355,6 +378,13 @@
 		    <artifactId>rest-assured</artifactId>
 		    <version>3.3.0</version>		    
 		</dependency>		
+        
+		<dependency>
+		    <groupId>org.assertj</groupId>
+		    <artifactId>assertj-core-java8</artifactId>
+		    <version>1.0.0m1</version>
+		    <scope>test</scope>
+		</dependency>
         
 		<dependency>
 			<groupId>org.springframework.security</groupId>

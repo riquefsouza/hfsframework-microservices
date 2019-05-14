@@ -1,5 +1,6 @@
 package br.com.hfsframework.base;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -7,10 +8,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.security.oauth2.common.util.JacksonJsonParser;
 import org.springframework.security.web.FilterChainProxy;
@@ -23,13 +26,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 public abstract class BaseOAuth2RestTest {
 
-	private static final String HFSFRAMEWORK_OAUTH_SERVER = "http://localhost:8080/hfsframework-oauth-server/oauth/token";
+	//private static final String HFSFRAMEWORK_OAUTH_SERVER = "http://localhost:8080/hfsframework-oauth-server/oauth/token";
 	//private static final String HFSFRAMEWORK_ADMIN_SERVER = "http://localhost:8080/hfsframework-admin-server";
 
     private static final String CLIENT_ID = "hfsClient";
     private static final String CLIENT_SECRET = "hfsSecret";
 
-    private static final String CONTENT_TYPE = "application/json;charset=UTF-8";
+    protected static final String CONTENT_TYPE = "application/json;charset=UTF-8";
 
     protected MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -47,7 +50,6 @@ public abstract class BaseOAuth2RestTest {
 
     protected String accessToken;
     
-    /*
     @Autowired
     protected void setConverters(HttpMessageConverter<Object>[] converters) {
 
@@ -59,7 +61,6 @@ public abstract class BaseOAuth2RestTest {
         assertNotNull(this.mappingJackson2HttpMessageConverter, 
         		"the JSON message converter must not be null");
     }
-    */
     
 	protected String json(Object o) throws IOException {
 	    MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
@@ -76,7 +77,7 @@ public abstract class BaseOAuth2RestTest {
         params.add("password", password);
 
         ResultActions result = mockMvc.perform(
-        		post(HFSFRAMEWORK_OAUTH_SERVER)
+        		post("/oauth/token")
        					.contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
        					.params(params)
        					.with(httpBasic(CLIENT_ID, CLIENT_SECRET))
@@ -91,9 +92,9 @@ public abstract class BaseOAuth2RestTest {
     }
     
 	
-    public void setup() throws Exception {
+    public void setup(String username, String password) throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).addFilter(springSecurityFilterChain).build();
-        accessToken = obtainAccessToken("admin", "admin");
+        accessToken = obtainAccessToken(username, password);
     }
 	
 
