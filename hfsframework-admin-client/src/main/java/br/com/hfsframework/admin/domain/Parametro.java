@@ -1,6 +1,8 @@
 package br.com.hfsframework.admin.domain;
 
-public class Parametro {
+import br.com.hfsframework.base.BaseEntityRestClient;
+
+public class Parametro implements BaseEntityRestClient<Long> {
 
 	private Long id;
 

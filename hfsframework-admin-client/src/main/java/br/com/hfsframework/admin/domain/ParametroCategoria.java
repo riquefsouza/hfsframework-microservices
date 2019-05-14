@@ -3,7 +3,9 @@ package br.com.hfsframework.admin.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParametroCategoria {
+import br.com.hfsframework.base.BaseEntityRestClient;
+
+public class ParametroCategoria implements BaseEntityRestClient<Long> {
 
 	private Long id;
 
