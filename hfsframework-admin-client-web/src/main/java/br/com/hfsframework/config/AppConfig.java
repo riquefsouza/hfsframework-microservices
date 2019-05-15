@@ -2,12 +2,15 @@ package br.com.hfsframework.config;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -15,10 +18,15 @@ import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +39,18 @@ public class AppConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		
+		registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/")
+			.setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+		
+		registry.addResourceHandler("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**")
+                .addResourceLocations(
+                		"classpath:/static/css/",
+                		"classpath:/static/img/",                        
+                        "classpath:/static/js/",
+                		"classpath:/static/primeui/",
+                		"classpath:/static/scss/",                        
+                        "classpath:/static/vendor/");		
 	}	
 	
 	@Override
@@ -75,4 +95,45 @@ public class AppConfig implements WebMvcConfigurer {
         return xmlConverter;
     }
 
+	@Bean
+	@Description("Thymeleaf template resolver serving HTML 5")
+	public ClassLoaderTemplateResolver templateResolver() {
+
+		ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+
+		templateResolver.setPrefix("templates/");
+		templateResolver.setCacheable(false);
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("UTF-8");
+
+		return templateResolver;
+	}
+
+	@Bean
+	@Description("Thymeleaf template engine with Spring integration")
+	public SpringTemplateEngine templateEngine() {
+
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver());
+
+		return templateEngine;
+	}
+
+	@Bean
+	@Description("Thymeleaf view resolver")
+	public ViewResolver viewResolver() {
+
+		ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+
+		viewResolver.setTemplateEngine(templateEngine());
+		viewResolver.setCharacterEncoding("UTF-8");
+
+		return viewResolver;
+	}
+
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/login").setViewName("login");
+	}
+    
 }

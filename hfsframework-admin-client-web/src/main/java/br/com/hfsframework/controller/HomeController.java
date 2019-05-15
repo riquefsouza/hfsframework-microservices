@@ -12,7 +12,7 @@ public class HomeController {
 	//@Value("${server.contextPath}")
 	//private String baseURL;
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/home")
 	public String index() {
 		return "index.html";
 	}

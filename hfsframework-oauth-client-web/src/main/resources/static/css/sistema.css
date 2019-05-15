@@ -1,0 +1,36 @@
+/*
+* {
+	font-size: 11px;
+	line-height: 1.428;	
+}
+*/
+
+.tema-principal {
+	background-color: lightblue;
+}
+
+.rodape-central {
+	position: absolute;
+	bottom: 0;
+	width: 98%;
+	float: right;
+	padding: 20px;
+	margin-bottom: 30px;
+}
+
+.form-actions {
+	text-align: right;
+	padding-bottom: 0.5em;
+}
+
+.tela-conteudo {
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.imagem-inverte {
+	-webkit-filter: invert(100%);
+	filter: invert(100%);
+}
+		

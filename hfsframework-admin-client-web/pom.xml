@@ -59,6 +59,26 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- #################### THYMELEAF #################### -->
+
+		<dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		    <version>3.0.4.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf-spring5</artifactId>
+		    <version>3.0.11.RELEASE</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-java8time</artifactId>
+		    <version>3.0.4.RELEASE</version>
+		</dependency>
+
 		<!-- #################### TEST #################### -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
