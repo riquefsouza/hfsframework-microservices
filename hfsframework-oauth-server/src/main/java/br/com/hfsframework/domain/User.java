@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity 
@@ -19,7 +20,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name="ADM_USER_ID_GENERATOR", sequenceName="ADM_USER_SEQ", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADM_USER_ID_GENERATOR")
 	private Long id; 
 	
 	private String username;
@@ -27,12 +29,12 @@ public class User implements Serializable {
 	private String password;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL) 
-	private List<UserRole> roles; 
+	private List<Role> roles; 
 
 	User() { 
 	} 
 
-	public User(String username, String password, List<UserRole> roles) { 
+	public User(String username, String password, List<Role> roles) { 
 		this.username = username; 
 		this.password = password; 
 		this.roles = roles; 
@@ -54,11 +56,11 @@ public class User implements Serializable {
 		this.password = password; 
 	} 
 
-	public List<UserRole> getRoles() { 
+	public List<Role> getRoles() { 
 		return roles; 
 	} 
 
-	public void setRoles(List<UserRole> roles) { 
+	public void setRoles(List<Role> roles) { 
 		this.roles = roles; 
 	}
 

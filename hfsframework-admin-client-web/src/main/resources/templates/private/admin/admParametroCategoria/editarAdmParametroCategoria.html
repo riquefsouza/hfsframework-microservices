@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="pt-BR">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+
+<div th:replace="private/menu :: menu"></div>
+
+<div class="tela-conteudo">
+	<form id="editarAdmParametroCategoria">
+	
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				Categoria dos Parâmetros de Configuração
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="button" class="btn btn-success btn-icon-split" id="btnSalvar">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text">Salvar</span>
+					</button>			
+					<button type="reset" class="btn btn-light btn-icon-split" id="btnLimpar">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text">Limpar</span>
+					</button>
+
+					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancelar">
+						<span class="icon text-white-50"> <i
+							class="fa fa-times-circle"></i>
+						</span> <span class="text">Cancelar</span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<input type="hidden" class="form-control" id="admParametroCategoria_id">
+						
+						<label for="admParametroCategoria_descricao">Descrição:</label>						
+						<input type="text" class="form-control" id="admParametroCategoria_descricao" maxlength="80">
+						
+						<input type="hidden" class="form-control" id="admParametroCategoria_ordem">
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</form>	
+</div>
+
+<script src="/js/admin/editarAdmParametroCategoria.js"></script>
+
+</body>
+</html>
+	

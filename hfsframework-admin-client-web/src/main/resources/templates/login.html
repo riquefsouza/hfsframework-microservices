@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="pt-BR">
+<head th:replace="fragments/header :: header">
+</head>	
+<body>
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		<a class="navbar-brand" href="">HFS Framework</a>
+	</nav>
+
+	<div th:if="${param.error}" class="alert alert-danger alert-dismissible">
+  		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	  	Usuário ou senha inválidos.
+	</div>
+	
+	<div th:if="${param.logout}" class="alert alert-info alert-dismissible">
+  		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	  	Você saiu do sistema.
+	</div>
+	
+	<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
+		<div id="tela-login" style="margin-top: 20px;">
+			<div class="card" id="tela-login">
+				<div class="card-header" style="font-weight: normal;">Autentique-se</div>
+				<div class="card-body">
+				
+					<form th:action="@{/login}" method="post">
+								
+						<div class="form-group">
+							<label for="username">Usuário:</label>
+							<div class="input-group">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button" disabled="disabled">
+										<i class="fas fa-user fa-sm"></i>
+									</button>
+								</div>	
+								<input type="text" class="form-control" name="username" id="username" placeholder="Informe seu nome de usuário">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password">Senha:</label>
+							<div class="input-group">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button" disabled="disabled">
+										<i class="fas fa-lock fa-sm"></i>
+									</button>	
+								</div>	
+								<input type="password" class="form-control" name="password" id="password" 
+									placeholder="Informe sua senha" autocomplete="off">
+							</div>
+						</div>
+						<br />
+						<div class="form-group">
+							<div style="margin: 0 auto; width:40%">
+								<button type="button" class="btn btn-success btn-icon-split" id="btnEntrar">
+									<span class="icon text-white-50">
+										<i class="fa fa-sign-in" aria-hidden="true"></i>
+									</span>
+									<span class="text">Entrar</span>
+								</button>
+							</div>
+						</div>
+					
+					</form>	
+					
+				</div>		
+			</div>
+		</div>	
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+	
+</body>
+</html>

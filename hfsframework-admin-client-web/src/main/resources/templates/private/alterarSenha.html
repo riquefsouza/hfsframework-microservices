@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="pt-BR">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+
+<div th:replace="private/menu :: menu"></div>
+
+<div class="tela-conteudo">
+	<form id="alterarSenha" style="max-width: 550px; margin-top: 10px;">
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				Alteração de Senha
+			</div>
+			<div class="card-body">
+			
+				<div class="form-actions">
+					<button type="button" class="btn btn-success" id="btnSalvar" onclick="dlgAlterarSenha()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Salvar
+					</button>
+				
+					<button type="reset" class="btn btn-primary" id="btnLimpar">
+						<span class="glyphicon glyphicon-star"></span> Limpar
+					</button>
+				
+					<button type="button" class="btn btn-primary" id="btnVoltar" onclick="window.location.href='/'">
+						<span class="glyphicon glyphicon-circle-arrow-left"></span> Voltar
+					</button>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label for="senhaAtual">Senha atual:</label>
+						<input type="password" class="form-control" id="senhaAtual" maxlength="128" >
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label for="senhaNova">Nova senha:</label>
+						<input type="password" class="form-control" id="senhaNova" maxlength="128" >
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 form-group">
+						<label for="confirmaSenhaNova">Confirmar nova senha:</label>
+						<input type="password" class="form-control" id="confirmaSenhaNova" maxlength="128" >
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>

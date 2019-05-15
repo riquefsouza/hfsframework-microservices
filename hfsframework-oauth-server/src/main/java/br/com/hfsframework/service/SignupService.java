@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.hfsframework.domain.User;
-import br.com.hfsframework.domain.UserRole;
+import br.com.hfsframework.domain.Role;
 import br.com.hfsframework.repository.IUserRepository;
 
 @Service
@@ -39,7 +39,7 @@ public class SignupService {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String senha = passwordEncoder.encode("admin");
 			User user = new User("admin", senha,
-					Arrays.asList(new UserRole("USER"), new UserRole("ADMIN")));
+					Arrays.asList(new Role("USER"), new Role("ADMIN")));
 			//User savedUser = userRepository.save(user);
 			userRepository.save(user);
 			

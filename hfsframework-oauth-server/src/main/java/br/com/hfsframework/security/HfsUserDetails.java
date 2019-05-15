@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.hfsframework.domain.User;
-import br.com.hfsframework.domain.UserRole;
+import br.com.hfsframework.domain.Role;
 
 public class HfsUserDetails implements UserDetails {
 
@@ -24,9 +24,9 @@ public class HfsUserDetails implements UserDetails {
 		this.authorities = translate(user.getRoles()); 
 	} 
 
-	private Collection<? extends GrantedAuthority> translate(List<UserRole> roles) { 
+	private Collection<? extends GrantedAuthority> translate(List<Role> roles) { 
 		List<GrantedAuthority> authorities = new ArrayList<>(); 
-		for (UserRole role : roles) { 
+		for (Role role : roles) { 
 			String name = role.getName().toUpperCase(); 
 			if (!name.startsWith("ROLE_")) { 
 				name = "ROLE_" + name; 

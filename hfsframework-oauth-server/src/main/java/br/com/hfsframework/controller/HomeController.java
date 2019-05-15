@@ -3,8 +3,10 @@ package br.com.hfsframework.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
-//@ApiIgnore
+@ApiIgnore
 public class HomeController {
 	
 	//@Value("${server.contextPath}")
@@ -12,7 +14,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/")
 	public String index() {
-		//return "redirect:swagger-ui.html";
-		return "index.html";
+		return "redirect:swagger-ui.html";
+		//return "index.html";
 	}
 }

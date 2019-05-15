@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	lang="pt-BR">
+<body>
+<div th:fragment="infoUsuario">
+
+<script>
+	$(document).ready(function(){
+		 $.ajax({
+		        url: "/sistemaMB"
+		    }).then(function(data) {
+				$('.infoUsuario-nome').empty();
+				$('.infoUsuario-ip').empty();
+				$('.infoUsuario-matricula').empty();
+				$('.infoUsuario-login').empty();
+				$('.infoUsuario-cpf').empty();
+				$('.infoUsuario-data').empty();
+				$('.infoUsuario-email').empty();
+				
+				$('.infoUsuario-nome').append(data.nome);
+				$('.infoUsuario-ip').append(data.ip);
+				$('.infoUsuario-matricula').append(data.matricula);
+				$('.infoUsuario-login').append(data.login);
+				$('.infoUsuario-cpf').append(data.cpfFormatado);
+				$('.infoUsuario-data').append(data.dataFormatada);
+				$('.infoUsuario-email').append(data.email);
+		    });        
+	});
+</script>
+
+<form id="infoUsuarioForm">
+
+	<div id="infoUsuarioDialog" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-sm">
+
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Informações do Usuário</h4>
+		  </div>
+		  <div class="modal-body">
+
+			<table class="table table-bordered table-condensed">
+				<tbody>
+					<tr>
+						<td style="font-weight: bold;">Nome:</td>
+						<td class="infoUsuario-nome"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">IP:</td>
+						<td class="infoUsuario-ip"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">Matrícula:</td>
+						<td class="infoUsuario-matricula"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">Login:</td>
+						<td class="infoUsuario-login"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">CPF:</td>
+						<td class="infoUsuario-cpf"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">Data Primeiro Login:</td>
+						<td class="infoUsuario-data"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">E-mail:</td>
+						<td class="infoUsuario-email"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		  
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

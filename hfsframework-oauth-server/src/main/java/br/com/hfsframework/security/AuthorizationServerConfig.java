@@ -34,6 +34,7 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
 	private static String REALM = "HFS_REALM";
 	//private static final int ONE_DAY = 60 * 60 * 24;
 	//private static final int THIRTY_DAYS = 60 * 60 * 24 * 30; 
