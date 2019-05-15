@@ -45,12 +45,12 @@ public class AppConfig implements WebMvcConfigurer {
 		
 		registry.addResourceHandler("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**")
                 .addResourceLocations(
-                		"classpath:/static/css/",
-                		"classpath:/static/img/",                        
-                        "classpath:/static/js/",
-                		"classpath:/static/primeui/",
-                		"classpath:/static/scss/",                        
-                        "classpath:/static/vendor/");		
+                		"/WEB-INF/static/css/",
+                		"/WEB-INF/static/img/",                        
+                        "/WEB-INF/static/js/",
+                		"/WEB-INF/static/primeui/",
+                		"/WEB-INF/static/scss/",                        
+                        "/WEB-INF/static/vendor/");		
 	}
 	
 	@Override
