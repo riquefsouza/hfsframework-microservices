@@ -38,8 +38,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.
 		anonymous().disable()
-		.requestMatchers().antMatchers("/api/v1/**", "/swagger*", "/v2/**")
-		.and().authorizeRequests()
+		.requestMatchers().antMatchers("/api/v1/**", "/swagger-ui.html", "/webjars/**", 
+				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
+		.and()
+		.authorizeRequests()
 		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
 		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}

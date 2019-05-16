@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private HfsUserDetailsService hfsUserDetailsService;	
+	private HfsUserDetailsService hfsUserDetailsService;
 	
     @Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,8 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.csrf().disable()
 	  	.authorizeRequests()
-	  	.antMatchers("/about").permitAll() 
-        .antMatchers("/signup").permitAll()
+		.antMatchers("/api/public/**").permitAll()
+		//.antMatchers(HttpMethod.POST, "/api/login").permitAll()  	
+        //.antMatchers("/signup").permitAll()
 	  	.antMatchers("/oauth/token").permitAll()
 	  	//.antMatchers("/api/v1/**").authenticated()
         //.antMatchers("/api/v1/**").hasRole("USER")

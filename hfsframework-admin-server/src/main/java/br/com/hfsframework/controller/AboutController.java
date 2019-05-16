@@ -9,8 +9,8 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class AboutController {
 	
-	@RequestMapping(value = "/sobre")
-	public String about() {
-		return "about.html";
+	@RequestMapping(value = "/api/public/about")
+	public String getAbout() {
+		return "/about-server.html";
 	}
 }

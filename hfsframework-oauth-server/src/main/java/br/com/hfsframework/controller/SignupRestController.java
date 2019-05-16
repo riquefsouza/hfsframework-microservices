@@ -20,7 +20,7 @@ public class SignupRestController {
 	@Autowired
 	private SignupService signupService;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/public/signup", method = RequestMethod.POST)
     public ResponseEntity<?> signup(@RequestBody User user) {
    		user.setRoles(Arrays.asList(new Role("USER")));
     	//User newUser = signupService.addUser(user);

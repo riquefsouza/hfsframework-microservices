@@ -14,14 +14,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	//private static String REALM = "HFS_REALM";	
 
-	/*
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-    */
-
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
@@ -31,9 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.csrf().disable()
-		.requestMatchers().antMatchers("/swagger*", "/v2/**").and()
+		.requestMatchers().antMatchers("/swagger-ui.html", "/webjars/**", 
+				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").and()
 		.authorizeRequests()
-	  	.antMatchers("/sobre").permitAll() 
+		.antMatchers("/api/public/**").permitAll()
 	  	//.antMatchers("/api/v1/**").authenticated()
         //.antMatchers("/api/v1/**").hasRole("ADMIN")
         //.antMatchers("/api/v1/**").hasRole("USER")
