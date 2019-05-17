@@ -1,4 +1,4 @@
-package br.com.hfsframework.domain;
+package br.com.hfsframework.security.login;
 
 import javax.validation.constraints.NotBlank;
 

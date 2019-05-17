@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -18,9 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class BaseOAuth2RestTemplateClient {
 	
-    private static final String CLIENT_ID = "hfsClient";
-    private static final String CLIENT_SECRET = "hfsSecret";	
-
 	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 	
 	protected enum METHOD_ACTION {
@@ -56,14 +54,15 @@ public abstract class BaseOAuth2RestTemplateClient {
 	            o, MediaType.APPLICATION_JSON, mockHttpOutputMessage);
 	    return mockHttpOutputMessage.getBodyAsString();
 	}    
-	
-	protected OAuth2RestTemplate restTemplate(String server, String login, String password) {
+
+	private OAuth2RestTemplate restTemplate(String server, String clientId, String clientSecret, 
+			String login, String password) throws IllegalStateException {
 		
 		ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
 		resourceDetails.setGrantType("password");
-		resourceDetails.setAccessTokenUri(server);
-		resourceDetails.setClientId(CLIENT_ID);
-		resourceDetails.setClientSecret(CLIENT_SECRET);
+		resourceDetails.setAccessTokenUri(server.trim());
+		resourceDetails.setClientId(clientId.trim());		
+		resourceDetails.setClientSecret(clientSecret.trim());
 
 		List<String> scopes = new ArrayList<String>();
 		scopes.add("read");
@@ -71,8 +70,8 @@ public abstract class BaseOAuth2RestTemplateClient {
 		scopes.add("trust");
 		resourceDetails.setScope(scopes);
 
-		resourceDetails.setUsername(login);
-		resourceDetails.setPassword(password);
+		resourceDetails.setUsername(login.trim());
+		resourceDetails.setPassword(password.trim());
 
 		OAuth2RestTemplate rt = new OAuth2RestTemplate(resourceDetails);
 		mappingJackson2HttpMessageConverter = createMappingJackson2HttpMessageConverter(); 
@@ -82,4 +81,16 @@ public abstract class BaseOAuth2RestTemplateClient {
 		return rt;
 	}
 
+	protected OAuth2RestTemplate restTemplate(Environment env, String projectId, String login, String password) throws IllegalStateException {
+		String server = env.getRequiredProperty("oauth2."+ projectId +".provider.token-uri");
+		String clientId = env.getProperty("oauth2."+ projectId + ".client-id");
+		String clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");
+
+		return restTemplate(server, clientId, clientSecret, login, password);
+	}
+	
+	protected OAuth2RestTemplate restTemplate(String server, String login, String password) throws IllegalStateException {
+		return restTemplate(server, "hfsClient", "hfsSecret", login, password);
+	}
+	
 }

@@ -5,13 +5,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import br.com.hfsframework.security.login.StatelessAuthenticationFilter;
+import br.com.hfsframework.security.login.StatelessLoginFilter;
+import br.com.hfsframework.security.login.TokenAuthenticationService;
 
 @Configuration
 @EnableWebSecurity
@@ -19,11 +26,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static String REALM = "HFS_REALM";	
 	
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private HfsUserDetailsService hfsUserDetailsService;
+	
+	private UserDetailsService userDetailsService;
+	private TokenAuthenticationService tokenAuthenticationService;
+	
+	public SecurityConfig(UserDetailsService userDetailsService) {
+		super();
+		this.userDetailsService = userDetailsService;
+		this.tokenAuthenticationService = new TokenAuthenticationService("hfsSecret", userDetailsService);
+	}
 	
     @Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -39,7 +54,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .withUser("hfsuser").password(passwordEncoder.encode("123")).roles("USER");    
     }
     */
-	
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        if (passwordEncoder == null) {
+            passwordEncoder = DefaultPasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
+        return passwordEncoder;
+    }
 
     @Override
     @Bean
@@ -51,15 +73,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
     	
+		StatelessLoginFilter statelessLoginFilter = new StatelessLoginFilter("/api/login", 
+				tokenAuthenticationService, userDetailsService, authenticationManager());
+		
+		StatelessAuthenticationFilter statelessAuthenticationFilter = 
+				new StatelessAuthenticationFilter(tokenAuthenticationService);
+    	
 		http
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.csrf().disable()
-	  	.authorizeRequests()
-		.antMatchers("/api/public/**").permitAll()
-		//.antMatchers(HttpMethod.POST, "/api/login").permitAll()  	
-        //.antMatchers("/signup").permitAll()
+		.addFilterBefore(statelessLoginFilter, UsernamePasswordAuthenticationFilter.class)		
+		.addFilterBefore(statelessAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)		
+		.requestMatchers().antMatchers("/api/public/**")
+		.requestMatchers().antMatchers(HttpMethod.POST, "/api/login")
+		.and()
+		.authorizeRequests()
 	  	.antMatchers("/oauth/token").permitAll()
 	  	//.antMatchers("/api/v1/**").authenticated()
         //.antMatchers("/api/v1/**").hasRole("USER")
@@ -70,4 +100,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  	.realmName(REALM);
     }
 
+    @Bean
+    public TokenAuthenticationService tokenAuthenticationService() {
+        return tokenAuthenticationService;
+    }    
+    
 }

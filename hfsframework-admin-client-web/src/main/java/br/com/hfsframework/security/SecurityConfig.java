@@ -10,9 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import br.com.hfsframework.util.ldap.LdapBundle;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -21,8 +19,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired	
 	private HfsUserDetailsService hfsUserDetailsService;
 	
-	@Autowired	
-	private LdapBundle ldapBundle;
+	//@Autowired	
+	//private LdapBundle ldapBundle;
+	
+	@Autowired
+    private AuthenticationSuccessHandler successHandler;
+	
+	@Autowired
+	private CustomAccessDeniedHandler accessDeniedHandler;
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -38,15 +42,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  	.antMatchers("/sobre").permitAll()
         .anyRequest().authenticated()
         .and()
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+        .and()
 		.formLogin()				
 		.loginPage("/login")
-			.failureUrl("/login?error=401").permitAll()
-			.successForwardUrl("/home").and()
-			//.defaultSuccessUrl("/home").and()
+			.loginProcessingUrl("/j_spring_security_check")
+			.successForwardUrl("/home")
+			//.defaultSuccessUrl("/home")
+			.failureUrl("/?error").usernameParameter("username").passwordParameter("password")
+			.successHandler(successHandler)
+		.and()	
 		.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/login");
-
+			.invalidateHttpSession(true).deleteCookies("JSESSIONID")
+			//.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutUrl("/logout").logoutSuccessUrl("/")
+         .and()
+         .sessionManagement().sessionFixation().none().maximumSessions(1).maxSessionsPreventsLogin(true);
+         
     }
 	
 	@Override
