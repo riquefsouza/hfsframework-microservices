@@ -6,8 +6,4 @@ public interface BaseEntityRestClient<I> {
 	
 	public void setId(I id);
 	
-	public String getDescricao();
-
-	public void setDescricao(String descricao);
-
 }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hfsframework.domain.User;
-import br.com.hfsframework.domain.Role;
+import br.com.hfsframework.oauth.domain.Role;
+import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.service.SignupService;
 
 @RestController

@@ -9,9 +9,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.hfsframework.domain.User;
-import br.com.hfsframework.domain.Role;
-import br.com.hfsframework.repository.IUserRepository;
+import br.com.hfsframework.oauth.domain.Role;
+import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.repository.IUserRepository;
 
 @Service
 @Transactional

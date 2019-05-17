@@ -1,4 +1,4 @@
-package br.com.hfsframework.domain;
+package br.com.hfsframework.oauth.domain;
 
 import java.io.Serializable;
 import java.util.List;

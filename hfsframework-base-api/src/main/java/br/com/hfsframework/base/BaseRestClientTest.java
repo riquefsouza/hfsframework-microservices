@@ -1,4 +1,4 @@
-package br.com.hfsframework.admin.client;
+package br.com.hfsframework.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,29 +11,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.admin.client.domain.Parametro;
-import br.com.hfsframework.admin.client.domain.ParametroCategoria;
-import br.com.hfsframework.base.BaseOAuth2RestTemplateClient;
+public class BaseRestClientTest<T extends BaseEntityRestClientTest<I>, I> extends BaseOAuth2RestTemplateClient {
 
-public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
-
-	private static final Logger log = LogManager.getLogger(ParametroRestClient.class);
+	private static final Logger log = LogManager.getLogger(BaseRestClientTest.class);
 	
-	private List<Parametro> objList = new ArrayList<Parametro>();
+	protected List<T> objList = new ArrayList<T>();
 	
 	private OAuth2RestTemplate oauth2RestTemplate = null;
 	
-	private String adminServer;
+	protected String server;
 	
-    public ParametroRestClient(String oauthServer, String adminServer) {
-    	this.adminServer = adminServer + "/api/v1/parametro";
+	private Class<T> classEntity;
+	
+    public BaseRestClientTest(String oauthServer, String server, Class<T> classEntity, String login, String password) {
+    	this.server = server;
+    	this.classEntity = classEntity;
     	
-    	objList.add(new Parametro(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new ParametroCategoria(1L)));
-    	objList.add(new Parametro(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new ParametroCategoria(1L)));
-    	objList.add(new Parametro(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new ParametroCategoria(1L)));
-    	objList.add(new Parametro(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new ParametroCategoria(1L)));
-        
-        oauth2RestTemplate = restTemplate(oauthServer, "admin", "admin");
+        oauth2RestTemplate = restTemplate(oauthServer, login, password);
 	}
 	
 	public void addAll() {
@@ -42,8 +36,8 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
     	this.objList.stream().forEach(bean -> {
     		try {
     			
-    			Parametro saved = oauth2RestTemplate.postForObject(
-    					this.adminServer, bean, Parametro.class);
+    			T saved = oauth2RestTemplate.postForObject(
+    					this.server, bean, classEntity);
     			
     			bean.setId(saved.getId());
     			
@@ -54,12 +48,13 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
     	});				
 	}
 
+	@SuppressWarnings("unchecked")
 	public void getAll() {
 		log.info(METHOD_ACTION.GET_ALL);
 		
 		try {
-			Parametro[] obj = oauth2RestTemplate.getForObject(
-					this.adminServer, Parametro[].class);
+			List<T> obj = oauth2RestTemplate.getForObject(
+					this.server, objList.getClass());
 			Arrays.asList(obj).stream().forEach(bean -> log.info("getAll: " + bean));
 		} catch (RestClientException e) {
 			log.error(e.getMessage());			
@@ -71,8 +66,8 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
     	this.objList.stream().forEach(bean -> {
     		
 			try {
-				Parametro obj = oauth2RestTemplate.getForObject(
-						this.adminServer + "/{id}", Parametro.class, bean.getId());
+				T obj = oauth2RestTemplate.getForObject(
+						this.server + "/{id}", classEntity, bean.getId());
 				
 				log.info("getById: " + obj);
     		} catch (RestClientException e) {
@@ -88,7 +83,7 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
     	
     	this.objList.stream().forEach(bean -> {
 			try {
-				oauth2RestTemplate.put(this.adminServer + "/{id}", bean, bean.getId());
+				oauth2RestTemplate.put(this.server + "/{id}", bean, bean.getId());
     			
 				log.info("updated: " + bean);
     		} catch (RestClientException e) {
@@ -100,9 +95,9 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
 	public void getEntity() {
 		this.objList.stream().forEach(bean -> {
 			try {
-				ResponseEntity<Parametro> entity = oauth2RestTemplate.getForEntity(this.adminServer + "/{id}", 
-						Parametro.class, bean.getId());
-				Parametro obj = (Parametro) entity.getBody();
+				ResponseEntity<T> entity = oauth2RestTemplate.getForEntity(this.server + "/{id}", 
+						classEntity, bean.getId());
+				T obj = (T) entity.getBody();
 				log.info("getEntity: " + obj);
 		
 				HttpHeaders responseHeaders = entity.getHeaders();
@@ -123,7 +118,7 @@ public class ParametroRestClient extends BaseOAuth2RestTemplateClient {
 		
     	this.objList.stream().forEach(bean -> {
 			try {
-				oauth2RestTemplate.delete(this.adminServer + "/{id}", bean.getId());
+				oauth2RestTemplate.delete(this.server + "/{id}", bean.getId());
     			
 				log.info("deleted: " + bean);
     		} catch (RestClientException e) {

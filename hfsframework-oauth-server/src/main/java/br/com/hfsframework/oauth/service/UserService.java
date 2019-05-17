@@ -1,10 +1,10 @@
-package br.com.hfsframework.service;
+package br.com.hfsframework.oauth.service;
 
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.base.BaseBusinessService;
-import br.com.hfsframework.domain.User;
-import br.com.hfsframework.repository.IUserRepository;
+import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.repository.IUserRepository;
 
 @Service
 public class UserService extends BaseBusinessService<User, Long, IUserRepository> {

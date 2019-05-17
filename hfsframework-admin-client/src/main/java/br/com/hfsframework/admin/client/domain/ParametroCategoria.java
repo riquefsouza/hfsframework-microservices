@@ -1,11 +1,11 @@
-package br.com.hfsframework.admin.domain;
+package br.com.hfsframework.admin.client.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.hfsframework.base.BaseEntityRestClient;
+import br.com.hfsframework.base.BaseEntityRestClientTest;
 
-public class ParametroCategoria implements BaseEntityRestClient<Long> {
+public class ParametroCategoria implements BaseEntityRestClientTest<Long> {
 
 	private Long id;
 

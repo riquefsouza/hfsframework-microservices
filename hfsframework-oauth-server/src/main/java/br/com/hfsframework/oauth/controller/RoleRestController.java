@@ -1,11 +1,11 @@
-package br.com.hfsframework.controller;
+package br.com.hfsframework.oauth.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hfsframework.base.BaseRestController;
-import br.com.hfsframework.domain.Role;
-import br.com.hfsframework.service.RoleService;
+import br.com.hfsframework.oauth.domain.Role;
+import br.com.hfsframework.oauth.service.RoleService;
 
 @RestController
 @RequestMapping("/api/v1/role")

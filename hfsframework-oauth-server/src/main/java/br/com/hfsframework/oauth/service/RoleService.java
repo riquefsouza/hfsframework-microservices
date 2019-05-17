@@ -1,10 +1,10 @@
-package br.com.hfsframework.service;
+package br.com.hfsframework.oauth.service;
 
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.base.BaseBusinessService;
-import br.com.hfsframework.domain.Role;
-import br.com.hfsframework.repository.IRoleRepository;
+import br.com.hfsframework.oauth.domain.Role;
+import br.com.hfsframework.oauth.repository.IRoleRepository;
 
 @Service
 public class RoleService extends BaseBusinessService<Role, Long, IRoleRepository> {

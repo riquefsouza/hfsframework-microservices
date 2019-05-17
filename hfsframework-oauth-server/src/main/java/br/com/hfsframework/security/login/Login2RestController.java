@@ -18,12 +18,12 @@ import br.com.hfsframework.base.BaseOAuth2RestTemplateClient;
 
 @RestController
 @CrossOrigin
-public class LoginRestController extends BaseOAuth2RestTemplateClient {
+public class Login2RestController extends BaseOAuth2RestTemplateClient {
 	
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@PostMapping(value = "/api/public/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/api/public/login2", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> autentica(@RequestBody LoginDTO loginDTO) {
 		try {
 			String baseURL = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();

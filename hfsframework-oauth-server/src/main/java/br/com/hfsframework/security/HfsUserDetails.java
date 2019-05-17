@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.hfsframework.domain.User;
-import br.com.hfsframework.domain.Role;
+import br.com.hfsframework.oauth.domain.Role;
+import br.com.hfsframework.oauth.domain.User;
 
 public class HfsUserDetails implements UserDetails {
 

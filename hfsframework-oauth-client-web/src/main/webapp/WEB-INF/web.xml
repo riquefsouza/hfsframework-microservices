@@ -12,7 +12,7 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
+<!-- 
 	<filter>
 		<filter-name>exceptionHandlerFilter</filter-name>
 		<filter-class>br.com.hfsframework.security.ExceptionHandlerFilter</filter-class>
@@ -27,5 +27,5 @@
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/paginaErro</location>
 	</error-page>
-
+ -->
 </web-app>

@@ -68,14 +68,6 @@ public class AppConfig implements WebMvcConfigurer {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 	
-	/*
-    @Bean
-    public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate;
-    } 
-    */  
-	
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(createMappingJackson2HttpMessageConverter());

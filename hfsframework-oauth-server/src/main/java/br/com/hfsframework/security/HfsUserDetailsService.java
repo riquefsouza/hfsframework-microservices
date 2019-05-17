@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.hfsframework.domain.User;
-import br.com.hfsframework.repository.IUserRepository;
+import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.repository.IUserRepository;
 
 @Service
 public class HfsUserDetailsService implements UserDetailsService {

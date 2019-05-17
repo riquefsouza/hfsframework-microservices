@@ -1,4 +1,4 @@
-package br.com.hfsframework.admin.deserializer;
+package br.com.hfsframework.admin.client.deserializer;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.com.hfsframework.admin.domain.Parametro;
-import br.com.hfsframework.admin.domain.ParametroCategoria;
+import br.com.hfsframework.admin.client.domain.Parametro;
+import br.com.hfsframework.admin.client.domain.ParametroCategoria;
 
 public class ParametroCategoriaDeserializer extends JsonDeserializer<ParametroCategoria> {
 

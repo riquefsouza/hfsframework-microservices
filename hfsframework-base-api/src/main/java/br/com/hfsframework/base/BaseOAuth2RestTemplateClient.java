@@ -12,12 +12,17 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.oxm.xstream.XStreamMarshaller;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
+import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class BaseOAuth2RestTemplateClient {
+	
+	private String server, clientId, clientSecret;
 	
 	private HttpMessageConverter<Object> mappingJackson2HttpMessageConverter;
 	
@@ -56,7 +61,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 	}    
 
 	private OAuth2RestTemplate restTemplate(String server, String clientId, String clientSecret, 
-			String login, String password) throws IllegalStateException {
+			String login, String password) throws RestClientException {
 		
 		ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
 		resourceDetails.setGrantType("password");
@@ -80,17 +85,61 @@ public abstract class BaseOAuth2RestTemplateClient {
 		
 		return rt;
 	}
-
-	protected OAuth2RestTemplate restTemplate(Environment env, String projectId, String login, String password) throws IllegalStateException {
-		String server = env.getRequiredProperty("oauth2."+ projectId +".provider.token-uri");
-		String clientId = env.getProperty("oauth2."+ projectId + ".client-id");
-		String clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");
-
+	
+	private void setProperties(Environment env, String projectId) {
+		this.server = env.getRequiredProperty("oauth2."+ projectId +".provider.token-uri");
+		this.clientId = env.getProperty("oauth2."+ projectId + ".client-id");
+		this.clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");		
+	}
+	
+	protected OAuth2RestTemplate restTemplate(Environment env, String projectId, String login, String password) 
+			throws RestClientException {
+		setProperties(env, projectId);
 		return restTemplate(server, clientId, clientSecret, login, password);
 	}
 	
-	protected OAuth2RestTemplate restTemplate(String server, String login, String password) throws IllegalStateException {
+	protected OAuth2RestTemplate restTemplate(String server, String login, String password) 
+			throws RestClientException {
+		
 		return restTemplate(server, "hfsClient", "hfsSecret", login, password);
+	}
+	
+	private BaseOAuth2RestUser login(String server, String clientId, String clientSecret, 
+			String login, String password) {
+		
+		String[] roles = { "ROLE_USER" };
+		//String csenha = BCrypt.hashpw(password, BCrypt.gensalt());
+		BaseOAuth2RestUser baseUser = new BaseOAuth2RestUser(login, password, 
+				AuthorityUtils.createAuthorityList(roles));
+		
+		try {
+			OAuth2RestTemplate token = restTemplate(server, clientId, clientSecret, login, password);
+			String sToken = token.getAccessToken().getValue();
+			if (!sToken.trim().isEmpty()) {
+				baseUser.setAuthenticated(true);
+				baseUser.setAccessToken(token.getAccessToken());
+			} else {
+				baseUser.setAuthenticated(false);				
+			}
+			
+		} catch (OAuth2AccessDeniedException e) {
+			baseUser.setAuthenticated(false);
+			baseUser.setMessageException(e.getMessage());
+		} catch (Exception e) {
+			baseUser.setAuthenticated(false);
+			baseUser.setMessageException(e.getMessage());			
+		}
+		
+		return baseUser;
+	}
+	
+	protected BaseOAuth2RestUser login(Environment env, String projectId, String login, String password) {
+		setProperties(env, projectId);
+		return login(this.server, this.clientId, this.clientSecret, login, password);
+	}
+	
+	protected BaseOAuth2RestUser login(String server, String login, String password) {
+		return login(server, "hfsClient", "hfsSecret", login, password);
 	}
 	
 }

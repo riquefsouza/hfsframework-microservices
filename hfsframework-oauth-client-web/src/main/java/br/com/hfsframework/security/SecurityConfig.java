@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/login")
 			//.loginProcessingUrl("/j_spring_security_check")
 			.successForwardUrl("/home")
-			//.failureUrl("/login?error=401").permitAll()
+			//.failureUrl("/login?error=400").permitAll()
 			.failureUrl("/paginaErro").permitAll()
 			//.defaultSuccessUrl("/home")
 			//.failureUrl("/errorPage").usernameParameter("username").passwordParameter("password")
@@ -103,7 +103,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		BaseOAuth2AuthenticationProvider baseAuthenticationProvider = new BaseOAuth2AuthenticationProvider();
 		baseAuthenticationProvider.setInfo(env, "hfsframework");	
+		auth.eraseCredentials(false);
 		auth.authenticationProvider(baseAuthenticationProvider);
+		
 	}
 	
     

@@ -1,14 +1,14 @@
 package br.com.hfsframework.admin.client;
 
-import br.com.hfsframework.admin.domain.ParametroCategoria;
-import br.com.hfsframework.base.BaseRestClient;
+import br.com.hfsframework.admin.client.domain.ParametroCategoria;
+import br.com.hfsframework.base.BaseRestClientTest;
 
-public class ParametroCategoriaRestClient extends BaseRestClient<ParametroCategoria, Long> {
+public class ParametroCategoriaRestClient extends BaseRestClientTest<ParametroCategoria, Long> {
 
-    public ParametroCategoriaRestClient(String oauthServer, String adminServer) {
-    	super(oauthServer, adminServer, ParametroCategoria.class, "admin", "admin");
+    public ParametroCategoriaRestClient(String oauthServer, String server) {
+    	super(oauthServer, server, ParametroCategoria.class, "admin", "admin");
 
-    	this.adminServer = adminServer + "/api/v1/parametroCategoria";
+    	this.server = server + "/api/v1/parametroCategoria";
     	
         objList.add(new ParametroCategoria(1L, "ALFA Parâmetros", 1L));
         objList.add(new ParametroCategoria(2L, "BETA Parâmetros", 2L));

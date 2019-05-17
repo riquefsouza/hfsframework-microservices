@@ -1,4 +1,4 @@
-package br.com.hfsframework.domain;
+package br.com.hfsframework.oauth.domain;
 
 import java.io.Serializable;
 
@@ -39,7 +39,7 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserRole [id=" + id + ", name=" + name + "]";
+		return "Role [id=" + id + ", name=" + name + "]";
 	}
 		
 }
