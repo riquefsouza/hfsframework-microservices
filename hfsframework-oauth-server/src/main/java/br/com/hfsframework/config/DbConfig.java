@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource({ "classpath:application.properties" })
-@EnableJpaRepositories(basePackages = "br.com.hfsframework.repository")
+@EnableJpaRepositories(basePackages = "br.com.hfsframework.oauth.repository")
 @EnableTransactionManagement
 public class DbConfig {
 
@@ -43,7 +43,7 @@ public class DbConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource());
-		emf.setPackagesToScan("br.com.hfsframework.domain");
+		emf.setPackagesToScan("br.com.hfsframework.oauth.domain");
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		emf.setJpaVendorAdapter(vendorAdapter);
@@ -99,6 +99,27 @@ public class DbConfig {
 				setProperty("hibernate.show_sql", env.getProperty("database.hibernate.show_sql"));
 				setProperty("hibernate.format_sql", env.getProperty("database.hibernate.format_sql"));
 				setProperty("hibernate.use_sql_comments", env.getProperty("database.hibernate.use_sql_comments"));
+				
+				setProperty("hibernate.id.new_generator_mappings", env.getProperty("database.hibernate.id.new_generator_mappings"));				
+				setProperty("hibernate.archive.autodetection", env.getProperty("database.hibernate.archive.autodetection"));
+				setProperty("hibernate.jdbc.batch_size", env.getProperty("database.hibernate.jdbc.batch_size"));
+				setProperty("hibernate.max_fetch_depth", env.getProperty("database.hibernate.max_fetch_depth"));
+				setProperty("hibernate.transaction.flush_before_completion", env.getProperty("database.hibernate.transaction.flush_before_completion"));
+				setProperty("hibernate.generate_statistics", env.getProperty("database.hibernate.generate_statistics"));
+				setProperty("hibernate.enable_lazy_load_no_trans", env.getProperty("database.hibernate.enable_lazy_load_no_trans"));
+				
+				setProperty("hibernate.cache.use_query_cache", env.getProperty("database.hibernate.cache.use_query_cache"));
+				setProperty("hibernate.cache.use_second_level_cache", env.getProperty("database.hibernate.cache.use_second_level_cache"));
+				setProperty("hibernate.cache.provider_class", env.getProperty("database.hibernate.cache.provider_class"));
+				setProperty("hibernate.cache.region.factory_class", env.getProperty("database.hibernate.cache.region.factory_class"));
+				setProperty("net.sf.ehcache.configurationResourceName", env.getProperty("database.net.sf.ehcache.configurationResourceName"));
+				
+				setProperty("hibernate.c3p0.acquire_increment", env.getProperty("database.hibernate.c3p0.acquire_increment"));
+				setProperty("hibernate.c3p0.min_size", env.getProperty("database.hibernate.c3p0.min_size"));
+				setProperty("hibernate.c3p0.max_size", env.getProperty("database.hibernate.c3p0.max_size"));
+				setProperty("hibernate.c3p0.timeout", env.getProperty("database.hibernate.c3p0.timeout"));
+				setProperty("hibernate.c3p0.max_statements", env.getProperty("database.hibernate.c3p0.max_statements"));
+				setProperty("hibernate.c3p0.idle_test_period", env.getProperty("database.hibernate.c3p0.idle_test_period"));				
 			}
 		};
 	}

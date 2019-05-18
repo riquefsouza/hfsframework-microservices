@@ -28,6 +28,7 @@
 		
 		<spring-data-jpa.version>2.1.6.RELEASE</spring-data-jpa.version>
 		<hibernate.version>5.4.2.Final</hibernate.version>
+		<org.ehcache.version>3.7.1</org.ehcache.version>
 		<h2database.version>1.4.199</h2database.version>
 		<mysql.version>8.0.15</mysql.version>
 		<postgresql.version>42.2.5</postgresql.version>
@@ -207,7 +208,41 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
- 
+		
+		<!-- #################### CACHE MANAGEMENT #################### -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>           
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${org.ehcache.version}</version>
+        </dependency>				
+  
+		<!-- #################### CONNECTION POOLING #################### --> 
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-hikaricp</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>		
+		<dependency>
+		    <groupId>com.mchange</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>0.9.5.4</version>
+		</dependency>		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-c3p0</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+  
 		<!-- #################### DATABASE DRIVERS #################### -->
 		<dependency>
 			<groupId>com.h2database</groupId>
