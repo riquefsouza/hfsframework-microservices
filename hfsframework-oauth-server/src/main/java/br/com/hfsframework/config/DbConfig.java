@@ -33,6 +33,9 @@ public class DbConfig {
 	@Autowired
 	private Environment env;
 	
+	@Autowired
+	private HikariDataSourceConfig hikariDS;
+	
     @Value("classpath:schema.sql")
     private Resource schemaScript;
 
@@ -42,7 +45,8 @@ public class DbConfig {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-		emf.setDataSource(dataSource());
+		//emf.setDataSource(dataSource());
+		emf.setDataSource(hikariDS.getDataSource(env));
 		emf.setPackagesToScan("br.com.hfsframework.oauth.domain");
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -110,9 +114,10 @@ public class DbConfig {
 				
 				setProperty("hibernate.cache.use_query_cache", env.getProperty("database.hibernate.cache.use_query_cache"));
 				setProperty("hibernate.cache.use_second_level_cache", env.getProperty("database.hibernate.cache.use_second_level_cache"));
-				setProperty("hibernate.cache.provider_class", env.getProperty("database.hibernate.cache.provider_class"));
-				setProperty("hibernate.cache.region.factory_class", env.getProperty("database.hibernate.cache.region.factory_class"));
-				setProperty("net.sf.ehcache.configurationResourceName", env.getProperty("database.net.sf.ehcache.configurationResourceName"));
+				setProperty("hibernate.javax.cache.missing_cache_strategy", env.getProperty("database.hibernate.javax.cache.missing_cache_strategy"));
+				//setProperty("hibernate.cache.provider_class", env.getProperty("database.hibernate.cache.provider_class"));
+				//setProperty("hibernate.cache.region.factory_class", env.getProperty("database.hibernate.cache.region.factory_class"));
+				//setProperty("net.sf.ehcache.configurationResourceName", env.getProperty("database.net.sf.ehcache.configurationResourceName"));
 				
 				setProperty("hibernate.c3p0.acquire_increment", env.getProperty("database.hibernate.c3p0.acquire_increment"));
 				setProperty("hibernate.c3p0.min_size", env.getProperty("database.hibernate.c3p0.min_size"));

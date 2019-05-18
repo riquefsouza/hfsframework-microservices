@@ -33,6 +33,9 @@ public class DbConfig {
 	@Autowired
 	private Environment env;
 	
+	@Autowired
+	private HikariDataSourceConfig hikariDS;
+	
     @Value("classpath:schema.sql")
     private Resource schemaScript;
 
@@ -42,7 +45,8 @@ public class DbConfig {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-		emf.setDataSource(dataSource());
+		//emf.setDataSource(dataSource());
+		emf.setDataSource(hikariDS.getDataSource(env));
 		emf.setPackagesToScan("br.com.hfsframework.admin.domain");
 
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

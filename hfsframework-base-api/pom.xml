@@ -209,17 +209,30 @@
 			<version>${hibernate.version}</version>
 		</dependency>
 		
-		<!-- #################### CACHE MANAGEMENT #################### -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>           
-        </dependency>
+		<!-- #################### CACHE MANAGEMENT #################### -->    
+
+<!-- 
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-ecache</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+ -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-jcache</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
             <version>${org.ehcache.version}</version>
-        </dependency>				
+        </dependency>
+		<dependency>
+		    <groupId>javax.cache</groupId>
+		    <artifactId>cache-api</artifactId>
+		    <version>1.1.1</version>
+		</dependency>  
   
 		<!-- #################### CONNECTION POOLING #################### --> 
 		<dependency>

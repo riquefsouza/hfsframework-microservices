@@ -1,67 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE ehcache>
-<ehcache>
-    <!--	Sets the path to the directory where cache .data files are created.
-       If the path is a Java System Property it is replaced by
-       its value in the running VM.
-       The following properties are translated:
-       user.home - User's home directory
-       user.dir - User's current working directory
-       java.io.tmpdir - Default temp file path
-    -->
-    <diskStore path="java.io.tmpdir"/>
+<config
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+    xmlns='http://www.ehcache.org/v3'
+    xsi:schemaLocation="
+        http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.5.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.5.xsd">
 
-    <!--	Default Cache configuration. These will applied to caches programmatically created through
-            the CacheManager.
-            The following attributes are required:
-            maxElementsInMemory            - Sets the maximum number of objects that will be created in memory
-            eternal                        - Sets whether elements are eternal. If eternal,  timeouts are ignored and the
-                                             element is never expired.
-            overflowToDisk                 - Sets whether elements can overflow to disk when the in-memory cache
-                                             has reached the maxInMemory limit.
-            The following attributes are optional:
-            timeToIdleSeconds              - Sets the time to idle for an element before it expires.
-                                             i.e. The maximum amount of time between accesses before an element expires
-                                             Is only used if the element is not eternal.
-                                             Optional attribute. A value of 0 means that an Element can idle for infinity.
-                                             The default value is 0.
-            timeToLiveSeconds              - Sets the time to live for an element before it expires.
-                                             i.e. The maximum time between creation time and when an element expires.
-                                             Is only used if the element is not eternal.
-                                             Optional attribute. A value of 0 means that and Element can live for infinity.
-                                             The default value is 0.
-            diskPersistent                 - Whether the disk store persists between restarts of the Virtual Machine.
-                                             The default value is false.
-            diskExpiryThreadIntervalSeconds- The number of seconds between runs of the disk expiry thread. The default value
-                                             is 120 seconds.
-            memoryStoreEvictionPolicy      - Policy would be enforced upon reaching the maxElementsInMemory limit. Default
-                                             policy is Least Recently Used (specified as LRU). Other policies available -
-                                             First In First Out (specified as FIFO) and Least Frequently Used
-                                             (specified as LFU)
-    -->
-    <defaultCache maxEntriesLocalHeap="10000" eternal="false"
-                  timeToIdleSeconds="120" timeToLiveSeconds="240" maxEntriesLocalDisk="100000"
-                  diskExpiryThreadIntervalSeconds="240" memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </defaultCache>
+  <service>
+    <jsr107:defaults enable-management="true" enable-statistics="true">
+      <jsr107:cache name="hfscache" template="heap-cache"/> 
+    </jsr107:defaults>
+  </service>
 
-    <!-- Standard Query Cache -->
-    <cache name="org.hibernate.cache.internal.StandardQueryCache" maxEntriesLocalHeap="5"
-           eternal="false" timeToLiveSeconds="120">
-        <persistence strategy="localTempSwap"/>
-    </cache>
-
-    <!-- Update Timestamps Cache -->
-    <cache name="org.hibernate.cache.spi.UpdateTimestampsCache" maxEntriesLocalHeap="5000"
-           eternal="true">
-        <persistence strategy="localTempSwap"/>
-    </cache>
-
-    <cache name="user.byId"
-           maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="600"
-           timeToLiveSeconds="3600" overflowToDisk="true"/>
-
-    <cache name="user.byUsername"
-           maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="600"
-           timeToLiveSeconds="3600" overflowToDisk="true"/>
-</ehcache>
+  <cache-template name="heap-cache">
+    <listeners>    
+      <listener>
+        <class>org.terracotta.ehcache.EventLogger</class>
+        <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+        <event-ordering-mode>UNORDERED</event-ordering-mode>
+        <events-to-fire-on>CREATED</events-to-fire-on> 
+        <events-to-fire-on>UPDATED</events-to-fire-on> 
+        <events-to-fire-on>EXPIRED</events-to-fire-on> 
+        <events-to-fire-on>REMOVED</events-to-fire-on> 
+        <events-to-fire-on>EVICTED</events-to-fire-on> 
+      </listener>
+    </listeners>
+    <resources>
+      <heap unit="entries">2000</heap> 
+      <offheap unit="MB">100</offheap> 
+    </resources>
+  </cache-template>
+</config>
