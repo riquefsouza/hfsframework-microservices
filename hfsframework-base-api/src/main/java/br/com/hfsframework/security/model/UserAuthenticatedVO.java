@@ -13,7 +13,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
- * The Class UsuarioAutenticadoVO.
+ * The Class UserAuthenticatedVO.
  */
 
 @Component
@@ -433,7 +433,7 @@ public class UserAuthenticatedVO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "UsuarioAutenticadoVO [userName=" + userName + ", displayName=" + displayName + ", email=" + email
+		return "UserAuthenticatedVO [userName=" + userName + ", displayName=" + displayName + ", email=" + email
 				+ ", listaPermissao=" + listaPermissao + ", listaMenus=" + listaMenus + ", listaAdminMenus="
 				+ listaAdminMenus + ", usuario=" + usuario + "]";
 	}

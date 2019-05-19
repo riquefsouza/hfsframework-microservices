@@ -30,17 +30,17 @@ public final class ApplicationUtil implements Serializable {
 	    return attr.getRequest().getSession(); // true == permite criar		
 	}	
 	
-	public void setUsuarioAutenticado(UserAuthenticatedVO usu){
-		getSessao().setAttribute("usuarioAutenticado", usu);
+	public void setUserAuthenticated(UserAuthenticatedVO usu){
+		getSessao().setAttribute("userAuthenticated", usu);
 	}
 	
-	public UserAuthenticatedVO getUsuarioAutenticado(){
-		UserAuthenticatedVO usu = (UserAuthenticatedVO) getSessao().getAttribute("usuarioAutenticado");
+	public UserAuthenticatedVO getUserAuthenticated(){
+		UserAuthenticatedVO usu = (UserAuthenticatedVO) getSessao().getAttribute("userAuthenticated");
 		return usu;
 	}
 	
-	public void removeUsuarioAutenticado(){
-		getSessao().removeAttribute("usuarioAutenticado");
+	public void removeUserAuthenticated(){
+		getSessao().removeAttribute("userAuthenticated");
 	}
 	
 }

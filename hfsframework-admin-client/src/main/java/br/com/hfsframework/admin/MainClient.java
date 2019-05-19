@@ -2,11 +2,14 @@ package br.com.hfsframework.admin;
 
 import java.io.IOException;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import br.com.hfsframework.admin.client.AdmParameterCategoryRestClientTest;
 
 public class MainClient {
 
-	//private static final Logger log = LogManager.getLogger(MainClient.class);
+	private static final Logger log = LogManager.getLogger(MainClient.class);
 
 	private static final String ADMIN_SERVER = "http://localhost:8080/hfsframework-admin-server";
 	private static final String OAUTH_SERVER = "http://localhost:8080/hfsframework-oauth-server/oauth/token";
@@ -14,6 +17,14 @@ public class MainClient {
 	private AdmParameterCategoryRestClientTest restClient;
 	
 	public static void main(String[] args) throws IOException {
+		
+		log.info("------------------------------------------------------------------------");
+		log.info("HFSFramework for Microservices");
+		log.info("Developed by Henrique Figueiredo de Souza");
+		log.info("Version 1.0 - 2019");
+		log.info("------------------------------------------------------------------------");
+		log.info("Starting HFS Framework Administrative Client...");
+		
 		MainClient mainClient = new MainClient();
 		mainClient.run();
 	}

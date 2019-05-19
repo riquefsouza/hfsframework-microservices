@@ -157,6 +157,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 					</archive>
 				</configuration>
@@ -170,8 +171,7 @@
 						<nonFilteredFileExtension>jks</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
-			</plugin>
-
+			</plugin>     
 		</plugins>
 	</build>
 

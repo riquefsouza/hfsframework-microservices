@@ -22,8 +22,8 @@ public class ErrorController {
 }
 */
 	
-	@RequestMapping(value = "/paginaErro")
-	public String errorPage(HttpServletRequest req) {
+	@RequestMapping(value = "/public/errorPage")
+	public String getErrorPage(HttpServletRequest req) {
 		/*
 		Throwable t = (Throwable)req.getAttribute("javax.servlet.error.exception");
 		

@@ -25,7 +25,7 @@
 
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
-		<location>/paginaErro</location>
+		<location>/public/paginaErro</location>
 	</error-page>
  -->
 </web-app>

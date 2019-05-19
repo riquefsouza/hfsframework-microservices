@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,6 +18,7 @@ import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @PropertySource("classpath:application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -48,9 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()
-	  	.antMatchers("/sobre", "/paginaErro").permitAll()
-        .anyRequest().authenticated()
+		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
+		.antMatchers("/public/**").permitAll()
+		.anyRequest().authenticated()	  	
         //.and()
         //.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
         .and()
@@ -59,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//.loginProcessingUrl("/j_spring_security_check")
 			.successForwardUrl("/home")
 			//.failureUrl("/login?error=400").permitAll()
-			.failureUrl("/paginaErro").permitAll()
+			.failureUrl("/public/errorPage").permitAll()
 			//.defaultSuccessUrl("/home")
 			//.failureUrl("/errorPage").usernameParameter("username").passwordParameter("password")
 			//.successHandler(successHandler)			

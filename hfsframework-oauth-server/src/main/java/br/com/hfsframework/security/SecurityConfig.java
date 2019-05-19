@@ -91,8 +91,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.authorizeRequests()
 	  	.antMatchers("/oauth/token").permitAll()
-	  	//.antMatchers("/api/v1/**").authenticated()
-        //.antMatchers("/api/v1/**").hasRole("USER")
 		.antMatchers("/oauth/token/revokeById/**").permitAll()
 		.antMatchers("/tokens/**").permitAll()	  	
         .anyRequest().authenticated()

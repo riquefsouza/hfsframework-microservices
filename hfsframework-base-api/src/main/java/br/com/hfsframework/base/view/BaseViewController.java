@@ -220,8 +220,8 @@ public abstract class BaseViewController {
 	 *
 	 * @return o the usuario autenticado
 	 */
-	public UserAuthenticatedVO getUsuarioAutenticado() {		
-		return (UserAuthenticatedVO) getSessao().getAttribute("usuarioAutenticado");
+	public UserAuthenticatedVO getUserAuthenticated() {		
+		return (UserAuthenticatedVO) getSessao().getAttribute("userAuthenticated");
 	}
 	
 	/**
@@ -230,8 +230,8 @@ public abstract class BaseViewController {
 	 * @param usu
 	 *            the new usuario autenticado
 	 */
-	public void setUsuarioAutenticado(UserAuthenticatedVO usu){
-		getSessao().setAttribute("usuarioAutenticado", usu);
+	public void setUserAuthenticated(UserAuthenticatedVO usu){
+		getSessao().setAttribute("userAuthenticated", usu);
 	}
 	
 	private String getIdMenu() {
@@ -247,7 +247,7 @@ public abstract class BaseViewController {
 	public MenuVO getMenuAtual(){
 		String idMenu = getIdMenu();
 		if (!idMenu.isEmpty())
-			return getUsuarioAutenticado().getMenu(idMenu);
+			return getUserAuthenticated().getMenu(idMenu);
 		else 
 			return null;
 	}	
