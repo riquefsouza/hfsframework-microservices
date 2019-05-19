@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
+
 @Configuration
 @EnableWebSecurity
 @PropertySource("classpath:application.properties")

@@ -12,20 +12,20 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "ADM_ROLE")
+@Table(name = "AUT_ROLE")
 public class Role implements Serializable {
 	 
 	private static final long serialVersionUID = 1L;
 	
 	@Id	
-	@GenericGenerator(name = "ADM_ROLE_ID_GENERATOR",
+	@GenericGenerator(name = "AUT_ROLE_ID_GENERATOR",
 	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
     parameters = {
-    	@Parameter(name = "sequence_name", value = "ADM_ROLE_SEQ"),
+    	@Parameter(name = "sequence_name", value = "AUT_ROLE_SEQ"),
         @Parameter(name = "initial_value", value = "1"),
         @Parameter(name = "increment_size", value = "1")
 	})		
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_ROLE_ID_GENERATOR")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUT_ROLE_ID_GENERATOR")
 	private Long id;
 
 	private String name;

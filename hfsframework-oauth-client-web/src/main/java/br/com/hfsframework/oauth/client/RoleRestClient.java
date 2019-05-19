@@ -2,7 +2,7 @@ package br.com.hfsframework.oauth.client;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import br.com.hfsframework.base.BaseRestClient;
+import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.oauth.client.domain.Role;
 
 public class RoleRestClient extends BaseRestClient<Role, Long> {

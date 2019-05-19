@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.hfsframework.base.BaseOAuth2RestUser;
+import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 
 @Controller
 public class HomeController {

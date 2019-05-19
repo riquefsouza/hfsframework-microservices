@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.hfsframework.base.BaseOAuth2RestTemplateClient;
+import br.com.hfsframework.base.client.BaseOAuth2RestTemplateClient;
 
 @RestController
 @CrossOrigin

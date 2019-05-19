@@ -37,7 +37,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	private Long idPagina;
 
 	/** The pagina. */
-	private PaginaVO pagina;
+	private PageVO pagina;
 
 	/** The menu pai. */
 	private MenuVO menuPai;
@@ -61,7 +61,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 		this.descricao = null;
 		this.ordem = null;
 		this.idPagina = null;
-		this.pagina = new PaginaVO();
+		this.pagina = new PageVO();
 		this.menuPai = null;
 		this.subMenus.clear();
 	}
@@ -128,7 +128,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 *
 	 * @return o the adm pagina
 	 */
-	public PaginaVO getPagina() {
+	public PageVO getPagina() {
 		return this.pagina;
 	}
 
@@ -138,7 +138,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 * @param pagina
 	 *            o novo the adm pagina
 	 */
-	public void setPagina(PaginaVO pagina) {
+	public void setPagina(PageVO pagina) {
 		this.pagina = pagina;
 	}
 

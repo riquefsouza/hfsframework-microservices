@@ -23,11 +23,11 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.com.hfsframework.util.entidade.EntidadeCampo;
-import br.com.hfsframework.util.entidade.EntidadeUtil;
-import br.com.hfsframework.util.metadados.Metadados;
-import br.com.hfsframework.util.metadados.MetadadosColuna;
-import br.com.hfsframework.util.metadados.MetadadosObjeto;
+import br.com.hfsframework.util.entity.EntityField;
+import br.com.hfsframework.util.entity.EntidadeUtil;
+import br.com.hfsframework.util.metadados.Metadata;
+import br.com.hfsframework.util.metadados.MetadataColumn;
+import br.com.hfsframework.util.metadados.MetadataObject;
 import br.com.hfsframework.util.metadados.MetadadosUtil;
 import freemarker.core.ParseException;
 import freemarker.template.Configuration;
@@ -74,7 +74,7 @@ public class TemplateUtil implements Serializable {
 		File arquivo, dir;
 		String modelo = params.name() + ".txt";
 		String saida, texto, extensao = ".java";
-		List<EntidadeCampo> listaCampos;
+		List<EntityField> listaCampos;
 
 		Template templateModelo = configurar(caminhoModelo, modelo);
 
@@ -287,8 +287,8 @@ public class TemplateUtil implements Serializable {
 		LogAdmValorVO logAdmValorVO;
 		parametros.put("opcao", opcao);
 
-		Metadados md = mu.getMetadados(esquema);
-		for (MetadadosObjeto t : md.getObjetos()) {
+		Metadata md = mu.getMetadados(esquema);
+		for (MetadataObject t : md.getObjetos()) {
 			parametros.put("esquema", t.getEsquema().toLowerCase());
 			
 			if (!t.getObjeto().equalsIgnoreCase("ADM_USUARIO") 
@@ -322,7 +322,7 @@ public class TemplateUtil implements Serializable {
 
 				listaLogAdmVO.add(logAdmVO);
 
-				for (MetadadosColuna mc : t.getColunas()) {
+				for (MetadataColumn mc : t.getColunas()) {
 					logAdmValorVO = new LogAdmValorVO();
 					logAdmValorVO.setEntidade(logAdmVO.getEntidade());
 					logAdmValorVO.setTabela(logAdmVO.getTabela());
@@ -362,8 +362,8 @@ public class TemplateUtil implements Serializable {
 		Map<String, Object> parametros = new HashMap<String, Object>();
 		String classe;
 						
-		Metadados md = mu.getMetadados(esquema);
-		for (MetadadosObjeto t : md.getObjetos()) {
+		Metadata md = mu.getMetadados(esquema);
+		for (MetadataObject t : md.getObjetos()) {
 			if (t.getObjeto().toUpperCase().indexOf("LOG_") != 0 && t.getObjeto().toUpperCase().indexOf("VW_") != 0){
 				
 				String prop = "";

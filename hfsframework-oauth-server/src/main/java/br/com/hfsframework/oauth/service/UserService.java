@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.hfsframework.base.BaseBusinessService;
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.repository.IUserRepository;
-import br.com.hfsframework.util.exceptions.TransacaoException;
+import br.com.hfsframework.util.exceptions.TransactionException;
 
 @Service
 public class UserService extends BaseBusinessService<User, Long, IUserRepository> {
@@ -37,7 +37,7 @@ public class UserService extends BaseBusinessService<User, Long, IUserRepository
 	@Caching(evict = { @CacheEvict(value = "user.byUsername", allEntries = true),
 			@CacheEvict(value = "user.byId", key = "#result.id", condition = "#result != null") }, 
 	put = { @CachePut(value = "user.byId", key = "#result.id", unless = "#result != null") })
-	public Optional<User> update(User user) throws TransacaoException {
+	public Optional<User> update(User user) throws TransactionException {
 		return super.update(user);
 	}
 
@@ -45,7 +45,7 @@ public class UserService extends BaseBusinessService<User, Long, IUserRepository
 	@Transactional
 	@Caching(evict = { @CacheEvict(value = "user.byId", key = "#user.id"),
 			@CacheEvict(value = "user.byUsername", key = "#user.username") })
-	public void delete(User user) throws TransacaoException {
+	public void delete(User user) throws TransactionException {
 		super.delete(user);
 	}
 }

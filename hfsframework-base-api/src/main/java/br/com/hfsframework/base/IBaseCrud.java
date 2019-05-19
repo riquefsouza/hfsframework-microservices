@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import br.com.hfsframework.util.exceptions.TransacaoException;
+import br.com.hfsframework.util.exceptions.TransactionException;
 
 /**
  * The Interface IBaseCrud.
@@ -63,10 +63,10 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 * @param bean
 	 *            the bean
 	 * @return the t
-	 * @throws TransacaoException
+	 * @throws TransactionException
 	 *             the transacao exception
 	 */
-	Optional<T> add(T bean) throws TransacaoException;
+	Optional<T> add(T bean) throws TransactionException;
 
 	/**
 	 * Update.
@@ -74,19 +74,19 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 * @param bean
 	 *            the bean
 	 * @return the t
-	 * @throws TransacaoException
+	 * @throws TransactionException
 	 *             the transacao exception
 	 */
-	Optional<T> update(T bean) throws TransacaoException;
+	Optional<T> update(T bean) throws TransactionException;
 
 	/**
 	 * Delete.
 	 *
 	 * @param bean
 	 *            the bean
-	 * @throws TransacaoException
+	 * @throws TransactionException
 	 *             the transacao exception
 	 */
-	void delete(T bean) throws TransacaoException;
+	void delete(T bean) throws TransactionException;
 	
 }

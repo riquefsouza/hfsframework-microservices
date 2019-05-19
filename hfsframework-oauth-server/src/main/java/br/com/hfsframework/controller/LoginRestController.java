@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.hfsframework.base.BaseRestTemplateClient;
-import br.com.hfsframework.base.BaseRestUser;
+import br.com.hfsframework.base.client.BaseRestTemplateClient;
+import br.com.hfsframework.base.client.BaseRestUser;
 import br.com.hfsframework.security.login.LoginDTO;
 
 @RestController

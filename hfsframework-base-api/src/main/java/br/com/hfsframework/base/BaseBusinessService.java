@@ -18,8 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.hfsframework.AplicacaoUtil;
-import br.com.hfsframework.util.exceptions.TransacaoException;
+import br.com.hfsframework.ApplicationUtil;
+import br.com.hfsframework.util.exceptions.TransactionException;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,7 +44,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 
 	/** The aplicacao util. */
 	@Autowired
-	protected AplicacaoUtil aplicacaoUtil;
+	protected ApplicationUtil aplicacaoUtil;
 	
 	/* (non-Javadoc)
 	 * @see br.com.hfsframework.base.IBaseCrud#get(java.io.Serializable)
@@ -83,13 +83,13 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	 */
 	@Override
 	@Transactional
-	public void delete(T bean) throws TransacaoException {
+	public void delete(T bean) throws TransactionException {
 		try {
 			log.info("DELETE: " + bean.toString());
 			
 			repositorio.delete(bean);
 		} catch (Exception e) {
-			throw new TransacaoException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
 	}
 
@@ -98,7 +98,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	 */
 	@Override
 	@Transactional
-	public Optional<T> add(T bean) throws TransacaoException {
+	public Optional<T> add(T bean) throws TransactionException {
 		try {
 			T obj = repositorio.save(bean);
 			
@@ -112,7 +112,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 				return Optional.empty();
 			}
 		} catch (Exception e) {
-			throw new TransacaoException(log, ERRO_INSERT + e.getMessage(), e);
+			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -121,7 +121,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	 */
 	@Override
 	@Transactional
-	public Optional<T> update(T bean) throws TransacaoException {
+	public Optional<T> update(T bean) throws TransactionException {
 		try {
 			T obj = repositorio.save(bean);
 			
@@ -135,7 +135,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 				return Optional.empty();
 			}
 		} catch (Exception e) {
-			throw new TransacaoException(log, ERRO_UPDATE + e.getMessage(), e);
+			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
 		}
 	}
 

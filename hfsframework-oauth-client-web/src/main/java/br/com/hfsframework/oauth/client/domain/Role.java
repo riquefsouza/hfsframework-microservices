@@ -1,6 +1,6 @@
 package br.com.hfsframework.oauth.client.domain;
 
-import br.com.hfsframework.base.BaseEntityRestClient;
+import br.com.hfsframework.base.client.BaseEntityRestClient;
 
 public class Role implements BaseEntityRestClient<Long> {
 	 

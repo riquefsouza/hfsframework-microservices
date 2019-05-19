@@ -31,7 +31,7 @@ public class MetadadosUtil implements Serializable {
 	private Logger log;
 
 	/** The config. */
-	private MetadadosConfig config;
+	private MetadataConfig config;
 
 	/**
 	 * Instantiates a new metadados util.
@@ -46,7 +46,7 @@ public class MetadadosUtil implements Serializable {
 	 *
 	 * @param config the config
 	 */
-	public void configurar(MetadadosConfig config) {
+	public void configurar(MetadataConfig config) {
 		this.config = config;
 	}
 
@@ -56,12 +56,12 @@ public class MetadadosUtil implements Serializable {
 	 * @param sEsquema the s esquema
 	 * @return the metadados
 	 */
-	public Metadados getMetadados(String sEsquema) {
-		Metadados m = new Metadados();
-		MetadadosObjeto mo;
-		List<MetadadosObjeto> lmo;
-		MetadadosColuna mc;
-		List<MetadadosColuna> lmc;		
+	public Metadata getMetadados(String sEsquema) {
+		Metadata m = new Metadata();
+		MetadataObject mo;
+		List<MetadataObject> lmo;
+		MetadataColumn mc;
+		List<MetadataColumn> lmc;		
 		Connection conexao = null;
 		ResultSet r1, r2, r3, r4;
 		List<String> nomeColunasPK;
@@ -78,18 +78,18 @@ public class MetadadosUtil implements Serializable {
 			r1 = dbmd.getSchemas(null, sEsquema);
 			while (r1.next()) {
 				sEsquema = r1.getString(1);
-				lmo = new ArrayList<MetadadosObjeto>();
+				lmo = new ArrayList<MetadataObject>();
 				r2 = dbmd.getTables(null, sEsquema, "%", new String[] { "TABLE" });
 				while (r2.next()) {
-					mo = new MetadadosObjeto();
+					mo = new MetadataObject();
 					mo.setEsquema(sEsquema);
 					mo.setObjeto(r2.getString("TABLE_NAME"));
 					nomeColunas = new ArrayList<String>();
 
-					lmc = new ArrayList<MetadadosColuna>();					
+					lmc = new ArrayList<MetadataColumn>();					
 					r3 = dbmd.getColumns(null, mo.getEsquema(), mo.getObjeto(), "%");
 					while (r3.next()) {
-						mc = new MetadadosColuna();
+						mc = new MetadataColumn();
 						mc.setNome(r3.getString("COLUMN_NAME"));
 						mc.setTipo(r3.getString("TYPE_NAME"));
 						mc.setTipoSQL(r3.getInt("DATA_TYPE"));

@@ -23,9 +23,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import br.com.hfsframework.admin.domain.Parametro;
-import br.com.hfsframework.admin.domain.ParametroCategoria;
-import br.com.hfsframework.base.BaseOAuth2RestAssuredTest;
+import br.com.hfsframework.admin.domain.AdmParameter;
+import br.com.hfsframework.admin.domain.AdmParameterCategory;
+import br.com.hfsframework.base.test.BaseOAuth2RestAssuredTest;
 import br.com.hfsframework.config.TestWebConfig;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -42,14 +42,14 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 	
 	private static final String HFSFRAMEWORK_ADMIN_SERVER = "http://localhost:8080/hfsframework-admin-server/api/v1";
 	
-	private List<Parametro> objList = new ArrayList<Parametro>();
+	private List<AdmParameter> objList = new ArrayList<AdmParameter>();
 	
 	@BeforeAll
     public void setup() throws Exception {
-    	objList.add(new Parametro(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new ParametroCategoria(69L)));
-    	objList.add(new Parametro(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new ParametroCategoria(69L)));
-    	objList.add(new Parametro(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new ParametroCategoria(69L)));
-    	objList.add(new Parametro(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new ParametroCategoria(69L)));
+    	objList.add(new AdmParameter(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new AdmParameterCategory(69L)));
+    	objList.add(new AdmParameter(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new AdmParameterCategory(69L)));
+    	objList.add(new AdmParameter(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new AdmParameterCategory(69L)));
+    	objList.add(new AdmParameter(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new AdmParameterCategory(69L)));
         
         accessToken = obtainAccessToken("admin", "admin");
     }
@@ -104,9 +104,9 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 		assertEquals(lst.size(), 4);
 		assertNotNull(lst.get(0));
 		assertNotNull(from(content).getLong("[0].id"));
-		assertEquals(this.objList.get(0).getValor(), from(content).getString("[0].valor"));
-		assertEquals(this.objList.get(0).getDescricao(), from(content).getString("[0].descricao"));
-		assertEquals(this.objList.get(0).getCodigo(), from(content).getLong("[0].codigo"));
+		assertEquals(this.objList.get(0).getValue(), from(content).getString("[0].valor"));
+		assertEquals(this.objList.get(0).getDescription(), from(content).getString("[0].descricao"));
+		assertEquals(this.objList.get(0).getCode(), from(content).getLong("[0].codigo"));
 		
 		response.prettyPrint();
     }
@@ -129,7 +129,7 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
 				assertNotNull(response.jsonPath().get("id"));
 				assertEquals(bean.getId(), response.jsonPath().getLong("id"));
 				assertNotNull(response.jsonPath().get("descricao"));
-				assertEquals(bean.getDescricao(), response.jsonPath().get("descricao"));
+				assertEquals(bean.getDescription(), response.jsonPath().get("descricao"));
 				
 				response.prettyPrint();
 				
@@ -145,7 +145,7 @@ public class ParametroRestTest extends BaseOAuth2RestAssuredTest {
     public void updateById() throws Exception {
     	log.info(TEST_ACTION.UPDATE_BY_ID);
     	
-    	this.objList.stream().forEach(bean -> bean.setDescricao("DESC "+bean.getId()));
+    	this.objList.stream().forEach(bean -> bean.setDescription("DESC "+bean.getId()));
     	
     	this.objList.stream().forEach(bean -> 
 	        {

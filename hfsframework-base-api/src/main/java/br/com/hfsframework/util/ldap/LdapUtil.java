@@ -18,14 +18,14 @@ public class LdapUtil implements Serializable {
 	private LdapBundle config;
 	
 	/** The lista ldap atributo. */
-	private List<LdapAtributo> listaLdapAtributo;
+	private List<LdapAttribute> listaLdapAtributo;
 	
 	/**
 	 * Instantiates a new ldap util.
 	 */
 	public LdapUtil() {
 		super();
-		this.listaLdapAtributo = new ArrayList<LdapAtributo>();
+		this.listaLdapAtributo = new ArrayList<LdapAttribute>();
 	}
 
 	public void configurar(LdapBundle config){
@@ -49,8 +49,8 @@ public class LdapUtil implements Serializable {
 		return false;
 	}
 	
-	public List<LdapAtributo> getAtributos(String usuario) {
-		List<LdapAtributo> lista = new ArrayList<LdapAtributo>();
+	public List<LdapAttribute> getAtributos(String usuario) {
+		List<LdapAttribute> lista = new ArrayList<LdapAttribute>();
 		
 		return lista;
 	}
@@ -60,7 +60,7 @@ public class LdapUtil implements Serializable {
 	 *
 	 * @return o the lista ldap atributo
 	 */
-	public List<LdapAtributo> getListaLdapAtributo() {
+	public List<LdapAttribute> getListaLdapAtributo() {
 		return listaLdapAtributo;
 	}
 
@@ -70,7 +70,7 @@ public class LdapUtil implements Serializable {
 	 * @param listaLdapAtributo
 	 *            o novo the lista ldap atributo
 	 */
-	public void setListaLdapAtributo(List<LdapAtributo> listaLdapAtributo) {
+	public void setListaLdapAtributo(List<LdapAttribute> listaLdapAtributo) {
 		this.listaLdapAtributo = listaLdapAtributo;
 	}
 	
@@ -83,9 +83,9 @@ public class LdapUtil implements Serializable {
 	 */
 	public String getAtributo(String atributo) {
 		String svalor = "";
-		List<LdapAtributo> atributos = this.getListaLdapAtributo();
+		List<LdapAttribute> atributos = this.getListaLdapAtributo();
 		if (!atributos.isEmpty()) {
-			for (LdapAtributo item : atributos) {
+			for (LdapAttribute item : atributos) {
 				if (item.getId().equals(atributo)) {
 					svalor = item.getValor();
 					break;

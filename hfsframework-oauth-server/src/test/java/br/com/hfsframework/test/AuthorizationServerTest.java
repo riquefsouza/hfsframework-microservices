@@ -22,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import br.com.hfsframework.base.BaseOAuth2RestTest;
+import br.com.hfsframework.base.test.BaseOAuth2RestTest;
 import br.com.hfsframework.config.TestWebConfig;
 
 @ExtendWith(SpringExtension.class)

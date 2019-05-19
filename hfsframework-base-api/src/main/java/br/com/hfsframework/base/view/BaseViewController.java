@@ -18,7 +18,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.com.hfsframework.security.model.MenuVO;
-import br.com.hfsframework.security.model.UsuarioAutenticadoVO;
+import br.com.hfsframework.security.model.UserAuthenticatedVO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -220,8 +220,8 @@ public abstract class BaseViewController {
 	 *
 	 * @return o the usuario autenticado
 	 */
-	public UsuarioAutenticadoVO getUsuarioAutenticado() {		
-		return (UsuarioAutenticadoVO) getSessao().getAttribute("usuarioAutenticado");
+	public UserAuthenticatedVO getUsuarioAutenticado() {		
+		return (UserAuthenticatedVO) getSessao().getAttribute("usuarioAutenticado");
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public abstract class BaseViewController {
 	 * @param usu
 	 *            the new usuario autenticado
 	 */
-	public void setUsuarioAutenticado(UsuarioAutenticadoVO usu){
+	public void setUsuarioAutenticado(UserAuthenticatedVO usu){
 		getSessao().setAttribute("usuarioAutenticado", usu);
 	}
 	
