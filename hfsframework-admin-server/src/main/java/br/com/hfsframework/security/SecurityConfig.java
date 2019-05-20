@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	  	//.antMatchers("/api/v1/**").authenticated()
         //.antMatchers("/api/v1/**").hasRole("ADMIN")
         //.antMatchers("/api/v1/**").hasRole("USER")
-        .anyRequest().authenticated();
-	  	//.and().httpBasic();
+        .anyRequest().authenticated()
+	  	.and().httpBasic();
 	  	//.realmName(REALM);	  	  
     }
 

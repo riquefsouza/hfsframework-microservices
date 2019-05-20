@@ -42,7 +42,7 @@ public class HfsUserDetailsService implements UserDetailsService {
 		}
 		*/
 
-		String[] roles = { "USER" };
+		String[] roles = { "ROLE_ADMIN", "ROLE_USER" };
 
 		//String csenha = DigestUtils.shaHex(senha);
 		String csenha = BCrypt.hashpw("admin", BCrypt.gensalt());

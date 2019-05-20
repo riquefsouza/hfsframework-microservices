@@ -39,9 +39,15 @@ public class SignupService {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String senha = passwordEncoder.encode("admin");
 			User user = new User("admin", senha,
-					Arrays.asList(new Role("USER"), new Role("ADMIN")));
+					Arrays.asList(new Role("ADMIN")));
 			//User savedUser = userRepository.save(user);
 			userRepository.save(user);
+
+			String senha2 = passwordEncoder.encode("user");
+			User user2 = new User("user", senha2,
+					Arrays.asList(new Role("USER")));
+			//User savedUser2 = userRepository.save(user2);
+			userRepository.save(user2);
 			
 		//}
 	}

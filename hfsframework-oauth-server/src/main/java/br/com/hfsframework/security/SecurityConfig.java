@@ -24,7 +24,7 @@ import br.com.hfsframework.security.login.TokenAuthenticationService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	private static String REALM = "HFS_REALM";	
+	private static String REALM = "HFS_REALM";
 	
     private PasswordEncoder passwordEncoder;
 	

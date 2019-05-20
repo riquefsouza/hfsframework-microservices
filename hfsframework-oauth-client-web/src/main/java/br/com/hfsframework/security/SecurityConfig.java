@@ -3,8 +3,6 @@ package br.com.hfsframework.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -41,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//private BaseAccessDeniedHandler accessDeniedHandler;	
 	
     @Override
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    //@Order(Ordered.HIGHEST_PRECEDENCE)
     protected void configure(HttpSecurity http) throws Exception {
 
     	http
@@ -52,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
 		.antMatchers("/public/**").permitAll()
+		.antMatchers("/private/**").authenticated()
+		.antMatchers("/private/**").hasRole("ADMIN")
+		.antMatchers("/private/**").hasRole("USER")
 		.anyRequest().authenticated()	  	
         //.and()
         //.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
@@ -100,10 +101,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .password(loginDTO.getSenha())
             .roles("USER", "ADMIN");
 	*/		
-		
-		//auth
-		 //.userDetailsService(this.hfsUserDetailsService)
-			//.passwordEncoder(new BCryptPasswordEncoder());
+		/*
+		auth
+		 .userDetailsService(this.hfsUserDetailsService)
+			.passwordEncoder(new BCryptPasswordEncoder());
+		*/
 		
 		BaseOAuth2AuthenticationProvider baseAuthenticationProvider = new BaseOAuth2AuthenticationProvider();
 		baseAuthenticationProvider.setInfo(env, "hfsframework");	
@@ -112,6 +114,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	}
 	
+	/*
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    */
     
     /*    
     @Bean

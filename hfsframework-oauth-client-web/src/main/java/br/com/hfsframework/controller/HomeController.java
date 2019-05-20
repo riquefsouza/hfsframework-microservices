@@ -1,13 +1,17 @@
 package br.com.hfsframework.controller;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 
 @Controller
 public class HomeController {
@@ -18,18 +22,44 @@ public class HomeController {
 	//private String baseURL;
 
 	@RequestMapping(value = "/home")
-	public String index() {
+	public String index(HttpServletRequest request, Principal principal, Authentication authentication) {
+		Principal principalRequest = request.getUserPrincipal();
+		
+		if (principalRequest!=null) {
+			log.info("REQUEST LOGIN: " + principalRequest.getName());
+		}
+		if (principal!=null) {
+			log.info("PRINCIPAL LOGIN: " + principal.getName());
+		}
+		if (authentication!=null) {
+			log.info("AUTHENTICATION LOGIN: " + authentication.getName());
+			
+			if (authentication.getPrincipal()!=null) {
+				//BaseOAuth2RestUser userDetails = (BaseOAuth2RestUser) authentication.getPrincipal();
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				if (userDetails.getAuthorities()!=null) {
+					log.info("AUTHENTICATION User has authorities: " + userDetails.getAuthorities());
+				}
+			}
+		}
+		
+		
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		if (auth!=null) {
-			log.info("LOGIN: " + auth.getName());
-			
-			BaseOAuth2RestUser baseUser = (BaseOAuth2RestUser)auth.getPrincipal();
-			
-			log.info("TOKEN: " + baseUser.getAccessToken().getValue());
-			//log.info("LOGIN: " + auth.getPrincipal());
-			//log.info("SENHA: " + auth.getCredentials().toString());
-			auth.getAuthorities().forEach(item -> log.info("AUTHORITIE: " + item.getAuthority()));
+			if (!(auth instanceof AnonymousAuthenticationToken)) {
+				log.info("SECURITY LOGIN: " + auth.getName());
+				
+				//BaseOAuth2RestUser baseUser = (BaseOAuth2RestUser)auth.getPrincipal();
+				//UserDetails baseUser = (UserDetails) authentication.getPrincipal();
+				
+				//log.info("SECURITY TOKEN: " + baseUser.getAccessToken().getValue());
+				log.info("SECURITY PRINCIPAL: " + auth.getPrincipal());
+				//log.info("SECURITY SENHA: " + auth.getCredentials().toString());
+				auth.getAuthorities().forEach(item -> log.info("SECURITY AUTHORITIE: " + item.getAuthority()));
+				log.info("SECURITY isAuthenticated: " + auth.isAuthenticated());
+			}
 		}
 		
 		return "index.html";

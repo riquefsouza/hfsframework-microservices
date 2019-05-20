@@ -33,8 +33,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan(basePackages = {"br.com.hfsframework"} ) 
-public class AppConfig implements WebMvcConfigurer {
+@ComponentScan(basePackages = {"br.com.hfsframework"} )
+public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -133,6 +133,7 @@ public class AppConfig implements WebMvcConfigurer {
 
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login").setViewName("login");
+		registry.addViewController("/private/alterarSenha.html");
 	}
     
 }

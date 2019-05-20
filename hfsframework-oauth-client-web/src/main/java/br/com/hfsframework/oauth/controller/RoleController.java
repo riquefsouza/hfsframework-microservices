@@ -1,4 +1,4 @@
-package br.com.hfsframework.controller;
+package br.com.hfsframework.oauth.controller;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -143,6 +143,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	    converter.setKeyPair(keyStoreKeyFactory.getKeyPair("jwt"));
 
 	    //converter.setSigningKey("123");
+	    converter.setAccessTokenConverter(new JwtConverter());
     	
 	    return converter;
 	}	

@@ -18,23 +18,12 @@
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administrativo</a>
 		<div class="dropdown-menu">
-		  <a class="dropdown-item" href="/admParametroCategoriaMB/listar">Categoria dos Parâmetros de Configuração</a>
-		  <a class="dropdown-item" href="/admParametroMB/listar">Parâmetros de Configuração</a> 
-		  <a class="dropdown-item" href="/admPerfilMB/listar">Administrar Perfil</a>
-		  <a class="dropdown-item" href="/admFuncionalidadeMB/listar">Administrar Funcionalidade</a>
-		  <a class="dropdown-item" href="/admPaginaMB/listar">Administrar Página</a>  
-		  <a class="dropdown-item" href="/admMenuMB/listar">Administrar Menu</a>
-		  <a class="dropdown-item" href="/admCargoMB/listar">Administrar os Cargos</a>
-		  <a class="dropdown-item" href="/admFuncionarioMB/listar">Administrar os Funcionários</a>
-		  <a class="dropdown-item" href="/admSetorMB/listar">Administrar os Setores</a>
-		  <a class="dropdown-item" href="/admUsuarioMB/listar">Visualizar os Usuários</a>
-		  <a class="dropdown-item" href="/vwAdmLogMB/listar">Visualizar os Logs de Auditoria</a>
-		  <a class="dropdown-item" href="/admLogColunaMB/listar">Administrar os Campos do Log de Auditoria</a>
-		  <a class="dropdown-item" href="/visualizarArqLogServidorMB/listar">Visualizar Arquivo de Log do Servidor</a>
+		  <a class="dropdown-item" th:href="@{/admParametroCategoriaMB/listar}">Categoria dos Parâmetros de Configuração</a>
+		  <a class="dropdown-item" th:href="@{/admParametroMB/listar}">Parâmetros de Configuração</a> 
 		</div>
 	  </li>
 	  <li class="nav-item">
-	  	<a class="nav-link" href="/alterarSenhaMB/listar">Alterar Senha</a>
+	  	<a class="nav-link" th:href="@{/private/alterarSenhaView/listar}">Alterar Senha</a>
 	  </li>
 	  <li class="nav-item">
 	  	<a class="nav-link" th:href="@{/logout}"><img class="imagem-inverte" th:src="@{/img/sair.png}" alt="Sair" />Sair</a>

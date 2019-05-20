@@ -1,10 +1,7 @@
 package br.com.hfsframework.security;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +16,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.DelegatingJwtClaimsSetVerifier;
-import org.springframework.security.oauth2.provider.token.store.IssuerClaimVerifier;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtClaimsSetVerifier;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
@@ -70,7 +64,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setAccessTokenConverter(customAccessTokenConverter);
-        converter.setJwtClaimsSetVerifier(jwtClaimsSetVerifier());
+        //converter.setJwtClaimsSetVerifier(jwtClaimsSetVerifier());
         //converter.setSigningKey("123");
 		converter.setVerifierKey(getPublicKeyAsString());
 		return converter;
@@ -87,6 +81,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return publicKey;
     }
 
+    /*
     @Bean
     public JwtClaimsSetVerifier jwtClaimsSetVerifier() {
         return new DelegatingJwtClaimsSetVerifier(Arrays.asList(issuerClaimVerifier(), customJwtClaimVerifier()));
@@ -95,7 +90,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtClaimsSetVerifier issuerClaimVerifier() {
         try {
-            return new IssuerClaimVerifier(new URL("http://localhost:8081"));
+            return new IssuerClaimVerifier(new URL("http://localhost:8080"));
         } catch (final MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -104,5 +99,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtClaimsSetVerifier customJwtClaimVerifier() {
         return new CustomClaimVerifier();
-    }    
+    }
+    */    
 }

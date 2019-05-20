@@ -109,7 +109,9 @@ public abstract class BaseOAuth2RestTemplateClient {
 	private BaseOAuth2RestUser login(String server, String clientId, String clientSecret, 
 			String login, String password) {
 		
-		String[] roles = { "ROLE_USER" };
+		List<String> listRoles = new ArrayList<String>();
+		//listRoles.add("ROLE_USER");
+		String[] roles = new String[listRoles.size()];
 		//String csenha = BCrypt.hashpw(password, BCrypt.gensalt());
 		BaseOAuth2RestUser baseUser = new BaseOAuth2RestUser(login, password, 
 				AuthorityUtils.createAuthorityList(roles));
@@ -117,6 +119,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 		try {
 			OAuth2RestTemplate token = restTemplate(server, clientId, clientSecret, login, password);
 			String sToken = token.getAccessToken().getValue();
+
 			if (!sToken.trim().isEmpty()) {
 				baseUser.setAuthenticated(true);
 				baseUser.setAccessToken(token.getAccessToken());
