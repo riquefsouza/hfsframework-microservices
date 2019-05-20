@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  * The Class DataUtil.
  */
 @Component
-public final class DataUtil implements Serializable {
+public final class CalendarUtil implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

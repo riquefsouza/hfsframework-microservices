@@ -18,10 +18,10 @@ public class HikariDataSourceConfig {
 		//HikariConfig config = new HikariConfig(hikariResource.getFile().getAbsolutePath());
     	
     	HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(env.getProperty("database.connection.url"));
-        config.setDriverClassName(env.getProperty("database.connection.driver"));
-        config.setUsername(env.getProperty("database.connection.user"));
-        config.setPassword(env.getProperty("database.connection.password"));
+        config.setJdbcUrl(env.getProperty("connection.url"));
+        config.setDriverClassName(env.getProperty("connection.driver"));
+        config.setUsername(env.getProperty("connection.user"));
+        config.setPassword(env.getProperty("connection.password"));
         
         config.addDataSourceProperty( "cachePrepStmts" , env.getProperty("hikari.cachePrepStmts") );
         config.addDataSourceProperty( "prepStmtCacheSize" , env.getProperty("hikari.prepStmtCacheSize") );

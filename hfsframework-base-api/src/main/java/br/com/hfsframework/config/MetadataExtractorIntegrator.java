@@ -1,18 +1,13 @@
-/**
- * <p><b>HFS Framework Spring</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2018
- */
 package br.com.hfsframework.config;
 
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.model.relational.Database;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
 public class MetadataExtractorIntegrator
-        implements org.hibernate.integrator.spi.Integrator {
+        implements Integrator {
 
     public static final MetadataExtractorIntegrator INSTANCE =
             new MetadataExtractorIntegrator();

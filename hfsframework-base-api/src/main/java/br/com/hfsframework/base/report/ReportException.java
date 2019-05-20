@@ -8,7 +8,7 @@ package br.com.hfsframework.base.report;
 
 import org.slf4j.Logger;
 
-import br.com.hfsframework.util.ExcecaoUtil;
+import br.com.hfsframework.util.ExceptionUtil;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -51,7 +51,7 @@ public class ReportException extends RuntimeException {
 	 */
 	public ReportException(Logger log, String mensagem, Throwable causa) {
 		super(mensagem, causa);
-		ExcecaoUtil.getErros(log, this, mensagem, true);
+		ExceptionUtil.getErros(log, this, mensagem, true);
 	}
 
 }

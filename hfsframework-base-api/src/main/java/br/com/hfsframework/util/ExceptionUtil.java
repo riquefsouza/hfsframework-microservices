@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 /**
  * The Class ExcecaoUtil.
  */
-public final class ExcecaoUtil implements Serializable {
+public final class ExceptionUtil implements Serializable {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

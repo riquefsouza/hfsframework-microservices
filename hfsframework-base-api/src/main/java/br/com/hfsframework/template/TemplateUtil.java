@@ -24,7 +24,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.hfsframework.util.entity.EntityField;
-import br.com.hfsframework.util.entity.EntidadeUtil;
+import br.com.hfsframework.util.entity.EntityUtil;
 import br.com.hfsframework.util.metadados.Metadata;
 import br.com.hfsframework.util.metadados.MetadataColumn;
 import br.com.hfsframework.util.metadados.MetadataObject;
@@ -126,7 +126,7 @@ public class TemplateUtil implements Serializable {
 			parametros.put("idTipo", classes[i][1]);
 
 			if (params.name().equals("paisagem") || params.name().equals("retrato")) {
-				listaCampos = EntidadeUtil.lerCampos(pacote + ".model.", classes[i][0]);
+				listaCampos = EntityUtil.lerCampos(pacote + ".model.", classes[i][0]);
 				parametros.put("campos", listaCampos);
 			}
 

@@ -17,10 +17,10 @@ import org.apache.logging.log4j.Logger;
 /**
  * The Class EntidadeUtil.
  */
-public class EntidadeUtil {
+public class EntityUtil {
 
 	/** The log. */
-	private static Logger log = LogManager.getLogger(EntidadeUtil.class);
+	private static Logger log = LogManager.getLogger(EntityUtil.class);
 
 	/**
 	 * Ler campos.

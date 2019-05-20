@@ -4,12 +4,18 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import br.com.hfsframework.util.copyright.CopyrightEnum;
+import br.com.hfsframework.util.copyright.CopyrightUtil;
+
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	
 	private static final Logger log = LogManager.getLogger(AppInitializer.class);
 	
     @Override
     protected Class<?>[] getRootConfigClasses() {
+    	
+    	System.out.print(CopyrightUtil.getAsString(CopyrightEnum.HFSFRAMEWORK_FOR_MICROSERVICES));
+    	System.out.print(CopyrightUtil.getAsString(CopyrightEnum.DEVELOPED_BY));
     	
 		log.info("------------------------------------------------------------------------");
 		log.info("HFSFramework for Microservices");
@@ -18,6 +24,8 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		log.info("------------------------------------------------------------------------");
 		log.info("Starting HFS Framework OAuth Authorization Client Web..."); 
 		
+		System.out.print(CopyrightUtil.getAsString(CopyrightEnum.AUTHORIZATION_CLIENT_WEB));
+				
     	return null;
     }
   

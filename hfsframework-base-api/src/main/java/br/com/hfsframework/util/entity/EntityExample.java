@@ -58,7 +58,7 @@ public class EntityExample {
 			System.out.println();
 		}
 		*/
-		List<EntityField> campos = EntidadeUtil.lerCampos("br.com.hfsframework.admin.model.", classes[0][0]);
+		List<EntityField> campos = EntityUtil.lerCampos("br.com.hfsframework.admin.model.", classes[0][0]);
 		for (EntityField campo : campos) {
 			//System.out.println("<field name=\"" + campo.getNome() +"\" class=\""+ campo.getTipo() + "\"/>");
 			System.out.println(campo.toString());

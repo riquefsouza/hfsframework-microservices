@@ -20,9 +20,9 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 /**
  * The Class CompilarRelatorios.
  */
-public class CompilarRelatorios {
+public class CompileReport {
 
-	private static Logger log = LogManager.getLogger(CompilarRelatorios.class);
+	private static Logger log = LogManager.getLogger(CompileReport.class);
 	
 	/**
 	 * The main method.
@@ -39,8 +39,8 @@ public class CompilarRelatorios {
 	 * @param caminho the caminho
 	 */
 	private static void compilar(String caminho) {
-		if (VisitarDiretorioUtil.getInstancia().ListarDiretorio(caminho,".jrxml")) {
-			List<String> listaJRXML = VisitarDiretorioUtil.getInstancia().getListaDir();
+		if (VisitDirectoryUtil.getInstancia().ListarDiretorio(caminho,".jrxml")) {
+			List<String> listaJRXML = VisitDirectoryUtil.getInstancia().getListaDir();
 			List<String> listaJasper = listaJRXML.stream()
 					.map(item -> item.replaceAll(".jrxml", ".jasper"))
 					.collect(Collectors.toList());

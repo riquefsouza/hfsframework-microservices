@@ -6,6 +6,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import br.com.hfsframework.admin.client.AdmParameterCategoryRestClientTest;
+import br.com.hfsframework.util.copyright.CopyrightEnum;
+import br.com.hfsframework.util.copyright.CopyrightUtil;
 
 public class MainClient {
 
@@ -18,12 +20,17 @@ public class MainClient {
 	
 	public static void main(String[] args) throws IOException {
 		
+    	System.out.print(CopyrightUtil.getAsString(CopyrightEnum.HFSFRAMEWORK_FOR_MICROSERVICES));
+    	System.out.print(CopyrightUtil.getAsString(CopyrightEnum.DEVELOPED_BY));
+    	
 		log.info("------------------------------------------------------------------------");
 		log.info("HFSFramework for Microservices");
 		log.info("Developed by Henrique Figueiredo de Souza");
 		log.info("Version 1.0 - 2019");
 		log.info("------------------------------------------------------------------------");
 		log.info("Starting HFS Framework Administrative Client...");
+		
+		System.out.print(CopyrightUtil.getAsString(CopyrightEnum.ADMINISTRATIVE_CLIENT_CONSOLE));
 		
 		MainClient mainClient = new MainClient();
 		mainClient.run();

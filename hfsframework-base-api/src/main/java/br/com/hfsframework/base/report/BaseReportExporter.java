@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
-import br.com.hfsframework.util.VisitarDiretorioUtil;
+import br.com.hfsframework.util.VisitDirectoryUtil;
 import br.com.hfsframework.util.zip.ZipException;
 import br.com.hfsframework.util.zip.ZipUtil;
 import net.sf.jasperreports.engine.JRException;
@@ -220,8 +220,8 @@ public class BaseReportExporter {
 		byte[] conteudoZIP;
 
 		try {
-			if (VisitarDiretorioUtil.getInstancia().ListarDiretorio(dirResto)) {
-				List<File> lista = VisitarDiretorioUtil.getInstancia().getListaFile();
+			if (VisitDirectoryUtil.getInstancia().ListarDiretorio(dirResto)) {
+				List<File> lista = VisitDirectoryUtil.getInstancia().getListaFile();
 				List<String> arquivos = new ArrayList<String>();
 				List<String> dirs = new ArrayList<String>();
 

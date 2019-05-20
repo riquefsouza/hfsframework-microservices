@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 /**
  * The Class VisitarDiretorioUtil.
  */
-public final class VisitarDiretorioUtil {
+public final class VisitDirectoryUtil {
 	
 	/** The instancia. */
-	private static VisitarDiretorioUtil instancia;
+	private static VisitDirectoryUtil instancia;
 
 	/** The lista dir. */
 	private List<String> listaDir;
@@ -28,7 +28,7 @@ public final class VisitarDiretorioUtil {
 	/**
 	 * Instantiates a new visitar diretorio.
 	 */
-	private VisitarDiretorioUtil() {
+	private VisitDirectoryUtil() {
 		listaDir = new ArrayList<String>();
 		listaFile = new ArrayList<File>();
 	}
@@ -38,9 +38,9 @@ public final class VisitarDiretorioUtil {
 	 *
 	 * @return o the instancia
 	 */
-	public static VisitarDiretorioUtil getInstancia() {
+	public static VisitDirectoryUtil getInstancia() {
 		if (instancia == null) {
-			instancia = new VisitarDiretorioUtil();
+			instancia = new VisitDirectoryUtil();
 		}
 		return instancia;
 	}
