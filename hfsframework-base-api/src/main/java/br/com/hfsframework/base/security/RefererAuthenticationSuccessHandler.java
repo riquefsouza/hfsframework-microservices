@@ -1,4 +1,4 @@
-package br.com.hfsstore.security;
+package br.com.hfsframework.base.security;
 
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

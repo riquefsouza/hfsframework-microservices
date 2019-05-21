@@ -14,14 +14,14 @@
     <security:authorize access="hasRole('ROLE_USER')">
         This text is only visible to a user
         <br/> <br/>
-        <a href="<c:url value="/admin/adminpage.html" />">Restricted Admin Page</a>
+        <a href="<c:url value="/private/admin/adminpage.html" />">Restricted Admin Page</a>
         <br/> <br/>
     </security:authorize>
 	
     <security:authorize access="hasRole('ROLE_ADMIN')">
         This text is only visible to an admin
         <br/>
-        <a href="<c:url value="/admin/adminpage.html" />">Admin Page</a>
+        <a href="<c:url value="/private/admin/adminpage.html" />">Admin Page</a>
         <br/>
     </security:authorize>
 

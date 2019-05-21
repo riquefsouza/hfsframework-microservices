@@ -1,40 +1,48 @@
 package br.com.hfsstore.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
+import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
+
 @Configuration
 // @ImportResource({ "classpath:channelWebSecurityConfig.xml" })
 @EnableWebSecurity
 @Profile("https")
-public class ChannelSecSecurityConfig extends WebSecurityConfigurerAdapter {
+@PropertySource("classpath:application.properties")
+public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public ChannelSecSecurityConfig() {
+	@Autowired
+	private Environment env;
+	
+    public ChannelSecurityConfig() {
         super();
     }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        // @formatter:off
-        auth.inMemoryAuthentication()
-        .withUser("user1").password("user1Pass").roles("USER")
-        .and()
-        .withUser("user2").password("user2Pass").roles("USER");
-        // @formatter:on
+		BaseOAuth2AuthenticationProvider baseAuthenticationProvider = new BaseOAuth2AuthenticationProvider();
+		baseAuthenticationProvider.setInfo(env, "hfsframework");	
+		auth.eraseCredentials(false);
+		auth.authenticationProvider(baseAuthenticationProvider);
     }
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        // @formatter:off
         http
         .csrf().disable()
         .authorizeRequests()
+        .antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()
         .antMatchers("/anonymous*").anonymous()
         .antMatchers("/login*").permitAll()
         .anyRequest().authenticated()
@@ -57,12 +65,11 @@ public class ChannelSecSecurityConfig extends WebSecurityConfigurerAdapter {
         .logoutUrl("/perform_logout")
         .deleteCookies("JSESSIONID")
         .logoutSuccessHandler(logoutSuccessHandler());
-        // @formatter:on
     }
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
-        return new CustomLogoutSuccessHandler();
+        return new BaseLogoutSuccessHandler();
     }
 
 }

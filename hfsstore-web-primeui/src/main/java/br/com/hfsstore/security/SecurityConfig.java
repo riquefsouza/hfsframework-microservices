@@ -16,6 +16,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import br.com.hfsframework.base.security.BaseAccessDeniedHandler;
+import br.com.hfsframework.base.security.BaseAuthenticationFailureHandler;
+import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 
 @Configuration
@@ -23,31 +26,21 @@ import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 @EnableWebSecurity
 @Profile("!https")
 @PropertySource("classpath:application.properties")
-public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment env;
 
-    public SecSecurityConfig() {
+    public SecurityConfig() {
         super();
     }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-    	/*
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(passwordEncoder().encode("user1Pass")).roles("USER")
-                .and()
-                .withUser("user2").password(passwordEncoder().encode("user2Pass")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("adminPass")).roles("ADMIN");
-        */
-    	
 		BaseOAuth2AuthenticationProvider baseAuthenticationProvider = new BaseOAuth2AuthenticationProvider();
 		baseAuthenticationProvider.setInfo(env, "hfsframework");	
 		auth.eraseCredentials(false);
 		auth.authenticationProvider(baseAuthenticationProvider);
-    	
     }
 
     @Override
@@ -56,7 +49,9 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
         http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()
+		.antMatchers("/private/admin/**").hasRole("ADMIN")
+		.antMatchers("/private/**").hasRole("USER")
 		.antMatchers("/anonymous*").anonymous()
 		.antMatchers("/login*").permitAll()
 		.anyRequest().authenticated()
@@ -80,17 +75,17 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
-        return new CustomLogoutSuccessHandler();
+        return new BaseLogoutSuccessHandler();
     }
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
+        return new BaseAccessDeniedHandler();
     }
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new CustomAuthenticationFailureHandler();
+        return new BaseAuthenticationFailureHandler();
     }
     
     @Bean

@@ -1,161 +1,112 @@
 package br.com.hfsframework.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import br.com.hfsframework.base.security.BaseAccessDeniedHandler;
+import br.com.hfsframework.base.security.BaseAuthenticationFailureHandler;
+import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Profile("!https")
 @PropertySource("classpath:application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment env;
 
-	//@Autowired	
-	//private HfsUserDetailsService hfsUserDetailsService;
-	
-	//@Autowired	
-	//private LdapBundle ldapBundle;
-	
-	//@Autowired	
-	//private BaseAuthenticationProvider baseAuthenticationProvider;
-	
-	//@Autowired
-    //private BaseAuthenticationSuccessHandler successHandler;
-	
-	//@Autowired
-	//private BaseAccessDeniedHandler accessDeniedHandler;	
-	
-    @Override
-    //@Order(Ordered.HIGHEST_PRECEDENCE)
-    protected void configure(HttpSecurity http) throws Exception {
-
-    	http
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
-		.csrf().disable()
-		.authorizeRequests()
-		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
-		.antMatchers("/public/**").permitAll()
-		.antMatchers("/private/**").authenticated()
-		.antMatchers("/private/**").hasRole("ADMIN")
-		.antMatchers("/private/**").hasRole("USER")
-		.anyRequest().authenticated()	  	
-        //.and()
-        //.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-        .and()
-		.formLogin()				
-		.loginPage("/login")
-			//.loginProcessingUrl("/j_spring_security_check")
-			.successForwardUrl("/home")
-			//.failureUrl("/login?error=400").permitAll()
-			.failureUrl("/public/errorPage").permitAll()
-			//.defaultSuccessUrl("/home")
-			//.failureUrl("/errorPage").usernameParameter("username").passwordParameter("password")
-			//.successHandler(successHandler)			
-		.and()	
-		.logout()
-			//.invalidateHttpSession(true).deleteCookies("JSESSIONID")
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/login");
-			//.logoutUrl("/logout").logoutSuccessUrl("/");
-         //.and()
-         //.sessionManagement().sessionFixation().none().maximumSessions(1).maxSessionsPreventsLogin(true);
-    	
+    public SecurityConfig() {
+        super();
     }
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-/*		
-		String surl = ldapBundle.getLdapTipoConexao().toLowerCase()+"://"+ldapBundle.getLdapServer()+":"+ldapBundle.getLdapPorta();
-		
-		auth
-		.ldapAuthentication()
-			.userDnPatterns(ldapBundle.getLdapUserDN())
-			.groupSearchBase(ldapBundle.getLdapBaseDN())
-			.contextSource()				
-				.url(surl)
-				.and()
-			.passwordCompare()
-				//.passwordEncoder(new LdapShaPasswordEncoder())
-				.passwordAttribute("userPassword");
-
-		
-
-          auth
-          .inMemoryAuthentication()
-          .withUser(loginDTO.getLogin())
-            .password(loginDTO.getSenha())
-            .roles("USER", "ADMIN");
-	*/		
-		/*
-		auth
-		 .userDetailsService(this.hfsUserDetailsService)
-			.passwordEncoder(new BCryptPasswordEncoder());
-		*/
-		
 		BaseOAuth2AuthenticationProvider baseAuthenticationProvider = new BaseOAuth2AuthenticationProvider();
 		baseAuthenticationProvider.setInfo(env, "hfsframework");	
 		auth.eraseCredentials(false);
 		auth.authenticationProvider(baseAuthenticationProvider);
-		
 	}
-	
-	/*
-    @Bean
+
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    protected void configure(HttpSecurity http) throws Exception {
+
+    	http
+		.csrf().disable()
+		.authorizeRequests()
+		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
+		.antMatchers("/public/**").permitAll()
+		.antMatchers("/private/admin/**").hasRole("ADMIN")
+		.antMatchers("/private/**").hasRole("USER")
+		.antMatchers("/anonymous*").anonymous()
+		.antMatchers("/login*").permitAll()
+		.anyRequest().authenticated()
+		.and()
+		.formLogin()
+		.loginPage("/login.html")
+		.loginProcessingUrl("/perform_login")
+		.defaultSuccessUrl("/homepage.html", true)
+		//.failureUrl("/login.html?error=true")
+		.failureHandler(authenticationFailureHandler())
+		.and()
+		.logout()
+		.logoutUrl("/perform_logout")
+		.deleteCookies("JSESSIONID")
+		.logoutSuccessHandler(logoutSuccessHandler());
+        //.and()
+        //.exceptionHandling().accessDeniedPage("/accessDenied");
+        //.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+
+    	
+    	/*
+		.antMatchers("/private/**").authenticated()
+		.antMatchers("/private/**").hasRole("ADMIN")
+		.antMatchers("/private/**").hasRole("USER")
+		.anyRequest().authenticated()	  	
+        .and()
+		.formLogin()				
+		.loginPage("/login")
+			.successForwardUrl("/home")
+			.failureUrl("/public/errorPage").permitAll()
+		.and()	
+		.logout()
+			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+			.logoutSuccessUrl("/login");
+    	 
+    	 */
     }
-    */
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new BaseLogoutSuccessHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new BaseAccessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new BaseAuthenticationFailureHandler();
+    }
     
-    /*    
     @Bean
-    public OAuth2AuthorizedClientService authorizedClientService() {
-        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository());
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
-        return new HttpSessionOAuth2AuthorizationRequestRepository();
-    }
-
-    @Bean
-    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient() {
-        DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient = new DefaultAuthorizationCodeTokenResponseClient();
-        return accessTokenResponseClient;
-    }
-
-    //@Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-    	BaseOAuth2Provider baseOAuth2Provider = new BaseOAuth2Provider();
-        ClientRegistration registration = baseOAuth2Provider.getRegistration(env, "hfsframework");
-        return new InMemoryClientRegistrationRepository(registration);
-    }
-    
-    @Bean
-    public RestTemplate restTemplate(OAuth2AuthorizedClientService clientService) {
-        RestTemplate restTemplate = new RestTemplate();
-        List<ClientHttpRequestInterceptor> interceptors = restTemplate.getInterceptors();
-        if (CollectionUtils.isEmpty(interceptors)) {
-            interceptors = new ArrayList<>();
-        }
-        interceptors.add(new AuthorizationHeaderInterceptor(clientService));
-        restTemplate.setInterceptors(interceptors);
-        return restTemplate;
-    }
-*/ 
 }

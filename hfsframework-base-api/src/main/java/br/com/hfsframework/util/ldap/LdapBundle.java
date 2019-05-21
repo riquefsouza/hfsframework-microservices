@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 // TODO: Auto-generated Javadoc
@@ -21,6 +23,8 @@ public class LdapBundle implements Serializable {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger log = LoggerFactory.getLogger(LdapBundle.class);
 
 	/** The ldap S porta. */
 	private int ldapSPorta;
@@ -67,8 +71,12 @@ public class LdapBundle implements Serializable {
 	public LdapBundle() {
 		super();
 
-		Locale locale = new Locale("pt", "BR");
-		bundle = ResourceBundle.getBundle("ldap", locale);
+		try {
+			Locale locale = new Locale("pt", "BR");
+			bundle = ResourceBundle.getBundle("ldap", locale);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
 	}
 
 	/**
