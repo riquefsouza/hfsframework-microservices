@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	lang="en-US">
 <body>
 	<div class="rodape-central hidden-xs" th:fragment="footer">
 		<div class="info-browser">
-			<span>Todos os direitos reservados para Henrique Figueiredo de Souza</span>
+			<span>All rights reserved to Henrique Figueiredo de Souza</span>
 		</div>
 	</div>
+	
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/primeui/jquery.js}"></script>
+	<script type="text/javascript" th:src="@{/primeui/jquery-ui.js}"></script>
+	<script type="text/javascript" th:src="@{/primeui/perfect-scrollbar.js}"></script>
+ 
+	<!-- Dependencies of some widgets -->
+	<script type="text/javascript" th:src="@{/primeui/plugins/plugins-all.js}"></script>
+	
+	<!-- Mustache for templating support -->
+	<script type="text/javascript" th:src="@{/primeui/plugins/mustache.min.js}"></script>
+
+ 	<script type="text/javascript" th:src="@{/primeui/primeui.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/primeui/x-tag-core.min.js}"></script>
+ 	<script type="text/javascript" th:src="@{/primeui/primeelements.js}"></script>
+
+	<script th:src="@{/js/system-session-timeout.js}"></script>
+ 	<script th:src="@{/js/systemUtil.js}"></script>
 	
 </body>
 </html>

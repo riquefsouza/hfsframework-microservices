@@ -16,14 +16,14 @@
     <ul class="navbar-nav mr-auto">
 
 	  <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administrativo</a>
+		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administrative</a>
 		<div class="dropdown-menu">
-		  <a class="dropdown-item" th:href="@{/admParametroCategoriaMB/listar}">Categoria dos Parâmetros de Configuração</a>
-		  <a class="dropdown-item" th:href="@{/admParametroMB/listar}">Parâmetros de Configuração</a> 
+		  <a class="dropdown-item" th:href="@{/private/role/listar}">Roles</a>
+		  <a class="dropdown-item" th:href="@{/private/user/listar}">Users</a> 
 		</div>
 	  </li>
 	  <li class="nav-item">
-	  	<a class="nav-link" th:href="@{/private/alterarSenhaView/listar}">Alterar Senha</a>
+	  	<a class="nav-link" th:href="@{/private/changePasswordView/list}">Change Password</a>
 	  </li>
 	  <li class="nav-item">
 	  	<a class="nav-link" th:href="@{/perform_logout}"><img class="imagem-inverte" th:src="@{/img/sair.png}" alt="Sair" />Sair</a>
@@ -35,7 +35,7 @@
 		<small> 
 			<span id="informacoes-usuario" style="color: lightgray"> 				
 				<i class="fas fa-user fa-sm"></i> 
-				<a data-toggle="modal" data-target="#infoUsuarioDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">henrique.souza</a>
+				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">henrique.souza</a>
 			</span>
 		</small>
 
@@ -47,14 +47,14 @@
 <div class="tela-conteudo" style="margin:5px 0;">
 	<div class="alert alert-danger alert-dismissible fade show" id="alert-messages" style="display: none">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
-		<strong>Favor selecionar um registro da tabela para proceder esta ação!</strong>
+		<strong>Please select a table record to do this action!</strong>
 	</div>
 </div>
 
 <!-- 
-<div th:replace="sessionTimeOut :: sessaoSistema"></div>
+<div th:replace="sessionTimeOut :: sessionSystem"></div>
 	
-<div th:replace="private/infoUsuario :: infoUsuario"></div>
+<div th:replace="private/infoUser :: infoUser"></div>
 -->
 
 </div>

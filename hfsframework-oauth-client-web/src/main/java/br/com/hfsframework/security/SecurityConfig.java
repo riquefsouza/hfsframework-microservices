@@ -6,15 +6,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import br.com.hfsframework.base.security.BaseAccessDeniedHandler;
 import br.com.hfsframework.base.security.BaseAuthenticationFailureHandler;
@@ -29,6 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment env;
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private PersistentTokenRepository tokenRepository;
 
     public SecurityConfig() {
         super();
@@ -51,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
 		.antMatchers("/public/**").permitAll()
 		.antMatchers("/private/admin/**").hasRole("ADMIN")
+		.antMatchers("/private/**").hasRole("ADMIN")
 		.antMatchers("/private/**").hasRole("USER")
 		.antMatchers("/anonymous*").anonymous()
 		.antMatchers("/login*").permitAll()
@@ -63,31 +75,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//.failureUrl("/login.html?error=true")
 		.failureHandler(authenticationFailureHandler())
 		.and()
+		.rememberMe().rememberMeParameter("remember-me")
+		.and()
 		.logout()
 		.logoutUrl("/perform_logout")
 		.deleteCookies("JSESSIONID")
-		.logoutSuccessHandler(logoutSuccessHandler());
-        //.and()
-        //.exceptionHandling().accessDeniedPage("/accessDenied");
-        //.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-
-    	
-    	/*
-		.antMatchers("/private/**").authenticated()
-		.antMatchers("/private/**").hasRole("ADMIN")
-		.antMatchers("/private/**").hasRole("USER")
-		.anyRequest().authenticated()	  	
+		.logoutSuccessHandler(logoutSuccessHandler())
         .and()
-		.formLogin()				
-		.loginPage("/login")
-			.successForwardUrl("/home")
-			.failureUrl("/public/errorPage").permitAll()
-		.and()	
-		.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/login");
-    	 
-    	 */
+        //.exceptionHandling().accessDeniedPage("/accessDenied");
+        .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
@@ -109,4 +105,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+	@Bean
+	public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+		PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
+				"remember-me", userDetailsService, tokenRepository);
+		return tokenBasedservice;
+	}
+
+	@Bean
+	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
+		return new AuthenticationTrustResolverImpl();
+	}
+    
 }

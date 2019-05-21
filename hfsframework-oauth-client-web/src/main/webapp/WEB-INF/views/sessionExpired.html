@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	lang="en-US">
 <head th:replace="fragments/header :: header">
-<title>Anonymous page</title>
+<title>Session Expired</title>
 </head>
 <body>
 
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<h1>Anonymous page</h1>
-
-	<a th:href="@{/login.html}">To Login</a>
+		<div class="row-fluid">
+			<div class="jumbotron">
+				<h2>Session expired due to inactivity.</h2>
+				<a class="btn btn-primary btn-large" th:href="@{/login.html}">Return to login screen</a>
+			</div>
+		</div>
 </div>
 
 </body>
 </html>
+	

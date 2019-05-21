@@ -1,4 +1,4 @@
-var sURL_BACKEND = "http://localhost:8090"; 
+var sURL_BACKEND = "http://localhost:8080"; 
 
 function setCookie(cname,cvalue,exdays) {
 	var d = new Date();

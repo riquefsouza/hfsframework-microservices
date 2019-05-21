@@ -1,6 +1,6 @@
 <div class="col-md-3 form-group">		
-	<label for="cmbTipoRelatorio">Escolha o tipo de relat&oacute;rio:</label>
-	<select class="form-control" id="cmbTipoRelatorio" label="Tipo de relatório">
+	<label for="cmbTipoRelatorio">Choose the type of report:</label>
+	<select class="form-control" id="cmbTipoRelatorio" label="Report type">
 	 	<optgroup th:each="grupo : ${listaTipoRelatorio}" th:label="${grupo.grupo}">
 	 		<option th:each="opcao : ${grupo.tipos}" th:value="${opcao}">
 	 			<span th:text="${opcao.descricao}" th:remove="tag"></span>
@@ -10,6 +10,6 @@
 </div>
 <div class="col-md-3 form-group">
 	<label class="checkbox-inline" for="forcaDownload">
-		<input type="checkbox" id="forcaDownload"> For&ccedil;ar Download
+		<input type="checkbox" id="forcaDownload"> Force Download
 	</label>
 </div>

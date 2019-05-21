@@ -24,9 +24,11 @@ public class RoleController {
 	
 	private static final Logger log = LogManager.getLogger(RoleController.class);
 	
+	//@Autowired
+	//private MessageSource messageSource;
+
 	private RoleRestClient roleRestClient;
-	
-	
+		
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
 	@ResponseBody
@@ -43,6 +45,15 @@ public class RoleController {
 			roleRestClient = new RoleRestClient(sToken);
 			listAll = roleRestClient.getAll();
 		}		
+		
+		/*
+		if(!userService.)){
+			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
+		    result.addError(ssoError);
+			return "registration";
+		}
+		*/
+		
 		
 		return listAll;
 	}

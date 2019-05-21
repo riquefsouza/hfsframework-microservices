@@ -4,7 +4,7 @@ var tempoRestanteAviso = 60;
 var countTimer;
 var processTimer;
 var timer_is_on = 0;
-var redirectPage = "file:///C:/hfs-frameworks/sessaoExpirada.html";
+var redirectPage = "/sessionExpired.html";
 
 var txtCountDown = null;
 if (!txtCountDown) {

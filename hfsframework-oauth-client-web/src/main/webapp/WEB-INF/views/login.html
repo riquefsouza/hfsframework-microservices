@@ -13,35 +13,35 @@
 
 	<div th:if="${param.error}" class="alert alert-danger alert-dismissible">
   		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	Usuário ou senha inválidos.
+	  	Username or password is invalid.
 	</div>
 	
 	<div th:if="${param.logout}" class="alert alert-info alert-dismissible">
   		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	Você saiu do sistema.
+	  	You left the system.
 	</div>
 	
 	<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
 		<div id="tela-login" style="margin-top: 20px;">
 			<div class="card" id="tela-login">
-				<div class="card-header" style="font-weight: normal;">Autentique-se</div>
+				<div class="card-header" style="font-weight: normal;">Authenticate</div>
 				<div class="card-body">
 				
 					<form name="formLogin" th:action="@{/perform_login}" method="POST">
 								
 						<div class="form-group">
-							<label for="username">Usuário:</label>
+							<label for="username">User:</label>
 							<div class="input-group">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button" disabled="disabled">
 										<i class="fas fa-user fa-sm"></i>
 									</button>
 								</div>	
-								<input type="text" class="form-control" name="username" id="username" placeholder="Informe seu nome de usuário">
+								<input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="password">Senha:</label>
+							<label for="password">Password:</label>
 							<div class="input-group">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button" disabled="disabled">
@@ -49,8 +49,15 @@
 									</button>	
 								</div>	
 								<input type="password" class="form-control" name="password" id="password" 
-									placeholder="Informe sua senha" autocomplete="off">
+									placeholder="Enter password" autocomplete="off">
 							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group input-sm">
+                              <div class="checkbox">
+                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
+                              </div>
+                            </div>
 						</div>
 						<br />
 						<div class="form-group">
@@ -59,7 +66,7 @@
 									<span class="icon text-white-50">
 										<i class="fa fa-sign-in" aria-hidden="true"></i>
 									</span>
-									<span class="text">Entrar</span>
+									<span class="text">Log in</span>
 								</button>
 							</div>
 						</div>

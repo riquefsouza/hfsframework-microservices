@@ -18,13 +18,13 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @ApiIgnore
 @Controller
-@RequestMapping("/private/alterarSenhaView")
-public class AlterarSenhaController {
+@RequestMapping("/private/changePasswordView")
+public class ChangePasswordController {
 
-	private static final Logger log = LogManager.getLogger(AlterarSenhaController.class);
+	private static final Logger log = LogManager.getLogger(ChangePasswordController.class);
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@GetMapping("/listar")
+	@GetMapping("/list")
 	public ModelAndView listar(HttpServletRequest request, Principal principal, Authentication authentication) {		
 		Principal principalRequest = request.getUserPrincipal();
 		
@@ -45,7 +45,7 @@ public class AlterarSenhaController {
 		//ModelAndView mv = new ModelAndView(getPaginaListar());
 		//mv.addObject("bean", bean.get());
 		//setEntidade(bean.get());
-		ModelAndView mv = new ModelAndView("/private/alterarSenha");
+		ModelAndView mv = new ModelAndView("/private/changePassword");
 		return mv;
 	}
 	
