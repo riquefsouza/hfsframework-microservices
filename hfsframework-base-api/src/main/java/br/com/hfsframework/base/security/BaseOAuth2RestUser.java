@@ -11,13 +11,12 @@ public class BaseOAuth2RestUser extends User {
 	private static final long serialVersionUID = 1L;
 
 	private OAuth2AccessToken accessToken;
-	
-	private boolean	authenticated;
-	
+
+	private boolean authenticated;
+
 	private String messageException;
 
-	public BaseOAuth2RestUser(String username, String password, 
-			Collection<? extends GrantedAuthority> authorities) {
+	public BaseOAuth2RestUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
 		this.accessToken = null;
 		this.messageException = "";
@@ -30,7 +29,7 @@ public class BaseOAuth2RestUser extends User {
 
 	public void setAccessToken(OAuth2AccessToken accessToken) {
 		this.accessToken = accessToken;
-		
+
 	}
 
 	public boolean isAuthenticated() {
@@ -48,5 +47,4 @@ public class BaseOAuth2RestUser extends User {
 	public void setMessageException(String messageException) {
 		this.messageException = messageException;
 	}
-
 }

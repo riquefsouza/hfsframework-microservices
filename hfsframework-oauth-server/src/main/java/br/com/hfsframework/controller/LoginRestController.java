@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hfsframework.base.client.BaseRestTemplateClient;
-import br.com.hfsframework.base.client.BaseRestUser;
+import br.com.hfsframework.base.security.BaseRestUser;
 import br.com.hfsframework.security.login.LoginDTO;
 
 @RestController
 @CrossOrigin
 public class LoginRestController extends BaseRestTemplateClient {
-	
+		
 	@PostMapping(value = "/api/public/login", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<BaseRestUser> autentica(@RequestBody LoginDTO loginDTO) {
 		try {
@@ -24,6 +24,7 @@ public class LoginRestController extends BaseRestTemplateClient {
 			
 			BaseRestUser baseUser = this.login(baseURL + "/oauth/token", 
 					loginDTO.getLogin(), loginDTO.getSenha());
+			
 			return ResponseEntity.ok(baseUser);
 						
 		} catch (Exception e) {

@@ -10,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -45,18 +46,13 @@ public class BaseOAuth2AuthenticationProvider extends BaseOAuth2RestTemplateClie
             }
 
 			if (user.isAuthenticated()) {
-/*				
-				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();        
-				Object details = authentication.getDetails();        
-				if ( details instanceof OAuth2AuthenticationDetails ){
-				    OAuth2AuthenticationDetails oAuth2AuthenticationDetails = (OAuth2AuthenticationDetails)details;
-
-				    Map<String, Object> decodedDetails = (Map<String, Object>)oAuth2AuthenticationDetails.getDecodedDetails();
-
-				    System.out.println( "My custom claim value: " + decodedDetails.get("MyClaim") );
-				}*/  				
+				String sToken = user.getAccessToken().getValue();
+				DecodedJwt decodedJwt = DecodedJwt.getDecodedJwt(sToken);
+				String[] roles = new String[decodedJwt.getAuthorities().size()];
+				roles = decodedJwt.getAuthorities().toArray(roles);
 				
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, 
+						user.getPassword(), AuthorityUtils.createAuthorityList(roles));
 				return token;
 			} else {		
 				log.error("Token vazio!");

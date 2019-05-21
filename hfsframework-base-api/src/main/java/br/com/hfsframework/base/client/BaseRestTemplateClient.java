@@ -30,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.hfsframework.base.security.BaseRestUser;
 import br.com.hfsframework.util.interceptors.HeaderRequestInterceptor;
 
 public abstract class BaseRestTemplateClient {
