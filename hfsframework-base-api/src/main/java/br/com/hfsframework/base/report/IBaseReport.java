@@ -60,7 +60,7 @@ public abstract interface IBaseReport extends Serializable {
 	 * @return the byte[]
 	 */
 	public abstract byte[] export(Iterable<?> paramCollection, Map<String, Object> paramMap,
-			ReportTipoEnum paramType);
+			ReportTypeEnum paramType);
 
 	/**
 	 * Export.
@@ -69,7 +69,7 @@ public abstract interface IBaseReport extends Serializable {
 	 *            the param type
 	 * @return the byte[]
 	 */
-	public abstract byte[] export(ReportTipoEnum paramType);
+	public abstract byte[] export(ReportTypeEnum paramType);
 
 	/**
 	 * Export junto alternado.
@@ -82,5 +82,5 @@ public abstract interface IBaseReport extends Serializable {
 	 *            the type
 	 * @return the byte[]
 	 */
-	public abstract byte[] exportJuntoAlternado(JasperPrint jp1, JasperPrint jp2, ReportTipoEnum type);
+	public abstract byte[] exportJuntoAlternado(JasperPrint jp1, JasperPrint jp2, ReportTypeEnum type);
 }

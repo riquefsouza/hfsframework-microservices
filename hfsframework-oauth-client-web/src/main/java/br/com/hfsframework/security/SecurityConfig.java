@@ -6,20 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import br.com.hfsframework.base.security.BaseAccessDeniedHandler;
 import br.com.hfsframework.base.security.BaseAuthenticationFailureHandler;
@@ -35,11 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Environment env;
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-
+	/*
 	@Autowired
 	private PersistentTokenRepository tokenRepository;
+	*/
 
     public SecurityConfig() {
         super();
@@ -61,9 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
 		.antMatchers("/public/**").permitAll()
-		.antMatchers("/private/admin/**").hasRole("ADMIN")
-		.antMatchers("/private/**").hasRole("ADMIN")
-		.antMatchers("/private/**").hasRole("USER")
+		.antMatchers("/private/**").access("hasRole('USER') or hasRole('ADMIN')")
+		//.antMatchers("/private/**").hasRole("ADMIN")
+		//.antMatchers("/private/**").hasRole("USER")
 		.antMatchers("/anonymous*").anonymous()
 		.antMatchers("/login*").permitAll()
 		.anyRequest().authenticated()
@@ -74,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.defaultSuccessUrl("/homepage.html", true)
 		//.failureUrl("/login.html?error=true")
 		.failureHandler(authenticationFailureHandler())
-		.and()
-		.rememberMe().rememberMeParameter("remember-me")
+		//.and()
+		//.rememberMe().rememberMeParameter("remember-me")
 		.and()
 		.logout()
 		.logoutUrl("/perform_logout")
@@ -100,12 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new BaseAuthenticationFailureHandler();
     }
-    
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-    
+
+    /*
 	@Bean
 	public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
 		PersistentTokenBasedRememberMeServices tokenBasedservice = new PersistentTokenBasedRememberMeServices(
@@ -117,5 +105,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
+	*/
     
 }

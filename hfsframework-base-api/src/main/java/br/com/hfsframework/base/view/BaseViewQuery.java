@@ -114,7 +114,7 @@ public abstract class BaseViewQuery<T, I extends Serializable,
 	 * @return the string
 	 */
 	public String cancelar() {
-		return getPaginaDesktop();
+		return getDesktopPage();
 	}
 
 	/**

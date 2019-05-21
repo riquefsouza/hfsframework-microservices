@@ -23,9 +23,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.com.hfsframework.base.report.IBaseReport;
-import br.com.hfsframework.base.report.ReportGrupoVO;
+import br.com.hfsframework.base.report.ReportGroupVO;
 import br.com.hfsframework.base.report.ReportRender;
-import br.com.hfsframework.base.report.ReportTipoEnum;
+import br.com.hfsframework.base.report.ReportTypeEnum;
 import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.util.pdf.PdfException;
 import br.com.hfsframework.util.pdf.PdfUtil;
@@ -59,7 +59,7 @@ public abstract class BaseViewReportController
 	 */
 	@PostConstruct
 	public void init() {
-		tipoRelatorio = ReportTipoEnum.PDF.name();
+		tipoRelatorio = ReportTypeEnum.PDF.name();
 	}
 
 	/**
@@ -116,7 +116,7 @@ public abstract class BaseViewReportController
 		byte[] buffer = null;
 		
 		if (colecao!=null) { // && !colecao.isEmpty()) {
-			ReportTipoEnum tipoRel = ReportTipoEnum.valueOf(tipoRelatorio);
+			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
 
 			buffer = relatorio.export(colecao, params, tipoRel);
 			
@@ -125,7 +125,7 @@ public abstract class BaseViewReportController
 			}
 			
 		} else {
-			gerarMensagemInformativa("Nenhum registro encontrado para exportar relatório.");
+			generateInfoMessage("No records found to export report.");
 		}
 		
 		return buffer;
@@ -143,7 +143,7 @@ public abstract class BaseViewReportController
 	public byte[] exportarJuntoAlternado(IBaseReport relatorio1, IBaseReport relatorio2,
 			boolean forcarDownload, boolean renderizar) {
 		byte[] buffer = null;
-		ReportTipoEnum tipoRel = ReportTipoEnum.valueOf(tipoRelatorio);
+		ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
 
 		buffer = relatorio1.exportJuntoAlternado(relatorio1.getReportObject(), relatorio2.getReportObject(), tipoRel);
 		
@@ -168,14 +168,14 @@ public abstract class BaseViewReportController
 	 */
 	public void exportarPDFjunto(byte[] buffer1, byte[] buffer2, boolean forcarDownload) throws PdfException {
 		if (buffer1!=null && buffer2!=null) {
-			ReportTipoEnum tipoRel = ReportTipoEnum.valueOf(tipoRelatorio);
+			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
 			
 			PdfUtil pu = new PdfUtil();
 			byte[] buffer = pu.juntarAlternado(buffer1, buffer2);
 			
 			this.renderer.render(buffer, tipoRel, "relatorio." + tipoRel.name().toLowerCase(), forcarDownload);			
 		} else {
-			gerarMensagemInformativa("Nenhum registro encontrado para exportar relatório.");
+			generateInfoMessage("No records found to export report.");
 		}		
 	}
 
@@ -197,18 +197,18 @@ public abstract class BaseViewReportController
 	 *
 	 * @return the lista tipo relatorio
 	 */
-	public List<ReportGrupoVO> getListaTipoRelatorio() {
-		List<ReportGrupoVO> listaVO = new ArrayList<ReportGrupoVO>();
-		ReportGrupoVO grupoVO;
-		List<ReportTipoEnum> listaEnum = Arrays.asList(ReportTipoEnum.values());
-		List<ReportTipoEnum> subtipos;
+	public List<ReportGroupVO> getListReportType() {
+		List<ReportGroupVO> listaVO = new ArrayList<ReportGroupVO>();
+		ReportGroupVO grupoVO;
+		List<ReportTypeEnum> listaEnum = Arrays.asList(ReportTypeEnum.values());
+		List<ReportTypeEnum> subtipos;
 		
-		for (String grupo : ReportTipoEnum.getGrupos()) {
+		for (String grupo : ReportTypeEnum.getGroups()) {
 			subtipos = listaEnum
 				.stream()
-				.filter(item -> item.getGrupo().equals(grupo))
+				.filter(item -> item.getGroup().equals(grupo))
 				.collect(Collectors.toList());
-			grupoVO = new ReportGrupoVO(grupo, subtipos);
+			grupoVO = new ReportGroupVO(grupo, subtipos);
 			listaVO.add(grupoVO);
 		}
 		
@@ -240,7 +240,7 @@ public abstract class BaseViewReportController
 	 * @return the string
 	 */
 	public String cancelar() {
-		return getPaginaDesktop();
+		return getDesktopPage();
 	}
 
 }

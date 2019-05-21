@@ -6,11 +6,7 @@
  */
 package br.com.hfsframework.base.report;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Enum RelatorioTipoEnum.
- */
-public enum ReportTipoEnum {
+public enum ReportTypeEnum {
 	
 	/** The pdf. */
 	PDF("Documentos", "application/pdf", "Portable Document Format (.pdf)"),
@@ -44,61 +40,31 @@ public enum ReportTipoEnum {
 	//HTML("Outros", "text/html", "Linguagem de Marcação de Hipertexto (.html)");
 	HTML("Outros", "application/zip", "Linguagem de Marcação de Hipertexto (.html)");
 	
-	/** The grupo. */
-	private String grupo;
+	private String group;
 	
-	/** The tipo conteudo. */
-	private String tipoConteudo;
+	private String contentType;
 
-	/** The descricao. */
-	private String descricao;
+	private String description;
 
-	/**
-	 * Instantiates a new relatorio tipo enum.
-	 *
-	 * @param grupo the grupo
-	 * @param tipoConteudo            the tipo conteudo
-	 * @param descricao            the descricao
-	 */
-	private ReportTipoEnum(String grupo, String tipoConteudo, String descricao) {
-		this.grupo = grupo;
-		this.tipoConteudo = tipoConteudo;
-		this.descricao = descricao;
+	private ReportTypeEnum(String group, String contentType, String description) {
+		this.group = group;
+		this.contentType = contentType;
+		this.description = description;
 	}
 	
-	/**
-	 * Gets the grupo.
-	 *
-	 * @return the grupo
-	 */
-	public String getGrupo() {
-		return grupo;
+	public String getGroup() {
+		return group;
 	}
 
-	/**
-	 * Pega o the tipo conteudo.
-	 *
-	 * @return o the tipo conteudo
-	 */
-	public String getTipoConteudo() {
-		return tipoConteudo;
+	public String getContentType() {
+		return contentType;
 	}
 
-	/**
-	 * Pega o the descricao.
-	 *
-	 * @return o the descricao
-	 */
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
 
-	/**
-	 * Gets the grupos.
-	 *
-	 * @return the grupos
-	 */
-	public static String[] getGrupos(){
+	public static String[] getGroups(){
 		return new String[] {"Documentos", "Planilhas", "Texto puro", "Outros"};
 	}
 }

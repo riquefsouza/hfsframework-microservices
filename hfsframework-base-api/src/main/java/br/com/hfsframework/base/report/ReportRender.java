@@ -53,7 +53,7 @@ public class ReportRender implements Serializable {
 	 * @param forcarDownload
 	 *            the forcar download
 	 */
-	public void render(final byte[] conteudo, final ReportTipoEnum tipoRelatorio, String nomeArquivo,
+	public void render(final byte[] conteudo, final ReportTypeEnum tipoRelatorio, String nomeArquivo,
 			boolean forcarDownload) {
 		//HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -61,12 +61,12 @@ public class ReportRender implements Serializable {
 
 		log.info("Renderizando para o arquivo " + nomeArquivo + ".");
 
-		if (tipoRelatorio.equals(ReportTipoEnum.HTML)){
+		if (tipoRelatorio.equals(ReportTypeEnum.HTML)){
 			nomeArquivo = nomeArquivo.replaceAll(".html", ".zip");
 		}
 		
 		try {
-			response.setContentType(tipoRelatorio.getTipoConteudo());
+			response.setContentType(tipoRelatorio.getContentType());
 			response.setContentLength(conteudo.length);
 
 			String forcarDownloadComando = forcarDownload ? "attachment; " : "";
@@ -93,7 +93,7 @@ public class ReportRender implements Serializable {
 	 * @param nomeArquivo
 	 *            the nome arquivo
 	 */
-	public void render(final byte[] conteudo, final ReportTipoEnum tipoRelatorio, final String nomeArquivo) {
+	public void render(final byte[] conteudo, final ReportTypeEnum tipoRelatorio, final String nomeArquivo) {
 		render(conteudo, tipoRelatorio, nomeArquivo, false);
 	}
 
@@ -109,7 +109,7 @@ public class ReportRender implements Serializable {
 	 * @param forcarDownload
 	 *            the forcar download
 	 */
-	public void render(final InputStream stream, final ReportTipoEnum tipoRelatorio, final String nomeArquivo,
+	public void render(final InputStream stream, final ReportTypeEnum tipoRelatorio, final String nomeArquivo,
 			boolean forcarDownload) {
 		log.info("Renderizando o arquivo " + nomeArquivo + ".");
 		try {
@@ -130,7 +130,7 @@ public class ReportRender implements Serializable {
 	 * @param nomeArquivo
 	 *            the nome arquivo
 	 */
-	public void render(final InputStream stream, final ReportTipoEnum tipoRelatorio, final String nomeArquivo) {
+	public void render(final InputStream stream, final ReportTypeEnum tipoRelatorio, final String nomeArquivo) {
 		render(stream, tipoRelatorio, nomeArquivo, false);
 	}
 
@@ -146,7 +146,7 @@ public class ReportRender implements Serializable {
 	 * @param forcarDownload
 	 *            the forcar download
 	 */
-	public void render(File file, ReportTipoEnum tipoRelatorio, String nomeArquivo, boolean forcarDownload) {
+	public void render(File file, ReportTypeEnum tipoRelatorio, String nomeArquivo, boolean forcarDownload) {
 		log.info("Renderizando para o arquivo " + nomeArquivo + ".");
 		try {
 			render(new FileInputStream(file), tipoRelatorio, nomeArquivo, forcarDownload);
@@ -166,7 +166,7 @@ public class ReportRender implements Serializable {
 	 * @param nomeArquivo
 	 *            the nome arquivo
 	 */
-	public void render(File file, ReportTipoEnum tipoRelatorio, String nomeArquivo) {
+	public void render(File file, ReportTypeEnum tipoRelatorio, String nomeArquivo) {
 		render(file, tipoRelatorio, nomeArquivo, false);
 	}
 

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	lang="en-US">
 <head th:replace="fragments/header :: header">
 </head>
 <body>
 
 <div th:replace="private/menu :: menu"></div>
 
-<div class="tela-conteudo">
-	<form id="editarAdmParametroCategoria">
+<div class="web-content">
+	<form id="editAutRole">
 	
 		<div class="card">
 			<div class="card-header" 
@@ -18,33 +18,31 @@
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
-					<button type="button" class="btn btn-success btn-icon-split" id="btnSalvar">
+					<button type="button" class="btn btn-success btn-icon-split" id="btnSave">
 						<span class="icon text-white-50">
 							<i class="fa fa-check-circle"></i>
 						</span>
-						<span class="text">Salvar</span>
+						<span class="text">Save</span>
 					</button>			
-					<button type="reset" class="btn btn-light btn-icon-split" id="btnLimpar">
+					<button type="reset" class="btn btn-light btn-icon-split" id="btnReset">
 	                    <span class="icon text-gray-600">
 	                      <i class="fa fa-eraser"></i>
 	                    </span>
-						<span class="text">Limpar</span>
+						<span class="text">Reset</span>
 					</button>
 
-					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancelar">
+					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancel">
 						<span class="icon text-white-50"> <i
 							class="fa fa-times-circle"></i>
-						</span> <span class="text">Cancelar</span>
+						</span> <span class="text">Cancel</span>
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-4 form-group">
+					<div class="col-md-2 form-group">
 						<input type="hidden" class="form-control" id="autRole_id">
 						
-						<label for="autRole_descricao">Descrição:</label>						
-						<input type="text" class="form-control" id="autRole_descricao" maxlength="80">
-						
-						<input type="hidden" class="form-control" id="autRole_ordem">
+						<label for="autRole_name">Name:</label>
+						<input type="text" class="form-control" id="autRole_name" maxlength="10">
 					</div>
 				</div>
 				
@@ -53,7 +51,7 @@
 	</form>	
 </div>
 
-<script src="/js/admin/editAutRole.js"></script>
+<script src="/js/auth/editAutRole.js"></script>
 
 </body>
 </html>

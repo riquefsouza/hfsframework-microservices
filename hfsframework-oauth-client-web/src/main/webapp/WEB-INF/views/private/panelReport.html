@@ -1,15 +1,15 @@
 <div class="col-md-3 form-group">		
-	<label for="cmbTipoRelatorio">Choose the type of report:</label>
-	<select class="form-control" id="cmbTipoRelatorio" label="Report type">
-	 	<optgroup th:each="grupo : ${listaTipoRelatorio}" th:label="${grupo.grupo}">
-	 		<option th:each="opcao : ${grupo.tipos}" th:value="${opcao}">
-	 			<span th:text="${opcao.descricao}" th:remove="tag"></span>
+	<label for="cmbReportType">Choose the type of report:</label>
+	<select class="form-control" id="cmbReportType" label="Report type">
+	 	<optgroup th:each="group : ${listReportType}" th:label="${group.group}">
+	 		<option th:each="option : ${group.types}" th:value="${option}">
+	 			<span th:text="${option.description}" th:remove="tag"></span>
 	 		</option>
 	    </optgroup>
 	</select>
 </div>
 <div class="col-md-3 form-group">
-	<label class="checkbox-inline" for="forcaDownload">
-		<input type="checkbox" id="forcaDownload"> Force Download
+	<label class="checkbox-inline" for="forceDownload">
+		<input type="checkbox" id="forceDownload"> Force Download
 	</label>
 </div>

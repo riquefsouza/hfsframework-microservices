@@ -1,38 +1,15 @@
-/**
- * <p><b>HFS Framework</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2017
- */
 package br.com.hfsframework.base.view;
 
 import java.io.Serializable;
 import java.util.List;
 
-import br.com.hfsframework.base.report.ReportGrupoVO;
+import br.com.hfsframework.base.report.ReportGroupVO;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Interface IBaseViewRelatorio.
- */
 public interface IBaseViewReport extends Serializable {
 
-	/**
-	 * Gets the lista tipo relatorio.
-	 *
-	 * @return the lista tipo relatorio
-	 */
-	List<ReportGrupoVO> getListaTipoRelatorio();
+	List<ReportGroupVO> getListReportType();
 	
-	/**
-	 * Exportar.
-	 */
-	String exportar(String tipoRelatorio, String forcarDownload);
+	String export(String reportType, String forceDownload);
 
-	/**
-	 * Cancelar.
-	 *
-	 * @return the string
-	 */
-	String cancelar();
+	String cancel();
 }

@@ -64,7 +64,7 @@ public class BaseReportExporter {
 	 *            the print
 	 * @return the byte array output stream
 	 */
-	public static synchronized ByteArrayOutputStream export(ReportTipoEnum type, JasperPrint print) {
+	public static synchronized ByteArrayOutputStream export(ReportTypeEnum type, JasperPrint print) {
 		if (log == null) {
 			log = LoggerFactory.getLogger(BaseReportExporter.class);
 		}
@@ -212,7 +212,7 @@ public class BaseReportExporter {
 	 *            the conteudo
 	 * @return the byte[]
 	 */
-	private static byte[] compactarHTML(ReportTipoEnum type, String sDiretorio, String sArquivo, byte[] conteudo) {
+	private static byte[] compactarHTML(ReportTypeEnum type, String sDiretorio, String sArquivo, byte[] conteudo) {
 		ZipUtil zipUtil = new ZipUtil();
 		String arquivoZIP = sDiretorio + "/" + sArquivo + ".zip";
 		String dirResto = sDiretorio + "/" + sArquivo + "_files";

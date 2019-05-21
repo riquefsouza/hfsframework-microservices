@@ -1,9 +1,3 @@
-/**
- * <p><b>HFS Framework</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2017
- */
 package br.com.hfsframework.base.view;
 
 import java.util.Enumeration;
@@ -20,180 +14,49 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import br.com.hfsframework.security.model.MenuVO;
 import br.com.hfsframework.security.model.UserAuthenticatedVO;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class BaseViewController.
- */
 public abstract class BaseViewController {
 
-	/** The log. */
 	protected transient Logger log;	
 	
-	/** The Constant SELECIONAR_REGISTRO. */
-	protected static final String SELECIONAR_REGISTRO = "Favor selecionar um registro da tabela para proceder esta ação.";
+	protected static final String SELECIONAR_REGISTRO = "Please select a table record to do this action!";
 	
-	/** The Constant ERRO_SALVAR. */
-	protected static final String ERRO_SALVAR = "Erro de Transação ao Salvar: ";
+	protected static final String ERRO_SALVAR = "Transaction Error When Saving: ";
 	
-	/** The Constant ERRO_DELETE. */
-	protected static final String ERRO_DELETE = "Erro de Transação ao Excluir: ";
+	protected static final String ERRO_DELETE = "Error Transaction When Excluding: ";
 	
-	/**
-	 * Pega o the pagina desktop.
-	 *
-	 * @return o the pagina desktop
-	 */
-	public String getPaginaDesktop(){
+	public String getDesktopPage(){
 		return "/";
 	}
 
-	/**
-	 * Gerar mensagem erro.
-	 *
-	 * @param mensagem the mensagem
-	 */
-	/*
-	 * Gerar mensagem erro.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 */
-	public void gerarMensagemErro(String mensagem) {
-		//context.addMessage(null,
-			//	new FacesMessage(FacesMessage.SEVERITY_ERROR, null, mensagem));
+	public void generateErrorMessage(String message) {
 	}
 
-	/**
-	 * Gerar mensagem erro.
-	 *
-	 * @param e
-	 *            the e
-	 * @param mensagem
-	 *            the mensagem
-	 */
-	public void gerarMensagemErro(Exception e, String mensagem) {
-		//context.addMessage(null,
-			//	new FacesMessage(FacesMessage.SEVERITY_ERROR, null, ExcecaoUtil.getErros(log, e, mensagem)));
+	public void generateErrorMessage(Exception e, String message) {
 	}
 
-	/**
-	 * Gerar mensagem informativa.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 */
-	public void gerarMensagemInformativa(String mensagem) {
-		//context.addMessage(null,
-			//	new FacesMessage(FacesMessage.SEVERITY_INFO, null, mensagem));
+	public void generateInfoMessage(String message) {
 	}
 
-	/**
-	 * Gerar mensagem aviso.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 */
-	public void gerarMensagemAviso(String mensagem) {
-		//context.addMessage(null,
-			//	new FacesMessage(FacesMessage.SEVERITY_WARN, null, mensagem));
+	public void generateWarningMessage(String mensagem) {
 	}
 
-	/**
-	 * Gerar mensagem erro.
-	 *
-	 * @param e
-	 *            the e
-	 * @param mensagem
-	 *            the mensagem
-	 * @param clientId
-	 *            the client id
-	 */
-	public void gerarMensagemErro(Exception e, String mensagem, String clientId) {
-		//context.addMessage(clientId,
-			//	new FacesMessage(FacesMessage.SEVERITY_ERROR, null, ExcecaoUtil.getErros(log, e, mensagem)));
-	}
-
-	/**
-	 * Gerar mensagem informativa.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 * @param clientId
-	 *            the client id
-	 */
-	public void gerarMensagemInformativa(String mensagem, String clientId) {
-		//context.addMessage(clientId,
-			//	new FacesMessage(FacesMessage.SEVERITY_INFO, null, mensagem));
-	}
-
-	/**
-	 * Gerar mensagem aviso.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 * @param clientId
-	 *            the client id
-	 */
-	public void gerarMensagemAviso(String mensagem, String clientId) {
-		//context.addMessage(clientId,
-				//new FacesMessage(FacesMessage.SEVERITY_WARN, null, mensagem));
-	}
-	
-	/**
-	 * Adiciona o message info dialog.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 */
 	public static void addMessageInfoDialog(String mensagem) {
-		//RequestContext.getCurrentInstance()
-			//	.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_INFO, "Informação", mensagem));
 	}
 
-	/**
-	 * Adiciona o message alerta dialog.
-	 *
-	 * @param mensagem
-	 *            the mensagem
-	 */
 	public static void addMessageAlertaDialog(String mensagem) {
-		//RequestContext.getCurrentInstance()
-			//	.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção", mensagem));
 	}
 
-	/**
-	 * Adiciona o message erro dialog.
-	 *
-	 * @param e
-	 *            the e
-	 * @param mensagem
-	 *            the mensagem
-	 */
 	public static void addMessageErroDialog(Exception e, String mensagem) {
-		//RequestContext.getCurrentInstance()
-			//	.showMessageInDialog(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", ExcecaoUtil.getErros(LogManager.getLogger(), e, mensagem)));
 	}
 	
-	/**
-	 * Gets the sessao.
-	 *
-	 * @return the sessao
-	 */
-	public HttpSession getSessao() {
-		//HttpServletRequest hsr = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		//return hsr.getSession();
+	public HttpSession getSession() {
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    return attr.getRequest().getSession();
 		
 	}
 	
-	/**
-	 * Gets the atributos sessao.
-	 *
-	 * @return the atributos sessao
-	 */
-	public Map<String, String> getAtributosSessao() {
-		HttpSession sessao = getSessao();
+	public Map<String, String> getSessionAttributes() {
+		HttpSession sessao = getSession();
 		HashMap<String, String> mapa = new HashMap<String, String>();
 		String atributo, valor;
 		for (Enumeration<String> item = sessao.getAttributeNames(); item.hasMoreElements();) {
@@ -204,34 +67,20 @@ public abstract class BaseViewController {
 		return mapa;
 	}
 	
-	/**
-	 * Log atributos sessao.
-	 */
-	public void logAtributosSessao() {
+	public void logSessionAttributes() {
 		log.info("Sessão: [");
-		for (Entry<String, String> item : getAtributosSessao().entrySet()) {
+		for (Entry<String, String> item : getSessionAttributes().entrySet()) {
 			log.info("\n" + item.getKey() + " = " + item.getValue());
 		}
 		log.info("]");
 	}
 	
-	/**
-	 * Pega o the usuario autenticado.
-	 *
-	 * @return o the usuario autenticado
-	 */
 	public UserAuthenticatedVO getUserAuthenticated() {		
-		return (UserAuthenticatedVO) getSessao().getAttribute("userAuthenticated");
+		return (UserAuthenticatedVO) getSession().getAttribute("userAuthenticated");
 	}
 	
-	/**
-	 * Sets the usuario autenticado.
-	 *
-	 * @param usu
-	 *            the new usuario autenticado
-	 */
 	public void setUserAuthenticated(UserAuthenticatedVO usu){
-		getSessao().setAttribute("userAuthenticated", usu);
+		getSession().setAttribute("userAuthenticated", usu);
 	}
 	
 	private String getIdMenu() {
@@ -244,7 +93,7 @@ public abstract class BaseViewController {
 		return "";
 	}
 	
-	public MenuVO getMenuAtual(){
+	public MenuVO getCurrentMenu(){
 		String idMenu = getIdMenu();
 		if (!idMenu.isEmpty())
 			return getUserAuthenticated().getMenu(idMenu);

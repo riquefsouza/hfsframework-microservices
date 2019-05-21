@@ -167,7 +167,7 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 		
 		/*
 		if (entidade == null) {
-			gerarMensagemErro(SELECIONAR_REGISTRO);
+			generateErrorMessage(SELECIONAR_REGISTRO);
 			return "";
 		}
 		*/
@@ -190,7 +190,7 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 	private RedirectView excluir(I id, String contemErro, String mensagemErro) {
 		/*
 		if (entidade == null) {
-			gerarMensagemErro(SELECIONAR_REGISTRO);
+			generateErrorMessage(SELECIONAR_REGISTRO);
 			return;
 		}
 		*/
@@ -201,13 +201,13 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 		} catch (Exception e) {
 	        if (!contemErro.isEmpty() && !mensagemErro.isEmpty()){
 	            if (e.getCause().toString().contains(contemErro)) {
-	                //gerarMensagemErro(e, ERRO_DELETE + mensagemErro);
+	                //generateErrorMessage(e, ERRO_DELETE + mensagemErro);
 	                addMessageAlertaDialog(mensagemErro);
 	            }                
 	        } else if (!mensagemErro.isEmpty()){
 	            addMessageAlertaDialog(mensagemErro);
 	        } else {
-	            gerarMensagemErro(e, ERRO_DELETE);
+	            generateErrorMessage(e, ERRO_DELETE);
 	        }
 	        //return;
 		}
@@ -244,7 +244,7 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 		
 		if (descricao!=null){
 			if (descricao.isEmpty()) {
-				gerarMensagemErro("Campo 'Descrição' não pode ser vazio.");
+				generateErrorMessage("Campo 'Descrição' não pode ser vazio.");
 				if (modoIncluir)
 					return new RedirectView(getMapeamento()+"/incluir");
 				else
@@ -254,12 +254,12 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 			/*
 			if (modoIncluir){
 				if (this.businessController.existeNovo(descricao)){
-					gerarMensagemErro("Campo 'Descrição' já existe.");
+					generateErrorMessage("Campo 'Descrição' já existe.");
 					return new RedirectView(getMapeamento()+"/incluir");					
 				}
 			} else {				
 				if (this.businessController.existeAntigo(id, descricao)){
-					gerarMensagemErro("Campo 'Descrição' já existe.");
+					generateErrorMessage("Campo 'Descrição' já existe.");
 					return new RedirectView(getMapeamento()+"/editar/{id}");										
 				}				
 			}
@@ -291,9 +291,9 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 			this.modoSalvo = false;
 			
 			if (e.getMessage().contains(contemErro)) {
-				gerarMensagemErro(e, ERRO_SALVAR + mensagemErro);
+				generateErrorMessage(e, ERRO_SALVAR + mensagemErro);
 			} else {
-				gerarMensagemErro(e, ERRO_SALVAR);
+				generateErrorMessage(e, ERRO_SALVAR);
 			}
 			if (modoIncluir)
 				return new RedirectView(getMapeamento()+"/incluir");
@@ -350,7 +350,7 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 	 * @return the string
 	 */
 	public String cancelar() {
-		return getPaginaDesktop();
+		return getDesktopPage();
 	}
 
 	/**
