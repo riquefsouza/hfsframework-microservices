@@ -18,13 +18,20 @@
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administrative</a>
 		<div class="dropdown-menu">
-		  <a class="dropdown-item" th:href="@{/private/roleView/listar}">Roles</a>
-		  <a class="dropdown-item" th:href="@{/private/userView/listar}">Users</a> 
+		  <a class="dropdown-item" th:href="@{/private/roleView/list}">Roles</a>
+		  <a class="dropdown-item" th:href="@{/private/userView/list}">Users</a> 
 		</div>
 	  </li>
-	  <li class="nav-item">
-	  	<a class="nav-link" th:href="@{/private/changePasswordView/list}">Change Password</a>
-	  </li>
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Settings</a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" th:href="@{/private/changePasswordView/list}">Change Password</a>
+		  <a class="dropdown-item" th:href="@{/public/about}">About</a> 
+		  <a class="dropdown-item" th:href="@{/public/international}">International</a>
+		  <a class="dropdown-item" th:href="@{/public/email}">Email</a>
+		  <a class="dropdown-item" th:href="@{/public/ldap/list}">Ldap</a>
+		</div>
+	  </li>	  
 	  <li class="nav-item">
 	  	<a class="nav-link" th:href="@{/perform_logout}"><img class="imagem-inverte" th:src="@{/img/sair.png}" alt="Sair" />Sair</a>
 	  </li>	

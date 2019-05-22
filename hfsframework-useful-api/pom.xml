@@ -9,6 +9,7 @@
 	<description>HFS Framework Useful Api</description>
 	
 	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>	
 		<java.version>11</java.version>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

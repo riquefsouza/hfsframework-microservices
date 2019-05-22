@@ -25,6 +25,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ComponentScan(basePackages = {"br.com.hfsframework"})  
 public class MvcConfig implements WebMvcConfigurer {
 
+	/*
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+    */
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");

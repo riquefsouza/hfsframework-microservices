@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="en-US">
+<head th:replace="fragments/header :: header">
+<title>International</title>
+</head>
+<body>
+
+<div th:replace="private/menu :: menu"></div>
+
+<div class="web-content">
+
+	<span th:text="#{lang.change}"></span>:
+	<select id="locales">
+	    <option value=""></option>
+	    <option value="en_US" th:text="#{lang.en_US}"></option>
+	    <option value="pt_BR" th:text="#{lang.pt_BR}"></option>
+	</select>	
+	<br>
+	<span th:text="#{main.app.title}"></span>
+	<br>
+	<span th:text="#{main.app.welcome}"></span>
+	<br>
+	<span th:text="#{main.no.record}"></span>
+	<br>
+	<span th:text="#{text_confirm_delete}"></span>
+	<br>
+	<span th:text="#{title_confirm}"></span>
+	<br>
+	<span th:text="#{build.version}"></span>
+	<br>
+	<span th:text="#{build.timestamp}"></span>
+	<br>	
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+	    $("#locales").change(function () {
+	        var selectedOption = $('#locales').val();
+	        if (selectedOption != ''){
+	            window.location.replace('international?lang=' + selectedOption);
+	        }
+	    });
+	});
+</script>
+	
+</body>
+</html>

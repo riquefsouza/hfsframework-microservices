@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.naming.Name;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.ldap.core.AttributesMapper;
 import org.springframework.ldap.core.DirContextAdapter;
@@ -14,30 +16,48 @@ import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.ldap.support.LdapNameBuilder;
+import org.springframework.stereotype.Service;
 
+@Service
+@PropertySource("classpath:ldap.properties")
 public class LdapUtilImpl implements LdapUtil {
 
-	public LdapContextSource contextSource(Environment env) {
+	@Autowired
+	private Environment env;
+
+	private LdapContextSource contextSource() {
 		LdapContextSource contextSource = new LdapContextSource();
 
-		contextSource.setUrl(env.getRequiredProperty("ldap.url"));
-		contextSource.setBase(env.getRequiredProperty("ldap.partitionSuffix"));
-		contextSource.setUserDn(env.getRequiredProperty("ldap.principal"));
-		contextSource.setPassword(env.getRequiredProperty("ldap.password"));
+		String sServer = env.getRequiredProperty("ldap.server");
+		String sPort = env.getRequiredProperty("ldap.port");
+		String sBase = env.getRequiredProperty("ldap.base");
+		String sUserDn = env.getRequiredProperty("ldap.userdn");
+		String sPassword = env.getRequiredProperty("ldap.password");
+		
+		String sUrl = "ldap://" + sServer + ":" + sPort;
+		
+		contextSource.setUrl(sUrl);		
+		contextSource.setBase(sBase);
+		contextSource.setUserDn(sUserDn);
+		contextSource.setPassword(sPassword);
+		
+		contextSource.afterPropertiesSet();
 
 		return contextSource;
 	}
 
-	public LdapTemplate ldapTemplate(Environment env) {
-		return new LdapTemplate(contextSource(env));
+	public LdapTemplate ldapTemplate() {		
+		return new LdapTemplate(contextSource());
 	}
 
-	public void authenticate(Environment env, String username, String password) {
-		contextSource(env).getContext("cn=" + username + ",ou=users," + env.getRequiredProperty("ldap.partitionSuffix"),
-				password);
+	public boolean authenticate(String filter) {		
+		String sUserDn = env.getRequiredProperty("ldap.userdn");
+		String sPassword = env.getRequiredProperty("ldap.password");
+		
+		return ldapTemplate().authenticate(sUserDn, filter, sPassword);
 	}
 
-	public void create(Environment env, String username, String password) {
+	public void create(String username, String password) {
 		Name dn = LdapNameBuilder.newInstance().add("ou", "users").add("cn", username).build();
 		DirContextAdapter context = new DirContextAdapter(dn);
 
@@ -47,12 +67,12 @@ public class LdapUtilImpl implements LdapUtil {
 		context.setAttributeValue("sn", username);
 		context.setAttributeValue("userPassword", digestSHA(password));
 
-		ldapTemplate(env).bind(context);
+		ldapTemplate().bind(context);
 	}
 
-	public void modify(Environment env, String username, String password) {
+	public void modify(String username, String password) {
 		Name dn = LdapNameBuilder.newInstance().add("ou", "users").add("cn", username).build();
-		DirContextOperations context = ldapTemplate(env).lookupContext(dn);
+		DirContextOperations context = ldapTemplate().lookupContext(dn);
 
 		context.setAttributeValues("objectclass",
 				new String[] { "top", "person", "organizationalPerson", "inetOrgPerson" });
@@ -60,11 +80,11 @@ public class LdapUtilImpl implements LdapUtil {
 		context.setAttributeValue("sn", username);
 		context.setAttributeValue("userPassword", digestSHA(password));
 
-		ldapTemplate(env).modifyAttributes(context);
+		ldapTemplate().modifyAttributes(context);
 	}
 
-	public List<String> search(Environment env, String username) {
-		return ldapTemplate(env).search("ou=users", "cn=" + username,
+	public List<String> search(String username) {
+		return ldapTemplate().search("ou=users", "cn=" + username,
 				(AttributesMapper<String>) attrs -> (String) attrs.get("cn").get());
 	}
 

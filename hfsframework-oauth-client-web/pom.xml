@@ -10,6 +10,7 @@
 	<description>HFS Framework OAuth Authorization Client Web</description>
 	
 	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
 		<java.version>11</java.version>
 		
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,6 +46,12 @@
 		<dependency>
 			<groupId>br.com</groupId>
 			<artifactId>hfsframework-base-api</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+		</dependency>	
+		<dependency>
+			<groupId>br.com</groupId>
+			<artifactId>hfsframework-useful-api</artifactId>
 			<version>1.0.0</version>
 			<type>jar</type>
 		</dependency>	
@@ -174,6 +181,7 @@
 				<version>${maven.war.plugin}</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<warName>${project.artifactId}</warName>					
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -188,11 +196,21 @@
 				<configuration>
 					<nonFilteredFileExtensions>
 						<nonFilteredFileExtension>jks</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+				        <nonFilteredFileExtension>jasper</nonFilteredFileExtension>						
 					</nonFilteredFileExtensions>
 				</configuration>
 			</plugin>
 
 		</plugins>
+		
+		<resources>
+	        <resource>
+	            <directory>src/main/resources</directory>
+	            <filtering>true</filtering>
+	        </resource>
+		</resources>
+		
 	</build>
 
 	<repositories>

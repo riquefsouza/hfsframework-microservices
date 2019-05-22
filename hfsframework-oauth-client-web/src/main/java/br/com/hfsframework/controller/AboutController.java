@@ -8,6 +8,6 @@ public class AboutController {
 	
 	@RequestMapping(value = "/public/about")
 	public String getAbout() {
-		return "/about-client.html";
+		return "about-client";
 	}
 }

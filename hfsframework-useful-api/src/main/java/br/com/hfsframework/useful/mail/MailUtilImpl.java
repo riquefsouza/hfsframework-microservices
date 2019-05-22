@@ -6,15 +6,22 @@ import java.util.Properties;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
+@PropertySource("classpath:email.properties")
 public class MailUtilImpl implements MailUtil {
+
+	@Autowired
+	private Environment env;
 
 	public void sendSimpleMessage(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -40,20 +47,20 @@ public class MailUtilImpl implements MailUtil {
 		getJavaMailSender().send(message);
 	}
 
-	public JavaMailSender getJavaMailSender() {
+	private JavaMailSender getJavaMailSender() {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-		mailSender.setHost("smtp.gmail.com");
-		mailSender.setPort(587);
+		mailSender.setHost(env.getRequiredProperty("mail.host"));		
+		mailSender.setPort(Integer.valueOf(env.getRequiredProperty("mail.port")));
 
-		mailSender.setUsername("my.gmail@gmail.com");
-		mailSender.setPassword("password");
+		mailSender.setUsername(env.getRequiredProperty("mail.user"));
+		mailSender.setPassword(env.getRequiredProperty("mail.password"));
 
 		Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.starttls.enable", env.getRequiredProperty("mail.tls"));
 		props.put("mail.debug", "true");
-
+		
 		return mailSender;
 	}
 
