@@ -1,14 +1,14 @@
-$('#btnCancelar').click(function(event) {
+$('#btnCancel').click(function(event) {
 	event.preventDefault();
 	
-	window.location.href='/admParametroCategoriaMB/listar';	
+	window.location.href='/private/roleView/list';	
 });
 
-$('#btnSalvar').click(function(event) {
+$('#btnSave').click(function(event) {
 	event.preventDefault();
 
 	$.post(responsePage, getFields(), function(data, status) {
-		window.location.href='listar';
+		window.location.href='list';
 	})
 	.fail(function(xhr, textStatus, msg){
 		alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -16,19 +16,17 @@ $('#btnSalvar').click(function(event) {
 });
 
 function setFields(obj){
-	$('#admParametroCategoria_id').val(obj.id);
-	$('#admParametroCategoria_descricao').val(obj.descricao);
-	$('#admParametroCategoria_ordem').val(obj.ordem);	
+	$('#autRole_id').val(obj.id);
+	$('#autRole_name').val(obj.name);
 }
 
 function getFields(){
-	var sId = $('#admParametroCategoria_id').val();
+	var sId = $('#autRole_id').val();
 	var nId = sId.length == 0 ? null : parseInt(sId);
 	
 	var obj = {
 		"id" : nId,
-		"descricao" : $('#admParametroCategoria_descricao').val(),
-		"ordem" : 0
+		"name" : $('#autRole_name').val()
 	};
 	return obj;
 }

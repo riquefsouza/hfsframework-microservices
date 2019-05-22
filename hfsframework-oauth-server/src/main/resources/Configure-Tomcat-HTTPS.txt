@@ -1,0 +1,45 @@
+On File:
+C:\ambiente\apache-tomcat-9.0.12\conf\context.xml
+
+add in the end of file:
+
+	<Resources cachingAllowed="true" cacheMaxSize="100000" />
+</Context>
+
+--------------------------
+
+1) Creating the Keystore
+
+set JAVA_HOME=C:\jdk-12.0.1
+cd C:\ambiente\apache-tomcat-9.0.12\conf
+
+"%JAVA_HOME%\bin\keytool" -genkey -noprompt -alias tomcat -keyalg RSA -keystore hfsframework.jks -keypass 123456 -storepass 123456 -dname "CN=tomcat-cert, OU=Dev, O=HfsFramework, L=Rio de Janeiro, ST=RJ, C=BR"
+
+"%JAVA_HOME%\bin\keytool" -list -keystore hfsframework.jks
+
+
+C:\ambiente\apache-tomcat-9.0.12\conf\server.xml
+
+ <Connector
+         protocol="org.apache.coyote.http11.Http11NioProtocol"
+         port="8443" maxThreads="200"
+         scheme="https" secure="true" SSLEnabled="true"
+         keystoreFile="conf/hfsframework.jks"
+         keystorePass="123456" keyAlias="tomcat"
+         clientAuth="false" sslProtocol="TLS"/>
+     
+Put on web.xml of app to force https:
+	 
+<security-constraint>
+	<web-resource-collection>
+		<web-resource-name>securedapp</web-resource-name>
+		<url-pattern>/*</url-pattern>
+	</web-resource-collection>
+	<user-data-constraint>
+		<!-- 
+		<transport-guarantee>NONE</transport-guarantee>
+		-->
+		
+		<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	</user-data-constraint>
+</security-constraint>

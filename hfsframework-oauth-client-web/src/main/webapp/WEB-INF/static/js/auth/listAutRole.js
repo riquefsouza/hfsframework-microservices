@@ -1,29 +1,27 @@
-var sURL = sURL_BACKEND + "/admParametroCategorias";
-
-$('#btnExportar').click(function(event) {
+$('#btnExport').click(function(event) {
 	event.preventDefault();
 	
 	var sUrl = 'exportar/'+$('#cmbTipoRelatorio').val()+'/'+$('#forcaDownload')[0].checked;
 	window.open(sUrl, '_blank');	
 });
 
-$('#btnIncluir').click(function(event) {
+$('#btnAdd').click(function(event) {
 	event.preventDefault();
 	
 	persistItem("responsePage", sURL);
-	window.location.href='incluir';
+	window.location.href='add';
 });	
 	
-$('#btnEditar').click(function(event) {
+$('#btnEdit').click(function(event) {
 	event.preventDefault();
 	$('#alert-messages').hide();
 	
-	var dataRowSelected = $('#tabelaAdmParametroCategoria').puidatatable('getSelection');
+	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
 	
 	if (dataRowSelected.length > 0) {
 		$.get(dataRowSelected[0]._links.self.href, function(responsePage) {			
 			persistItem("responsePage", responsePage._links.self.href);
-			window.location.href='editar';
+			window.location.href='edit';
 		}).fail(function() {
 	    	$('#alert-messages').show();
 	    	setTimeout(function() {
@@ -44,10 +42,10 @@ function buildDialogExcluir(){
 	    minWidth: 200,
 	    modal: true,
 	    buttons: [{
-	            text: 'Sim',
+	            text: 'Yes',
 	            icon: 'fa-check',
 	            click: function() {
-	            	var dataRowSelected = $('#tabelaAdmParametroCategoria').puidatatable('getSelection');
+	            	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
 	            	
 	            	if (dataRowSelected.length > 0) {
 	        			$.ajax({
@@ -69,7 +67,7 @@ function buildDialogExcluir(){
 	            }
 	        },
 	        {
-	            text: 'Não',
+	            text: 'No',
 	            icon: 'fa-close',
 	            click: function() {
 	                $('#dlgDeleteConfirmation').puidialog('hide');
@@ -91,7 +89,7 @@ $('#btnExcluir').click(function(event) {
 	event.preventDefault();
 	$('#alert-messages').hide();
 	
-	var dataRowSelected = $('#tabelaAdmParametroCategoria').puidatatable('getSelection');
+	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
 	
 	if (dataRowSelected.length > 0) {
 		$('#dlgDeleteConfirmation').puidialog('show');
@@ -108,9 +106,9 @@ $('#btnVoltar').click(function(event) {
 });	
 
 
-function buildTableAdmParametroCategoria(sURL, responsePage) {
-	$('#tabelaAdmParametroCategoria').puidatatable({
-		caption: 'Categoria dos Parâmetros de Configuração',
+function buildTable(sURL, responsePage) {
+	$('#tableAutRole').puidatatable({
+		caption: 'Roles',
 		lazy: true,
 		responsive: true,	           
 		selectionMode: 'single',
@@ -119,8 +117,7 @@ function buildTableAdmParametroCategoria(sURL, responsePage) {
 			totalRecords: (responsePage.page.totalElements-responsePage.page.size)
 		},
 		columns: [
-			{field: 'descricao', headerText: 'Descrição', sortable: true, filter: false},
-			{field: 'ordem', headerText: 'Ordem', sortable: true, filter: false}
+			{field: 'name', headerText: 'Name', sortable: true, filter: false}
 		],
 		datasource: function(callback, ui) {
 			//ui.first = Index of the first record
@@ -174,12 +171,12 @@ function buildTableAdmParametroCategoria(sURL, responsePage) {
 }
 
 $(function() {
-	
+//var sURL = sURL_BACKEND + "/private/roleView";	
 	
 	//$('#spinner').toggle();
 	
 	$.get(sURL, function(data) {		
-		buildTableAdmParametroCategoria(sURL, data);
+		buildTable(sURL, data);
 		buildDialogExcluir();
 	}).fail(function(xhr, textStatus, msg){
 		alert("An error occured: " + xhr.status + " " + xhr.statusText);

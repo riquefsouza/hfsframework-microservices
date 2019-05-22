@@ -89,7 +89,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 	}
 	
 	private void setProperties(Environment env, String projectId) {
-		this.server = env.getRequiredProperty("oauth2."+ projectId +".provider.token-uri");
+		this.server = env.getRequiredProperty("oauth2."+ projectId + ".server") + "/oauth/token";
 		this.clientId = env.getProperty("oauth2."+ projectId + ".client-id");
 		this.clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");		
 	}

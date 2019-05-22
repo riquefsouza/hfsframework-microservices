@@ -7,7 +7,7 @@ import br.com.hfsframework.oauth.client.domain.Role;
 
 public class RoleRestClient extends BaseRestClient<Role, Long> {
 
-	@Value("${oauth2.hfsframework.provider.token-uri}")
+	@Value("${oauth2.hfsframework.server}")
 	private static String baseURL;
 	
 	public RoleRestClient(String sAccesToken) {

@@ -7,7 +7,7 @@ import br.com.hfsframework.oauth.client.domain.User;
 
 public class UserRestClient extends BaseRestClient<User, Long> {
 
-	@Value("${oauth2.hfsframework.provider.token-uri}")
+	@Value("${oauth2.hfsframework.server}")
 	private static String baseURL;
 
 	public UserRestClient(String sAccesToken) {

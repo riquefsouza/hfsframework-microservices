@@ -3,7 +3,13 @@ package br.com.hfsframework.oauth.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hfsframework.base.report.ReportGroupVO;
+import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.base.view.BaseViewController;
 
 @Controller
@@ -30,6 +38,9 @@ public class AutRoleController extends BaseViewController implements Serializabl
 	private String editPage;
 
 	//private RoleRestClient roleRestClient;
+	
+	@Value("${oauth2.hfsframework.server}")
+	private String authServerURL;
 
 	public AutRoleController() {
 		this.listPage = "/private/autRole/listAutRole";
@@ -37,9 +48,33 @@ public class AutRoleController extends BaseViewController implements Serializabl
 	}
 
 	@GetMapping("/list")
-	public String list() {
-		return getListPage();
+	public ModelAndView list(HttpServletResponse response) {        
+		ModelAndView mv = new ModelAndView(getListPage());
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		if (auth!=null) {
+			Object principal = auth.getPrincipal();
+	
+			if (principal instanceof BaseOAuth2RestUser) {
+				BaseOAuth2RestUser user = (BaseOAuth2RestUser) principal;
+				String sToken = user.getAccessToken().getValue();
+				//mv.addObject("xauthtoken", sToken);
+				//mv.addObject("authServerURL", authServerURL);
+				
+		        Cookie cookie = new Cookie("X-AUTH-TOKEN", sToken);
+		        //1 hour = 60 seconds x 60 minutes
+		        cookie.setMaxAge(60 * 60);
+		        response.addCookie(cookie);
+		        
+		        Cookie cookie2 = new Cookie("AUTH-SERVER-URL", authServerURL);
+
+			}
+		}
+		
+		return mv;
 	}
+	
 
 	@GetMapping("/add")
 	public String add() {
