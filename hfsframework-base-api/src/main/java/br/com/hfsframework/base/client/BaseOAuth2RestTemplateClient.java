@@ -67,7 +67,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 		
 		ResourceOwnerPasswordResourceDetails resourceDetails = new ResourceOwnerPasswordResourceDetails();
 		resourceDetails.setGrantType("password");
-		resourceDetails.setAccessTokenUri(server.trim());
+		resourceDetails.setAccessTokenUri(server.trim() + "/oauth/token");
 		resourceDetails.setClientId(clientId.trim());		
 		resourceDetails.setClientSecret(clientSecret.trim());
 
@@ -89,7 +89,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 	}
 	
 	private void setProperties(Environment env, String projectId) {
-		this.server = env.getRequiredProperty("oauth2."+ projectId + ".server") + "/oauth/token";
+		this.server = env.getRequiredProperty("oauth2."+ projectId + ".server");
 		this.clientId = env.getProperty("oauth2."+ projectId + ".client-id");
 		this.clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");		
 	}
@@ -122,6 +122,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 
 			if (!sToken.trim().isEmpty()) {
 				baseUser.setAuthenticated(true);
+				baseUser.setUrlAuthorizationServer(server);
 				baseUser.setAccessToken(token.getAccessToken());
 			} else {
 				baseUser.setAuthenticated(false);				

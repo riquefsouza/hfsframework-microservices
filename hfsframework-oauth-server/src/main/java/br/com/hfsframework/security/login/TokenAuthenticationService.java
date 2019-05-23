@@ -1,7 +1,5 @@
 package br.com.hfsframework.security.login;
 
-import io.jsonwebtoken.MalformedJwtException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
 
-public class TokenAuthenticationService {
+import br.com.hfsframework.util.CookieUtil;
+import io.jsonwebtoken.MalformedJwtException;
 
-	public static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+public class TokenAuthenticationService {	
 
 	private final TokenHandler tokenHandler;
 
@@ -22,13 +21,13 @@ public class TokenAuthenticationService {
 
 	public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
 		final UserDetails user = authentication.getDetails();
-		response.addHeader(AUTH_HEADER_NAME, tokenHandler.createTokenForUser(user));
+		response.addHeader(CookieUtil.AUTH_TOKEN, tokenHandler.createTokenForUser(user));
 	}
 
 	public Authentication getAuthentication(HttpServletRequest request) {
-		String token = request.getHeader(AUTH_HEADER_NAME);
+		String token = request.getHeader(CookieUtil.AUTH_TOKEN);
 		if (!StringUtils.hasText(token)) {
-			token = request.getParameter(AUTH_HEADER_NAME);
+			token = request.getParameter(CookieUtil.AUTH_TOKEN);
 		}
 		if (token != null) {
 			try {

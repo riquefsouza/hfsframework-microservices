@@ -24,9 +24,9 @@ import br.com.hfsframework.util.CookieUtil;
 
 @Configuration
 @EnableWebSecurity
-@Profile("!https")
+@Profile("https")
 @PropertySource("classpath:application.properties")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private Environment env;
@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private PersistentTokenRepository tokenRepository;
 	*/
 
-    public SecurityConfig() {
+    public ChannelSecurityConfig() {
         super();
     }
 
@@ -61,12 +61,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/login*").permitAll()
 		.anyRequest().authenticated()
 		.and()
+		//Begin Channel Secure Config
+		.requiresChannel()
+        .antMatchers("/login*", "/perform_login").requiresSecure()
+        .anyRequest().requiresInsecure()
+        .and()
+        .sessionManagement()
+        .sessionFixation()
+        .none()
+        .and()		
+		//End Channel Secure Config
 		.formLogin()
 		.loginPage("/login.html")
 		.loginProcessingUrl("/perform_login")
-		//.defaultSuccessUrl("/homepage.html", true)
+		.defaultSuccessUrl("/homepage.html", true)
 		.successHandler(authenticationSuccessHandler())
-		//.failureUrl("/login.html?error=true")		
+		//.successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
+		//.failureUrl("/login.html?error=true")
 		.failureHandler(authenticationFailureHandler())
 		//.and()
 		//.rememberMe().rememberMeParameter("remember-me")
@@ -94,7 +105,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
     	return new BaseAuthenticationSuccessHandler();
     }
-    
+
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
         return new BaseAuthenticationFailureHandler();
@@ -113,5 +124,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AuthenticationTrustResolverImpl();
 	}
 	*/
-    
 }

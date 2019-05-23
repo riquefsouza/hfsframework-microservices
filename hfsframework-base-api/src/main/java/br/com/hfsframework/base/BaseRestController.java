@@ -150,7 +150,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	 */
 	@ApiOperation("Delete bean")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable I id) {
+	public ResponseEntity<I> delete(@PathVariable I id) {
 		Optional<T> obj = servico.get(id);
 
 		if (!obj.isPresent()) {
@@ -160,7 +160,8 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		servico.delete(obj.get());
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
+		//return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
 }

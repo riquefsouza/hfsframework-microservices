@@ -1,193 +1,234 @@
-$('#btnExport').click(function(event) {
-	event.preventDefault();
-	
-	var sUrl = 'exportar/'+$('#cmbTipoRelatorio').val()+'/'+$('#forcaDownload')[0].checked;
-	window.open(sUrl, '_blank');	
-});
-
-$('#btnAdd').click(function(event) {
-	event.preventDefault();
-	
-	persistItem("responsePage", sURL);
-	window.location.href='add';
-});	
-	
-$('#btnEdit').click(function(event) {
-	event.preventDefault();
-	$('#alert-messages').hide();
-	
-	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
-	
-	if (dataRowSelected.length > 0) {
-		$.get(dataRowSelected[0]._links.self.href, function(responsePage) {			
-			persistItem("responsePage", responsePage._links.self.href);
-			window.location.href='edit';
-		}).fail(function() {
-	    	$('#alert-messages').show();
-	    	setTimeout(function() {
-	    		$('#alert-messages').toggle();
-			}, 1500);
-        });
-	} else {
-		$('#alert-messages').show();
-	}
+class ListAutRole {
+	constructor()
+	{
+		this._url = window.location.href;
+		this._urlAuthServer = HFSSystemUtil.getCookie("URL-AUTH-SERVER");
+		this._authToken = HFSSystemUtil.getCookie("X-AUTH-TOKEN");
 		
-});	
-
-function buildDialogExcluir(){
-	$('#dlgDeleteConfirmation').puidialog({
-	    minimizable: false,
-	    maximizable: false,
-	    responsive: true,
-	    minWidth: 200,
-	    modal: true,
-	    buttons: [{
-	            text: 'Yes',
-	            icon: 'fa-check',
-	            click: function() {
-	            	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
-	            	
-	            	if (dataRowSelected.length > 0) {
-	        			$.ajax({
-	        				type: "DELETE",
-	        				url: dataRowSelected[0]._links.self.href,
-	        				dataType: "json",
-	        		        context: this,
-	        		        success: function(data) {
-	        		        	alert(data);	
-	        		        },
-	        		        error: function(xhr){
-	        		            alert("An error occured: " + xhr.status + " " + xhr.statusText);
-	        		        }			
-	        		    });
-
-	            	}
-	            	
-	                $('#dlgDeleteConfirmation').puidialog('hide');
-	            }
-	        },
-	        {
-	            text: 'No',
-	            icon: 'fa-close',
-	            click: function() {
-	                $('#dlgDeleteConfirmation').puidialog('hide');
-	            }
+		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
+		//$('#spinner').toggle();
+				
+		this._alertMessages = $('#alert-messages');
+		this._cmbReportType = $('#cmbReportType');
+		this._forceDownload = $('#forceDownload');
+		this._tableList = $('#tableAutRole');
+		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
+		
+		$.get({
+			url: this._urlApiServer + "/pages",
+			dataType: "json",
+		    contentType: "application/json; charset=utf-8",								
+	        context: this,
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader("Authorization", "Bearer " + this._authToken);
 	        }
-	    ]
-	});	
-}
-
-$('#btn-show').puibutton({
-    icon: 'fa-external-link-square',
-    click: function() {
-        $('#dlg').puidialog('show');
-    }
-});
-
-
-$('#btnExcluir').click(function(event) {
-	event.preventDefault();
-	$('#alert-messages').hide();
-	
-	var dataRowSelected = $('#tableAutRole').puidatatable('getSelection');
-	
-	if (dataRowSelected.length > 0) {
-		$('#dlgDeleteConfirmation').puidialog('show');
-	} else {
-		$('#alert-messages').show();
+		})
+		.done(function(data) {
+    		this.buildTable(this._urlApiServer + "/pages", this._authToken, data);
+    		this.buildDialogExcluir(this._urlApiServer, this._authToken, this._tableList, this._dlgDeleteConfirmation);	        
+		})
+		.fail(function(xhr, textStatus, msg){
+			alert("An error occured on ListAutRole: " + xhr.status + " " + xhr.statusText);
+			/*
+	    	this._alertMessages.show();
+	    	setTimeout(function() {
+	    		//this._alertMessages.toggle();
+			}, 1500);
+			*/
+	    })
+	    .always(function(){
+	    	//$('#spinner').toggle();
+	    });
+		
 	}
 	
-});
-
-$('#btnVoltar').click(function(event) {
-	event.preventDefault();
-	
-	window.location.href='/';
-});	
-
-
-function buildTable(sURL, responsePage) {
-	$('#tableAutRole').puidatatable({
-		caption: 'Roles',
-		lazy: true,
-		responsive: true,	           
-		selectionMode: 'single',
-		paginator: {
-			rows: responsePage.page.size,
-			totalRecords: (responsePage.page.totalElements-responsePage.page.size)
-		},
-		columns: [
-			{field: 'name', headerText: 'Name', sortable: true, filter: false}
-		],
-		datasource: function(callback, ui) {
-			//ui.first = Index of the first record
-			//ui.rows = Number of rows to load
-			//ui.sortField = Field name of the sorted column
-			//ui.sortOrder = Sort order of the sorted column
-			//ui.sortMeta = Array of field names and sort orders of the sorted columns 
-			//ui.filters = Filtering information with field-value pairs like ui.filters['fieldname'] = 'filtervalue'
-			var uri = '';
-			var ascDesc = 'asc';
-			var fieldSort = 'id';
-			
-			//console.log(ui);
-			/*
-			if (ui.filters){
-			   if (ui.filters.length > 0){
-			   		console.log(ui.filters[0].field);
-			   		console.log(ui.filters[0].value);
-			   }	        	   		
-			}
-			*/	           
-			
-			ui.sortField ? fieldSort = ui.sortField : fieldSort = 'id'; 	            
-			ui.sortOrder == 1 ? ascDesc='asc' : ascDesc='desc';
-			
-			if (ui.first==0)
-				uri = sURL+'?page=0&size='+responsePage.page.size+'&sort='+fieldSort+','+ascDesc;
-			else
-				uri = sURL+'?page='+((ui.first/ui.rows)+1)+'&size='+responsePage.page.size+'&sort='+fieldSort+','+ascDesc;
-			
-			console.log(uri);
+	btnExportClick(event) {
+		event.preventDefault();
 		
-			$.ajax({
-				type: "GET",
-				url: uri,
+		var sUrl = this._urlApiServer + "/export";
+		sUrl += this._cmbReportType.val()+'/'+this._forceDownload[0].checked;
+		window.open(sUrl, '_blank');	
+	}
+	
+	btnAddClick(event) {
+		event.preventDefault();
+		
+		HFSSystemUtil.persistItem("saveMethod", "POST");
+		HFSSystemUtil.persistItem("urlApiServer", this._urlApiServer);
+		window.location.href=this._url.replace("/list", "/add");
+	}
+	
+	btnEditClick(event) {
+		event.preventDefault();
+		this._alertMessages.hide();
+		
+		var dataRowSelected = this._tableList.puidatatable('getSelection');		
+		
+		if (dataRowSelected.length > 0) {			
+			$.get({
+				url: this._urlApiServer + "/" + dataRowSelected[0].id,
 				dataType: "json",
+			    contentType: "application/json; charset=utf-8",								
 		        context: this,
-		        success: function(data) {
-		        	callback.call(this, data._embedded.admParametroCategorias);
-		        },
-		        error: function(xhr){
-		            alert("An error occured: " + xhr.status + " " + xhr.statusText);
-		        }			
-		    });
-		},	           
-		rowSelect: function(event, data) {
-			//console.log(data);
+		        beforeSend: function (xhr) {
+		            xhr.setRequestHeader("Authorization", "Bearer " + this._authToken);
+		        }
+			})
+			.done(function(responsePage) {
+				HFSSystemUtil.persistItem("saveMethod", "PUT");
+	        	HFSSystemUtil.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
+				window.location.href=this._url.replace("/list", "/edit");
+			})
+			.fail(function() {
+		    	this._alertMessages.show();
+		    	setTimeout(function() {
+		    		this._alertMessages.toggle();
+				}, 1500);
+	        });
+		} else {
+			this._alertMessages.show();
 		}
-	});
+	}
+	
+	buildDialogExcluir(urlApiServer, authToken, tableList, dlgDeleteConfirmation){
+		this._dlgDeleteConfirmation.puidialog({
+		    minimizable: false,
+		    maximizable: false,
+		    responsive: true,
+		    minWidth: 200,
+		    modal: true,
+		    buttons: [{
+		            text: 'Yes',
+		            icon: 'fa-check',
+		            click: function() {
+		            	var dataRowSelected = tableList.puidatatable('getSelection');
+		            	
+		            	if (dataRowSelected.length > 0) {
+		        			$.ajax({
+		        				method: "DELETE",
+		        				url: urlApiServer + "/" + dataRowSelected[0].id,
+		        				dataType: "json",
+		        			    contentType: "application/json; charset=utf-8",								
+		        		        context: this,
+		        		        beforeSend: function (xhr) {
+		        		            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+		        		        }
+		        			})
+		        			.done(function(data) {
+		        				//alert(data);			        		        
+			            	})
+			    			.fail(function(xhr){
+	        		            alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
+	        		        });
+
+		            	}
+		            	
+		                dlgDeleteConfirmation.puidialog('hide');
+		                tableList.puidatatable('reload');
+		            }
+		        },
+		        {
+		            text: 'No',
+		            icon: 'fa-close',
+		            click: function() {
+		                dlgDeleteConfirmation.puidialog('hide');
+		            }
+		        }
+		    ]
+		});	
+	}
+
+	btnDeleteClick(event) {
+		event.preventDefault();
+		this._alertMessages.hide();
+		
+		var dataRowSelected = this._tableList.puidatatable('getSelection');
+		
+		if (dataRowSelected.length > 0) {
+			this._dlgDeleteConfirmation.puidialog('show');
+		} else {
+			this._alertMessages.show();
+		}
+	}
+
+	btnBackClick(event) {
+		event.preventDefault();
+		//window.location.href='/';
+		window.history.back();
+	}
+	
+	buildTable(urlApiServer, authToken, responsePage) {
+		this._tableList.puidatatable({
+			caption: 'Roles',
+			lazy: true,
+			responsive: true,	           
+			selectionMode: 'single',
+			paginator: {
+				rows: responsePage.size,
+				totalRecords: (responsePage.totalElements-responsePage.size)
+			},
+			columns: [
+				{field: 'name', headerText: 'Name', sortable: true, filter: false}
+			],
+			datasource: function(callback, ui) {
+				//ui.first = Index of the first record
+				//ui.rows = Number of rows to load
+				//ui.sortField = Field name of the sorted column
+				//ui.sortOrder = Sort order of the sorted column
+				//ui.sortMeta = Array of field names and sort orders of the sorted columns 
+				//ui.filters = Filtering information with field-value pairs like ui.filters['fieldname'] = 'filtervalue'
+				var uri = '';
+				var ascDesc = 'asc';
+				var fieldSort = 'id';
+				
+				//console.log(ui);
+				//if (ui.filters){
+				  // if (ui.filters.length > 0){
+				   	//	console.log(ui.filters[0].field);
+				   		//console.log(ui.filters[0].value);
+				   //}	        	   		
+				//}					           
+				
+				ui.sortField ? fieldSort = ui.sortField : fieldSort = 'id'; 	            
+				ui.sortOrder == 1 ? ascDesc='asc' : ascDesc='desc';
+				
+				if (ui.first==0)
+					uri = urlApiServer+'?page=0&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
+				else
+					uri = urlApiServer+'?page='+((ui.first/ui.rows)+1)+'&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
+				
+				$.ajax({
+					method: "GET",
+					url: uri,
+					dataType: "json",
+				    contentType: "application/json; charset=utf-8",								
+			        context: this,
+			        beforeSend: function (xhr) {
+			            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
+			        }
+				}).done(function(data) {
+		        	callback.call(this, data.content);
+				}).fail(function(xhr){
+		            alert("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
+			    });
+			},	           
+			rowSelect: function(event, data) {
+				//console.log(data);
+			}
+		});
+		
+	}
 	
 }
 
 $(function() {
-//var sURL = sURL_BACKEND + "/private/roleView";	
+	const listAutRole = new ListAutRole();
 	
-	//$('#spinner').toggle();
+	$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
+	$('#btnAdd').click(listAutRole.btnAddClick.bind(listAutRole));
+	$('#btnEdit').click(listAutRole.btnEditClick.bind(listAutRole));
+	$('#btnDelete').click(listAutRole.btnDeleteClick.bind(listAutRole));
+	$('#btnBack').click(listAutRole.btnBackClick.bind(listAutRole));
 	
-	$.get(sURL, function(data) {		
-		buildTable(sURL, data);
-		buildDialogExcluir();
-	}).fail(function(xhr, textStatus, msg){
-		alert("An error occured: " + xhr.status + " " + xhr.statusText);
-		/*
-    	$('#alert-messages').show();
-    	setTimeout(function() {
-    		//$('#alert-messages').toggle();
-		}, 1500);
-		*/
-    }).always(function(){
-    	//$('#spinner').toggle();
-    });
- 	 	
+	
 });

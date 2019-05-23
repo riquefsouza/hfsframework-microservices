@@ -39,7 +39,8 @@ public class User implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL) 
 	private List<Role> roles; 
 
-	User() { 
+	public User() {
+		super();
 	} 
 
 	public User(String username, String password, List<Role> roles) { 
@@ -47,6 +48,14 @@ public class User implements Serializable {
 		this.password = password; 
 		this.roles = roles; 
 	} 
+	
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getUsername() { 
 		return username; 

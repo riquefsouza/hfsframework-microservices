@@ -1,4 +1,4 @@
-package br.com.hfsframework.security;
+package br.com.hfsframework.base.security;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConv
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
+public class BaseAccessTokenConverter extends DefaultAccessTokenConverter {
 
     @Override
     public OAuth2Authentication extractAuthentication(Map<String, ?> claims) {

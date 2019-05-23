@@ -31,7 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.hfsframework.base.security.BaseRestUser;
-import br.com.hfsframework.util.interceptors.HeaderRequestInterceptor;
+import br.com.hfsframework.util.interceptors.BaseHeaderRequestInterceptor;
 
 public abstract class BaseRestTemplateClient {
 
@@ -100,7 +100,7 @@ public abstract class BaseRestTemplateClient {
 		request.set("username", login);
 		request.set("password", password);
 		request.set("grant_type", "password");
-		Map<String, Object> token = restTemplate.postForObject(server, request, Map.class);
+		Map<String, Object> token = restTemplate.postForObject(server + "/oauth/token", request, Map.class);
 		
 		return token;
 	}
@@ -108,8 +108,8 @@ public abstract class BaseRestTemplateClient {
 	protected RestTemplate restTemplate(String sAccesToken) throws RestClientException {
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new HeaderRequestInterceptor("Authorization", "Bearer " + sAccesToken));
-		interceptors.add(new HeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+		interceptors.add(new BaseHeaderRequestInterceptor("Authorization", "Bearer " + sAccesToken));
+		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
 
 		RestTemplate rt = new RestTemplate();
 		rt.setInterceptors(interceptors);
@@ -131,7 +131,7 @@ public abstract class BaseRestTemplateClient {
 	}
 
 	private void setProperties(Environment env, String projectId) {
-		this.server = env.getRequiredProperty("oauth2."+ projectId +".server") + "/oauth/token";
+		this.server = env.getRequiredProperty("oauth2."+ projectId +".server");
 		this.clientId = env.getProperty("oauth2."+ projectId + ".client-id");
 		this.clientSecret = env.getProperty("oauth2."+ projectId + ".client-secret");		
 	}
@@ -161,6 +161,7 @@ public abstract class BaseRestTemplateClient {
 			String sToken = token.get("access_token").toString();			
 			if (!sToken.trim().isEmpty()) {
 				baseUser.setAuthenticated(true);
+				baseUser.setUrlAuthorizationServer(server);
 				baseUser.setAccessToken(sToken);
 			} else {
 				baseUser.setAuthenticated(false);				

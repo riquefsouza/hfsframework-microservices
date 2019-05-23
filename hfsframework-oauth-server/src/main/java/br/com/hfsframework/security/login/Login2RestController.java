@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.hfsframework.base.client.BaseOAuth2RestTemplateClient;
+import br.com.hfsframework.util.CookieUtil;
 
 @RestController
 @CrossOrigin
@@ -41,7 +42,7 @@ public class Login2RestController extends BaseOAuth2RestTemplateClient {
 					.contentType(MediaType.APPLICATION_JSON).body(loginDTO);
 
 			ResponseEntity<String> response = restTemplate.exchange(request, String.class);
-				return ResponseEntity.ok(response.getHeaders().get(TokenAuthenticationService.AUTH_HEADER_NAME).get(0));
+				return ResponseEntity.ok(response.getHeaders().get(CookieUtil.AUTH_TOKEN).get(0));
 			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

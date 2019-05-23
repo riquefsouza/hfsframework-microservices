@@ -10,6 +10,8 @@ public class BaseOAuth2RestUser extends User {
 
 	private static final long serialVersionUID = 1L;
 
+	private String urlAuthorizationServer;
+
 	private OAuth2AccessToken accessToken;
 
 	private boolean authenticated;
@@ -18,9 +20,18 @@ public class BaseOAuth2RestUser extends User {
 
 	public BaseOAuth2RestUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
+		this.urlAuthorizationServer = "";
 		this.accessToken = null;
 		this.messageException = "";
 		this.authenticated = false;
+	}
+
+	public String getUrlAuthorizationServer() {
+		return urlAuthorizationServer;
+	}
+
+	public void setUrlAuthorizationServer(String urlAuthorizationServer) {
+		this.urlAuthorizationServer = urlAuthorizationServer;
 	}
 
 	public OAuth2AccessToken getAccessToken() {
@@ -47,4 +58,5 @@ public class BaseOAuth2RestUser extends User {
 	public void setMessageException(String messageException) {
 		this.messageException = messageException;
 	}
+
 }

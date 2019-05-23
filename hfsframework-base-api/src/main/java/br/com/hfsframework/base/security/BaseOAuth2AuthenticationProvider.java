@@ -2,8 +2,8 @@ package br.com.hfsframework.base.security;
 
 import java.net.URLEncoder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -19,7 +19,7 @@ import br.com.hfsframework.base.client.BaseOAuth2RestTemplateClient;
 @Component
 public class BaseOAuth2AuthenticationProvider extends BaseOAuth2RestTemplateClient implements AuthenticationProvider {
 
-	private static final Logger log = LogManager.getLogger(BaseOAuth2AuthenticationProvider.class);
+	public static final Logger log = LoggerFactory.getLogger(BaseOAuth2AuthenticationProvider.class);
 	
 	private Environment env;
 	

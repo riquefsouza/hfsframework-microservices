@@ -19,12 +19,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import br.com.hfsframework.base.security.BaseAccessTokenConverter;
+
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private CustomAccessTokenConverter customAccessTokenConverter;
+    private BaseAccessTokenConverter customAccessTokenConverter;
 
     private TokenStore tokenStore;
     
@@ -98,7 +100,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Bean
     public JwtClaimsSetVerifier customJwtClaimVerifier() {
-        return new CustomClaimVerifier();
+        return new BaseClaimVerifier();
     }
     */    
 }

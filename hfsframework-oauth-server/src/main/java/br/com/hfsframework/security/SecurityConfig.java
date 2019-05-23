@@ -46,15 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.passwordEncoder(passwordEncoder);
 	}	
     
-	/*
-	@Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-        .withUser("hfsadmin").password(passwordEncoder.encode("hfspass")).roles("ADMIN","USER").and()
-        .withUser("hfsuser").password(passwordEncoder.encode("123")).roles("USER");    
-    }
-    */
-    
     @Bean
     public PasswordEncoder passwordEncoder() {
         if (passwordEncoder == null) {

@@ -9,6 +9,8 @@ public class BaseRestUser extends User {
 
 	private static final long serialVersionUID = 1L;
 
+	private String urlAuthorizationServer;
+	
 	private String accessToken;
 
 	private boolean authenticated;
@@ -17,11 +19,20 @@ public class BaseRestUser extends User {
 
 	public BaseRestUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
+		this.urlAuthorizationServer = "";
 		this.accessToken = "";
 		this.messageException = "";
 		this.authenticated = false;
 	}
 
+	public String getUrlAuthorizationServer() {
+		return urlAuthorizationServer;
+	}
+
+	public void setUrlAuthorizationServer(String urlAuthorizationServer) {
+		this.urlAuthorizationServer = urlAuthorizationServer;
+	}
+	
 	public String getAccessToken() {
 		return accessToken;
 	}

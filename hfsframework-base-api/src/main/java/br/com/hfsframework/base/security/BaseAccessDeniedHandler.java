@@ -22,10 +22,11 @@ public class BaseAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException exc)
 			throws IOException, ServletException {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		if (auth != null) {
-			log.warn("User: " + auth.getName() + " attempted to access the protected URL: " + request.getRequestURI());
+		if (authentication != null) {
+			log.warn("User: " + authentication.getName() + " attempted to access the protected URL: "
+					+ request.getRequestURI());
 		}
 
 		response.sendRedirect(request.getContextPath() + "/accessDenied");

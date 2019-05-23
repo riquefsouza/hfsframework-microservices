@@ -6,15 +6,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
+import br.com.hfsframework.util.CookieUtil;
+
 public class BaseLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
 
-	private static final Logger log = LogManager.getLogger(BaseLogoutSuccessHandler.class);
+	public static final Logger log = LoggerFactory.getLogger(BaseLogoutSuccessHandler.class);
 			
 	public BaseLogoutSuccessHandler() {
 		super();
@@ -26,6 +28,14 @@ public class BaseLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler impl
 		final String refererUrl = request.getHeader("Referer");
 		
 		log.info("Referer URL: " + refererUrl);
+		
+		if (CookieUtil.getValue(request, CookieUtil.URL_AUTH_SERVER).isPresent()) {
+			CookieUtil.remove(response, CookieUtil.URL_AUTH_SERVER);
+		}
+		if (CookieUtil.getValue(request, CookieUtil.AUTH_TOKEN).isPresent()) {
+			CookieUtil.remove(response, CookieUtil.AUTH_TOKEN);
+		}
+		
 
 		super.onLogoutSuccess(request, response, authentication);
 	}

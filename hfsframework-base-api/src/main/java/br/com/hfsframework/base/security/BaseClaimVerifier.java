@@ -1,11 +1,11 @@
-package br.com.hfsframework.security;
+package br.com.hfsframework.base.security;
 
 import java.util.Map;
 
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.token.store.JwtClaimsSetVerifier;
 
-public class CustomClaimVerifier implements JwtClaimsSetVerifier {
+public class BaseClaimVerifier implements JwtClaimsSetVerifier {
     @Override
     public void verify(Map<String, Object> claims) throws InvalidTokenException {
         final String username = (String) claims.get("user_name");
