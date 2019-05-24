@@ -17,6 +17,7 @@ import org.springframework.core.Ordered;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -39,6 +40,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.hfsframework.util.MediaTypeUtil;
 
 @Configuration
 @EnableWebMvc
@@ -106,6 +109,7 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(createMappingJackson2HttpMessageConverter());
 		converters.add(createXmlHttpMessageConverter());
+		converters.add(byteArrayHttpMessageConverter());
 	}
 
 	@Bean
@@ -126,6 +130,13 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 		return xmlConverter;
 	}
+	
+    @Bean
+    public ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+        arrayHttpMessageConverter.setSupportedMediaTypes(MediaTypeUtil.getByteArrayMediaTypes());
+        return arrayHttpMessageConverter;
+    }	
 
 	@Bean
 	@Description("Thymeleaf template resolver serving HTML")

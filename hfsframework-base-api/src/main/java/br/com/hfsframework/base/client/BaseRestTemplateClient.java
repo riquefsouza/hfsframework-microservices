@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -31,6 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.hfsframework.base.security.BaseRestUser;
+import br.com.hfsframework.util.MediaTypeUtil;
 import br.com.hfsframework.util.interceptors.BaseHeaderRequestInterceptor;
 
 public abstract class BaseRestTemplateClient {
@@ -64,6 +66,12 @@ public abstract class BaseRestTemplateClient {
         xmlConverter.setUnmarshaller(xstreamMarshaller);
  
         return xmlConverter;
+    }
+    
+    private ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+        arrayHttpMessageConverter.setSupportedMediaTypes(MediaTypeUtil.getByteArrayMediaTypes());
+        return arrayHttpMessageConverter;
     }
     
 	protected String json(Object o) throws IOException {
@@ -117,6 +125,7 @@ public abstract class BaseRestTemplateClient {
 		mappingJackson2HttpMessageConverter = createMappingJackson2HttpMessageConverter(); 
 		rt.getMessageConverters().add(mappingJackson2HttpMessageConverter);
 		rt.getMessageConverters().add(createXmlHttpMessageConverter());
+		rt.getMessageConverters().add(byteArrayHttpMessageConverter());
 		
 		return rt; 
 	}

@@ -74,7 +74,7 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 		.formLogin()
 		.loginPage("/login.html")
 		.loginProcessingUrl("/perform_login")
-		.defaultSuccessUrl("/homepage.html", true)
+		//.defaultSuccessUrl("/homepage.html", true)
 		.successHandler(authenticationSuccessHandler())
 		//.successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
 		//.failureUrl("/login.html?error=true")

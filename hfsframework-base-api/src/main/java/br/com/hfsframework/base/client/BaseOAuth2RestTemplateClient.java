@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
@@ -21,6 +22,7 @@ import org.springframework.web.client.RestClientException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
+import br.com.hfsframework.util.MediaTypeUtil;
 
 public abstract class BaseOAuth2RestTemplateClient {
 	
@@ -55,6 +57,12 @@ public abstract class BaseOAuth2RestTemplateClient {
         return xmlConverter;
     }
     
+    private ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
+        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
+        arrayHttpMessageConverter.setSupportedMediaTypes(MediaTypeUtil.getByteArrayMediaTypes());
+        return arrayHttpMessageConverter;
+    }
+    
 	protected String json(Object o) throws IOException {
 	    MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
 	    mappingJackson2HttpMessageConverter.write(
@@ -84,6 +92,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 		mappingJackson2HttpMessageConverter = createMappingJackson2HttpMessageConverter(); 
 		rt.getMessageConverters().add(mappingJackson2HttpMessageConverter);
 		rt.getMessageConverters().add(createXmlHttpMessageConverter());
+		rt.getMessageConverters().add(byteArrayHttpMessageConverter());
 		
 		return rt;
 	}

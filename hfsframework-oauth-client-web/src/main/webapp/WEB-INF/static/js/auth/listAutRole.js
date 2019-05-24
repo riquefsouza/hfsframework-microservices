@@ -45,9 +45,37 @@ class ListAutRole {
 	btnExportClick(event) {
 		event.preventDefault();
 		
-		var sUrl = this._urlApiServer + "/export";
-		sUrl += this._cmbReportType.val()+'/'+this._forceDownload[0].checked;
-		window.open(sUrl, '_blank');	
+		//window.location.href=this._url.replace("/list", "/export");
+
+		/*
+		var reportParams = {
+			reportType: this._cmbReportType.val(),
+			forceDownload: this._forceDownload[0].checked, 
+			reportName: "AutRole"
+		}
+			
+		var params = JSON.stringify(reportParams);
+		*/
+		
+		console.log(this._urlApiServer + "/report");
+		
+		$.ajax({
+			method: "GET",
+			url: this._urlApiServer + "/report",
+			//dataType: "json",
+			contentType: "application/pdf",								
+	        context: this,
+	        beforeSend: function (xhr) {
+	            xhr.setRequestHeader("Authorization", "Bearer " + this._authToken);
+	        }
+		})
+		.done(function(data, status) {
+			//			
+		})
+		.fail(function(xhr, textStatus, msg){
+			alert("An error occured on export: " + xhr.status + " " + xhr.statusText);
+	    });
+
 	}
 	
 	btnAddClick(event) {
@@ -224,7 +252,7 @@ class ListAutRole {
 $(function() {
 	const listAutRole = new ListAutRole();
 	
-	$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
+	//$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
 	$('#btnAdd').click(listAutRole.btnAddClick.bind(listAutRole));
 	$('#btnEdit').click(listAutRole.btnEditClick.bind(listAutRole));
 	$('#btnDelete').click(listAutRole.btnDeleteClick.bind(listAutRole));

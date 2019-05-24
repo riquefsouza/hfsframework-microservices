@@ -43,8 +43,12 @@
 
 		<small> 
 			<span id="informacoes-usuario" style="color: lightgray"> 				
+				<span>Sessão expira: </span> 
+				<span id="dialog-countdown-geral"></span> 
 				<i class="fas fa-user fa-sm"></i> 
-				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;"><span sec:authentication="name" th:remove="tag"></span></a>
+				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">
+					<span sec:authentication="name" th:remove="tag"></span>
+				</a>
 			</span>
 		</small>
 

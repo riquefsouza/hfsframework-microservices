@@ -47,10 +47,13 @@ public final class CookieUtil implements Serializable {
 	}
 	
 	public static Optional<String> getValue(HttpServletRequest request, String name) {
-	    return Arrays.stream(request.getCookies())
-	      .filter(c -> name.equals(c.getName()))
-	      .map(Cookie::getValue)
-	      .findAny();
+		if (request.getCookies()!=null) {
+			return Arrays.stream(request.getCookies())
+				      .filter(c -> name.equals(c.getName()))
+				      .map(Cookie::getValue)
+				      .findAny();
+		}
+		return Optional.empty();
 	}
 	
 	/*
