@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -30,18 +31,14 @@ import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.util.pdf.PdfException;
 import br.com.hfsframework.util.pdf.PdfUtil;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class BaseViewRelatorioController.
- */
-public abstract class BaseViewReportController
+@Component
+public class BaseViewReportController
 		extends BaseViewController implements Serializable {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The tipo relatorio. */
-	private String tipoRelatorio;
+	private String reportType;
 
 	/** The renderer. */
 	@Autowired
@@ -52,14 +49,12 @@ public abstract class BaseViewReportController
 	 */
 	public BaseViewReportController() {
 		super();
+		reportType = ReportTypeEnum.PDF.name();
 	}
-
-	/**
-	 * Inicia o.
-	 */
+	
 	@PostConstruct
 	public void init() {
-		tipoRelatorio = ReportTypeEnum.PDF.name();
+		//reportType = ReportTypeEnum.PDF.name();
 	}
 
 	/**
@@ -70,58 +65,30 @@ public abstract class BaseViewReportController
 	public Map<String, Object> getParametros() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
-		//ServletContext sc = (ServletContext) context.getExternalContext().getContext();
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    ServletContext sc = (ServletContext) attr.getRequest().getServletContext();
 		String caminho = sc.getRealPath(File.separator);
-
-		params.put("IMAGEM", caminho + "/img/logo.png");
+		
+		params.put("IMAGE", caminho + "/WEB-INF/static/img/logo.png");
 		return params;
 	}
 
-	/**
-	 * Exportar.
-	 *
-	 * @param relatorio
-	 *            the relatorio
-	 * @param colecao
-	 *            the colecao
-	 * @param params
-	 *            the params
-	 * @param forcarDownload
-	 *            the forcar download
-	 */
-	public void exportar(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
+	public void export(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
 			boolean forcarDownload) {
-		exportar(relatorio, colecao, params, forcarDownload, true);
+		export(relatorio, colecao, params, forcarDownload, true);
 	}
 	
-	/**
-	 * Exportar.
-	 *
-	 * @param relatorio
-	 *            the relatorio
-	 * @param colecao
-	 *            the colecao
-	 * @param params
-	 *            the params
-	 * @param forcarDownload
-	 *            the forcar download
-	 * @param renderizar
-	 *            the renderizar
-	 * @return the byte[]
-	 */
-	public byte[] exportar(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
+	public byte[] export(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
 			boolean forcarDownload, boolean renderizar) {
 		byte[] buffer = null;
 		
 		if (colecao!=null) { // && !colecao.isEmpty()) {
-			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
+			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(reportType);
 
 			buffer = relatorio.export(colecao, params, tipoRel);
 			
 			if (renderizar) {
-				this.renderer.render(buffer, tipoRel, "relatorio." + tipoRel.name().toLowerCase(), forcarDownload);
+				this.renderer.render(buffer, tipoRel, "report." + tipoRel.name().toLowerCase(), forcarDownload);
 			}
 			
 		} else {
@@ -131,72 +98,41 @@ public abstract class BaseViewReportController
 		return buffer;
 	}
 
-	/**
-	 * Exportar junto alternado.
-	 *
-	 * @param relatorio1 the relatorio 1
-	 * @param relatorio2 the relatorio 2
-	 * @param forcarDownload the forcar download
-	 * @param renderizar the renderizar
-	 * @return the byte[]
-	 */
-	public byte[] exportarJuntoAlternado(IBaseReport relatorio1, IBaseReport relatorio2,
+	public byte[] exportTogetherAlternate(IBaseReport relatorio1, IBaseReport relatorio2,
 			boolean forcarDownload, boolean renderizar) {
 		byte[] buffer = null;
-		ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
+		ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(reportType);
 
 		buffer = relatorio1.exportJuntoAlternado(relatorio1.getReportObject(), relatorio2.getReportObject(), tipoRel);
 		
 		if (renderizar) {
-			this.renderer.render(buffer, tipoRel, "relatorio." + tipoRel.name().toLowerCase(), forcarDownload);
+			this.renderer.render(buffer, tipoRel, "report." + tipoRel.name().toLowerCase(), forcarDownload);
 		}
 		
 		return buffer;
 	}
 
-	/**
-	 * Exportar PD fjunto.
-	 *
-	 * @param buffer1
-	 *            the buffer 1
-	 * @param buffer2
-	 *            the buffer 2
-	 * @param forcarDownload
-	 *            the forcar download
-	 * @throws PdfException
-	 *             the pdf exception
-	 */
-	public void exportarPDFjunto(byte[] buffer1, byte[] buffer2, boolean forcarDownload) throws PdfException {
+	public void exportPDFTogether(byte[] buffer1, byte[] buffer2, boolean forcarDownload) throws PdfException {
 		if (buffer1!=null && buffer2!=null) {
-			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(tipoRelatorio);
+			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(reportType);
 			
 			PdfUtil pu = new PdfUtil();
 			byte[] buffer = pu.juntarAlternado(buffer1, buffer2);
 			
-			this.renderer.render(buffer, tipoRel, "relatorio." + tipoRel.name().toLowerCase(), forcarDownload);			
+			this.renderer.render(buffer, tipoRel, "report." + tipoRel.name().toLowerCase(), forcarDownload);			
 		} else {
 			generateInfoMessage("No records found to export report.");
 		}		
 	}
 
-	/**
-	 * Gets the real path.
-	 *
-	 * @return the real path
-	 */
 	public String getRealPath(){
 		//ServletContext sc = (ServletContext) context.getExternalContext().getContext();
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    ServletContext sc = (ServletContext) attr.getRequest().getServletContext();		
-		String caminho = sc.getRealPath("/WEB-INF/classes/relatorios");
+		String caminho = sc.getRealPath("/WEB-INF/classes/reports");
 		return caminho + File.separator;
 	}
 
-	/**
-	 * Gets the lista tipo relatorio.
-	 *
-	 * @return the lista tipo relatorio
-	 */
 	public List<ReportGroupVO> getListReportType() {
 		List<ReportGroupVO> listaVO = new ArrayList<ReportGroupVO>();
 		ReportGroupVO grupoVO;
@@ -215,31 +151,15 @@ public abstract class BaseViewReportController
 		return listaVO;
 	}
 
-	/**
-	 * Pega o the tipo relatorio.
-	 *
-	 * @return o the tipo relatorio
-	 */
-	public String getTipoRelatorio() {
-		return tipoRelatorio;
+	public String getReportType() {
+		return reportType;
 	}
 
-	/**
-	 * Atribui o the tipo relatorio.
-	 *
-	 * @param tipoRelatorio
-	 *            o novo the tipo relatorio
-	 */
-	public void setTipoRelatorio(String tipoRelatorio) {
-		this.tipoRelatorio = tipoRelatorio;
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
 	}
 
-	/**
-	 * Cancelar.
-	 *
-	 * @return the string
-	 */
-	public String cancelar() {
+	public String cancel() {
 		return getDesktopPage();
 	}
 

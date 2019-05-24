@@ -34,7 +34,7 @@ public class BaseReportImpl implements IBaseReport {
 	private static final long serialVersionUID = 1L;
 	
 	/** The Constant DEFAULT_PATH. */
-	private static final String DEFAULT_PATH = "relatorios/";
+	private static final String DEFAULT_PATH = "reports/";
 	
 	/** The Constant DEFAULT_EXTENSION. */
 	private static final String DEFAULT_EXTENSION = ".jasper";

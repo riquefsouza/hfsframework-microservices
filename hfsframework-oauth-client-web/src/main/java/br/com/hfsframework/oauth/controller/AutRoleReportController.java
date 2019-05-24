@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 
 import br.com.hfsframework.base.report.ReportGroupVO;
-import br.com.hfsframework.base.view.IBaseViewReport;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
+import br.com.hfsframework.base.view.report.IBaseViewReport;
 
 @Controller
 public class AutRoleReportController extends BaseViewReportController implements IBaseViewReport {
@@ -25,9 +25,10 @@ public class AutRoleReportController extends BaseViewReportController implements
 	
 	@Override
 	public String export(String reportType, String forceDownload) {
+		/*
 		this.setTipoRelatorio(reportType);
 		this.setForceDownload(Boolean.parseBoolean(forceDownload));
-		/*
+		
 		Map<String, Object> params = getParametros();
 		params.put("PARAMETRO1", "");
 

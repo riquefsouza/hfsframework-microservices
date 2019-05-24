@@ -122,7 +122,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 
 			if (!sToken.trim().isEmpty()) {
 				baseUser.setAuthenticated(true);
-				baseUser.setUrlAuthorizationServer(server);
+				baseUser.setUrlAuthorizationServer(this.server);
 				baseUser.setAccessToken(token.getAccessToken());
 			} else {
 				baseUser.setAuthenticated(false);				

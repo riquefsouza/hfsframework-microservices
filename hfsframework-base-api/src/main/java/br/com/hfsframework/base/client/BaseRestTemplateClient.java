@@ -151,7 +151,9 @@ public abstract class BaseRestTemplateClient {
 	private BaseRestUser login(String server, String clientId, String clientSecret, 
 			String login, String password) {
 		
-		String[] roles = { "ROLE_USER" };
+		List<String> listRoles = new ArrayList<String>();
+		//listRoles.add("ROLE_USER");
+		String[] roles = new String[listRoles.size()];
 		//String csenha = BCrypt.hashpw(password, BCrypt.gensalt());
 		BaseRestUser baseUser = new BaseRestUser(login, password, 
 				AuthorityUtils.createAuthorityList(roles));

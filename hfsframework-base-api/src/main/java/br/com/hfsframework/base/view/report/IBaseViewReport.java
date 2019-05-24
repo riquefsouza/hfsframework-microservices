@@ -1,4 +1,4 @@
-package br.com.hfsframework.base.view;
+package br.com.hfsframework.base.view.report;
 
 import java.io.Serializable;
 import java.util.List;

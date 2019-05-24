@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	lang="pt-BR">
 <head th:replace="fragments/header :: header">
 </head>
@@ -8,10 +9,20 @@
  
 	<div th:replace="private/menu :: menu"></div>
 
-	<p style="padding: 20px;">Welcome to the app HFS Framework.</p>
+	<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
 	
 	<div class="web-content"></div>
 
+	<div sec:authorize="hasRole('USER')">Text visible to role user.</div>
+	<div sec:authorize="hasRole('ADMIN')">Text visible to role admin.</div>
+	<div sec:authorize="isAuthenticated()">
+	    Text visible only to authenticated users.
+	</div>
+	Authenticated username:
+	<div sec:authentication="name"></div>
+	Authenticated user roles:
+	<div sec:authentication="principal.authorities"></div>
+        
 	<div th:replace="fragments/footer :: footer"></div>
 
 </body>

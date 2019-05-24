@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"	
+	lang="en-US">
 <body>
 	
 <div th:fragment="menu">	
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="javascript:void(0)">HFS Framework</a>
+  <a class="navbar-brand" th:href="@{''}">HFS Framework</a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -15,13 +16,14 @@
   <div class="collapse navbar-collapse" id="navb">
     <ul class="navbar-nav mr-auto">
 
-	  <li class="nav-item dropdown">
+	  <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Administrative</a>
 		<div class="dropdown-menu">
 		  <a class="dropdown-item" th:href="@{/private/roleView/list}">Roles</a>
 		  <a class="dropdown-item" th:href="@{/private/userView/list}">Users</a> 
 		</div>
 	  </li>
+	  
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Settings</a>
 		<div class="dropdown-menu">
@@ -42,7 +44,7 @@
 		<small> 
 			<span id="informacoes-usuario" style="color: lightgray"> 				
 				<i class="fas fa-user fa-sm"></i> 
-				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">henrique.souza</a>
+				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;"><span sec:authentication="name" th:remove="tag"></span></a>
 			</span>
 		</small>
 
@@ -58,11 +60,11 @@
 	</div>
 </div>
 
-<!-- 
+ 
 <div th:replace="sessionTimeOut :: sessionSystem"></div>
 	
 <div th:replace="private/infoUser :: infoUser"></div>
--->
+
 
 </div>
 	

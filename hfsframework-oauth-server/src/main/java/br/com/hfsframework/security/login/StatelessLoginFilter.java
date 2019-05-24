@@ -19,6 +19,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.hfsframework.oauth.dto.LoginDTO;
+
 public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final TokenAuthenticationService tokenAuthenticationService;
@@ -38,7 +40,7 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 
 		final LoginDTO login = new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(
-				login.getLogin(), login.getSenha());		
+				login.getLogin(), login.getPassword());		
 		return getAuthenticationManager().authenticate(loginToken);
 	}
 

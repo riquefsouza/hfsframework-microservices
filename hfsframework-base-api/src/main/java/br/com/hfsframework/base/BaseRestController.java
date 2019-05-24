@@ -1,12 +1,7 @@
-/**
- * <p><b>HFS Framework Spring</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2018
- */
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -14,10 +9,12 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,17 +24,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.hfsframework.base.report.BaseReportImpl;
+import br.com.hfsframework.base.report.IBaseReport;
+import br.com.hfsframework.base.view.report.BaseViewReportController;
+import br.com.hfsframework.base.view.report.ReportParamsDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class BaseRestController.
- *
- * @param <T> the generic type
- * @param <I> the generic type
- * @param <S> the generic type
- */
 @Api
 public abstract class BaseRestController<T, I extends Serializable, 
 	S extends IBaseBusinessService<T, I, ? extends JpaRepository<T, I>>> {
@@ -49,6 +42,9 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@Autowired
 	protected S servico;
 
+	@Autowired
+	private BaseViewReportController reportController;
+	
 	/**
 	 * Get.
 	 *
@@ -162,6 +158,28 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		return new ResponseEntity<>(id, HttpStatus.OK);
 		//return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
+	@ApiOperation("Export Report")
+	@GetMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<ByteArrayResource> report(@RequestBody ReportParamsDTO reportParamsDTO)  {
+
+		Map<String, Object> params = reportController.getParametros();
+		params.put("PARAMETER1", "");
+
+		IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
+		
+		byte[] generatedReport = reportController.export(report, servico.getAll(), 
+				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), true);
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_PDF)
+				.body(new ByteArrayResource(generatedReport));
+	}
+	
+	
+	public S getServico() {
+		return servico;
 	}
 
 }

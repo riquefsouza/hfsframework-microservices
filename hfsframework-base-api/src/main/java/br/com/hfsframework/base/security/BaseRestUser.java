@@ -24,6 +24,14 @@ public class BaseRestUser extends User {
 		this.messageException = "";
 		this.authenticated = false;
 	}
+	
+	public BaseRestUser(BaseRestUser other, Collection<? extends GrantedAuthority> authorities) {
+		super(other.getUsername(), other.getPassword(), authorities);
+		this.urlAuthorizationServer = other.getUrlAuthorizationServer();
+		this.accessToken = other.getAccessToken();
+		this.messageException = other.getMessageException();
+		this.authenticated = other.isAuthenticated();
+	}
 
 	public String getUrlAuthorizationServer() {
 		return urlAuthorizationServer;

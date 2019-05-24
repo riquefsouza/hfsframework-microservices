@@ -1,4 +1,4 @@
-package br.com.hfsframework.security.login;
+package br.com.hfsframework.oauth.dto;
 
 import javax.validation.constraints.NotBlank;
 
@@ -8,7 +8,7 @@ public class LoginDTO {
 	private String login;
 
 	@NotBlank
-	private String senha;
+	private String password;
 
 	public String getLogin() {
 		return login;
@@ -18,17 +18,17 @@ public class LoginDTO {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public String toString() {
-		return "LoginDTO [login=" + login + ", senha=" + senha + "]";
+		return "LoginDTO [login=" + login + ", password=" + password + "]";
 	}
 
 }
