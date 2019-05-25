@@ -11,4 +11,6 @@ import br.com.hfsframework.oauth.service.RoleService;
 @RequestMapping("/api/v1/role")
 public class RoleRestController extends BaseRestController<Role, Long, RoleService> {
 
+	private static final long serialVersionUID = 1L;
+
 }

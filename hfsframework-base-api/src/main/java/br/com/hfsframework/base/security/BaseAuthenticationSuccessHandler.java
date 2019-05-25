@@ -12,8 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-import br.com.hfsframework.util.CookieUtil;
-
 public class BaseAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 //public class BaseAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	
@@ -35,6 +33,7 @@ public class BaseAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 			//String baseURL = UrlUtil.getURL(request, "/home");
 			//response.sendRedirect(baseURL);
 			
+			/*
 			Object principal = authentication.getPrincipal();
 			
 			if (principal instanceof BaseOAuth2RestUser) {
@@ -52,6 +51,7 @@ public class BaseAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 				CookieUtil.createAdd(response, CookieUtil.URL_AUTH_SERVER, sUrlAuthServer, false);
 				CookieUtil.createAdd(response, CookieUtil.AUTH_TOKEN, sToken, false);
 			}
+			*/
 		}
 
 		super.onAuthenticationSuccess(request, response, authentication);

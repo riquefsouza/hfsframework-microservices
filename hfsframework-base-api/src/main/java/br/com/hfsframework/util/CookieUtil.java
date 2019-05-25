@@ -19,8 +19,6 @@ public final class CookieUtil implements Serializable {
 	
 	public static final String JSESSIONID = "JSESSIONID";
 	
-	public static final String URL_AUTH_SERVER = "URL-AUTH-SERVER"; 
-	
 	public static final String AUTH_TOKEN = "X-AUTH-TOKEN";
 
 	public static void createAdd(HttpServletResponse response, String name, String value, boolean secure) {

@@ -16,10 +16,8 @@ public final class MediaTypeUtil {
 		list.add(MediaType.IMAGE_PNG);
 		list.add(MediaType.APPLICATION_OCTET_STREAM);
 		list.add(MediaType.APPLICATION_PDF);
-		list.add(MediaType.TEXT_HTML);
-		list.add(MediaType.TEXT_XML);
-		list.add(MediaType.TEXT_PLAIN);
-
+		list.add(MediaType.APPLICATION_XML);
+				
 		return list;
 	}
 

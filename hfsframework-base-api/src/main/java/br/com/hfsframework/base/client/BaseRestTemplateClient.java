@@ -2,7 +2,6 @@ package br.com.hfsframework.base.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,12 +15,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,10 +24,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.hfsframework.base.security.BaseRestUser;
-import br.com.hfsframework.util.MediaTypeUtil;
+import br.com.hfsframework.util.HttpMessageConverterUtil;
 import br.com.hfsframework.util.interceptors.BaseHeaderRequestInterceptor;
 
 public abstract class BaseRestTemplateClient {
@@ -49,31 +42,7 @@ public abstract class BaseRestTemplateClient {
 			return "############" + this.name() + "############";
 		}
 	} 	
-	
-    private HttpMessageConverter<Object> createMappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-        return converter;
-    }
-    
-    private HttpMessageConverter<Object> createXmlHttpMessageConverter() {
-        MarshallingHttpMessageConverter xmlConverter = 
-          new MarshallingHttpMessageConverter();
- 
-        XStreamMarshaller xstreamMarshaller = new XStreamMarshaller();
-        xmlConverter.setMarshaller(xstreamMarshaller);
-        xmlConverter.setUnmarshaller(xstreamMarshaller);
- 
-        return xmlConverter;
-    }
-    
-    private ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
-        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-        arrayHttpMessageConverter.setSupportedMediaTypes(MediaTypeUtil.getByteArrayMediaTypes());
-        return arrayHttpMessageConverter;
-    }
-    
+   
 	protected String json(Object o) throws IOException {
 	    MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
 	    mappingJackson2HttpMessageConverter.write(
@@ -113,6 +82,7 @@ public abstract class BaseRestTemplateClient {
 		return token;
 	}
 		
+	@SuppressWarnings("unchecked")
 	protected RestTemplate restTemplate(String sAccesToken) throws RestClientException {
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
@@ -122,10 +92,8 @@ public abstract class BaseRestTemplateClient {
 		RestTemplate rt = new RestTemplate();
 		rt.setInterceptors(interceptors);
 
-		mappingJackson2HttpMessageConverter = createMappingJackson2HttpMessageConverter(); 
-		rt.getMessageConverters().add(mappingJackson2HttpMessageConverter);
-		rt.getMessageConverters().add(createXmlHttpMessageConverter());
-		rt.getMessageConverters().add(byteArrayHttpMessageConverter());
+		rt.getMessageConverters().addAll(HttpMessageConverterUtil.getMessageConverters());
+		mappingJackson2HttpMessageConverter = (HttpMessageConverter<Object>) rt.getMessageConverters().get(0);
 		
 		return rt; 
 	}
@@ -161,7 +129,6 @@ public abstract class BaseRestTemplateClient {
 			String login, String password) {
 		
 		List<String> listRoles = new ArrayList<String>();
-		//listRoles.add("ROLE_USER");
 		String[] roles = new String[listRoles.size()];
 		//String csenha = BCrypt.hashpw(password, BCrypt.gensalt());
 		BaseRestUser baseUser = new BaseRestUser(login, password, 

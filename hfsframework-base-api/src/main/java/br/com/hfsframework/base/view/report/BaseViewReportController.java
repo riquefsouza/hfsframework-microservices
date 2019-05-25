@@ -19,7 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -31,8 +30,7 @@ import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.util.pdf.PdfException;
 import br.com.hfsframework.util.pdf.PdfUtil;
 
-@Component
-public class BaseViewReportController
+public abstract class BaseViewReportController
 		extends BaseViewController implements Serializable {
 	
 	/** The Constant serialVersionUID. */

@@ -12,8 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
-import br.com.hfsframework.util.CookieUtil;
-
 public class BaseLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler implements LogoutSuccessHandler {
 
 	public static final Logger log = LoggerFactory.getLogger(BaseLogoutSuccessHandler.class);
@@ -29,13 +27,14 @@ public class BaseLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler impl
 		
 		log.info("Referer URL: " + refererUrl);
 		
+		/*
 		if (CookieUtil.getValue(request, CookieUtil.URL_AUTH_SERVER).isPresent()) {
 			CookieUtil.remove(response, CookieUtil.URL_AUTH_SERVER);
 		}
 		if (CookieUtil.getValue(request, CookieUtil.AUTH_TOKEN).isPresent()) {
 			CookieUtil.remove(response, CookieUtil.AUTH_TOKEN);
 		}
-		
+		*/
 
 		super.onLogoutSuccess(request, response, authentication);
 	}

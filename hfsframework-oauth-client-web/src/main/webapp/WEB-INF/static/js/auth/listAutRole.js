@@ -2,12 +2,13 @@ class ListAutRole {
 	constructor()
 	{
 		this._url = window.location.href;
-		this._urlAuthServer = HFSSystemUtil.getCookie("URL-AUTH-SERVER");
-		this._authToken = HFSSystemUtil.getCookie("X-AUTH-TOKEN");
+		this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
+		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
 		//$('#spinner').toggle();
-				
+		
+		this._anchorHomePage = $('#anchorHomePage');
 		this._alertMessages = $('#alert-messages');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
@@ -45,37 +46,13 @@ class ListAutRole {
 	btnExportClick(event) {
 		event.preventDefault();
 		
-		//window.location.href=this._url.replace("/list", "/export");
-
-		/*
-		var reportParams = {
-			reportType: this._cmbReportType.val(),
-			forceDownload: this._forceDownload[0].checked, 
-			reportName: "AutRole"
-		}
-			
-		var params = JSON.stringify(reportParams);
-		*/
+		var sUrl = this._url.replace("/list", "/export");
+		//sUrl += "/" + this._cmbReportType.val() + "/" + this._forceDownload[0].checked;
+		sUrl += "?reportType=" + this._cmbReportType.val() + "&forceDownload=" + this._forceDownload[0].checked + "&params=1,2,3";
 		
-		console.log(this._urlApiServer + "/report");
-		
-		$.ajax({
-			method: "GET",
-			url: this._urlApiServer + "/report",
-			//dataType: "json",
-			contentType: "application/pdf",								
-	        context: this,
-	        beforeSend: function (xhr) {
-	            xhr.setRequestHeader("Authorization", "Bearer " + this._authToken);
-	        }
-		})
-		.done(function(data, status) {
-			//			
-		})
-		.fail(function(xhr, textStatus, msg){
-			alert("An error occured on export: " + xhr.status + " " + xhr.statusText);
-	    });
-
+		//window.location.href=sUrl;
+		window.open(sUrl,'_blank');
+		//console.log(sUrl);
 	}
 	
 	btnAddClick(event) {
@@ -143,7 +120,9 @@ class ListAutRole {
 		        		        }
 		        			})
 		        			.done(function(data) {
-		        				//alert(data);			        		        
+		        				//alert(data);
+		        				tableList.puidatatable('reload');
+		        				dlgDeleteConfirmation.puidialog('hide');
 			            	})
 			    			.fail(function(xhr){
 	        		            alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -151,8 +130,6 @@ class ListAutRole {
 
 		            	}
 		            	
-		                dlgDeleteConfirmation.puidialog('hide');
-		                tableList.puidatatable('reload');
 		            }
 		        },
 		        {
@@ -181,8 +158,7 @@ class ListAutRole {
 
 	btnBackClick(event) {
 		event.preventDefault();
-		//window.location.href='/';
-		window.history.back();
+		this._anchorHomePage[0].click();
 	}
 	
 	buildTable(urlApiServer, authToken, responsePage) {
@@ -252,7 +228,7 @@ class ListAutRole {
 $(function() {
 	const listAutRole = new ListAutRole();
 	
-	//$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
+	$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
 	$('#btnAdd').click(listAutRole.btnAddClick.bind(listAutRole));
 	$('#btnEdit').click(listAutRole.btnEditClick.bind(listAutRole));
 	$('#btnDelete').click(listAutRole.btnDeleteClick.bind(listAutRole));

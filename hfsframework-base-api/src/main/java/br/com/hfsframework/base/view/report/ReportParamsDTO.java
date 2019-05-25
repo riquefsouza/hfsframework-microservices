@@ -1,5 +1,8 @@
 package br.com.hfsframework.base.view.report;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 public class ReportParamsDTO {
@@ -12,7 +15,14 @@ public class ReportParamsDTO {
 
 	@NotBlank
 	private String reportName;
+	
+	private List<String> params;
 
+	public ReportParamsDTO() {
+		super();
+		this.params = new ArrayList<String>();
+	}
+	
 	public String getReportType() {
 		return reportType;
 	}
@@ -37,10 +47,18 @@ public class ReportParamsDTO {
 		this.reportName = reportName;
 	}
 
+	public List<String> getParams() {
+		return params;
+	}
+
+	public void setParams(List<String> params) {
+		this.params = params;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportParamsDTO [reportType=" + reportType + ", forceDownload=" + forceDownload + ", reportName="
-				+ reportName + "]";
+				+ reportName + ", params=" + params + "]";
 	}
 	
 }

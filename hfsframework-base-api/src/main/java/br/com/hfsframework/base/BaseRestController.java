@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,22 +29,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import br.com.hfsframework.base.report.BaseReportImpl;
 import br.com.hfsframework.base.report.IBaseReport;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
+import br.com.hfsframework.base.view.report.ReportParamsDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
 public abstract class BaseRestController<T, I extends Serializable, 
-	S extends IBaseBusinessService<T, I, ? extends JpaRepository<T, I>>> {
+	S extends IBaseBusinessService<T, I, ? extends JpaRepository<T, I>>> 
+	extends BaseViewReportController {
 
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+	
 	/** The log. */
 	protected Logger log = LoggerFactory.getLogger(BaseRestController.class);
 
 	/** The servico. */
 	@Autowired
 	protected S servico;
-
-	@Autowired
-	private BaseViewReportController reportController;
 
 	public S getServico() {
 		return servico;
@@ -162,37 +167,25 @@ public abstract class BaseRestController<T, I extends Serializable,
 		//return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 
-	/*
 	@ApiOperation("Export Report")
-	@GetMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void report(@RequestBody ReportParamsDTO reportParamsDTO)  {
+	@PostMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ByteArrayResource> report(HttpServletRequest request, @RequestBody ReportParamsDTO reportParamsDTO) {
 
-		Map<String, Object> params = reportController.getParametros();
+		Map<String, Object> params = this.getParametros();
 		params.put("PARAMETER1", "");
 
 		IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
 		
-		reportController.export(report, servico.getAll(), 
-				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), true);		
-	}
-	*/
-	
-	@ApiOperation("Export Report")
-	//@GetMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_PDF_VALUE)
-	@GetMapping(value = "/report", produces = MediaType.APPLICATION_PDF_VALUE)
-	@ResponseBody
-	public byte[] report()  {	
-
-		Map<String, Object> params = reportController.getParametros();
-		params.put("PARAMETER1", "");
-
-		//IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
-		IBaseReport report = new BaseReportImpl("AutRole");
+		byte[] data = this.export(report, servico.getAll(), 
+				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);			
 		
-		return reportController.export(report, servico.getAll(), params, true, true);
-				//params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), true);		
-	    
+		ByteArrayResource resource = new ByteArrayResource(data);
+
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + reportParamsDTO.getReportName())
+				.contentType(MediaType.APPLICATION_PDF)
+				.contentLength(data.length)
+				.body(resource);
 	}
-	
 
 }

@@ -84,7 +84,7 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.logout()
 		.logoutUrl("/perform_logout")
-		.deleteCookies(CookieUtil.JSESSIONID, CookieUtil.URL_AUTH_SERVER, CookieUtil.AUTH_TOKEN)
+		.deleteCookies(CookieUtil.JSESSIONID)
 		.logoutSuccessHandler(logoutSuccessHandler())
         .and()
         //.exceptionHandling().accessDeniedPage("/accessDenied");

@@ -2,27 +2,20 @@ package br.com.hfsframework.base.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
-import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.web.client.RestClientException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
-import br.com.hfsframework.util.MediaTypeUtil;
+import br.com.hfsframework.util.HttpMessageConverterUtil;
 
 public abstract class BaseOAuth2RestTemplateClient {
 	
@@ -38,30 +31,6 @@ public abstract class BaseOAuth2RestTemplateClient {
 			return "############" + this.name() + "############";
 		}
 	} 	
-	
-    private HttpMessageConverter<Object> createMappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-        return converter;
-    }
-    
-    private HttpMessageConverter<Object> createXmlHttpMessageConverter() {
-        MarshallingHttpMessageConverter xmlConverter = 
-          new MarshallingHttpMessageConverter();
- 
-        XStreamMarshaller xstreamMarshaller = new XStreamMarshaller();
-        xmlConverter.setMarshaller(xstreamMarshaller);
-        xmlConverter.setUnmarshaller(xstreamMarshaller);
- 
-        return xmlConverter;
-    }
-    
-    private ByteArrayHttpMessageConverter byteArrayHttpMessageConverter() {
-        ByteArrayHttpMessageConverter arrayHttpMessageConverter = new ByteArrayHttpMessageConverter();
-        arrayHttpMessageConverter.setSupportedMediaTypes(MediaTypeUtil.getByteArrayMediaTypes());
-        return arrayHttpMessageConverter;
-    }
     
 	protected String json(Object o) throws IOException {
 	    MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
@@ -70,6 +39,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 	    return mockHttpOutputMessage.getBodyAsString();
 	}    
 
+	@SuppressWarnings("unchecked")
 	private OAuth2RestTemplate restTemplate(String server, String clientId, String clientSecret, 
 			String login, String password) throws RestClientException {
 		
@@ -89,10 +59,8 @@ public abstract class BaseOAuth2RestTemplateClient {
 		resourceDetails.setPassword(password.trim());
 
 		OAuth2RestTemplate rt = new OAuth2RestTemplate(resourceDetails);
-		mappingJackson2HttpMessageConverter = createMappingJackson2HttpMessageConverter(); 
-		rt.getMessageConverters().add(mappingJackson2HttpMessageConverter);
-		rt.getMessageConverters().add(createXmlHttpMessageConverter());
-		rt.getMessageConverters().add(byteArrayHttpMessageConverter());
+		rt.getMessageConverters().addAll(HttpMessageConverterUtil.getMessageConverters());
+		mappingJackson2HttpMessageConverter = (HttpMessageConverter<Object>) rt.getMessageConverters().get(0);
 		
 		return rt;
 	}
@@ -119,7 +87,6 @@ public abstract class BaseOAuth2RestTemplateClient {
 			String login, String password) {
 		
 		List<String> listRoles = new ArrayList<String>();
-		//listRoles.add("ROLE_USER");
 		String[] roles = new String[listRoles.size()];
 		//String csenha = BCrypt.hashpw(password, BCrypt.gensalt());
 		BaseOAuth2RestUser baseUser = new BaseOAuth2RestUser(login, password, 

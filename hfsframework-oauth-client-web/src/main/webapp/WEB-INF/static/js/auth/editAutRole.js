@@ -2,7 +2,8 @@ class EditAutRole {
 	constructor()
 	{
 		this._url = window.location.href;
-		this._authToken = HFSSystemUtil.getCookie("X-AUTH-TOKEN");
+		//this._authToken = HFSSystemUtil.getCookie("X-AUTH-TOKEN");
+		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
 		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
 		

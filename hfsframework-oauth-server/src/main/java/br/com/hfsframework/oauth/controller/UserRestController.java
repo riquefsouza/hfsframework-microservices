@@ -22,6 +22,8 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/api/v1/user")
 public class UserRestController extends BaseRestController<User, Long, UserService> {
 
+	private static final long serialVersionUID = 1L;
+	
 	@InitBinder("newUserDTO")
 	public void init(WebDataBinder binder) {
 		binder.addValidators(new UsernameAndPasswordDifferentValidator(), new NewUserValidator(this.getServico()));

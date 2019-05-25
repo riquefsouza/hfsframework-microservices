@@ -42,7 +42,9 @@ public class BaseOAuth2AuthenticationProvider extends BaseOAuth2RestTemplateClie
 	        BaseOAuth2RestUser user = this.login(env, projectId, username, password);
 	        
             if (user == null) {
-                throw new UsernameNotFoundException(String.format(URLEncoder.encode("Invalid username or password", "UTF-8"), authentication.getPrincipal()));
+                throw new UsernameNotFoundException(
+                		String.format(URLEncoder.encode("Invalid username or password", "UTF-8"), 
+                				authentication.getPrincipal()));
             }
 
 			if (user.isAuthenticated()) {

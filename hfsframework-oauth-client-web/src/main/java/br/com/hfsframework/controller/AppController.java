@@ -1,11 +1,15 @@
 package br.com.hfsframework.controller;
 
+import java.util.Optional;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 
 @Controller
 @RequestMapping("/")
@@ -27,20 +31,42 @@ public class AppController {
 	
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
-		model.addAttribute("loggedinuser", getPrincipal());
+		
+		if (getPrincipal().isPresent()) {
+			model.addAttribute("loggedinuser", getPrincipal().get().getUsername());
+		}
+		
 		return "accessDenied";
 	}
 
 	/*
 	@RequestMapping(value = "/perform_login", method = RequestMethod.GET)
 	public String loginPage() {
-		if (isCurrentAuthenticationAnonymous()) {
-			return "login";
-	    } else {
-	    	return "redirect:/list";  
-	    }
+		//if (isCurrentAuthenticationAnonymous()) {
+			//return "login";
+	    //} else {
+	    	//return "redirect:/list";  
+	    //}
+		
+		return "homepage";
 	}
 	*/
+	
+	private Optional<BaseOAuth2RestUser> getPrincipal() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null){ 
+			Object principal = authentication.getPrincipal();
+			
+			if (principal instanceof BaseOAuth2RestUser) {
+				BaseOAuth2RestUser userLogged = (BaseOAuth2RestUser) principal;
+				//String sUrlAuthServer = userLogged.getUrlAuthorizationServer();
+				//String sToken = userLogged.getAccessToken().getValue();
+				
+				return Optional.of(userLogged);
+			}
+		}
+		return Optional.empty();
+	}
 	
 	/*
 	@RequestMapping(value="/perform_logout", method = RequestMethod.GET)
@@ -53,7 +79,6 @@ public class AppController {
 		}
 		return "redirect:/login?logout";
 	}
-	*/
 
 	private String getPrincipal(){
 		String userName = null;
@@ -66,8 +91,7 @@ public class AppController {
 		}
 		return userName;
 	}
-	
-	/*
+		
 	private boolean isCurrentAuthenticationAnonymous() {
 	    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    return authenticationTrustResolver.isAnonymous(authentication);

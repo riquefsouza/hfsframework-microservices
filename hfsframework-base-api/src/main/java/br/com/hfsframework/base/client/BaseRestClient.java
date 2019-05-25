@@ -6,8 +6,12 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
 public class BaseRestClient<T extends BaseEntityRestClient<I>, I> extends BaseRestTemplateClient {
 
@@ -87,5 +91,20 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I> extends BaseRe
 			return false;
 		}
 		return true;
-	}	
+	}
+	
+	public Optional<byte[]> report(ReportParamsDTO reportParamsDTO) {
+		try {
+			ResponseEntity<ByteArrayResource> obj = restTemplate.postForEntity(
+					this.server + "/report", reportParamsDTO, ByteArrayResource.class);
+			
+			return Optional.of(obj.getBody().getByteArray());
+			
+		} catch (RestClientException e) {
+			log.error(e.getMessage());
+		}
+		
+		return Optional.empty();
+	}
+	
 }
