@@ -1,18 +1,22 @@
 package br.com.hfsframework.controller;
 
+import java.util.Locale;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.unbescape.html.HtmlEscape;
 
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 //@SessionAttributes("roles")
 public class AppController {
 
@@ -29,6 +33,54 @@ public class AppController {
 	}
 	*/
 	
+	@RequestMapping("/")
+    public String root(Locale locale) {
+        return "redirect:/index.html";
+    }
+
+    /** Home page. */
+    @RequestMapping("/index.html")
+    public String index() {
+        return "index";
+    }
+    
+    /** Login form. */
+    @RequestMapping("/login.html")
+    public String login() {
+        return "login";
+    }
+
+    /** Login form with error. */
+    @RequestMapping("/login-error.html")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login";
+    }
+    
+    /** Error page. */
+    @RequestMapping("/error.html")
+    public String error(HttpServletRequest request, Model model) {
+        model.addAttribute("errorCode", "Error " + request.getAttribute("javax.servlet.error.status_code"));
+        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+        StringBuilder errorMessage = new StringBuilder();
+        errorMessage.append("<ul>");
+        while (throwable != null) {
+            errorMessage.append("<li>").append(HtmlEscape.escapeHtml5(throwable.getMessage())).append("</li>");
+            throwable = throwable.getCause();
+        }
+        errorMessage.append("</ul>");
+        model.addAttribute("errorMessage", errorMessage.toString());
+        return "error";
+    }
+
+    /** Error page. */
+    @RequestMapping("/403.html")
+    public String forbidden() {
+        return "403";
+    }
+    
+	
+	/*
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		
@@ -38,7 +90,7 @@ public class AppController {
 		
 		return "accessDenied";
 	}
-
+*/
 	/*
 	@RequestMapping(value = "/perform_login", method = RequestMethod.GET)
 	public String loginPage() {

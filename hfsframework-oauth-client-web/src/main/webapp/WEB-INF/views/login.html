@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	lang="en-US">
 <head th:replace="fragments/header :: header">
 </head>	
@@ -11,14 +11,9 @@
   		<a class="navbar-brand" href="">HFS Framework</a>
 	</nav>
 
-	<div th:if="${param.error}" class="alert alert-danger alert-dismissible">
+	<div th:if="${loginError}" class="alert alert-danger alert-dismissible">
   		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	Username or password is invalid.
-	</div>
-	
-	<div th:if="${param.logout}" class="alert alert-info alert-dismissible">
-  		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	You left the system.
+	  	Wrong user or password!
 	</div>
 	
 	<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
@@ -27,7 +22,7 @@
 				<div class="card-header" style="font-weight: normal;">Authenticate</div>
 				<div class="card-body">
 				
-					<form name="formLogin" th:action="@{/perform_login}" method="POST">
+					<form name="formLogin" th:action="@{/login.html}" method="POST">
 								
 						<div class="form-group">
 							<label for="username">User:</label>

@@ -27,11 +27,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 
@@ -43,7 +43,11 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
 
-	public void setApplicationContext(ApplicationContext applicationContext) {
+	public MvcConfig() {
+		super();
+	}
+	
+	public void setApplicationContext(final ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	}
 
@@ -104,9 +108,9 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 	@Bean
 	@Description("Thymeleaf template resolver serving HTML")
-	public ITemplateResolver templateResolver() {
+	public SpringResourceTemplateResolver templateResolver() {
 		SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-		resolver.setApplicationContext(applicationContext);
+		resolver.setApplicationContext(this.applicationContext);
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setTemplateMode(TemplateMode.HTML);
 		resolver.setSuffix(".html");
@@ -121,6 +125,7 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 		SpringTemplateEngine engine = new SpringTemplateEngine();
 		engine.setEnableSpringELCompiler(true);
 		engine.setTemplateResolver(templateResolver());
+		engine.addDialect(new SpringSecurityDialect());
 		return engine;
 	}
 
@@ -136,7 +141,7 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/anonymous.html");
 		registry.addViewController("/login.html");
-		registry.addViewController("/homepage.html");
+		registry.addViewController("/index.html");
 		registry.addViewController("/accessDenied");
 
 		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);

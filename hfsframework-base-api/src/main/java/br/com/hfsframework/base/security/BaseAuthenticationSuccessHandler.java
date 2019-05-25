@@ -18,7 +18,7 @@ public class BaseAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 	public static final Logger log = LoggerFactory.getLogger(BaseAuthenticationSuccessHandler.class);
 			
 	public BaseAuthenticationSuccessHandler() {
-		super("/homepage.html");
+		super("/index.html");
 		setAlwaysUseDefaultTargetUrl(true);
 	}
 		
@@ -55,8 +55,7 @@ public class BaseAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 		}
 
 		super.onAuthenticationSuccess(request, response, authentication);
-		
-		//response.sendRedirect(request.getContextPath() + "/homepage.html");
+
 	}
 
 }

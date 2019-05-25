@@ -24,7 +24,11 @@
 		<maven.mojo.plugin>3.0.0</maven.mojo.plugin>
 		<maven.resources.plugin>3.1.0</maven.resources.plugin>
 		
-		<org.springframework.version>5.1.6.RELEASE</org.springframework.version>		
+		<org.springframework.version>5.1.6.RELEASE</org.springframework.version>
+		
+		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+    	<thymeleafspringsecurity5.version>3.0.4.RELEASE</thymeleafspringsecurity5.version>		
+				
 		<jackson.version>2.9.8</jackson.version>
 		
 		<spring-data-jpa.version>2.1.6.RELEASE</spring-data-jpa.version>
@@ -67,15 +71,15 @@
 		<!-- #################### THYMELEAF #################### -->
 
 		<dependency>
-		    <groupId>org.thymeleaf.extras</groupId>
-		    <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-		    <version>3.0.4.RELEASE</version>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring5</artifactId>
+			<version>${thymeleaf.version}</version>
 		</dependency>
-		
+	
 		<dependency>
-		    <groupId>org.thymeleaf</groupId>
-		    <artifactId>thymeleaf-spring5</artifactId>
-		    <version>3.0.11.RELEASE</version>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<version>${thymeleafspringsecurity5.version}</version>
 		</dependency>
 		
 		<dependency>
