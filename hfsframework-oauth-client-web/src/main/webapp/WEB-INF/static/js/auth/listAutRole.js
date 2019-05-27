@@ -1,15 +1,16 @@
 class ListAutRole extends HFSSystemUtil {
 	constructor()
 	{
+		super();
+		
 		//this._url = window.location.href;
 		//this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
 		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
-				
 		//this._anchorHomePage = $('#anchorHomePage');
 		//this._alertInfoMessage = $('#alert-info-message');
 		//this._alertErrorMessage = $('#alert-error-message');
+		
+		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');

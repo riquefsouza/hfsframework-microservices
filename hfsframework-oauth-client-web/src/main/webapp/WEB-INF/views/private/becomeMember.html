@@ -8,31 +8,43 @@
 <body>
 
 	<div id="dlgBecomeMember" th:title="#{dlgBecomeMember.title}" style="display: none;">
-	    <p><span th:text="#{dlgBecomeMember.text}" th:remove="tag"></span></p>
 	    
-		<div class="row">
-			<div class="col-md-6 form-group">
+	    <div class="container-fluid" style="margin: 0 auto; width:350px; position: float;">    
+			
+			<div class="form-group">
 				<label for="dlgBecomeMember_username"><span th:text="#{login.username}" th:remove="tag"></span></label>
-				<input type="text" class="form-control" id="dlgBecomeMember_username">
+				<input type="text" class="form-control" id="dlgBecomeMember_username" th:placeholder="#{login.username.placeholder}">
 			</div>
-			<div class="row">
-				<div class="col-md-6 form-group">
-					<label for="dlgBecomeMember_newPassword"><span th:text="#{login.password}" th:remove="tag"></span></label>
-					<input type="password" class="form-control" id="dlgBecomeMember_newPassword">
+			
+		
+			<div class="form-group">
+				<label for="dlgBecomeMember_email"><span th:text="#{dlgBecomeMember.email}" th:remove="tag"></span></label>
+				<input type="email" class="form-control" id="dlgBecomeMember_email">
+			</div>
+		
+			<div class="form-group">
+				<label for="dlgBecomeMember_newPassword"><span th:text="#{login.password}" th:remove="tag"></span></label>
+				<input type="password" class="form-control" id="dlgBecomeMember_newPassword" th:placeholder="#{login.password.placeholder}">
+			</div>
+		
+			<div class="form-group">
+				<label for="dlgBecomeMember_confirmNewPassword"><span th:text="#{changePassword.confirmNewPassword}" th:remove="tag"></span></label>
+				<input type="password" class="form-control" id="dlgBecomeMember_confirmNewPassword">
+			</div>
+		
+			<div class="form-group">
+				<div style="margin: 0 auto; width:40%">
+					<button type="button" class="btn btn-primary btn-icon-split" id="dlgBecomeMember_btnBecomeMember">
+						<span class="icon text-white-50">
+							<i class="fa fa-sign-in" aria-hidden="true"></i>
+						</span>
+						<span class="text" th:text="#{login.becomeMember}"></span>
+					</button>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6 form-group">
-					<label for="dlgBecomeMember_confirmNewPassword"><span th:text="#{changePassword.confirmNewPassword}" th:remove="tag"></span></label>
-					<input type="password" class="form-control" id="dlgBecomeMember_confirmNewPassword">
-				</div>
-			</div>
-		</div>
-		<button type="button" class="btn btn-primary btn-icon-split" id="btnBecomeMember">
-			<span class="text" th:text="#{login.becomeMember}"></span>
-		</button>			
-	    
-	    
+						
+	    </div>
+			    	    
 	</div>
 
 </body>

@@ -111,7 +111,7 @@ public class AutRoleController extends BaseViewReportController implements IBase
 	
 	@ModelAttribute("listReportType")
 	public List<ReportGroupVO> getListReportType() {
-		return this.getListReportType();
+		return super.getListReportType();
 	}
 
 	public String getListPage() {

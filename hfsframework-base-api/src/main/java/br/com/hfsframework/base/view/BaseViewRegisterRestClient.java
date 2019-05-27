@@ -117,7 +117,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	
 	@ModelAttribute("listReportType")
 	public List<ReportGroupVO> getListReportType() {
-		return this.getListReportType();
+		return super.getListReportType();
 	}
 
 	public String getListPage() {

@@ -1,13 +1,15 @@
-class EditAutUser {
+class EditAutUser extends HFSSystemUtil {
 	constructor()
 	{
-		this._url = window.location.href;
-		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
-		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
+		super();
 		
-		this._alertInfoMessage = $('#alert-info-message');
-		this._alertErrorMessage = $('#alert-error-message');
+		//this._url = window.location.href;
+		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
+		//this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
+		//this._alertInfoMessage = $('#alert-info-message');
+		//this._alertErrorMessage = $('#alert-error-message');
+		
+		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
 		
 		this._autUserId = $('#autUser_id');
 		this._autUserName = $('#autUser_username');

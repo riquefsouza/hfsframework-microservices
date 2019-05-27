@@ -1,6 +1,8 @@
 class HFSLogin extends HFSSystemUtil {
 	constructor()
 	{		
+		super();
+		
 		this._anchorForgotPassword = $('#anchorForgotPassword');
 		
 		this._dlgForgotPassword = $('#dlgForgotPassword');
@@ -15,29 +17,21 @@ class HFSLogin extends HFSSystemUtil {
 		
 		this._dlgForgotPassword.puidialog('show');
 	}
-	
+
+	dlgForgotPasswordBtnSendClick(event) {
+		event.preventDefault();
+		
+		this._dlgForgotPassword.puidialog('hide');
+	}
+
 	buildDlgForgotPassword(dlgForgotPassword){
 		this._dlgForgotPassword.puidialog({
 		    minimizable: false,
 		    maximizable: false,
+		    resizable: false,
 		    responsive: true,
 		    minWidth: 200,
-		    modal: true,
-		    buttons: [{
-		            text: 'Yes',
-		            icon: 'fa-check',
-		            click: function() {
-		            	dlgForgotPassword.puidialog('hide');
-		            }
-		        },
-		        {
-		            text: 'No',
-		            icon: 'fa-close',
-		            click: function() {
-		            	dlgForgotPassword.puidialog('hide');
-		            }
-		        }
-		    ]
+		    modal: true
 		});			
 	}
 		
@@ -52,26 +46,17 @@ class HFSLogin extends HFSSystemUtil {
 		    minimizable: false,
 		    maximizable: false,
 		    responsive: true,
-		    minWidth: 200,
-		    modal: true,
-		    buttons: [{
-		            text: 'Yes',
-		            icon: 'fa-check',
-		            click: function() {
-		            	dlgBecomeMember.puidialog('hide');
-		            }
-		        },
-		        {
-		            text: 'No',
-		            icon: 'fa-close',
-		            click: function() {
-		            	dlgBecomeMember.puidialog('hide');
-		            }
-		        }
-		    ]
+		    width: 400,
+		    modal: true
 		});	
 	}
-
+	
+	dlgBecomeMemberBtnBecomeMemberClick(event) {
+		event.preventDefault();
+		
+		this._dlgBecomeMember.puidialog('hide');
+	}
+	
 }
 
 $(function() {
@@ -79,5 +64,8 @@ $(function() {
 	
 	$('#anchorForgotPassword').click(hfsLogin.anchorForgotPasswordClick.bind(hfsLogin));
 	$('#btnBecomeMember').click(hfsLogin.btnBecomeMemberClick.bind(hfsLogin));
+	
+	$('#dlgBecomeMember_btnBecomeMember').click(hfsLogin.dlgBecomeMemberBtnBecomeMemberClick.bind(hfsLogin));
+	$('#dlgForgotPassword_btnSend').click(hfsLogin.dlgForgotPasswordBtnSendClick.bind(hfsLogin));
 	
 });

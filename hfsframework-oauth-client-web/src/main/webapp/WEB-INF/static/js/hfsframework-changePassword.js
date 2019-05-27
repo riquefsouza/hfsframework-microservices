@@ -1,6 +1,8 @@
 class HFSChangePassword extends HFSSystemUtil {
 	constructor()
 	{
+		super();
+		
 		this._anchorHomePage = $('#anchorHomePage');
 		
 		this._changePassword = $('#changePassword');

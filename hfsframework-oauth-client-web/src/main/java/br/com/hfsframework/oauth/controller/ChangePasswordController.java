@@ -1,6 +1,7 @@
 package br.com.hfsframework.oauth.controller;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -37,10 +38,15 @@ public class ChangePasswordController extends BaseViewController implements Seri
 
 	@GetMapping("/list")
 	public ModelAndView list() {
-		this.userLogged = restClient.getLoggedUser(getPrincipal());
-		ModelAndView mv = new ModelAndView(getListPage());
-		mv.addObject("bean", userLogged);
-		return mv;
+		Optional<ModelAndView> mv = getPage(getListPage());
+		
+		if (mv.isPresent()) {
+			restClient = new UserRestClient(authServerURL, accesToken);
+			this.userLogged = restClient.getLoggedUser(getPrincipal());
+			mv.get().addObject("bean", userLogged);
+		}
+		
+		return mv.get();
 	}
 	
 	public boolean prepararParaSalvar(User obj, RedirectAttributes attributes) {

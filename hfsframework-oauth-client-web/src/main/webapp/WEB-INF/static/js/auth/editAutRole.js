@@ -1,14 +1,16 @@
-class EditAutRole {
+class EditAutRole extends HFSSystemUtil {
 	constructor()
 	{
-		this._url = window.location.href;
-
-		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
-		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
+		super();
 		
-		this._alertInfoMessage = $('#alert-info-message');
-		this._alertErrorMessage = $('#alert-error-message');
+		//this._url = window.location.href;
+
+		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
+		//this._alertInfoMessage = $('#alert-info-message');
+		//this._alertErrorMessage = $('#alert-error-message');
+
+		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
+		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");	
 
 		this._autRoleId = $('#autRole_id');
 		this._autRoleName = $('#autRole_name');
