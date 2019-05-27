@@ -202,10 +202,10 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 	        if (!contemErro.isEmpty() && !mensagemErro.isEmpty()){
 	            if (e.getCause().toString().contains(contemErro)) {
 	                //generateErrorMessage(e, ERRO_DELETE + mensagemErro);
-	                addMessageAlertaDialog(mensagemErro);
+	                addMessageWarnDialog(mensagemErro);
 	            }                
 	        } else if (!mensagemErro.isEmpty()){
-	            addMessageAlertaDialog(mensagemErro);
+	            addMessageWarnDialog(mensagemErro);
 	        } else {
 	            generateErrorMessage(e, ERRO_DELETE);
 	        }

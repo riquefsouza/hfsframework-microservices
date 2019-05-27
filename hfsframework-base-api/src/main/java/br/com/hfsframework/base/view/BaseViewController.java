@@ -52,6 +52,36 @@ public abstract class BaseViewController {
 		attributes.addFlashAttribute("errorMessage", e.getMessage());
 	}
 
+	public void generateErrorMessage(String mensagem) {
+	}
+
+	public void generateErrorMessage(Exception e, String mensagem) {
+	}
+
+	public void generateInfoMessage(String mensagem) {
+	}
+
+	public void gerarMensagemAviso(String mensagem) {
+	}
+
+	public void generateErrorMessage(Exception e, String mensagem, String clientId) {
+	}
+
+	public void generateInfoMessage(String mensagem, String clientId) {
+	}
+
+	public void generateWarnMessage(String mensagem, String clientId) {
+	}
+	
+	public static void addMessageInfoDialog(String mensagem) {
+	}
+
+	public static void addMessageWarnDialog(String mensagem) {
+	}
+
+	public static void addMessageErrorDialog(Exception e, String mensagem) {
+	}
+		
 	public HttpSession getSession() {
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    return attr.getRequest().getSession();
