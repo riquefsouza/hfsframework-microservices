@@ -5,32 +5,22 @@
 <body>
 <div th:fragment="infoUser">
 
-<!-- 
 <script>
 	$(document).ready(function(){
-		 $.ajax({
-		        url: "/sistemaMB"
+		 $.ajax({			 
+		        url: $('#anchorHomePage')[0] + "/private/infouser"
 		    }).then(function(data) {
-				$('.infoUser-nome').empty();
-				$('.infoUser-ip').empty();
-				$('.infoUser-matricula').empty();
-				$('.infoUser-login').empty();
-				$('.infoUser-cpf').empty();
-				$('.infoUser-data').empty();
+				$('.infoUser-username').empty();
 				$('.infoUser-email').empty();
-				
-				$('.infoUser-nome').append(data.nome);
-				$('.infoUser-ip').append(data.ip);
-				$('.infoUser-matricula').append(data.matricula);
-				$('.infoUser-login').append(data.login);
-				$('.infoUser-cpf').append(data.cpfFormatado);
-				$('.infoUser-data').append(data.dataFormatada);
+				$('.infoUser-roles').empty();
+								
+				$('.infoUser-username').append(data.username);
 				$('.infoUser-email').append(data.email);
+				$('.infoUser-roles').append(data.roles);
 		    });        
 	});
 </script>
- -->
- 
+
 <form id="infoUserForm">
 
 	<div id="infoUserDialog" class="modal fade" role="dialog">
@@ -46,32 +36,16 @@
 			<table class="table table-bordered table-condensed">
 				<tbody>
 					<tr>
-						<td style="font-weight: bold;">Name:</td>
-						<td class="infoUser-nome"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">IP:</td>
-						<td class="infoUser-ip"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">Registration:</td>
-						<td class="infoUser-matricula"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">Login:</td>
-						<td class="infoUser-login"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">CPF:</td>
-						<td class="infoUser-cpf"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">Date First Login:</td>
-						<td class="infoUser-data"></td>
+						<td style="font-weight: bold;">Username:</td>
+						<td class="infoUser-username"></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;">E-mail:</td>
 						<td class="infoUser-email"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;">Roles:</td>
+						<td class="infoUser-roles"></td>
 					</tr>
 				</tbody>
 			</table>

@@ -28,7 +28,7 @@ import br.com.hfsframework.base.security.BaseRestUser;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 import br.com.hfsframework.util.interceptors.BaseHeaderRequestInterceptor;
 
-public abstract class BaseRestTemplateClient {
+public class BaseRestTemplateClient {
 
 	private String server, clientId, clientSecret;
 	
@@ -83,7 +83,7 @@ public abstract class BaseRestTemplateClient {
 	}
 		
 	@SuppressWarnings("unchecked")
-	protected RestTemplate restTemplate(String sAccesToken) throws RestClientException {
+	public RestTemplate restTemplate(String sAccesToken) throws RestClientException {
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
 		interceptors.add(new BaseHeaderRequestInterceptor("Authorization", "Bearer " + sAccesToken));

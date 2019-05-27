@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="en-US">
+<head>
+</head>
+<body>
+
+	<div id="dlgBecomeMember" th:title="#{dlgBecomeMember.title}" style="display: none;">
+	    <p><span th:text="#{dlgBecomeMember.text}" th:remove="tag"></span></p>
+	    
+		<div class="row">
+			<div class="col-md-6 form-group">
+				<label for="dlgBecomeMember_username"><span th:text="#{login.username}" th:remove="tag"></span></label>
+				<input type="text" class="form-control" id="dlgBecomeMember_username">
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<label for="dlgBecomeMember_newPassword"><span th:text="#{login.password}" th:remove="tag"></span></label>
+					<input type="password" class="form-control" id="dlgBecomeMember_newPassword">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<label for="dlgBecomeMember_confirmNewPassword"><span th:text="#{changePassword.confirmNewPassword}" th:remove="tag"></span></label>
+					<input type="password" class="form-control" id="dlgBecomeMember_confirmNewPassword">
+				</div>
+			</div>
+		</div>
+		<button type="button" class="btn btn-primary btn-icon-split" id="btnBecomeMember">
+			<span class="text" th:text="#{login.becomeMember}"></span>
+		</button>			
+	    
+	    
+	</div>
+
+</body>
+</html>

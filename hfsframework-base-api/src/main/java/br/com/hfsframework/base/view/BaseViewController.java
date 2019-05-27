@@ -2,17 +2,22 @@ package br.com.hfsframework.base.view;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.security.model.MenuVO;
@@ -28,31 +33,25 @@ public abstract class BaseViewController {
 	
 	protected static final String ERRO_DELETE = "Error Transaction When Excluding: ";
 	
-	public String getDesktopPage(){
-		return "/";
-	}
-
-	public void generateErrorMessage(String message) {
-	}
-
-	public void generateErrorMessage(Exception e, String message) {
-	}
-
-	public void generateInfoMessage(String message) {
-	}
-
-	public void generateWarningMessage(String mensagem) {
-	}
-
-	public static void addMessageInfoDialog(String mensagem) {
-	}
-
-	public static void addMessageAlertaDialog(String mensagem) {
-	}
-
-	public static void addMessageErroDialog(Exception e, String mensagem) {
-	}
+	protected String authServerURL;
 	
+	protected String accesToken;
+	
+	@Autowired
+	private MessageSource messageSource;
+	
+	public String getDesktopPage(){
+		return "/index.html";
+	}
+
+	public void showValidationMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("validationMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showErrorMessage(RedirectAttributes attributes, Exception e) {
+		attributes.addFlashAttribute("errorMessage", e.getMessage());
+	}
+
 	public HttpSession getSession() {
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    return attr.getRequest().getSession();
@@ -120,4 +119,19 @@ public abstract class BaseViewController {
 		}
 		return Optional.empty();
 	}
+	
+	public Optional<ModelAndView> getPage(String pagina) {		
+		if (getPrincipal().isPresent()) {
+			ModelAndView mv = new ModelAndView(pagina);
+
+			this.authServerURL = this.getPrincipal().get().getUrlAuthorizationServer();
+			this.accesToken = this.getPrincipal().get().getAccessToken().getValue();
+		
+			mv.addObject("urlAuthServer", authServerURL);
+			mv.addObject("authToken", accesToken);
+			return Optional.of(mv);
+		}		
+		return Optional.empty();
+	}	
+	
 }

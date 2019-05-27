@@ -1,24 +1,20 @@
 package br.com.hfsframework.controller;
 
 import java.util.Locale;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.unbescape.html.HtmlEscape;
 
-import br.com.hfsframework.base.security.BaseOAuth2RestUser;
+import br.com.hfsframework.base.view.BaseViewController;
 
 @Controller
-//@RequestMapping("/")
+@RequestMapping("/")
 //@SessionAttributes("roles")
-public class AppController {
+public class AppController extends BaseViewController {
 
 	//@Autowired
 	//private PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
@@ -78,14 +74,13 @@ public class AppController {
     public String forbidden() {
         return "403";
     }
-    
 	
-	/*
+    /*
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
 		
 		if (getPrincipal().isPresent()) {
-			model.addAttribute("loggedinuser", getPrincipal().get().getUsername());
+			model.addAttribute("", getPrincipal().get().getUsername());
 		}
 		
 		return "accessDenied";
@@ -103,22 +98,6 @@ public class AppController {
 		return "homepage";
 	}
 	*/
-	
-	private Optional<BaseOAuth2RestUser> getPrincipal() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null){ 
-			Object principal = authentication.getPrincipal();
-			
-			if (principal instanceof BaseOAuth2RestUser) {
-				BaseOAuth2RestUser userLogged = (BaseOAuth2RestUser) principal;
-				//String sUrlAuthServer = userLogged.getUrlAuthorizationServer();
-				//String sToken = userLogged.getAccessToken().getValue();
-				
-				return Optional.of(userLogged);
-			}
-		}
-		return Optional.empty();
-	}
 	
 	/*
 	@RequestMapping(value="/perform_logout", method = RequestMethod.GET)

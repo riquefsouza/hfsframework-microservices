@@ -1,11 +1,12 @@
 package br.com.hfsframework.base.client;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
@@ -13,23 +14,30 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
-public class BaseRestClient<T extends BaseEntityRestClient<I>, I> extends BaseRestTemplateClient {
+public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Serializable> extends BaseRestTemplateClient implements IBaseRestClient<T, I> {
 
-	private static final Logger log = LogManager.getLogger(BaseRestClient.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseRestClient.class);
 	
 	protected List<T> objList = new ArrayList<T>();
 	
-	private RestTemplate restTemplate = null;
+	protected RestTemplate restTemplate;
 	
 	protected String server;
 	
 	private Class<T> classEntity;
 	
-    public BaseRestClient(String server, String sAccesToken, Class<T> classEntity) {
+	public BaseRestClient() {
+		super();
+		restTemplate = null;
+	}
+	
+    public boolean init(String server, String sAccesToken, Class<T> classEntity) {
     	this.server = server;
     	this.classEntity = classEntity;
     	
         restTemplate = restTemplate(sAccesToken);
+        
+        return (restTemplate!=null);
 	}
 	
 	public Optional<T> add(T bean) {

@@ -1,15 +1,26 @@
-<div class="col-md-3 form-group">		
-	<label for="cmbReportType">Choose the type of report:</label>
-	<select class="form-control" id="cmbReportType">
-	 	<optgroup th:each="group : ${listReportType}" th:label="${group.group}">
-	 		<option th:each="option : ${group.types}" th:value="${option}">
-	 			<span th:text="${option.description}" th:remove="tag"></span>
-	 		</option>
-	    </optgroup>
-	</select>
-</div>
-<div class="col-md-3 form-group">
-	<label class="checkbox-inline" for="forceDownload">
-		<input type="checkbox" id="forceDownload"> Force Download
-	</label>
-</div>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="en-US">
+<head>
+</head>
+<body>
+	<div class="col-md-3 form-group">		
+		<label for="cmbReportType">Choose the type of report:</label>
+		<select class="form-control" id="cmbReportType">
+		 	<optgroup th:each="group : ${listReportType}" th:label="${group.group}">
+		 		<option th:each="option : ${group.types}" th:value="${option}">
+		 			<span th:text="${option.description}" th:remove="tag"></span>
+		 		</option>
+		    </optgroup>
+		</select>
+	</div>
+	<div class="col-md-3 form-group">
+		<label class="checkbox-inline" for="forceDownload">
+			<input type="checkbox" id="forceDownload"> Force Download
+		</label>
+	</div>
+</body>
+</html>
+	

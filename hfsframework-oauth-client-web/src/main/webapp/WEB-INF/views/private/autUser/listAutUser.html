@@ -10,12 +10,12 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content" style="margin:5px 0;">
-	<form id="listAutRole">
+	<form id="listAutUser">
 
 		<div class="card">
 			<div class="card-header" 
 				style="font-weight: bold;font-size: large;">
-				Roles
+				Users
 			</div>
 			<div class="card-body">				
 				<div class="row">
@@ -61,11 +61,11 @@
 		    <p><span th:text="#{dlgDeleteConfirmation.text}" th:remove="tag"></span></p>
 		</div>
 
-		<div id="tableAutRole"></div>
+		<div id="tableAutUser"></div>
 	</form>
 </div>
 
-<script th:src="@{/js/auth/listAutRole.js}"></script>
+<script th:src="@{/js/auth/listAutUser.js}"></script>
 
 </body>
 </html>

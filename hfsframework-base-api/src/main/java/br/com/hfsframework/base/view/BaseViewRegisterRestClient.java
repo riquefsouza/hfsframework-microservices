@@ -1,57 +1,63 @@
-package br.com.hfsframework.oauth.controller;
+package br.com.hfsframework.base.view;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.hfsframework.base.client.BaseEntityRestClient;
+import br.com.hfsframework.base.client.BaseRestClient;
+import br.com.hfsframework.base.client.IBaseRestClient;
 import br.com.hfsframework.base.report.ReportGroupVO;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
 import br.com.hfsframework.base.view.report.IBaseViewReport;
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
-import br.com.hfsframework.oauth.client.RoleRestClient;
 
-@Controller
-@RequestMapping(value = "/private/roleView")
-public class AutRoleController extends BaseViewReportController implements IBaseViewReport {
+public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<I>, I extends Serializable,
+	R extends BaseRestClient<T, I>> 
+	extends BaseViewReportController implements IBaseViewReport {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String listPage;
 
 	private String editPage;
 	
-	private RoleRestClient roleRestClient;
+	private String reportName;
+	
+	private IBaseRestClient<T, I> restClient;
+	
+	private Class<T> classEntity;
 	
 	private Boolean forceDownload;
-
-	public AutRoleController() {
+	
+	public BaseViewRegisterRestClient(String listPage, String editPage, String reportName) {
 		super();
 		this.forceDownload = false;
 		
-		log = LoggerFactory.getLogger(AutRoleController.class);
+		log = LoggerFactory.getLogger(BaseViewRegisterRestClient.class);
 		
-		this.listPage = "/private/autRole/listAutRole";
-		this.editPage = "/private/autRole/editAutRole";		
+		this.listPage = listPage;
+		this.editPage = editPage;
+		this.reportName = reportName;		
 	}
 
 	@GetMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(T restClient) {
 		Optional<ModelAndView> mv = getPage(getListPage());
 		
 		if (mv.isPresent()) {
-			this.roleRestClient = new RoleRestClient(authServerURL, accesToken);
+			this.restClient.init(authServerURL, accesToken, classEntity);
 		}
 		
 		return mv.get();
@@ -61,7 +67,7 @@ public class AutRoleController extends BaseViewReportController implements IBase
 	public ModelAndView add() {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		if (mv.isPresent()) {
-			this.roleRestClient = new RoleRestClient(authServerURL, accesToken);
+			this.restClient.init(authServerURL, accesToken, classEntity);
 		}
 		
 		return mv.get();
@@ -71,7 +77,7 @@ public class AutRoleController extends BaseViewReportController implements IBase
 	public ModelAndView edit() {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		if (mv.isPresent()) {
-			this.roleRestClient = new RoleRestClient(authServerURL, accesToken);
+			this.restClient.init(authServerURL, accesToken, classEntity);
 		}
 		
 		return mv.get();
@@ -95,12 +101,12 @@ public class AutRoleController extends BaseViewReportController implements IBase
 			@RequestParam(name = "params", required = false) List<String> params) {
 		
 		ReportParamsDTO reportParamsDTO = new ReportParamsDTO();
-		reportParamsDTO.setReportName("AutRole");
+		reportParamsDTO.setReportName(reportName.isEmpty() ? "report" : reportName);
 		reportParamsDTO.setReportType(reportType);
 		reportParamsDTO.setForceDownload(forceDownload);
 		reportParamsDTO.setParams(params);
 				
-		Optional<byte[]> report = roleRestClient.report(reportParamsDTO);
+		Optional<byte[]> report = this.restClient.report(reportParamsDTO);
 		
 		if (report.isPresent()) {
 			this.export(response, report, reportParamsDTO);
@@ -137,5 +143,5 @@ public class AutRoleController extends BaseViewReportController implements IBase
 	public String cancel() {
 		return getDesktopPage();
 	}
-
+	
 }

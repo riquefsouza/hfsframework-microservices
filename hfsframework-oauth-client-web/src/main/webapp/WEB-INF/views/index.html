@@ -11,10 +11,14 @@
 
 	<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
 	
+	<th:block th:include="private/validationMessage"></th:block>
+	
 	<div class="web-content"></div>
 
 <div sec:authorize="isAuthenticated()">
 
+
+URI: <span th:text="${#httpServletRequest.requestURI}"></span>.
 Established locale country: <span th:text="${#locale.country}"></span>.
 <br>
     Logged user: <span sec:authentication="name">Henrique</span> |

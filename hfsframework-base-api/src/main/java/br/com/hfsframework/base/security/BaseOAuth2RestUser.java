@@ -40,7 +40,6 @@ public class BaseOAuth2RestUser extends User {
 
 	public void setAccessToken(OAuth2AccessToken accessToken) {
 		this.accessToken = accessToken;
-
 	}
 
 	public boolean isAuthenticated() {

@@ -1,19 +1,19 @@
-class ListAutRole extends HFSSystemUtil {
+class ListAutUser {
 	constructor()
 	{
-		//this._url = window.location.href;
-		//this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
-		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
+		this._url = window.location.href;
+		this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
+		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
-				
-		//this._anchorHomePage = $('#anchorHomePage');
-		//this._alertInfoMessage = $('#alert-info-message');
-		//this._alertErrorMessage = $('#alert-error-message');
+		this._urlApiServer = this._urlAuthServer + "/api/v1/user";
 		
+		this._anchorHomePage = $('#anchorHomePage');
+		this._alertInfoMessage = $('#alert-info-message');
+		this._alertErrorMessage = $('#alert-error-message');
+
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAutRole');
+		this._tableList = $('#tableAutUser');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		
 		$.get({
@@ -30,10 +30,9 @@ class ListAutRole extends HFSSystemUtil {
     		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, this._dlgDeleteConfirmation);	        
 		})
 		.fail(function(xhr, textStatus, msg){
-			//alert("An error occured on ListAutRole: " + xhr.status + " " + xhr.statusText);
-			this._alertErrorMessage.html("An error occured on ListAutRole: " + xhr.status + " " + xhr.statusText);
-	    	this._alertErrorMessage.show();
-	    	/*
+			alert("An error occured on ListAutUser: " + xhr.status + " " + xhr.statusText);
+			/*
+	    	this._alertMessages.show();
 	    	setTimeout(function() {
 	    		//this._alertMessages.toggle();
 			}, 1500);
@@ -49,9 +48,12 @@ class ListAutRole extends HFSSystemUtil {
 		event.preventDefault();
 		
 		var sUrl = this._url.replace("/list", "/export");
+		//sUrl += "/" + this._cmbReportType.val() + "/" + this._forceDownload[0].checked;
 		sUrl += "?reportType=" + this._cmbReportType.val() + "&forceDownload=" + this._forceDownload[0].checked + "&params=1,2,3";
 		
+		//window.location.href=sUrl;
 		window.open(sUrl,'_blank');
+		//console.log(sUrl);
 	}
 	
 	btnAddClick(event) {
@@ -119,6 +121,7 @@ class ListAutRole extends HFSSystemUtil {
 		        		        }
 		        			})
 		        			.done(function(data) {
+		        				//alert(data);
 		        				tableList.puidatatable('reload');
 		        				dlgDeleteConfirmation.puidialog('hide');
 			            	})
@@ -161,7 +164,7 @@ class ListAutRole extends HFSSystemUtil {
 	
 	buildTable(urlApiServer, authToken, responsePage) {
 		this._tableList.puidatatable({
-			caption: 'Roles',
+			caption: 'Users',
 			lazy: true,
 			responsive: true,	           
 			selectionMode: 'single',
@@ -224,13 +227,13 @@ class ListAutRole extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAutRole = new ListAutRole();
+	const listAutUser = new ListAutUser();
 	
-	$('#btnExport').click(listAutRole.btnExportClick.bind(listAutRole));
-	$('#btnAdd').click(listAutRole.btnAddClick.bind(listAutRole));
-	$('#btnEdit').click(listAutRole.btnEditClick.bind(listAutRole));
-	$('#btnDelete').click(listAutRole.btnDeleteClick.bind(listAutRole));
-	$('#btnBack').click(listAutRole.btnBackClick.bind(listAutRole));
+	$('#btnExport').click(listAutUser.btnExportClick.bind(listAutUser));
+	$('#btnAdd').click(listAutUser.btnAddClick.bind(listAutUser));
+	$('#btnEdit').click(listAutUser.btnEditClick.bind(listAutUser));
+	$('#btnDelete').click(listAutUser.btnDeleteClick.bind(listAutUser));
+	$('#btnBack').click(listAutUser.btnBackClick.bind(listAutUser));
 	
 	
 });

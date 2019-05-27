@@ -1,17 +1,17 @@
-class EditAutRole {
+class EditAutUser {
 	constructor()
 	{
 		this._url = window.location.href;
-
 		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
 		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
 		
 		this._alertInfoMessage = $('#alert-info-message');
 		this._alertErrorMessage = $('#alert-error-message');
-
-		this._autRoleId = $('#autRole_id');
-		this._autRoleName = $('#autRole_name');
+		
+		this._autUserId = $('#autUser_id');
+		this._autUserName = $('#autUser_username');
+		this._autUserEmail = $('#autUser_email');
 		
 		if (this._saveMethod==="PUT"){
 			$.get({
@@ -26,24 +26,26 @@ class EditAutRole {
 					this.setFields(data);
 		        }
 			}).fail(function(xhr, textStatus, msg){
-				alert("An error occured on EditAutRole: " + xhr.status + " " + xhr.statusText);
+				alert("An error occured on EditAutUser: " + xhr.status + " " + xhr.statusText);
 		    });
 		}
 
 	}
 	
 	setFields(obj){
-		this._autRoleId.val(obj.id);
-		this._autRoleName.val(obj.name);
+		this._autUserId.val(obj.id);
+		this._autUserName.val(obj.name);
+		this._autUserEmail.val(obj.email);
 	}
 
 	getFields(){
-		var sId = this._autRoleId.val();
+		var sId = this._autUserId.val();
 		var nId = sId.length == 0 ? null : parseInt(sId);
 		
 		var obj = {
 			id: nId,
-			name: this._autRoleName.val()
+			name: this._autUserName.val(),
+			email: this._autUserEmail.val()
 		}
 		
 		return JSON.stringify(obj);
@@ -56,8 +58,6 @@ class EditAutRole {
 			window.location.href=this._url.replace("/edit", "/list");
 		else
 			window.location.href=this._url.replace("/add", "/list");
-		
-		//window.history.back();
 	}
 	
 	btnSaveClick(event) {
@@ -91,9 +91,9 @@ class EditAutRole {
 }
 
 $(function() {
-	const editAutRole = new EditAutRole();
+	const editAutUser = new EditAutUser();
 	
-	$('#btnSave').click(editAutRole.btnSaveClick.bind(editAutRole));
-	$('#btnCancel').click(editAutRole.btnCancelClick.bind(editAutRole));
+	$('#btnSave').click(editAutUser.btnSaveClick.bind(editAutUser));
+	$('#btnCancel').click(editAutUser.btnCancelClick.bind(editAutUser));
 	
 });

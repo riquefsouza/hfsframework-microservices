@@ -57,7 +57,7 @@ public class BaseOAuth2AuthenticationProvider extends BaseOAuth2RestTemplateClie
 						user.getPassword(), AuthorityUtils.createAuthorityList(roles));
 				return token;
 			} else {		
-				log.error("Token vazio!");
+				log.error("Error from BaseOAuth2RestTemplateClient.login: " + user.getMessageException());				
 				return null;
 			}
         } catch (Exception e) {

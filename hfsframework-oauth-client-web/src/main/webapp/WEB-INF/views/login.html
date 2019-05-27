@@ -12,31 +12,32 @@
 	</nav>
 
 	<div th:if="${loginError}" class="alert alert-danger alert-dismissible">
-  		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  	Wrong user or password!
+  		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>	  	
+	  	<span th:text="#{login.wrongUser}" th:remove="tag"></span>
 	</div>
 	
 	<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
 		<div id="tela-login" style="margin-top: 20px;">
 			<div class="card" id="tela-login">
-				<div class="card-header" style="font-weight: normal;">Authenticate</div>
+				<div class="card-header" style="font-weight: normal;"><span th:text="#{login.title}" th:remove="tag"></span></div>
 				<div class="card-body">
 				
 					<form name="formLogin" th:action="@{/login.html}" method="POST">
 								
 						<div class="form-group">
-							<label for="username">User:</label>
+							<label for="username"><span th:text="#{login.username}" th:remove="tag"></span></label>
 							<div class="input-group">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button" disabled="disabled">
 										<i class="fas fa-user fa-sm"></i>
 									</button>
 								</div>	
-								<input type="text" class="form-control" name="username" id="username" placeholder="Enter username">
+								<input type="text" class="form-control" name="username" id="username" autofocus 
+									th:placeholder="#{login.username.placeholder}">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="password">Password:</label>
+							<label for="password"><span th:text="#{login.password}" th:remove="tag"></span></label>
 							<div class="input-group">
 								<div class="input-group-append">
 									<button class="btn btn-primary" type="button" disabled="disabled">
@@ -44,29 +45,38 @@
 									</button>	
 								</div>	
 								<input type="password" class="form-control" name="password" id="password" 
-									placeholder="Enter password" autocomplete="off">
+									th:placeholder="#{login.placeholder.placeholder}" autocomplete="off">
 							</div>
 						</div>
 						<br />
 						<div class="form-group">
 							<div style="margin: 0 auto; width:40%">
-								<button type="submit" class="btn btn-success btn-icon-split" id="btnEntrar">
+								<button type="submit" class="btn btn-success btn-icon-split" id="btnLogin">
 									<span class="icon text-white-50">
 										<i class="fa fa-sign-in" aria-hidden="true"></i>
 									</span>
-									<span class="text">Log in</span>
+									<span class="text" th:text="#{login.button}"></span>
 								</button>
 							</div>
 						</div>
 					
 					</form>	
 					
-				</div>		
+				</div>
+				<div class="card-footer">
+					<a id="anchorForgotPassword" ><span th:text="#{login.forgotPassword}"></span></a>
+					<button type="button" class="btn btn-primary btn-icon-split" id="btnBecomeMember">
+						<span class="text" th:text="#{login.becomeMember}"></span>
+					</button>			
+									    
+			    </div>						
 			</div>
 		</div>	
 	</div>
 
 	<div th:replace="fragments/footer :: footer"></div>
+	
+	<script th:src="@{/js/hfsframework-login.js}"></script>
 	
 </body>
 </html>

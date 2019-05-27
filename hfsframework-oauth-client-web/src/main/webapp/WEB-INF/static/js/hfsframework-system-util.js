@@ -1,6 +1,16 @@
 class HFSSystemUtil {
-
-	static setCookie(cname,cvalue) {
+	constructor()
+	{
+		this._url = window.location.href;
+		this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
+		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
+		
+		this._anchorHomePage = $('#anchorHomePage');
+		this._alertInfoMessage = $('#alert-info-message');
+		this._alertErrorMessage = $('#alert-error-message');
+	}
+	
+	setCookie(cname,cvalue) {
 		var d = new Date();
 		// d.setTime(d.getTime() + (exdays*24*60*60*1000));
 		d.setTime(d.getTime() + (30*60*1000));
@@ -8,7 +18,7 @@ class HFSSystemUtil {
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
 
-	static getCookie(cname) {
+	getCookie(cname) {
 	  var name = cname + "=";
 	  var decodedCookie = decodeURIComponent(document.cookie);
 	  var ca = decodedCookie.split(';');
@@ -24,14 +34,14 @@ class HFSSystemUtil {
 	  return "";
 	}
 
-	static removeCookie(cname,cvalue) {
+	removeCookie(cname,cvalue) {
 		var d = new Date();
 		d.setTime(d.getTime());
 		var expires = "expires=" + d.toGMTString();
 		document.cookie = cname + "=;" + expires + ";path=/";
 	}
 
-	static persistItem(key, value){
+	persistItem(key, value){
 		if (typeof(Storage) !== "undefined") {
 			window.sessionStorage.setItem(key, value);
 		} else {
@@ -39,7 +49,7 @@ class HFSSystemUtil {
 		}
 	}
 
-	static getPersistedItem(key){
+	getPersistedItem(key){
 		if (typeof(Storage) !== "undefined") {
 			return window.sessionStorage.getItem(key);
 		} else {
@@ -47,7 +57,7 @@ class HFSSystemUtil {
 		}
 	}
 
-	static removePersistedItem(key){
+	removePersistedItem(key){
 		if (typeof(Storage) !== "undefined") {
 			window.sessionStorage.removeItem(key);
 		} else {

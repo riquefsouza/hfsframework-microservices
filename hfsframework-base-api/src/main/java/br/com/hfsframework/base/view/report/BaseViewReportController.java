@@ -13,10 +13,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -71,6 +73,14 @@ public abstract class BaseViewReportController
 		return params;
 	}
 
+	public String export(HttpServletResponse response, Optional<byte[]> report, ReportParamsDTO reportParamsDTO) {
+		if (report.isPresent()) {
+			this.renderer.render(response, report.get(), reportParamsDTO);
+		}
+		
+		return "";
+	}
+	
 	public void export(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
 			boolean forcarDownload) {
 		export(relatorio, colecao, params, forcarDownload, true);

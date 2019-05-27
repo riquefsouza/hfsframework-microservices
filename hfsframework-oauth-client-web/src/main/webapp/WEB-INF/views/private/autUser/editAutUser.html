@@ -9,12 +9,12 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="editAutRole">
+	<form id="editAutUser">
 	
 		<div class="card">
 			<div class="card-header" 
 				style="font-weight: bold;font-size: large;">
-				Role
+				User
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
@@ -23,8 +23,7 @@
 							<i class="fa fa-check-circle"></i>
 						</span>
 						<span class="text" th:text="#{button.save}"></span>
-					</button>
-								
+					</button>			
 					<button type="reset" class="btn btn-light btn-icon-split" id="btnReset">
 	                    <span class="icon text-gray-600">
 	                      <i class="fa fa-eraser"></i>
@@ -41,10 +40,13 @@
 				</div>				
 				<div class="row">
 					<div class="col-md-2 form-group">
-						<input type="hidden" class="form-control" id="autRole_id">
+						<input type="hidden" class="form-control" id="autUser_id">
 						
-						<label for="autRole_name">Name:</label>
-						<input type="text" class="form-control" id="autRole_name" maxlength="10">
+						<label for="autUser_username">Name:</label>
+						<input type="text" class="form-control" id="autUser_username" maxlength="10">
+						
+						<label for="autUser_email">Email:</label>
+						<input type="text" class="form-control" id="autUser_email" maxlength="100">						
 					</div>
 				</div>
 				
@@ -53,7 +55,7 @@
 	</form>	
 </div>
  
-<script th:src="@{/js/auth/editAutRole.js}"></script>
+<script th:src="@{/js/auth/editAutUser.js}"></script>
 
 </body>
 </html>
