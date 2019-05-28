@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.formLogin()
 		.loginPage("/login.html")
-		//.loginProcessingUrl("/perform_login")
+		//.loginProcessingUrl("/login.html")
 		//.defaultSuccessUrl("/index.html", true)		
 		.successHandler(authenticationSuccessHandler())
 		.failureUrl("/login-error.html")		
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//.logoutSuccessHandler(logoutSuccessHandler())
 		.logoutSuccessUrl("/index.html")
         .and()
-        //.exceptionHandling().accessDeniedPage("/accessDenied");
+        //.exceptionHandling().accessDeniedPage("/private/accessDenied");
         .exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
 

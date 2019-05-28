@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AboutController {
 	
-	@RequestMapping(value = "/public/about")
+	@RequestMapping(value = "/private/about")
 	public String getAbout() {
-		return "about-client";
+		return "/private/about-client";
 	}
 }

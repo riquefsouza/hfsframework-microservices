@@ -16,12 +16,12 @@ public class HfsUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L; 
 	private Collection<? extends GrantedAuthority> authorities; 
 	private String password; 
-	private String username; 
+	private String username;
 
 	public HfsUserDetails(User user) { 
 		this.username = user.getUsername(); 
 		this.password = user.getPassword(); 
-		this.authorities = translate(user.getRoles()); 
+		this.authorities = translate(user.getRoles());
 	} 
 
 	private Collection<? extends GrantedAuthority> translate(List<Role> roles) { 
@@ -69,6 +69,6 @@ public class HfsUserDetails implements UserDetails {
 	@Override 
 	public boolean isEnabled() { 
 		return true; 
-	} 
-	
+	}
+
 }

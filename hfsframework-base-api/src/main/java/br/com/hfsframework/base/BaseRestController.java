@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.hfsframework.base.report.BaseReportImpl;
 import br.com.hfsframework.base.report.IBaseReport;
+import br.com.hfsframework.base.report.ReportTypeEnum;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
 import io.swagger.annotations.Api;
@@ -170,15 +171,20 @@ public abstract class BaseRestController<T, I extends Serializable,
 		params.put("PARAMETER1", "");
 
 		IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
+		this.setReportType(reportParamsDTO.getReportType());
+		
+		ReportTypeEnum reportType = ReportTypeEnum.valueOf(reportParamsDTO.getReportType());
+		
+		MediaType mediaTypeReport = new MediaType(reportType.getContentType()); 
 		
 		byte[] data = this.export(report, service.getAll(), 
-				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);			
+				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);
 		
 		ByteArrayResource resource = new ByteArrayResource(data);
 
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + reportParamsDTO.getReportName())
-				.contentType(MediaType.APPLICATION_PDF)
+				.contentType(mediaTypeReport)
 				.contentLength(data.length)
 				.body(resource);
 	}

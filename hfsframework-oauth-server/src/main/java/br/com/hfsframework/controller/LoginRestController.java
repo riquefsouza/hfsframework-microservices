@@ -32,7 +32,7 @@ public class LoginRestController extends BaseRestTemplateClient {
 				String[] roles = new String[decodedJwt.getAuthorities().size()];
 				roles = decodedJwt.getAuthorities().toArray(roles);
 				
-				user = new BaseRestUser(baseUser, roles);
+				user = new BaseRestUser(baseUser, decodedJwt.getEmail(), decodedJwt.getUrlPhoto(), roles);
 			}
 			
 			if (user==null) {

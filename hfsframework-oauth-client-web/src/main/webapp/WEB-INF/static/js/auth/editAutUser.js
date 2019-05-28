@@ -3,6 +3,7 @@ class EditAutUser extends HFSSystemUtil {
 	{
 		super();
 		
+		this._urlApiServer = this.getPersistedItem("urlApiServer");
 		this._saveMethod = this.getPersistedItem("saveMethod");
 		
 		this._autUserId = $('#autUser_id');

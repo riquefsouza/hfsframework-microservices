@@ -34,8 +34,6 @@ public class UserRestClient extends BaseRestClient<User, Long> {
 
 	public User getLoggedUser(Optional<BaseOAuth2RestUser> principal) {
 		if (principal.isPresent()) {
-			//String serverURL = principal.get().getUrlAuthorizationServer();
-			//String token = principal.get().getAccessToken().getValue();
 			String username = principal.get().getUsername();
 
 			Optional<User> user = this.findByUsername(username);

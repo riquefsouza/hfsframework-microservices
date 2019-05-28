@@ -6,16 +6,16 @@
 </head>
 <body>
 
-<div th:replace="private/menu :: menu"></div>
+	<div th:replace="private/menu :: menu"></div>
 
-<div class="web-content">
+	<div class="web-content">
 		<div class="row-fluid">
 			<div class="jumbotron">
 				<h2><span th:text="#{sessionExpired.text}" th:remove="tag"></span></h2>
 				<a class="btn btn-primary btn-large" th:href="@{/login.html}"><span th:text="#{sessionExpired.backLogin}" th:remove="tag"></span></a>
 			</div>
 		</div>
-</div>
+	</div>
 
 </body>
 </html>

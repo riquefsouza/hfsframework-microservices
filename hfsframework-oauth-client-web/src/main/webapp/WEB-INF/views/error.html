@@ -2,15 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head th:replace="fragments/header :: header">
-<title>Error page</title>
+<title th:text="#{errorPage.title}"></title>
 </head>
 <body
 	th:with="httpStatus=${T(org.springframework.http.HttpStatus).valueOf((#response != null)? #response.status : 500)}">
 
+	<div th:replace="private/menu :: menu"></div>
+
 	<div class="web-content">
 		<h1 th:text="|${httpStatus} - ${httpStatus.reasonPhrase}|">404</h1>
 		<p th:utext="${errorMessage}">Error java.lang.NullPointerException</p>
-		<a href="index.html" th:href="@{/index.html}">Back to Home Page</a>
+		<a href="index.html" th:href="@{/index.html}"><span th:text="#{error.backHome}" th:remove="tag"></span></a>
 	</div>
 
 </body>

@@ -18,6 +18,10 @@ public class BaseOAuth2RestUser extends User {
 	private boolean authenticated;
 
 	private String messageException;
+	
+	private String email;
+	
+	private String urlPhoto;
 
 	public BaseOAuth2RestUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, authorities);
@@ -25,14 +29,18 @@ public class BaseOAuth2RestUser extends User {
 		this.accessToken = null;
 		this.messageException = "";
 		this.authenticated = false;
+		this.email = "";
+		this.urlPhoto = "";
 	}
 	
-	public BaseOAuth2RestUser(BaseOAuth2RestUser other, String[] roles) {
+	public BaseOAuth2RestUser(BaseOAuth2RestUser other, String email, String urlPhoto, String[] roles) {
 		super(other.getUsername(), other.getPassword(), AuthorityUtils.createAuthorityList(roles));
 		this.urlAuthorizationServer = other.getUrlAuthorizationServer();
 		this.accessToken = other.getAccessToken();
 		this.messageException = other.getMessageException();
-		this.authenticated = other.isAuthenticated();		
+		this.authenticated = other.isAuthenticated();
+		this.email = email;
+		this.urlPhoto = urlPhoto;
 	}
 
 	public String getUrlAuthorizationServer() {
@@ -67,4 +75,20 @@ public class BaseOAuth2RestUser extends User {
 		this.messageException = messageException;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUrlPhoto() {
+		return urlPhoto;
+	}
+
+	public void setUrlPhoto(String urlPhoto) {
+		this.urlPhoto = urlPhoto;
+	}
+	
 }

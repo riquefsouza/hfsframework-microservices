@@ -17,13 +17,8 @@ import br.com.hfsframework.oauth.repository.IUserRepository;
 @Transactional
 public class SignupService {
 
-	//private static final Logger log = LogManager.getLogger(SignupService.class);
-	
 	@Autowired
 	private IUserRepository userRepository;
-
-    //@Autowired
-    //private BCryptPasswordEncoder passwordEncoder;
 
 	public User addUser(User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,12 +33,14 @@ public class SignupService {
 		//if (userRepository.count() == 0) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String senha = passwordEncoder.encode("admin");
-			User user = new User("admin", senha, Arrays.asList(new Role("ADMIN")));
+			User user = new User("admin", senha, "admin@admin.com.br", "http://localhost:8080/urlAdminPhoto", 
+					Arrays.asList(new Role("ADMIN")));
 			//User savedUser = userRepository.save(user);
 			userRepository.save(user);
 
 			String senha2 = passwordEncoder.encode("user");
-			User user2 = new User("user", senha2, Arrays.asList(new Role("USER")));
+			User user2 = new User("user", senha2, "user@user.com.br", "http://localhost:8080/urlUserPhoto", 
+					Arrays.asList(new Role("USER")));
 			//User savedUser2 = userRepository.save(user2);
 			userRepository.save(user2);
 			

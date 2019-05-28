@@ -22,6 +22,8 @@ public class DecodedJwt implements Serializable {
 	private List<String> authorities;
 	private List<String> scope;
 	private String userName;
+	private String email;
+	private String urlPhoto;
 
 	@SuppressWarnings("unchecked")
 	public static DecodedJwt getDecodedJwt(String accessToken) {
@@ -53,6 +55,8 @@ public class DecodedJwt implements Serializable {
 		this.authorities = new ArrayList<String>();
 		this.scope = new ArrayList<String>();
 		this.userName = "";
+		this.email = "";
+		this.urlPhoto = "";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -65,6 +69,8 @@ public class DecodedJwt implements Serializable {
 		this.authorities = (List<String>) claimsMap.get("authorities");
 		this.scope = (List<String>) claimsMap.get("scope");
 		this.userName = (String) claimsMap.get("user_name");
+		this.email = (String) claimsMap.get("email");
+		this.urlPhoto = (String) claimsMap.get("url_photo");
 	}
 
 	public String getClientId() {
@@ -123,4 +129,19 @@ public class DecodedJwt implements Serializable {
 		this.userName = userName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getUrlPhoto() {
+		return urlPhoto;
+	}
+
+	public void setUrlPhoto(String urlPhoto) {
+		this.urlPhoto = urlPhoto;
+	}
 }

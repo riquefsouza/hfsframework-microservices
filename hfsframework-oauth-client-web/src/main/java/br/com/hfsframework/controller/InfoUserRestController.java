@@ -23,6 +23,8 @@ public class InfoUserRestController extends BaseViewController {
 			this.authServerURL = this.getPrincipal().get().getUrlAuthorizationServer();
 			this.accesToken = this.getPrincipal().get().getAccessToken().getValue();
 			String username = this.getPrincipal().get().getUsername();
+			String email = this.getPrincipal().get().getEmail();
+			String urlPhoto = this.getPrincipal().get().getUrlPhoto();			
 
 			//UserRestClient restClient = new UserRestClient(this.authServerURL, this.accesToken);
 			//Optional<User> user = restClient.findByUsername(username);
@@ -32,7 +34,7 @@ public class InfoUserRestController extends BaseViewController {
 			this.getPrincipal().get().getAuthorities()
 				.forEach(item -> roles.add(new Role(item.getAuthority())));
 			
-			User user = new User(username, roles);
+			User user = new User(username, "", email, urlPhoto, roles);
 			
 			return user;
 		}
