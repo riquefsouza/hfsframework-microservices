@@ -12,7 +12,6 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 
 public class User implements BaseEntityRestClient<Long> {
 
-	@NotBlank
 	private Long id;
 
 	@NotBlank

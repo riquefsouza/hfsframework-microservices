@@ -3,7 +3,7 @@ package br.com.hfsframework.useful.mail;
 import javax.mail.MessagingException;
 
 
-public interface MailUtil {
+public interface IMailUtil {
 
 	public void sendSimpleMessage(String to, String subject, String text);
 

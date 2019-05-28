@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.ldap.core.LdapTemplate;
 
-public interface LdapUtil {
+public interface ILdapUtil {
 
 	public LdapTemplate ldapTemplate();
 

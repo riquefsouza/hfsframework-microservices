@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hfsframework.useful.ldap.LdapAttributes;
-import br.com.hfsframework.useful.ldap.LdapUtil;
+import br.com.hfsframework.useful.ldap.ILdapUtil;
 
 @Controller
 @RequestMapping(value = "/public/ldap")
 public class LdapController {
 
 	@Autowired
-	private LdapUtil ldapUtil;
+	private ILdapUtil ldapUtil;
 
 	@GetMapping("/list")
 	public ModelAndView getLdapPage() {

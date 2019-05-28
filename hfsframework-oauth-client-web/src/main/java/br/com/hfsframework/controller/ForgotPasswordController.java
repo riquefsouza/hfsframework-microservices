@@ -12,7 +12,7 @@ import org.springframework.web.client.RestClientException;
 import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.oauth.client.UserRestClient;
 import br.com.hfsframework.oauth.client.domain.User;
-import br.com.hfsframework.useful.mail.MailUtil;
+import br.com.hfsframework.useful.mail.IMailUtil;
 
 @Controller
 public class ForgotPasswordController extends BaseViewController {
@@ -22,13 +22,13 @@ public class ForgotPasswordController extends BaseViewController {
 	}
 
 	@Autowired
-	private MailUtil mailUtil;
+	private IMailUtil mailUtil;
 
 	@PostMapping("/public/forgotPassword")
 	public String send(@RequestParam(name = "username", required = true) String username) {
 		
 		String subject =  messageSource.getMessage("login.forgotPassword", null, Locale.getDefault());
-		String text = "hfs framework";
+		String text = messageSource.getMessage("forgotPassword.textMail", null, Locale.getDefault());
 		
 		try {
 			UserRestClient restClient = new UserRestClient(this.authServerURL, this.accesToken);

@@ -44,12 +44,36 @@ public abstract class BaseViewController {
 		return "/index.html";
 	}
 
-	public void showValidationMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("validationMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	public void showPrimaryMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("primaryMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
 	}
 
-	public void showErrorMessage(RedirectAttributes attributes, Exception e) {
-		attributes.addFlashAttribute("errorMessage", e.getMessage());
+	public void showSecondaryMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("secondaryMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showSuccessMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("successMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showWarningMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("warningMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+	
+	public void showInfoMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("infoMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showLightMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("lightMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showDarkMessage(RedirectAttributes attributes, String messageCode) {
+		attributes.addFlashAttribute("darkMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+	}
+
+	public void showDangerMessage(RedirectAttributes attributes, Exception e) {
+		attributes.addFlashAttribute("dangerMessage", e.getMessage());
 	}
 
 	public void generateErrorMessage(String mensagem) {

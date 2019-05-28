@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @PropertySource("classpath:ldap.properties")
-public class LdapUtilImpl implements LdapUtil {
+public class LdapUtilImpl implements ILdapUtil {
 
 	@Autowired
 	private Environment env;

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @PropertySource("classpath:email.properties")
-public class MailUtilImpl implements MailUtil {
+public class MailUtilImpl implements IMailUtil {
 
 	@Autowired
 	private Environment env;

@@ -34,7 +34,7 @@ public class ChangePasswordController extends BaseViewController implements Seri
 	private UserRestClient restClient;
 	
 	public ChangePasswordController() {
-		this.listPage = "/private/changePasswordView/list";
+		this.listPage = "private/changePassword";
 	}
 
 	@GetMapping("/list")
@@ -54,12 +54,12 @@ public class ChangePasswordController extends BaseViewController implements Seri
 		if ((obj.getNewPassword() == null && obj.getConfirmNewPassword() == null && obj.getCurrentPassword() == null)
 				|| (obj.getNewPassword().equals("") && obj.getConfirmNewPassword().equals("") && obj.getCurrentPassword().equals(""))) {
 
-			this.showValidationMessage(attributes, "changePasswordView.validation");
+			this.showWarningMessage(attributes, "changePasswordView.validation");
 			
 		} else if ((obj.getNewPassword() == null && obj.getConfirmNewPassword() == null)
 				|| (obj.getNewPassword().equals("") && obj.getConfirmNewPassword().equals(""))) {
 
-			this.showValidationMessage(attributes, "changePasswordView.validation");
+			this.showWarningMessage(attributes, "changePasswordView.validation");
 			
 		} else {
 			String senha = BCrypt.hashpw(obj.getCurrentPassword(), BCrypt.gensalt());
@@ -69,10 +69,10 @@ public class ChangePasswordController extends BaseViewController implements Seri
 				if (obj.getNewPassword().equals(obj.getConfirmNewPassword())) {
 					return true;
 				} else {
-					this.showValidationMessage(attributes, "changePasswordView.notEqual");					
+					this.showWarningMessage(attributes, "changePasswordView.notEqual");					
 				}
 			} else {
-				this.showValidationMessage(attributes, "changePasswordView.currentPwdNotEqual");
+				this.showWarningMessage(attributes, "changePasswordView.currentPwdNotEqual");
 			}
 		}
 		return false;
@@ -83,12 +83,12 @@ public class ChangePasswordController extends BaseViewController implements Seri
 			BindingResult result, RedirectAttributes attributes) {
 		
 		if (prepararParaSalvar(obj, attributes)){
-			return new RedirectView(getListPage());
+			return new RedirectView("list");
 		}
 		
 		if (result.hasErrors()){
-			this.showValidationMessage(attributes, "changePasswordView.checkFields");
-			return new RedirectView(getListPage());
+			this.showWarningMessage(attributes, "changePasswordView.checkFields");
+			return new RedirectView("list");
 		}
 		
 		try {
@@ -106,13 +106,13 @@ public class ChangePasswordController extends BaseViewController implements Seri
 			
 			//setUsuarioAutenticado(usuarioAut);
 			
-			this.showValidationMessage(attributes, "changePasswordView.passwordChanged");
+			this.showWarningMessage(attributes, "changePasswordView.passwordChanged");
 		} catch (RestClientException e) {
-			this.showErrorMessage(attributes, e);
-			return new RedirectView(getListPage());
+			this.showDangerMessage(attributes, e);
+			return new RedirectView("list");
 		}
 		
-		return new RedirectView(getListPage());		
+		return new RedirectView("list");		
 	}	
 	
 	public String getListPage() {

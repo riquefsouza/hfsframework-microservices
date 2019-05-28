@@ -6,14 +6,25 @@ class HFSSystemUtil {
 		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');
+		
+		this._alertPrimary = $('#alert-primary');
+		this._textAlertPrimary = $('#text-alert-primary');
+		this._alertSecondary = $('#alert-secondary');
+		this._textAlertSecondary = $('#text-alert-secondary');
+		this._alertSuccess = $('#alert-success');
+		this._textAlertSuccess = $('#text-alert-success');
+		this._alertDanger = $('#alert-danger');
+		this._textAlertDanger = $('#text-alert-danger');
+		this._alertWarning = $('#alert-warning');
+		this._textAlertWarning = $('#text-alert-warning');
 		this._alertInfo = $('#alert-info');
 		this._textAlertInfo = $('#text-alert-info');
-		this._alertError = $('#alert-error');
-		this._textAlertError = $('#text-alert-error');
+		this._alertLight = $('#alert-light');
+		this._textAlertLight = $('#text-alert-light');
+		this._alertDark = $('#alert-dark');
+		this._textAlertDark = $('#text-alert-dark');
 		
 		this._messageSelectTable = $('#message-select-table').text();
-		
-		
 	}
 	
 	getSystemPage() {
@@ -21,14 +32,54 @@ class HFSSystemUtil {
 		return home.substring(0, home.lastIndexOf("/"));
 	}
 	
-	errorShow(message) {
-		this._alertError.show();
-		this._textAlertError.html(message);		
+	primaryShow(message) {
+		this._alertPrimary.show();
+		this._textAlertPrimary.html(message);		
 	}
 	
-	errorHide() {
-		this._textAlertError.html("");
-		this._alertError.hide();
+	primaryHide() {
+		this._textAlertPrimary.html("");
+		this._alertPrimary.hide();
+	}
+
+	secondaryShow(message) {
+		this._alertSecondary.show();
+		this._textAlertSecondary.html(message);		
+	}
+	
+	secondaryHide() {
+		this._textAlertSecondary.html("");
+		this._alertSecondary.hide();
+	}
+
+	successShow(message) {
+		this._alertSuccess.show();
+		this._textAlertSuccess.html(message);		
+	}
+	
+	successHide() {
+		this._textAlertSuccess.html("");
+		this._alertSuccess.hide();
+	}
+
+	dangerShow(message) {
+		this._alertDanger.show();
+		this._textAlertDanger.html(message);		
+	}
+	
+	dangerHide() {
+		this._textAlertDanger.html("");
+		this._alertDanger.hide();
+	}
+	
+	warningShow(message) {
+		this._alertWarning.show();
+		this._textAlertWarning.html(message);		
+	}
+	
+	warningHide() {
+		this._textAlertWarning.html("");
+		this._alertWarning.hide();
 	}
 
 	infoShow(message) {
@@ -40,7 +91,27 @@ class HFSSystemUtil {
 		this._textAlertInfo.html("");
 		this._alertInfo.hide();
 	}
+	
+	lightShow(message) {
+		this._alertLight.show();
+		this._textAlertLight.html(message);		
+	}
+	
+	lightHide() {
+		this._textAlertLight.html("");
+		this._alertLight.hide();
+	}
 
+	darkShow(message) {
+		this._alertDark.show();
+		this._textAlertDark.html(message);		
+	}
+	
+	darkHide() {
+		this._textAlertDark.html("");
+		this._alertDark.hide();
+	}
+	
 	setCookie(cname,cvalue) {
 		var d = new Date();
 		// d.setTime(d.getTime() + (exdays*24*60*60*1000));
