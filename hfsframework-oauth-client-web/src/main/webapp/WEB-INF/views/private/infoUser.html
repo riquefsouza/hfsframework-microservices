@@ -5,46 +5,26 @@
 <body>
 <div th:fragment="infoUser">
 
-<script>
-	$(document).ready(function(){
-		 $.ajax({			 
-		        url: $('#anchorHomePage')[0] + "/private/infouser"
-		    }).then(function(data) {
-				$('.infoUser-username').empty();
-				$('.infoUser-email').empty();
-				$('.infoUser-roles').empty();
-								
-				$('.infoUser-username').append(data.username);
-				$('.infoUser-email').append(data.email);
-				$('.infoUser-roles').append(data.roles);
-		    });        
-	});
-</script>
-
 <form id="infoUserForm">
 
 	<div id="infoUserDialog" class="modal fade" role="dialog">
 	  <div class="modal-dialog modal-sm">
 
 		<div class="modal-content">
-		  <div class="modal-header">
+		  <div class="modal-header">			
+			<h4 class="modal-title"><span th:text="#{infoUser.title}" th:remove="tag"></span></h4>
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">User Information</h4>
 		  </div>
 		  <div class="modal-body">
 
 			<table class="table table-bordered table-condensed">
 				<tbody>
 					<tr>
-						<td style="font-weight: bold;">Username:</td>
+						<td style="font-weight: bold;"><span th:text="#{login.username}" th:remove="tag"></span></td>
 						<td class="infoUser-username"></td>
 					</tr>
 					<tr>
-						<td style="font-weight: bold;">E-mail:</td>
-						<td class="infoUser-email"></td>
-					</tr>
-					<tr>
-						<td style="font-weight: bold;">Roles:</td>
+						<td style="font-weight: bold;"><span th:text="#{infoUser.roles}" th:remove="tag"></span></td>
 						<td class="infoUser-roles"></td>
 					</tr>
 				</tbody>
@@ -58,6 +38,8 @@
 	</div>
 
 </form>
+
+<script th:src="@{/js/hfsframework-infoUser.js}"></script>
 
 </div>
 

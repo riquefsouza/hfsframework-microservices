@@ -6,10 +6,41 @@ class HFSSystemUtil {
 		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');
-		this._alertInfoMessage = $('#alert-info-message');
-		this._alertErrorMessage = $('#alert-error-message');
+		this._alertInfo = $('#alert-info');
+		this._textAlertInfo = $('#text-alert-info');
+		this._alertError = $('#alert-error');
+		this._textAlertError = $('#text-alert-error');
+		
+		this._messageSelectTable = $('#message-select-table').text();
+		
+		
 	}
 	
+	getSystemPage() {
+		var home = this._anchorHomePage[0].href;
+		return home.substring(0, home.lastIndexOf("/"));
+	}
+	
+	errorShow(message) {
+		this._alertError.show();
+		this._textAlertError.html(message);		
+	}
+	
+	errorHide() {
+		this._textAlertError.html("");
+		this._alertError.hide();
+	}
+
+	infoShow(message) {
+		this._alertInfo.show();
+		this._textAlertInfo.html(message);		
+	}
+	
+	infoHide() {
+		this._textAlertInfo.html("");
+		this._alertInfo.hide();
+	}
+
 	setCookie(cname,cvalue) {
 		var d = new Date();
 		// d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -66,3 +97,19 @@ class HFSSystemUtil {
 	}
 	
 }
+
+
+$(function() {
+	$("#locales").change(function () {
+        var selectedOption = $("#locales").val();
+        if (selectedOption != ''){
+        	var sUrl = window.location.href;
+        	
+            if (sUrl.lastIndexOf("?") > -1){
+            	sUrl = sUrl.substr(0, sUrl.indexOf("?lang="));
+            }
+        	
+            window.location.replace(sUrl + '?lang=' + selectedOption);
+        }
+    });	
+});

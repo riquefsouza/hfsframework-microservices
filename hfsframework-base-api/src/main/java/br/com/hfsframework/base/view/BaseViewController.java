@@ -141,9 +141,6 @@ public abstract class BaseViewController {
 			
 			if (principal instanceof BaseOAuth2RestUser) {
 				BaseOAuth2RestUser userLogged = (BaseOAuth2RestUser) principal;
-				//String sUrlAuthServer = userLogged.getUrlAuthorizationServer();
-				//String sToken = userLogged.getAccessToken().getValue();
-				
 				return Optional.of(userLogged);
 			}
 		}

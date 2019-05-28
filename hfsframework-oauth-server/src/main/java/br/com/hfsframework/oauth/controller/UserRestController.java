@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.hfsframework.base.BaseRestController;
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.dto.NewUserDTO;
-import br.com.hfsframework.oauth.service.UserService;
+import br.com.hfsframework.oauth.service.IUserService;
 import br.com.hfsframework.oauth.validator.NewUserValidator;
 import br.com.hfsframework.oauth.validator.UsernameAndPasswordDifferentValidator;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/user")
-public class UserRestController extends BaseRestController<User, Long, UserService> {
+public class UserRestController extends BaseRestController<User, Long, IUserService> {
 
 	private static final long serialVersionUID = 1L;
 	
 	@InitBinder("newUserDTO")
 	public void init(WebDataBinder binder) {
-		binder.addValidators(new UsernameAndPasswordDifferentValidator(), new NewUserValidator(this.getServico()));
+		binder.addValidators(new UsernameAndPasswordDifferentValidator(), new NewUserValidator(this.service));
 	}
 
 	@ApiOperation("Insert bean Validate")
 	@PostMapping("/validateAndSave")
 	public ResponseEntity<User> validateAndSave(@Valid @RequestBody NewUserDTO dto) {
 
-		this.getServico().getRepositorio().save(dto.build());
+		this.service.getRepositorio().save(dto.build());
 
 		return ResponseEntity.ok().build();
 	}
@@ -45,7 +45,7 @@ public class UserRestController extends BaseRestController<User, Long, UserServi
 	@ApiOperation("Find by username")
 	@GetMapping("/find")
 	public ResponseEntity<User> findByUsername(@RequestParam(name = "username", required = true) String username) {
-		Optional<User> obj = this.getServico().findByUsername(username);
+		Optional<User> obj = this.service.findByUsername(username);
 		
 		if (!obj.isPresent()) {
 			log.info("FIND BY USERNAME NOT FOUND: " + username);

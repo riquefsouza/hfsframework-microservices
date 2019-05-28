@@ -16,7 +16,8 @@ import br.com.hfsframework.oauth.repository.IUserRepository;
 import br.com.hfsframework.util.exceptions.TransactionException;
 
 @Service
-public class UserService extends BaseBusinessService<User, Long, IUserRepository> {
+public class UserService extends BaseBusinessService<User, Long, IUserRepository>
+	implements IUserService {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

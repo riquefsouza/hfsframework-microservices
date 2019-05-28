@@ -3,13 +3,7 @@ class EditAutUser extends HFSSystemUtil {
 	{
 		super();
 		
-		//this._url = window.location.href;
-		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		//this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
-		//this._alertInfoMessage = $('#alert-info-message');
-		//this._alertErrorMessage = $('#alert-error-message');
-		
-		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");
+		this._saveMethod = this.getPersistedItem("saveMethod");
 		
 		this._autUserId = $('#autUser_id');
 		this._autUserName = $('#autUser_username');
@@ -28,7 +22,7 @@ class EditAutUser extends HFSSystemUtil {
 					this.setFields(data);
 		        }
 			}).fail(function(xhr, textStatus, msg){
-				alert("An error occured on EditAutUser: " + xhr.status + " " + xhr.statusText);
+				this.errorShow("An error occured on Edit: " + xhr.status + " " + xhr.statusText);
 		    });
 		}
 
@@ -77,15 +71,15 @@ class EditAutUser extends HFSSystemUtil {
 	        }
 		})
 		.done(function(data, status) {
-			HFSSystemUtil.removePersistedItem("saveMethod");
-			HFSSystemUtil.removePersistedItem("urlApiServer");
+			this.removePersistedItem("saveMethod");
+			this.removePersistedItem("urlApiServer");
 			if (this._saveMethod==="PUT")
     			window.location.href=this._url.replace("/edit", "/list");
     		else
     			window.location.href=this._url.replace("/add", "/list");
 		})
 		.fail(function(xhr, textStatus, msg){
-			alert("An error occured on save: " + xhr.status + " " + xhr.statusText);
+			this.errorShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
 
 	}

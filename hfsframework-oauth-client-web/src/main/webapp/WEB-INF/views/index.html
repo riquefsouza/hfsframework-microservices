@@ -11,8 +11,6 @@
 
 	<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
 	
-	<th:block th:include="private/validationMessage"></th:block>
-	
 	<div class="web-content"></div>
 
 <div sec:authorize="isAuthenticated()">

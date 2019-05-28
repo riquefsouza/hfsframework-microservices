@@ -10,16 +10,16 @@ import org.springframework.validation.Validator;
 
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.dto.NewUserDTO;
-import br.com.hfsframework.oauth.service.UserService;
+import br.com.hfsframework.oauth.service.IUserService;
 
 public class NewUserValidator implements Validator {
 
 	@Autowired
 	private MessageSource messageSource;
 
-	private UserService service;
+	private IUserService service;
 
-	public NewUserValidator(UserService service) {
+	public NewUserValidator(IUserService service) {
 		this.service = service;
 	}
 

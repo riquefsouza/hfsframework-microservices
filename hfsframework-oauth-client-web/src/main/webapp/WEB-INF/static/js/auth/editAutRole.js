@@ -3,14 +3,8 @@ class EditAutRole extends HFSSystemUtil {
 	{
 		super();
 		
-		//this._url = window.location.href;
-
-		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		//this._alertInfoMessage = $('#alert-info-message');
-		//this._alertErrorMessage = $('#alert-error-message');
-
-		this._urlApiServer = HFSSystemUtil.getPersistedItem("urlApiServer");
-		this._saveMethod = HFSSystemUtil.getPersistedItem("saveMethod");	
+		this._urlApiServer = this.getPersistedItem("urlApiServer");
+		this._saveMethod = this.getPersistedItem("saveMethod");	
 
 		this._autRoleId = $('#autRole_id');
 		this._autRoleName = $('#autRole_name');
@@ -28,7 +22,7 @@ class EditAutRole extends HFSSystemUtil {
 					this.setFields(data);
 		        }
 			}).fail(function(xhr, textStatus, msg){
-				alert("An error occured on EditAutRole: " + xhr.status + " " + xhr.statusText);
+				this.errorShow("An error occured on Edit: " + xhr.status + " " + xhr.statusText);
 		    });
 		}
 
@@ -57,9 +51,7 @@ class EditAutRole extends HFSSystemUtil {
 		if (this._saveMethod==="PUT")
 			window.location.href=this._url.replace("/edit", "/list");
 		else
-			window.location.href=this._url.replace("/add", "/list");
-		
-		//window.history.back();
+			window.location.href=this._url.replace("/add", "/list");		
 	}
 	
 	btnSaveClick(event) {
@@ -77,15 +69,15 @@ class EditAutRole extends HFSSystemUtil {
 	        }
 		})
 		.done(function(data, status) {
-			HFSSystemUtil.removePersistedItem("saveMethod");
-			HFSSystemUtil.removePersistedItem("urlApiServer");
+			this.removePersistedItem("saveMethod");
+			this.removePersistedItem("urlApiServer");
 			if (this._saveMethod==="PUT")
     			window.location.href=this._url.replace("/edit", "/list");
     		else
     			window.location.href=this._url.replace("/add", "/list");
 		})
 		.fail(function(xhr, textStatus, msg){
-			alert("An error occured on save: " + xhr.status + " " + xhr.statusText);
+			this.errorShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
 
 	}

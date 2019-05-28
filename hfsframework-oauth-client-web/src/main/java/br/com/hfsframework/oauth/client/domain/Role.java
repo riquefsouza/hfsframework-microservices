@@ -11,6 +11,11 @@ public class Role implements BaseEntityRestClient<Long> {
 	public Role() {
 		super();
 	}
+	
+	public Role(String name) {
+		super();
+		this.name = name;
+	}
 
 	@Override
 	public Long getId() {
@@ -22,10 +27,6 @@ public class Role implements BaseEntityRestClient<Long> {
 		this.id = id;
 	}
 		
-	public Role(String name) {
-		this.name = name;
-	}
-
 	public String getName() {
 		return name;
 	}

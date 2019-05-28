@@ -7,7 +7,8 @@ import br.com.hfsframework.admin.repository.IAdmParameterRepository;
 import br.com.hfsframework.base.BaseBusinessService;
 
 @Service
-public class AdmParameterService extends BaseBusinessService<AdmParameter, Long, IAdmParameterRepository> {
+public class AdmParameterService extends BaseBusinessService<AdmParameter, Long, IAdmParameterRepository>
+		implements IAdmParameterService {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

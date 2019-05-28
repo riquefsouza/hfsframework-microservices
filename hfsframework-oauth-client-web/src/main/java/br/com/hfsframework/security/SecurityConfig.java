@@ -109,10 +109,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return tokenBasedservice;
 	}
 
+    
 	@Bean
 	public AuthenticationTrustResolver getAuthenticationTrustResolver() {
 		return new AuthenticationTrustResolverImpl();
 	}
-	*/
+*/	
     
 }

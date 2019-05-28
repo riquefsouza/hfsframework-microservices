@@ -1,11 +1,9 @@
 package br.com.hfsframework.oauth.client.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import org.hibernate.validator.constraints.URL;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
 
@@ -22,27 +20,17 @@ public class User implements BaseEntityRestClient<Long> {
 
 	private List<Role> roles;
 
-	@NotBlank
-	@Email
-	private String email;
-
-	@NotBlank
-	@URL
-	private String urlPhoto;
-	
 	private String currentPassword;		
 	private String newPassword;
 	private String confirmNewPassword;
 
 	public User() {
 		super();
+		roles = new ArrayList<Role>();
 	}
 
-	public User(String username, String password, String email, String urlPhoto, List<Role> roles) {
+	public User(String username, List<Role> roles) {
 		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.urlPhoto = urlPhoto;		
 		this.roles = roles;
 	}
 
@@ -80,26 +68,9 @@ public class User implements BaseEntityRestClient<Long> {
 		this.roles = roles;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUrlPhoto() {
-		return urlPhoto;
-	}
-
-	public void setUrlPhoto(String urlPhoto) {
-		this.urlPhoto = urlPhoto;
-	}
-
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + ", email="
-				+ email + ", urlPhoto=" + urlPhoto + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + "]";
 	}
 
 	public String getCurrentPassword() {

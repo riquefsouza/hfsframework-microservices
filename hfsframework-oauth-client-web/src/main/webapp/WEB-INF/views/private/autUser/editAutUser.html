@@ -13,8 +13,8 @@
 	
 		<div class="card">
 			<div class="card-header"
-				style="font-weight: bold;font-size: large;">
-				User
+				style="font-weight: bold;font-size: large;">				
+				<span th:text="#{editAutUser.title}" th:remove="tag"></span>
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
@@ -42,10 +42,10 @@
 					<div class="col-md-2 form-group">
 						<input type="hidden" class="form-control" id="autUser_id">
 						
-						<label for="autUser_username">Name:</label>
+						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="autUser_username" maxlength="10">
 						
-						<label for="autUser_email">Email:</label>
+						<label for="autUser_email"><span th:text="#{editAutUser.email}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="autUser_email" maxlength="100">						
 					</div>
 				</div>

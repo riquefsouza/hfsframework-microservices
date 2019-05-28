@@ -3,13 +3,6 @@ class ListAutUser extends HFSSystemUtil {
 	{
 		super();
 		
-		//this._url = window.location.href;
-		//this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
-		//this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
-		//this._anchorHomePage = $('#anchorHomePage');
-		//this._alertInfoMessage = $('#alert-info-message');
-		//this._alertErrorMessage = $('#alert-error-message');
-		
 		this._urlApiServer = this._urlAuthServer + "/api/v1/user";
 		
 		this._cmbReportType = $('#cmbReportType');
@@ -31,11 +24,10 @@ class ListAutUser extends HFSSystemUtil {
     		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, this._dlgDeleteConfirmation);	        
 		})
 		.fail(function(xhr, textStatus, msg){
-			alert("An error occured on ListAutUser: " + xhr.status + " " + xhr.statusText);
-			/*
-	    	this._alertMessages.show();
+			this.errorShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
+	    	/*
 	    	setTimeout(function() {
-	    		//this._alertMessages.toggle();
+	    		//this.errorHide();
 			}, 1500);
 			*/
 	    })
@@ -49,25 +41,22 @@ class ListAutUser extends HFSSystemUtil {
 		event.preventDefault();
 		
 		var sUrl = this._url.replace("/list", "/export");
-		//sUrl += "/" + this._cmbReportType.val() + "/" + this._forceDownload[0].checked;
 		sUrl += "?reportType=" + this._cmbReportType.val() + "&forceDownload=" + this._forceDownload[0].checked + "&params=1,2,3";
 		
-		//window.location.href=sUrl;
 		window.open(sUrl,'_blank');
-		//console.log(sUrl);
 	}
 	
 	btnAddClick(event) {
 		event.preventDefault();
 		
-		HFSSystemUtil.persistItem("saveMethod", "POST");
-		HFSSystemUtil.persistItem("urlApiServer", this._urlApiServer);
+		this.persistItem("saveMethod", "POST");
+		this.persistItem("urlApiServer", this._urlApiServer);
 		window.location.href=this._url.replace("/list", "/add");
 	}
 	
 	btnEditClick(event) {
 		event.preventDefault();
-		this._alertMessages.hide();
+		this.errorHide();
 		
 		var dataRowSelected = this._tableList.puidatatable('getSelection');		
 		
@@ -82,18 +71,18 @@ class ListAutUser extends HFSSystemUtil {
 		        }
 			})
 			.done(function(responsePage) {
-				HFSSystemUtil.persistItem("saveMethod", "PUT");
-	        	HFSSystemUtil.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
+				this.persistItem("saveMethod", "PUT");
+	        	this.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
 				window.location.href=this._url.replace("/list", "/edit");
 			})
 			.fail(function() {
-		    	this._alertMessages.show();
+				this.errorShow(this._messageSelectTable);
 		    	setTimeout(function() {
-		    		this._alertMessages.toggle();
+		    		this.errorHide();
 				}, 1500);
 	        });
 		} else {
-			this._alertMessages.show();
+			this.errorShow(this._messageSelectTable);
 		}
 	}
 	
@@ -127,7 +116,8 @@ class ListAutUser extends HFSSystemUtil {
 		        				dlgDeleteConfirmation.puidialog('hide');
 			            	})
 			    			.fail(function(xhr){
-	        		            alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
+	        		            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
+			    				this.errorShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
 	        		        });
 
 		            	}
@@ -147,14 +137,14 @@ class ListAutUser extends HFSSystemUtil {
 
 	btnDeleteClick(event) {
 		event.preventDefault();
-		this._alertMessages.hide();
+		this.errorHide();
 		
 		var dataRowSelected = this._tableList.puidatatable('getSelection');
 		
 		if (dataRowSelected.length > 0) {
 			this._dlgDeleteConfirmation.puidialog('show');
 		} else {
-			this._alertMessages.show();
+			this.errorShow(this._messageSelectTable);
 		}
 	}
 
@@ -215,7 +205,7 @@ class ListAutUser extends HFSSystemUtil {
 				}).done(function(data) {
 		        	callback.call(this, data.content);
 				}).fail(function(xhr){
-		            alert("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
+					this.errorShow("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
 			    });
 			},	           
 			rowSelect: function(event, data) {

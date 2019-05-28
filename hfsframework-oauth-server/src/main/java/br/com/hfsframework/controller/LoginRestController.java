@@ -3,7 +3,6 @@ package br.com.hfsframework.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +32,7 @@ public class LoginRestController extends BaseRestTemplateClient {
 				String[] roles = new String[decodedJwt.getAuthorities().size()];
 				roles = decodedJwt.getAuthorities().toArray(roles);
 				
-				user = new BaseRestUser(baseUser, 
-						AuthorityUtils.createAuthorityList(roles));
+				user = new BaseRestUser(baseUser, roles);
 			}
 			
 			if (user==null) {

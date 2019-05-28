@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	lang="en-US">
+	xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
-<title>Session Expired</title>
+<title th:text="#{sessionExpired.title}"></title>
 </head>
 <body>
 
@@ -12,8 +11,8 @@
 <div class="web-content">
 		<div class="row-fluid">
 			<div class="jumbotron">
-				<h2>Session expired due to inactivity.</h2>
-				<a class="btn btn-primary btn-large" th:href="@{/login.html}">Return to login screen</a>
+				<h2><span th:text="#{sessionExpired.text}" th:remove="tag"></span></h2>
+				<a class="btn btn-primary btn-large" th:href="@{/login.html}"><span th:text="#{sessionExpired.backLogin}" th:remove="tag"></span></a>
 			</div>
 		</div>
 </div>

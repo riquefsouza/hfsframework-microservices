@@ -53,6 +53,8 @@ public class BaseOAuth2AuthenticationProvider extends BaseOAuth2RestTemplateClie
 				String[] roles = new String[decodedJwt.getAuthorities().size()];
 				roles = decodedJwt.getAuthorities().toArray(roles);
 				
+				user = new BaseOAuth2RestUser(user, roles);
+				
 				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, 
 						user.getPassword(), AuthorityUtils.createAuthorityList(roles));
 				return token;

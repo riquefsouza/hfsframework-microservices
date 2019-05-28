@@ -45,6 +45,7 @@ class HFSLogin extends HFSSystemUtil {
 		this._dlgBecomeMember.puidialog({
 		    minimizable: false,
 		    maximizable: false,
+		    resizable: false,
 		    responsive: true,
 		    width: 400,
 		    modal: true

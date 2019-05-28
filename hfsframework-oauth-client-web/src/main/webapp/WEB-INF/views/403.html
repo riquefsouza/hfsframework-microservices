@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" lang="en-US">
 <head th:replace="fragments/header :: header">
-<title>Error page</title>
+<title th:text="#{error403.title}"></title>
 </head>
 <body>
 
 	<div class="web-content">
-		<h1>FORBIDDEN</h1>
-		<a href="index.html" th:href="@{/index.html}">Back to Home Page</a>
+		<h1><span th:text="#{error403.text}" th:remove="tag"></span></h1>
+		<a href="index.html" th:href="@{/index.html}"><span th:text="#{error403.backHome}" th:remove="tag"></span></a>
 	</div>
 
 </body>

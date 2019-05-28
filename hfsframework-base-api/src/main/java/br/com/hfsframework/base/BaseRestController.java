@@ -44,13 +44,8 @@ public abstract class BaseRestController<T, I extends Serializable,
 	/** The log. */
 	protected Logger log = LoggerFactory.getLogger(BaseRestController.class);
 
-	/** The servico. */
 	@Autowired
-	protected S servico;
-
-	public S getServico() {
-		return servico;
-	}
+	protected S service;
 
 	/**
 	 * Get.
@@ -62,7 +57,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Get by id")
 	@GetMapping("/{id}")
 	public ResponseEntity<T> get(@PathVariable I id) {
-		Optional<T> obj = servico.get(id);
+		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
 			log.info("GET NOT FOUND: " + id);
@@ -81,7 +76,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Get all")
 	@GetMapping
 	public ResponseEntity<Iterable<T>> getAll() {
-		Iterable<T> iter = servico.getAll();
+		Iterable<T> iter = service.getAll();
 
 		return ResponseEntity.ok(iter);
 	}
@@ -97,7 +92,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@GetMapping("/pages")
 	@ResponseBody
 	public Page<T> pages(Pageable p) {
-		return servico.getAll(p);
+		return service.getAll(p);
 	}
 
 	/**
@@ -110,7 +105,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Insert bean")
 	@PostMapping
 	public ResponseEntity<T> insert(@Valid @RequestBody T bean) {
-		Optional<T> obj = servico.add(bean);
+		Optional<T> obj = service.add(bean);
 
 		if (obj.isPresent()) {
 			return new ResponseEntity<>(obj.get(), HttpStatus.CREATED);
@@ -130,7 +125,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Update bean")
 	@PutMapping("/{id}")
 	public ResponseEntity<T> update(@PathVariable I id, @Valid @RequestBody T bean) {
-		Optional<T> obj = servico.get(id);
+		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
 			log.info("UPDATE NOT FOUND: " + bean.toString());
@@ -139,7 +134,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		//BeanUtils.copyProperties(bean, obj, "id");
 
-		obj = servico.update(bean);
+		obj = service.update(bean);
 
 		return ResponseEntity.ok(obj.get());
 	}
@@ -154,14 +149,14 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Delete bean")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<I> delete(@PathVariable I id) {
-		Optional<T> obj = servico.get(id);
+		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
 			log.info("DELETE NOT FOUND: " + id);
 			return ResponseEntity.notFound().build();
 		}
 
-		servico.delete(obj.get());
+		service.delete(obj.get());
 
 		return new ResponseEntity<>(id, HttpStatus.OK);
 		//return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -176,7 +171,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
 		
-		byte[] data = this.export(report, servico.getAll(), 
+		byte[] data = this.export(report, service.getAll(), 
 				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);			
 		
 		ByteArrayResource resource = new ByteArrayResource(data);

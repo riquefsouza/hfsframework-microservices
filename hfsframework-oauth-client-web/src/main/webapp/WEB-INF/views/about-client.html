@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	lang="en-US">
+	xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header">
-<title>About</title>
+<title th:text="#{about.title}"></title>
 </head>
 <body>
 
@@ -14,9 +13,13 @@
 
 	<h1>HFS Framework OAuth Authorization Client Web</h1>
 	<br>
-	<h2>Developed by Henrique Figueiredo de Souza</h2>
+	<h2><span th:text="#{about.developedBy}" th:remove="tag"></span>&nbsp;Henrique Figueiredo de Souza</h2>
 	<br>
-	<h2>Version 1.0.0 - 2019</h2>
+	<h2>
+		<span th:text="#{about.version}" th:remove="tag"></span>&nbsp;
+		<span th:text="#{build.version}" th:remove="tag"></span>&nbsp;
+		<span th:text="#{build.timestamp}" th:remove="tag"></span>
+	</h2>
 	<br>
 
 	<hr>

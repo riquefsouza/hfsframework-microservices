@@ -23,13 +23,13 @@
 	padding-bottom: 0.5em;
 }
 
-.tela-conteudo {
+.web-content {
 	padding-top: 0px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
-.imagem-inverte {
+.inverted-image {
 	-webkit-filter: invert(100%);
 	filter: invert(100%);
 }

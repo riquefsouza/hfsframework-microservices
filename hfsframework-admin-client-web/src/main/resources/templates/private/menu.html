@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	xmlns:th="http://www.thymeleaf.org">
 <body>
 	
-<div th:fragment="menu">	
+<div th:fragment="menu">
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="javascript:void(0)">HFS Framework</a>
@@ -44,7 +43,7 @@
 	<div class="form-inline my-2 my-lg-0">
 
 		<small> 
-			<span id="informacoes-usuario" style="color: lightgray"> 				
+			<span id="infos-users" style="color: lightgray"> 				
 				<i class="fas fa-user fa-sm"></i> 
 				<a data-toggle="modal" data-target="#infoUsuarioDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">henrique.souza</a>
 			</span>
@@ -55,18 +54,17 @@
 
 </nav>
   
-<div class="tela-conteudo" style="margin:5px 0;">
+<div class="web-content" style="margin:5px 0;">
 	<div class="alert alert-danger alert-dismissible fade show" id="alert-messages" style="display: none">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<strong>Favor selecionar um registro da tabela para proceder esta ação!</strong>
 	</div>
 </div>
 
-<!-- 
-<div th:replace="sessionTimeOut :: sessaoSistema"></div>
+<div th:replace="sessionTimeOut :: sessionSystem"></div>
 	
-<div th:replace="private/infoUsuario :: infoUsuario"></div>
--->
+<div th:replace="private/infoUser :: infoUser"></div>
+
 
 </div>
 	

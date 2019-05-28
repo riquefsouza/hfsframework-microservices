@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.util.Assert;
@@ -23,13 +22,6 @@ public class NewUserDTO {
 	
 	@NotBlank
 	private String password;
-	
-	@NotBlank
-	private String email;
-	
-	@NotBlank
-	@URL
-	private String urlPhoto;
 	
 	private List<Role> roles;
 
@@ -49,22 +41,6 @@ public class NewUserDTO {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getUrlPhoto() {
-		return urlPhoto;
-	}
-
-	public void setUrlPhoto(String urlPhoto) {
-		this.urlPhoto = urlPhoto;
-	}
-	
 	public List<Role> getRoles() {
 		return roles;
 	}
@@ -83,7 +59,7 @@ public class NewUserDTO {
 	}
 
 	public User build() {
-		return new User(username, password, email, urlPhoto, roles);
+		return new User(username, password, roles);
 	}
 	
 }

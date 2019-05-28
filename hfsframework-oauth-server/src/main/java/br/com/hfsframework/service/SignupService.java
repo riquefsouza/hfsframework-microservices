@@ -38,14 +38,12 @@ public class SignupService {
 		//if (userRepository.count() == 0) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String senha = passwordEncoder.encode("admin");
-			User user = new User("admin", senha, "admin@email.com.br", "http://urlphoto-admin",
-					Arrays.asList(new Role("ADMIN")));
+			User user = new User("admin", senha, Arrays.asList(new Role("ADMIN")));
 			//User savedUser = userRepository.save(user);
 			userRepository.save(user);
 
 			String senha2 = passwordEncoder.encode("user");
-			User user2 = new User("user", senha2,"user@email.com.br", "http://urlphoto-user",
-					Arrays.asList(new Role("USER")));
+			User user2 = new User("user", senha2, Arrays.asList(new Role("USER")));
 			//User savedUser2 = userRepository.save(user2);
 			userRepository.save(user2);
 			

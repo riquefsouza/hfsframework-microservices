@@ -7,7 +7,8 @@ import br.com.hfsframework.oauth.domain.Role;
 import br.com.hfsframework.oauth.repository.IRoleRepository;
 
 @Service
-public class RoleService extends BaseBusinessService<Role, Long, IRoleRepository> {
+public class RoleService extends BaseBusinessService<Role, Long, IRoleRepository> 
+	implements IRoleService {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

@@ -3,6 +3,7 @@ package br.com.hfsframework.base.security;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
@@ -24,6 +25,14 @@ public class BaseOAuth2RestUser extends User {
 		this.accessToken = null;
 		this.messageException = "";
 		this.authenticated = false;
+	}
+	
+	public BaseOAuth2RestUser(BaseOAuth2RestUser other, String[] roles) {
+		super(other.getUsername(), other.getPassword(), AuthorityUtils.createAuthorityList(roles));
+		this.urlAuthorizationServer = other.getUrlAuthorizationServer();
+		this.accessToken = other.getAccessToken();
+		this.messageException = other.getMessageException();
+		this.authenticated = other.isAuthenticated();		
 	}
 
 	public String getUrlAuthorizationServer() {

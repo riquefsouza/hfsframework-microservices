@@ -3,6 +3,7 @@ package br.com.hfsframework.base.security;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
 public class BaseRestUser extends User {
@@ -25,8 +26,8 @@ public class BaseRestUser extends User {
 		this.authenticated = false;
 	}
 	
-	public BaseRestUser(BaseRestUser other, Collection<? extends GrantedAuthority> authorities) {
-		super(other.getUsername(), other.getPassword(), authorities);
+	public BaseRestUser(BaseRestUser other, String[] roles) {
+		super(other.getUsername(), other.getPassword(), AuthorityUtils.createAuthorityList(roles));
 		this.urlAuthorizationServer = other.getUrlAuthorizationServer();
 		this.accessToken = other.getAccessToken();
 		this.messageException = other.getMessageException();
