@@ -1,12 +1,34 @@
 package br.com.hfsframework.oauth.client;
 
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClientException;
+
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.oauth.client.domain.Role;
 
 public class RoleRestClient extends BaseRestClient<Role, Long> {
 	
-	public RoleRestClient(String authServerURL, String accesToken) {
+	private static final Logger log = LoggerFactory.getLogger(RoleRestClient.class);
+	
+	public RoleRestClient(String authServerURL, String accesToken) throws RestClientException {
 		super.init(authServerURL + "/api/v1/role", accesToken, Role.class);
+	}
+	
+	public Optional<Role> findByName(String name) throws RestClientException {
+		try {
+			Role obj = restTemplate.getForObject(
+					this.server + "/find?name=" + name, Role.class);
+
+			return Optional.of(obj);
+			
+		} catch (RestClientException e) {			
+			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
+		}		
+		//return Optional.empty();
 	}
 
 }

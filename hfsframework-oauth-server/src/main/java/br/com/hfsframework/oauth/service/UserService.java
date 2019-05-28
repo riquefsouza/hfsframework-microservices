@@ -49,4 +49,9 @@ public class UserService extends BaseBusinessService<User, Long, IUserRepository
 	public void delete(User user) throws TransactionException {
 		super.delete(user);
 	}
+	
+	public Optional<User> findByEmail(String email) {
+		return getRepositorio().findByEmail(email);
+	}
+
 }

@@ -54,5 +54,18 @@ public class UserRestController extends BaseRestController<User, Long, IUserServ
 
 		return ResponseEntity.ok(obj.get());
 	}
+
+	@ApiOperation("Find by email")
+	@GetMapping("/findemail")
+	public ResponseEntity<User> findByEmail(@RequestParam(name = "email", required = true) String email) {
+		Optional<User> obj = this.service.findByEmail(email);
+		
+		if (!obj.isPresent()) {
+			log.info("FIND BY EMAIL NOT FOUND: " + email);
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(obj.get());
+	}
 	
 }

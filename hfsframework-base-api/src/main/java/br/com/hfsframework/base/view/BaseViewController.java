@@ -38,7 +38,7 @@ public abstract class BaseViewController {
 	protected String accesToken;
 	
 	@Autowired
-	private MessageSource messageSource;
+	protected MessageSource messageSource;
 	
 	public String getDesktopPage(){
 		return "/index.html";

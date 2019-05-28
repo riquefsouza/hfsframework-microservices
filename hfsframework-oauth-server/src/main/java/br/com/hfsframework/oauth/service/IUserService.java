@@ -12,4 +12,5 @@ public interface IUserService extends IBaseBusinessService<User, Long, IUserRepo
 	
 	Optional<User> findByUsername(String username);
 
+	Optional<User> findByEmail(String email);
 }

@@ -1,5 +1,7 @@
 package br.com.hfsframework.oauth.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.base.BaseBusinessService;
@@ -12,5 +14,9 @@ public class RoleService extends BaseBusinessService<Role, Long, IRoleRepository
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	public Optional<Role> findByName(String name) {
+		return getRepositorio().findByName(name);
+	}
 
 }

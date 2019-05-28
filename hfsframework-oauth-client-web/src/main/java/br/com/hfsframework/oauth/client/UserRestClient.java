@@ -14,11 +14,11 @@ public class UserRestClient extends BaseRestClient<User, Long> {
 
 	private static final Logger log = LoggerFactory.getLogger(UserRestClient.class);
 	
-	public UserRestClient(String authServerURL, String sAccesToken) {
+	public UserRestClient(String authServerURL, String sAccesToken) throws RestClientException {
 		super.init(authServerURL + "/api/v1/user", sAccesToken, User.class);
 	}
 	
-	public Optional<User> findByUsername(String username) {
+	public Optional<User> findByUsername(String username) throws RestClientException {
 		try {
 			User obj = restTemplate.getForObject(
 					this.server + "/find?username=" + username, User.class);
@@ -27,12 +27,12 @@ public class UserRestClient extends BaseRestClient<User, Long> {
 			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
 		}
-		
-		return Optional.empty();
+		//return Optional.empty();
 	}
 
-	public User getLoggedUser(Optional<BaseOAuth2RestUser> principal) {
+	public User getLoggedUser(Optional<BaseOAuth2RestUser> principal) throws RestClientException {
 		if (principal.isPresent()) {
 			String username = principal.get().getUsername();
 
@@ -46,5 +46,18 @@ public class UserRestClient extends BaseRestClient<User, Long> {
 		return null;
 	}
 	
+	public Optional<User> findByEmail(String email) throws RestClientException {
+		try {
+			User obj = restTemplate.getForObject(
+					this.server + "/findemail?email=" + email, User.class);
+
+			return Optional.of(obj);
+			
+		} catch (RestClientException e) {
+			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
+		}
+		//return Optional.empty();
+	}
 	
 }

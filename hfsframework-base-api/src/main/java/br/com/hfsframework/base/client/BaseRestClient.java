@@ -31,7 +31,7 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 		restTemplate = null;
 	}
 	
-    public boolean init(String server, String sAccesToken, Class<T> classEntity) {
+    public boolean init(String server, String sAccesToken, Class<T> classEntity) throws RestClientException {
     	this.server = server;
     	this.classEntity = classEntity;
     	
@@ -40,7 +40,7 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
         return (restTemplate!=null);
 	}
 	
-	public Optional<T> add(T bean) {
+	public Optional<T> add(T bean) throws RestClientException {
 		try {
 			T saved = restTemplate.postForObject(
 					this.server, bean, classEntity);
@@ -49,23 +49,25 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
 		}
-		return Optional.empty();
+		//return Optional.empty();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<T> getAll() {
+	public List<T> getAll() throws RestClientException {
 		List<T> obj = new ArrayList<T>();
 		try {
 			obj = restTemplate.getForObject(
 					this.server, objList.getClass());
 		} catch (RestClientException e) {
-			log.error(e.getMessage());			
+			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
 		}
 		return obj;
 	}
 
-	public Optional<T> getById(I id) {
+	public Optional<T> getById(I id) throws RestClientException {
 		try {
 			T obj = restTemplate.getForObject(
 					this.server + "/{id}", classEntity, id);
@@ -74,12 +76,12 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
-		}
-		
-		return Optional.empty();
+			throw new RestClientException(e.getMessage(), e);
+		}		
+		//return Optional.empty();
 	}
 
-	public Optional<T> updateById(T bean) {
+	public Optional<T> updateById(T bean) throws RestClientException {
 		try {
 			restTemplate.put(this.server + "/{id}", bean, bean.getId());
 			
@@ -87,21 +89,23 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
 		}
-		return Optional.empty();
+		//return Optional.empty();
 	}
 	
-	public boolean deleteById(I id) {
+	public boolean deleteById(I id) throws RestClientException {
 		try {
 			restTemplate.delete(this.server + "/{id}", id);			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
-			return false;
+			throw new RestClientException(e.getMessage(), e);
+			//return false;
 		}
 		return true;
 	}
 	
-	public Optional<byte[]> report(ReportParamsDTO reportParamsDTO) {
+	public Optional<byte[]> report(ReportParamsDTO reportParamsDTO) throws RestClientException {
 		try {
 			ResponseEntity<ByteArrayResource> obj = restTemplate.postForEntity(
 					this.server + "/report", reportParamsDTO, ByteArrayResource.class);
@@ -110,9 +114,10 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
+			throw new RestClientException(e.getMessage(), e);
 		}
 		
-		return Optional.empty();
+		//return Optional.empty();
 	}
 	
 }
