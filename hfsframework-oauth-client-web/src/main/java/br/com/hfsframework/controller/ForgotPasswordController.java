@@ -31,7 +31,8 @@ public class ForgotPasswordController extends BaseViewController {
 		String text = messageSource.getMessage("forgotPassword.textMail", null, Locale.getDefault());
 		
 		try {
-			UserRestClient restClient = new UserRestClient(this.authServerURL, this.accesToken);
+			UserRestClient restClient = new UserRestClient();
+			restClient.init(this.authServerURL, this.accesToken);
 			Optional<User> user = restClient.findByUsername(username);
 			
 			if (user.isPresent()) {

@@ -40,7 +40,7 @@ class ListAutUser extends HFSSystemUtil {
 	btnExportClick(event) {
 		event.preventDefault();
 		
-		var sUrl = this._url.replace("/list", "/export");
+		var sUrl = this._url + "/export";
 		sUrl += "?reportType=" + this._cmbReportType.val() + "&forceDownload=" + this._forceDownload[0].checked + "&params=1,2,3";
 		
 		window.open(sUrl,'_blank');

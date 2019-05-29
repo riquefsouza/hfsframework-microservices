@@ -31,7 +31,7 @@ public class ReportRender implements Serializable {
 		//HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 	    HttpServletResponse response = attr.getResponse();		
-
+	    
 		log.info("Rendering to file " + nomeArquivo + ".");
 
 		if (tipoRelatorio.equals(ReportTypeEnum.HTML)){

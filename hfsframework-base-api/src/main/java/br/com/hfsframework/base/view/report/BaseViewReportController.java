@@ -92,7 +92,7 @@ public abstract class BaseViewReportController
 		
 		if (colecao!=null) { // && !colecao.isEmpty()) {
 			ReportTypeEnum tipoRel = ReportTypeEnum.valueOf(reportType);
-
+			
 			buffer = relatorio.export(colecao, params, tipoRel);
 			
 			if (renderizar) {

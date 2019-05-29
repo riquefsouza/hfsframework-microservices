@@ -254,9 +254,6 @@ public class BaseReportImpl implements IBaseReport {
 		return Boolean.valueOf(false);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.hfsframework.base.relatorio.IBaseRelatorio#export(br.com.hfsframework.base.relatorio.RelatorioTipoEnum)
-	 */
 	public byte[] export(ReportTypeEnum type) {
 		if (!isFilled().booleanValue()) {
 			throw new ReportException(ReportBundle.getString("excecao-relatorio-nao-preenchendo"));
@@ -265,25 +262,11 @@ public class BaseReportImpl implements IBaseReport {
 		return BaseReportExporter.export(type, this.print).toByteArray();
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.hfsframework.base.relatorio.IBaseRelatorio#export(java.util.Collection, java.util.Map, br.com.hfsframework.base.relatorio.RelatorioTipoEnum)
-	 */
 	public byte[] export(Iterable<?> dataSource, Map<String, Object> param, ReportTypeEnum type) {
 		prepare(dataSource, param);
 		return export(type);
 	}
 		
-	/**
-	 * Export junto alternado.
-	 *
-	 * @param jp1
-	 *            the jp 1
-	 * @param jp2
-	 *            the jp 2
-	 * @param type
-	 *            the type
-	 * @return the byte[]
-	 */
 	public byte[] exportJuntoAlternado(JasperPrint jp1, JasperPrint jp2, ReportTypeEnum type) {
 		this.print = juntarAlternado(jp1, jp2);		
 		return export(type);

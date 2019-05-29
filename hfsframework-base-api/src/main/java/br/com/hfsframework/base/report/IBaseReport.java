@@ -48,39 +48,10 @@ public abstract interface IBaseReport extends Serializable {
 	 */
 	public abstract void prepare(Iterable<?> paramCollection, Map<String, Object> paramMap);
 
-	/**
-	 * Export.
-	 *
-	 * @param paramCollection
-	 *            the param collection
-	 * @param paramMap
-	 *            the param map
-	 * @param paramType
-	 *            the param type
-	 * @return the byte[]
-	 */
 	public abstract byte[] export(Iterable<?> paramCollection, Map<String, Object> paramMap,
 			ReportTypeEnum paramType);
 
-	/**
-	 * Export.
-	 *
-	 * @param paramType
-	 *            the param type
-	 * @return the byte[]
-	 */
 	public abstract byte[] export(ReportTypeEnum paramType);
 
-	/**
-	 * Export junto alternado.
-	 *
-	 * @param jp1
-	 *            the jp 1
-	 * @param jp2
-	 *            the jp 2
-	 * @param type
-	 *            the type
-	 * @return the byte[]
-	 */
 	public abstract byte[] exportJuntoAlternado(JasperPrint jp1, JasperPrint jp2, ReportTypeEnum type);
 }

@@ -179,8 +179,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 		this.setReportType(reportParamsDTO.getReportType());
 		
 		ReportTypeEnum reportType = ReportTypeEnum.valueOf(reportParamsDTO.getReportType());
+		//MediaType mediaTypeReport = new MediaType(reportType.getContentType());
 		
-		MediaType mediaTypeReport = new MediaType(reportType.getContentType()); 
+		//MediaType mediaTypeReport = MediaTypeUtil.getMediaTypeForFileName(
+			//	request.getServletContext(), reportParamsDTO.getReportName()+"."+reportType.getFileExtension());
 		
 		byte[] data = this.export(report, service.getAll(), 
 				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);
@@ -189,7 +191,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + reportParamsDTO.getReportName())
-				.contentType(mediaTypeReport)
+				.contentType(reportType.getMediaType())
 				.contentLength(data.length)
 				.body(resource);
 	}

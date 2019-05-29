@@ -12,11 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.com.hfsframework.util.VisitDirectoryUtil;
 import br.com.hfsframework.util.zip.ZipException;
@@ -55,15 +58,6 @@ public class BaseReportExporter {
 	public BaseReportExporter() {		
 	}
 
-	/**
-	 * Export.
-	 *
-	 * @param type
-	 *            the type
-	 * @param print
-	 *            the print
-	 * @return the byte array output stream
-	 */
 	public static synchronized ByteArrayOutputStream export(ReportTypeEnum type, JasperPrint print) {
 		if (log == null) {
 			log = LoggerFactory.getLogger(BaseReportExporter.class);
@@ -81,21 +75,18 @@ public class BaseReportExporter {
 				exporterCSV.exportReport();
 				break;
 			case HTML:
-				//File folder = new ClassPathResource("WEB-INF").getFile();
-				//File[] listOfFiles = folder.listFiles();
-				//FacesContext context = FacesContext.getCurrentInstance();
-				//ExternalContext ec = context.getExternalContext();
-				//String sDiretorio = ec.getRealPath("WEB-INF");
-				//String sDiretorio = System.getProperty("user.dir");
+				//String sDiretorio = new ClassPathResource("WEB-INF").getPath();
 				
-				String sDiretorio = new ClassPathResource("WEB-INF").getPath();
+			    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			    ServletContext sc = (ServletContext) attr.getRequest().getServletContext();
+				String sHTMLDir = sc.getRealPath(File.separator) + "/WEB-INF";
 				
 				String sArquivo = RandomStringUtils.randomAlphanumeric(32).toUpperCase() + ".html";
-				File arquivo = new File(sDiretorio, sArquivo);
+				File arquivo = new File(sHTMLDir, sArquivo);
 				log.info(ReportBundle.getString("exportando-relatorio", "html"));
 				JasperExportManager.exportReportToHtmlFile(print, arquivo.getPath());
 				byte[] conteudo = FileUtils.readFileToByteArray(arquivo);
-				conteudo = compactarHTML(type, sDiretorio, sArquivo, conteudo);				
+				conteudo = compactarHTML(type, sHTMLDir, sArquivo, conteudo);				
 				outputStream.write(conteudo, 0, conteudo.length);
 				outputStream.flush();
 				arquivo.delete();

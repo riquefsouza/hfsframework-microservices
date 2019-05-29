@@ -33,14 +33,16 @@ public class BecomeMemberController extends BaseViewController {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String pwd = passwordEncoder.encode(confirmNewPassword);
 
-			RoleRestClient roleClient = new RoleRestClient(this.authServerURL, this.accesToken);
+			RoleRestClient roleClient = new RoleRestClient();
+			roleClient.init(this.authServerURL, this.accesToken);
 			
 			Optional<Role> userRole = roleClient.findByName("USER");
 			
 			if (userRole.isPresent()) {		
 				User user = new User(username, pwd, email, "http://temp", Arrays.asList(userRole.get()));
 				
-				UserRestClient userClient = new UserRestClient(this.authServerURL, this.accesToken);
+				UserRestClient userClient = new UserRestClient();
+				userClient.init(this.authServerURL, this.accesToken);
 				Optional<User> newUser = userClient.add(user);
 						
 				if (newUser.isPresent()) {

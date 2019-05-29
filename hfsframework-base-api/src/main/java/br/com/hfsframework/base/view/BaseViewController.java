@@ -211,6 +211,10 @@ public abstract class BaseViewController {
 			
 			if (principal instanceof BaseOAuth2RestUser) {
 				BaseOAuth2RestUser userLogged = (BaseOAuth2RestUser) principal;
+				
+				this.authServerURL = userLogged.getUrlAuthorizationServer();
+				this.accesToken = userLogged.getAccessToken().getValue();
+				
 				return Optional.of(userLogged);
 			}
 		}
@@ -220,10 +224,7 @@ public abstract class BaseViewController {
 	public Optional<ModelAndView> getPage(String pagina) {		
 		if (getPrincipal().isPresent()) {
 			ModelAndView mv = new ModelAndView(pagina);
-
-			this.authServerURL = this.getPrincipal().get().getUrlAuthorizationServer();
-			this.accesToken = this.getPrincipal().get().getAccessToken().getValue();
-		
+			
 			mv.addObject("urlAuthServer", authServerURL);
 			mv.addObject("authToken", accesToken);
 			return Optional.of(mv);

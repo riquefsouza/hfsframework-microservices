@@ -59,30 +59,18 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	@GetMapping
 	public ModelAndView list() {
 		Optional<ModelAndView> mv = getPage(getListPage());
-		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken);
-		}
-		
 		return mv.get();
 	}
 
 	@GetMapping("/add")
 	public ModelAndView add(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
-		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken);
-		}
-		
 		return mv.get();
 	}
 
 	@GetMapping("/edit")
 	public ModelAndView edit(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
-		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken);
-		}
-		
 		return mv.get();
 	}
 
@@ -126,16 +114,20 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 			@RequestParam(name = "forceDownload", required = true, defaultValue = "false") String forceDownload,
 			@RequestParam(name = "params", required = false) List<String> params) {
 		
-		ReportParamsDTO reportParamsDTO = new ReportParamsDTO();
-		reportParamsDTO.setReportName(reportName.isEmpty() ? "report" : reportName);
-		reportParamsDTO.setReportType(reportType);
-		reportParamsDTO.setForceDownload(forceDownload);
-		reportParamsDTO.setParams(params);
-				
-		Optional<byte[]> report = this.restClient.report(reportParamsDTO);
-		
-		if (report.isPresent()) {
-			this.export(response, report, reportParamsDTO);
+		if (getPrincipal().isPresent()) {
+			this.restClient.init(authServerURL, accesToken);
+			
+			ReportParamsDTO reportParamsDTO = new ReportParamsDTO();
+			reportParamsDTO.setReportName(reportName.isEmpty() ? "report" : reportName);
+			reportParamsDTO.setReportType(reportType);
+			reportParamsDTO.setForceDownload(forceDownload);
+			reportParamsDTO.setParams(params);
+					
+			Optional<byte[]> report = this.restClient.report(reportParamsDTO);
+			
+			if (report.isPresent()) {
+				this.export(response, report, reportParamsDTO);
+			}
 		}
 		
 		return "";
