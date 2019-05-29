@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -15,23 +16,32 @@ public class User implements BaseEntityRestClient<Long> {
 	private Long id;
 
 	@NotBlank
+	@Size(min=4, max=64)
 	private String username;
 
 	@NotBlank
+	@Size(min=4, max=64)
 	private String password;
 
 	@NotBlank
 	@Email
+	@Size(min=16, max=100)
 	private String email;
 	
 	@NotBlank
 	@URL
+	@Size(min=8, max=255)
 	private String urlPhoto;
 	
 	private List<Role> roles;
 
-	private String currentPassword;		
+	@Size(min=4, max=64)
+	private String currentPassword;
+	
+	@Size(min=4, max=64)
 	private String newPassword;
+	
+	@Size(min=4, max=64)
 	private String confirmNewPassword;
 
 	public User() {

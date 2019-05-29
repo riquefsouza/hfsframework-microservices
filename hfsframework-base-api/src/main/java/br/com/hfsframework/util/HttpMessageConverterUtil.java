@@ -14,6 +14,7 @@ import org.springframework.http.converter.support.AllEncompassingFormHttpMessage
 import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public final class HttpMessageConverterUtil {
@@ -35,8 +36,14 @@ public final class HttpMessageConverterUtil {
     //@Bean
     private static HttpMessageConverter<Object> createMappingJackson2HttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        
+        converter.setObjectMapper(objectMapper);
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+        converter.setPrettyPrint(true);
+        
         return converter;
     }
     

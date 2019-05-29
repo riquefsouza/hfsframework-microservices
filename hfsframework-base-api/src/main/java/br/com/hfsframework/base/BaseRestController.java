@@ -31,6 +31,7 @@ import br.com.hfsframework.base.report.IBaseReport;
 import br.com.hfsframework.base.report.ReportTypeEnum;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
+import br.com.hfsframework.util.exceptions.TransactionException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -135,7 +136,11 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		//BeanUtils.copyProperties(bean, obj, "id");
 
-		obj = service.update(bean);
+		try {
+			obj = service.update(bean);
+		} catch (TransactionException e) {
+			return new ResponseEntity<>(obj.get(), HttpStatus.NOT_MODIFIED);
+		}
 
 		return ResponseEntity.ok(obj.get());
 	}

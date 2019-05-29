@@ -1,8 +1,8 @@
 package br.com.hfsframework.base.view;
 
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,37 +47,81 @@ public abstract class BaseViewController {
 	}
 
 	public void showPrimaryMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("primaryMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("primaryMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showSecondaryMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("secondaryMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("secondaryMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showSuccessMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("successMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("successMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showWarningMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("warningMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("warningMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 	
 	public void showInfoMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("infoMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("infoMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showLightMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("lightMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("lightMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showDarkMessage(RedirectAttributes attributes, String messageCode) {
-		attributes.addFlashAttribute("darkMessage", messageSource.getMessage(messageCode, null, Locale.getDefault()));
+		attributes.addFlashAttribute("darkMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
 	}
 
 	public void showDangerMessage(RedirectAttributes attributes, Exception e) {
 		attributes.addFlashAttribute("dangerMessage", e.getMessage());
 	}
 
+
+	public void showPrimaryMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("primaryMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showSecondaryMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("secondaryMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showSuccessMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("successMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showWarningMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("warningMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+	
+	public void showInfoMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("infoMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showLightMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("lightMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showDarkMessage(ModelAndView mv, String messageCode) {
+		mv.addObject("darkMessage", messageSource.getMessage(messageCode, null, LocaleContextHolder.getLocale()));
+	}
+
+	public void showDangerMessage(ModelAndView mv, Exception e) {
+		mv.addObject("dangerMessage", e.getMessage());
+	}
+
+	protected void logBindingResultErrors(BindingResult result, Logger log) {
+		result.getAllErrors().forEach(item -> {
+			log.error("ObjectName: " + item.getObjectName());
+			Arrays.asList(item.getArguments()).forEach(arg -> log.error("Argument: " +	arg));
+			log.error("Code: " + item.getCode());
+			Arrays.asList(item.getCodes()).forEach(code -> log.error("Code: " + code));
+			log.error("DefaultMessage: " + item.getDefaultMessage());
+			log.info("Item: " + item.toString());
+		});
+	}	
+	
 	public void generateErrorMessage(String mensagem) {
 	}
 

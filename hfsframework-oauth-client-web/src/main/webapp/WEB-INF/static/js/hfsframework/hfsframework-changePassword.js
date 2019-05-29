@@ -22,6 +22,7 @@ class HFSChangePassword extends HFSSystemUtil {
 		this._dlgChangePassword.puidialog({
 		    minimizable: false,
 		    maximizable: false,
+		    resizable: false,
 		    responsive: true,
 		    minWidth: 200,
 		    modal: true,
@@ -45,7 +46,7 @@ class HFSChangePassword extends HFSSystemUtil {
 	}
 	
 	
-	btnBackClick(event) {
+	btnCancelClick(event) {
 		event.preventDefault();
 		this._anchorHomePage[0].click();
 	}
@@ -56,6 +57,6 @@ $(function() {
 	const hfsChangePassword = new HFSChangePassword();
 	
 	$('#btnSave').click(hfsChangePassword.btnSaveClick.bind(hfsChangePassword));
-	$('#btnBack').click(hfsChangePassword.btnBackClick.bind(hfsChangePassword));
+	$('#btnCancel').click(hfsChangePassword.btnCancelClick.bind(hfsChangePassword));
 	
 });

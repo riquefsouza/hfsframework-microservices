@@ -14,117 +14,100 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.oauth.client.UserRestClient;
 import br.com.hfsframework.oauth.client.domain.User;
 
 @Controller
-@RequestMapping("/private/changePasswordView")
+@RequestMapping("/private/changePassword")
 public class ChangePasswordController extends BaseViewController implements Serializable {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	//private static final Logger log = LoggerFactory.getLogger(ChangePasswordController.class);
+	
 	private String listPage;
 	
-	private User userLogged;
-	
 	private UserRestClient restClient;
+	
+	private User userLogged;
 	
 	public ChangePasswordController() {
 		this.listPage = "private/changePassword";
 	}
 
-	@GetMapping("/list")
+	@GetMapping
 	public ModelAndView list() {
-		Optional<ModelAndView> mv = getPage(getListPage());
+		Optional<ModelAndView> mv = getPage(this.listPage);
 		
 		if (mv.isPresent()) {
 			restClient = new UserRestClient(authServerURL, accesToken);
-			this.userLogged = restClient.getLoggedUser(getPrincipal());
-			mv.get().addObject("bean", userLogged);
+			userLogged = restClient.getLoggedUser(getPrincipal());
+			mv.get().addObject("user", userLogged);
 		}
 		
 		return mv.get();
 	}
-	
-	public boolean prepararParaSalvar(User obj, RedirectAttributes attributes) {
-		if ((obj.getNewPassword() == null && obj.getConfirmNewPassword() == null && obj.getCurrentPassword() == null)
-				|| (obj.getNewPassword().equals("") && obj.getConfirmNewPassword().equals("") && obj.getCurrentPassword().equals(""))) {
 
-			this.showWarningMessage(attributes, "changePasswordView.validation");
+	public boolean prepararParaSalvar(User user, ModelAndView mv) {
+		if ((user.getNewPassword() == null && user.getConfirmNewPassword() == null && user.getCurrentPassword() == null)
+				|| (user.getNewPassword().equals("") && user.getConfirmNewPassword().equals("") && user.getCurrentPassword().equals(""))) {
+
+			this.showWarningMessage(mv, "changePasswordView.validation");
 			
-		} else if ((obj.getNewPassword() == null && obj.getConfirmNewPassword() == null)
-				|| (obj.getNewPassword().equals("") && obj.getConfirmNewPassword().equals(""))) {
+		} else if ((user.getNewPassword() == null && user.getConfirmNewPassword() == null)
+				|| (user.getNewPassword().equals("") && user.getConfirmNewPassword().equals(""))) {
 
-			this.showWarningMessage(attributes, "changePasswordView.validation");
+			this.showWarningMessage(mv, "changePasswordView.validation");
 			
 		} else {
-			String senha = BCrypt.hashpw(obj.getCurrentPassword(), BCrypt.gensalt());
-			
-			if (senha.equals(this.userLogged.getPassword())) {
 
-				if (obj.getNewPassword().equals(obj.getConfirmNewPassword())) {
+			if (BCrypt.checkpw(user.getCurrentPassword(), user.getPassword())) {
+
+				if (user.getNewPassword().equals(user.getConfirmNewPassword())) {
 					return true;
 				} else {
-					this.showWarningMessage(attributes, "changePasswordView.notEqual");					
+					this.showWarningMessage(mv, "changePasswordView.notEqual");					
 				}
 			} else {
-				this.showWarningMessage(attributes, "changePasswordView.currentPwdNotEqual");
+				this.showWarningMessage(mv, "changePasswordView.currentPwdNotEqual");
 			}
 		}
 		return false;
 	}
 	
-	@PostMapping("/save")
-	public RedirectView save(@Valid User obj, 
+	@PostMapping
+	public ModelAndView save(@Valid User user, 
 			BindingResult result, RedirectAttributes attributes) {
-		
-		if (prepararParaSalvar(obj, attributes)){
-			return new RedirectView("list");
-		}
-		
+		Optional<ModelAndView> mv = getPage(this.listPage);
+		mv.get().addObject("user", user);
+
 		if (result.hasErrors()){
-			this.showWarningMessage(attributes, "changePasswordView.checkFields");
-			return new RedirectView("list");
+			//this.showWarningMessage(mv.get(), "changePasswordView.checkFields");
+			//logBindingResultErrors(result, log);
+			return mv.get();
+		}
+
+		if (!prepararParaSalvar(user, mv.get())){
+			return mv.get();
 		}
 		
 		try {
-			String password = BCrypt.hashpw(obj.getConfirmNewPassword(), BCrypt.gensalt());
-						
-			//UsuarioAutenticadoVO usuarioAut = getUsuarioAutenticado();
-			//usuarioAut.getUsuario().setSenha(password);
-			this.userLogged.setPassword(password);
+			String pwdCrypt = BCrypt.hashpw(user.getConfirmNewPassword(), BCrypt.gensalt());
 			
-			
-			//getBusinessController().updateSenha(usuarioAut.getUsuario().getSenha(), 
-				//	usuarioAut.getUsuario().getLogin());
+			userLogged.setPassword(pwdCrypt);
 			
 			restClient.updateById(userLogged);
 			
-			//setUsuarioAutenticado(usuarioAut);
-			
-			this.showWarningMessage(attributes, "changePasswordView.passwordChanged");
+			this.showWarningMessage(mv.get(), "changePasswordView.passwordChanged");
 		} catch (RestClientException e) {
-			this.showDangerMessage(attributes, e);
-			return new RedirectView("list");
+			this.showDangerMessage(mv.get(), e);
+			return mv.get();
 		}
 		
-		return new RedirectView("list");		
-	}	
-	
-	public String getListPage() {
-		return listPage;
-	}
-
-	public String cancelEdition() {
-		return getListPage();
+		return mv.get();
 	}
 	
-	public String cancel() {
-		return getDesktopPage();
-	}
-
 }

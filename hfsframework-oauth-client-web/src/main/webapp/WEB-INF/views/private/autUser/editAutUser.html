@@ -43,10 +43,12 @@
 						<input type="hidden" class="form-control" id="autUser_id">
 						
 						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_username" maxlength="10">
-						
+						<input type="text" class="form-control" id="autUser_username" maxlength="10" required="required" />						
+					</div>
+					
+					<div class="col-md-6 form-group">						
 						<label for="autUser_email"><span th:text="#{editAutUser.email}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_email" maxlength="100">						
+						<input type="text" class="form-control" id="autUser_email" maxlength="100" required="required" />
 					</div>
 				</div>
 				

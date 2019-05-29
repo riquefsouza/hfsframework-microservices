@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -36,17 +38,25 @@ public class User implements Serializable {
 	private Long id; 
 	
 	@NotBlank
+	@Size(min=4, max=64)
+	@Column(nullable = false, length = 64)
 	private String username;
 	
 	@NotBlank	
+	@Size(min=4, max=64)
+	@Column(nullable = false, length = 64)
 	private String password;
 
 	@NotBlank
 	@Email
+	@Size(min=16, max=100)
+	@Column(nullable = false, length = 100)
 	private String email;
 	
 	@NotBlank
 	@URL
+	@Size(min=8, max=255)
+	@Column(nullable = false, length = 255)
 	private String urlPhoto;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL) 

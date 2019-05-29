@@ -2,12 +2,14 @@ package br.com.hfsframework.oauth.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -30,6 +32,8 @@ public class Role implements Serializable {
 	private Long id;
 
 	@NotBlank
+	@Size(min=4, max=64)
+	@Column(nullable = false, length = 64)
 	private String name;
 
 	public Role() {
