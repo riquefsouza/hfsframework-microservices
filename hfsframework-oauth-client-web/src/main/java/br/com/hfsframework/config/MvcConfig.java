@@ -34,6 +34,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import br.com.hfsframework.util.HttpMessageConverterUtil;
+import br.com.hfsframework.util.filter.AuthenticationFilter;
 
 @Configuration
 @EnableWebMvc
@@ -79,11 +80,8 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**")
-				.addResourceLocations("/WEB-INF/static/css/", 
-						"/WEB-INF/static/img/", "/WEB-INF/static/js/",
-						"/WEB-INF/static/primeui/", "/WEB-INF/static/scss/", 
-						"/WEB-INF/static/vendor/");
+		registry.addResourceHandler(AuthenticationFilter.resourceHandler())
+				.addResourceLocations(AuthenticationFilter.resourceLocations());
 	}
 
 	@Override

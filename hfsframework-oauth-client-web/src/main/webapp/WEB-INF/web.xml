@@ -31,7 +31,7 @@
 		<filter-name>x-frame-header</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+-->
 
 	<filter>
 		<filter-name>AuthenticationFilter</filter-name>
@@ -42,7 +42,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-
+<!--
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>hfsframework-oauth-client-web</web-resource-name>

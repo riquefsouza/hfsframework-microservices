@@ -24,10 +24,10 @@ class ListAutRole extends HFSSystemUtil {
     		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, this._dlgDeleteConfirmation);	        
 		})
 		.fail(function(xhr, textStatus, msg){
-			this.errorShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
+			this.dangerShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
 	    	/*
 	    	setTimeout(function() {
-	    		//this.errorHide();
+	    		//this.dangerHide();
 			}, 1500);
 			*/
 	    })
@@ -56,7 +56,7 @@ class ListAutRole extends HFSSystemUtil {
 	
 	btnEditClick(event) {
 		event.preventDefault();
-		this.errorHide();
+		this.dangerHide();
 		
 		var dataRowSelected = this._tableList.puidatatable('getSelection');		
 		
@@ -76,13 +76,13 @@ class ListAutRole extends HFSSystemUtil {
 				window.location.href=this._url.replace("/list", "/edit");
 			})
 			.fail(function() {
-				this.errorShow(this._messageSelectTable);
+				this.dangerShow(this._messageSelectTable);
 		    	setTimeout(function() {
-		    		this.errorHide();
+		    		this.dangerHide();
 				}, 1500);
 	        });
 		} else {
-			this.errorShow(this._messageSelectTable);
+			this.dangerShow(this._messageSelectTable);
 		}
 	}
 	
@@ -115,7 +115,7 @@ class ListAutRole extends HFSSystemUtil {
 		        				dlgDeleteConfirmation.puidialog('hide');
 			            	})
 			    			.fail(function(xhr){
-			    				this.errorShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
+			    				this.dangerShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
 	        		        });
 
 		            	}
@@ -135,14 +135,14 @@ class ListAutRole extends HFSSystemUtil {
 
 	btnDeleteClick(event) {
 		event.preventDefault();
-		this.errorHide();
+		this.dangerHide();
 		
 		var dataRowSelected = this._tableList.puidatatable('getSelection');
 		
 		if (dataRowSelected.length > 0) {
 			this._dlgDeleteConfirmation.puidialog('show');
 		} else {
-			this.errorShow(this._messageSelectTable);
+			this.dangerShow(this._messageSelectTable);
 		}
 	}
 
@@ -203,7 +203,7 @@ class ListAutRole extends HFSSystemUtil {
 				}).done(function(data) {
 		        	callback.call(this, data.content);
 				}).fail(function(xhr){
-					this.errorShow("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
+					this.dangerShow("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
 			    });
 			},	           
 			rowSelect: function(event, data) {

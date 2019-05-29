@@ -21,6 +21,7 @@ import br.com.hfsframework.base.security.BaseAuthenticationSuccessHandler;
 import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 import br.com.hfsframework.util.CookieUtil;
+import br.com.hfsframework.util.filter.AuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +55,7 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
     	http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers("/css/**", "/img/**", "/js/**", "/primeui/**", "/scss/**", "/vendor/**").permitAll()       
+		.antMatchers(AuthenticationFilter.resourceHandler()).permitAll()       
 		.antMatchers("/public/**").permitAll()
 		.antMatchers("/private/**").access("hasRole('USER') or hasRole('ADMIN')")
 		.antMatchers("/anonymous*").anonymous()

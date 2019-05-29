@@ -91,7 +91,7 @@ class HFSLogin extends HFSSystemUtil {
 			this.infoShow("Welcome new member!");
 		})
 		.fail(function(xhr, textStatus, msg){
-			this.errorShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
+			this.dangerShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
 		
 	}
@@ -116,7 +116,7 @@ class HFSLogin extends HFSSystemUtil {
 			this.infoShow("Email Sent!");
 		})
 		.fail(function(xhr, textStatus, msg){
-			this.errorShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
+			this.dangerShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
 		
 	}

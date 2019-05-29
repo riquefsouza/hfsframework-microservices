@@ -27,7 +27,7 @@ class HFSInfoUser extends HFSSystemUtil {
 			
 		})
 		.fail(function(xhr, textStatus, msg){
-			this.errorShow("An error occured on InfoUser: " + xhr.status + " " + xhr.statusText);
+			this.dangerShow("An error occured on InfoUser: " + xhr.status + " " + xhr.statusText);
 	    });
 
 	}

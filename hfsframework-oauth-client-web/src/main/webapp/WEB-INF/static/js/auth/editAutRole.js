@@ -22,7 +22,7 @@ class EditAutRole extends HFSSystemUtil {
 					this.setFields(data);
 		        }
 			}).fail(function(xhr, textStatus, msg){
-				this.errorShow("An error occured on Edit: " + xhr.status + " " + xhr.statusText);
+				this.dangerShow("An error occured on Edit: " + xhr.status + " " + xhr.statusText);
 		    });
 		}
 
@@ -77,7 +77,7 @@ class EditAutRole extends HFSSystemUtil {
     			window.location.href=this._url.replace("/add", "/list");
 		})
 		.fail(function(xhr, textStatus, msg){
-			this.errorShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
+			this.dangerShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
 
 	}

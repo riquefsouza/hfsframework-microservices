@@ -45,6 +45,11 @@ public class AppController extends BaseViewController {
     public String login() {
         return "login";
     }
+    
+    @RequestMapping("/failure-forwardUrl") 
+    public String failureForwardUrl() {
+        return "login";
+    }
 
     /** Login form with error. */
     @RequestMapping("/login-error.html")
