@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.base.client.BaseRestClient;
@@ -37,55 +41,77 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	
 	private IBaseRestClient<T, I> restClient;
 	
-	private Class<T> classEntity;
-	
 	private Boolean forceDownload;
 	
-	public BaseViewRegisterRestClient(String listPage, String editPage, String reportName) {
+	public BaseViewRegisterRestClient(IBaseRestClient<T, I> restClient,
+			String listPage, String editPage, String reportName) {
 		super();
 		this.forceDownload = false;
 		
 		log = LoggerFactory.getLogger(BaseViewRegisterRestClient.class);
 		
+		this.restClient = restClient;
 		this.listPage = listPage;
 		this.editPage = editPage;
 		this.reportName = reportName;		
 	}
 
-	@GetMapping("/list")
-	public ModelAndView list(T restClient) {
+	@GetMapping
+	public ModelAndView list() {
 		Optional<ModelAndView> mv = getPage(getListPage());
-		
 		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken, classEntity);
+			this.restClient.init(authServerURL, accesToken);
 		}
 		
 		return mv.get();
 	}
 
 	@GetMapping("/add")
-	public ModelAndView add() {
+	public ModelAndView add(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken, classEntity);
+			this.restClient.init(authServerURL, accesToken);
 		}
 		
 		return mv.get();
 	}
 
 	@GetMapping("/edit")
-	public ModelAndView edit() {
+	public ModelAndView edit(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		if (mv.isPresent()) {
-			this.restClient.init(authServerURL, accesToken, classEntity);
+			this.restClient.init(authServerURL, accesToken);
 		}
 		
 		return mv.get();
 	}
 
-	@PostMapping("/save")
-	public String save() {
-		return getListPage();
+	@PostMapping
+	public ModelAndView save(@Valid T bean, 
+			BindingResult result, RedirectAttributes attributes) {
+		Optional<ModelAndView> mv = getPage(this.listPage);
+		if (mv.isPresent()) {
+			this.restClient.init(authServerURL, accesToken);
+		}
+
+		if (result.hasErrors()){
+			mv.get().setViewName(this.editPage);
+			return mv.get();
+		}
+		
+		try {
+			
+			if (bean.getId()==null) 
+				this.restClient.add(bean);
+			else
+				this.restClient.updateById(bean);
+			
+		} catch (RestClientException e) {
+			this.showDangerMessage(mv.get(), e);
+			return mv.get();
+		}
+		
+		return mv.get();
 	}
 
 	@GetMapping("/delete")
@@ -128,20 +154,12 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 		return editPage;
 	}
 
-	public String cancelEdition() {
-		return getListPage();
-	}
-
 	public Boolean getForceDownload() {
 		return forceDownload;
 	}
 
 	public void setForceDownload(Boolean forceDownload) {
 		this.forceDownload = forceDownload;
-	}
-	
-	public String cancel() {
-		return getDesktopPage();
 	}
 	
 }

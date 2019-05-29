@@ -51,16 +51,17 @@ class ListAutRole extends HFSSystemUtil {
 		
 		this.persistItem("saveMethod", "POST");
 		this.persistItem("urlApiServer", this._urlApiServer);
-		window.location.href=this._url.replace("/list", "/add");
+		
+		window.location.href=this._url + "/add";
 	}
 	
 	btnEditClick(event) {
-		event.preventDefault();
+		event.preventDefault();		
 		this.dangerHide();
 		
 		var dataRowSelected = this._tableList.puidatatable('getSelection');		
 		
-		if (dataRowSelected.length > 0) {			
+		if (dataRowSelected.length > 0) {
 			$.get({
 				url: this._urlApiServer + "/" + dataRowSelected[0].id,
 				dataType: "json",
@@ -73,15 +74,20 @@ class ListAutRole extends HFSSystemUtil {
 			.done(function(responsePage) {
 				this.persistItem("saveMethod", "PUT");
 				this.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
-				window.location.href=this._url.replace("/list", "/edit");
+				window.location.href=this._url + "/edit";
 			})
 			.fail(function() {
 				this.dangerShow(this._messageSelectTable);
+				/*
 		    	setTimeout(function() {
 		    		this.dangerHide();
 				}, 1500);
+				*/
 	        });
 		} else {
+			
+			console.log("ERRO=3");
+			
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
@@ -90,6 +96,7 @@ class ListAutRole extends HFSSystemUtil {
 		this._dlgDeleteConfirmation.puidialog({
 		    minimizable: false,
 		    maximizable: false,
+		    resizable: false,
 		    responsive: true,
 		    minWidth: 200,
 		    modal: true,

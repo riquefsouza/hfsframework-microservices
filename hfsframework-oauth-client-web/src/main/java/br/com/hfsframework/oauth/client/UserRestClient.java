@@ -7,15 +7,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 
 import br.com.hfsframework.base.client.BaseRestClient;
+import br.com.hfsframework.base.client.IBaseRestClient;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.oauth.client.domain.User;
 
-public class UserRestClient extends BaseRestClient<User, Long> {
+public class UserRestClient extends BaseRestClient<User, Long> implements IBaseRestClient<User, Long> {
 
 	private static final Logger log = LoggerFactory.getLogger(UserRestClient.class);
 	
-	public UserRestClient(String authServerURL, String sAccesToken) throws RestClientException {
-		super.init(authServerURL + "/api/v1/user", sAccesToken, User.class);
+	public UserRestClient() {
+		super();
+	}
+
+	@Override
+	public boolean init(String authServerURL, String sAccesToken) throws RestClientException {
+		return super.init(authServerURL + "/api/v1/user", sAccesToken, User.class);
 	}
 	
 	public Optional<User> findByUsername(String username) throws RestClientException {
@@ -59,5 +65,5 @@ public class UserRestClient extends BaseRestClient<User, Long> {
 		}
 		//return Optional.empty();
 	}
-	
+
 }

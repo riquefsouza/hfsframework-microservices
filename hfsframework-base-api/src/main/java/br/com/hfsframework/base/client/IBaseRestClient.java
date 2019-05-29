@@ -9,7 +9,7 @@ import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
 public interface IBaseRestClient<T, I> {
 
-	boolean init(String server, String sAccesToken, Class<T> classEntity) throws RestClientException;
+	boolean init(String authServerURL, String sAccesToken) throws RestClientException;
 	
 	Optional<T> add(T bean) throws RestClientException;
 	

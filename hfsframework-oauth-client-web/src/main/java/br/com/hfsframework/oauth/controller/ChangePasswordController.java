@@ -36,6 +36,7 @@ public class ChangePasswordController extends BaseViewController implements Seri
 	
 	public ChangePasswordController() {
 		this.listPage = "private/changePassword";
+		this.restClient = new UserRestClient();
 	}
 
 	@GetMapping
@@ -43,7 +44,7 @@ public class ChangePasswordController extends BaseViewController implements Seri
 		Optional<ModelAndView> mv = getPage(this.listPage);
 		
 		if (mv.isPresent()) {
-			restClient = new UserRestClient(authServerURL, accesToken);
+			this.restClient.init(authServerURL, accesToken);
 			userLogged = restClient.getLoggedUser(getPrincipal());
 			mv.get().addObject("user", userLogged);
 		}

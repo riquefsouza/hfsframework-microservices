@@ -51,7 +51,8 @@ class ListAutUser extends HFSSystemUtil {
 		
 		this.persistItem("saveMethod", "POST");
 		this.persistItem("urlApiServer", this._urlApiServer);
-		window.location.href=this._url.replace("/list", "/add");
+		
+		window.location.href=this._url + "/add";
 	}
 	
 	btnEditClick(event) {
@@ -90,6 +91,7 @@ class ListAutUser extends HFSSystemUtil {
 		this._dlgDeleteConfirmation.puidialog({
 		    minimizable: false,
 		    maximizable: false,
+		    resizable: false,
 		    responsive: true,
 		    minWidth: 200,
 		    modal: true,
@@ -164,7 +166,9 @@ class ListAutUser extends HFSSystemUtil {
 				totalRecords: (responsePage.totalElements-responsePage.size)
 			},
 			columns: [
-				{field: 'name', headerText: 'Name', sortable: true, filter: false}
+				{field: 'username', headerText: 'UserName', sortable: true, filter: false},
+				{field: 'email', headerText: 'Email', sortable: true, filter: false},
+				{field: 'urlPhoto', headerText: 'Url Photo', sortable: true, filter: false}
 			],
 			datasource: function(callback, ui) {
 				//ui.first = Index of the first record

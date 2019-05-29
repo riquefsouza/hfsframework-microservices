@@ -9,7 +9,7 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="editAutRole">
+	<form id="editAutRole" action="#" th:action="@{/private/roleView}" method="post" th:object="${role}">
 	
 		<div class="card">
 			<div class="card-header" 
@@ -18,7 +18,7 @@
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
-					<button type="button" class="btn btn-success btn-icon-split" id="btnSave">
+					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
 						<span class="icon text-white-50">
 							<i class="fa fa-check-circle"></i>
 						</span>
@@ -41,10 +41,11 @@
 				</div>				
 				<div class="row">
 					<div class="col-md-2 form-group">
-						<input type="hidden" class="form-control" id="autRole_id">
+						<input type="hidden" class="form-control" id="autRole_id" th:field="*{id}" />
 						
 						<label for="autRole_name"><span th:text="#{editAutRole.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autRole_name" maxlength="10" required="required" />
+						<input type="text" class="form-control" id="autRole_name" maxlength="10" required="required" th:field="*{name}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 					</div>
 				</div>
 				

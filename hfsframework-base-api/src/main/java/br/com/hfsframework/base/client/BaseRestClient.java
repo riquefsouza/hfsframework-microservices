@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
-public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Serializable> extends BaseRestTemplateClient implements IBaseRestClient<T, I> {
+public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Serializable> extends BaseRestTemplateClient {
 
 	private static final Logger log = LoggerFactory.getLogger(BaseRestClient.class);
 	
@@ -30,8 +30,8 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 		super();
 		restTemplate = null;
 	}
-	
-    public boolean init(String server, String sAccesToken, Class<T> classEntity) throws RestClientException {
+
+    protected boolean init(String server, String sAccesToken, Class<T> classEntity) throws RestClientException {
     	this.server = server;
     	this.classEntity = classEntity;
     	
@@ -119,5 +119,5 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 		
 		//return Optional.empty();
 	}
-	
+
 }

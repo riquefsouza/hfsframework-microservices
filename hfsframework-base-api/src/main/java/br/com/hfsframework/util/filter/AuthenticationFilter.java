@@ -48,6 +48,8 @@ public class AuthenticationFilter implements Filter {
 		
 		String url = httpRequest.getRequestURL().toString();
 		String urlLogin = UrlUtil.getURL(httpRequest, "/login.html");
+		String urlLoginError = UrlUtil.getURL(httpRequest, "/login-error.html");
+		
 		
 		//HttpUtil.logServletInfo(httpRequest);
 		
@@ -55,7 +57,7 @@ public class AuthenticationFilter implements Filter {
 		
 		if (!findResourceUrl(resourceHandler(), url)) {
 		
-			if (!url.equals(urlLogin)) {
+			if (!url.equals(urlLogin) && !url.equals(urlLoginError)) {
 
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();

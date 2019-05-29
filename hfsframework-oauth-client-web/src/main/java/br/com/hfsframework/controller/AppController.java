@@ -46,18 +46,12 @@ public class AppController extends BaseViewController {
         return "login";
     }
     
-    @RequestMapping("/failure-forwardUrl") 
-    public String failureForwardUrl() {
-        return "login";
-    }
-
-    /** Login form with error. */
     @RequestMapping("/login-error.html")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
         return "login";
     }
-    
+        
     /** Error page. */
     @RequestMapping("/error.html")
     public String error(HttpServletRequest request, Model model) {

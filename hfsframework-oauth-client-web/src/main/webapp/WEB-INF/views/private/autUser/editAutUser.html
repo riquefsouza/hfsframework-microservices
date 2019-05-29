@@ -9,7 +9,7 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="editAutUser">
+	<form id="editAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${user}">
 	
 		<div class="card">
 			<div class="card-header"
@@ -18,7 +18,7 @@
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
-					<button type="button" class="btn btn-success btn-icon-split" id="btnSave">
+					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
 						<span class="icon text-white-50">
 							<i class="fa fa-check-circle"></i>
 						</span>
@@ -40,16 +40,23 @@
 				</div>				
 				<div class="row">
 					<div class="col-md-2 form-group">
-						<input type="hidden" class="form-control" id="autUser_id">
+						<input type="hidden" id="autUser_id" th:field="*{id}" />
+						<input type="hidden" id="autUser_password" th:field="*{password}" />
 						
 						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_username" maxlength="10" required="required" />						
+						<input type="text" class="form-control" id="autUser_username" maxlength="10" required="required" th:field="*{username}" />						
 					</div>
 					
 					<div class="col-md-6 form-group">						
 						<label for="autUser_email"><span th:text="#{editAutUser.email}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_email" maxlength="100" required="required" />
+						<input type="text" class="form-control" id="autUser_email" maxlength="100" required="required" th:field="*{email}" />
 					</div>
+					
+					<div class="col-md-6 form-group">
+						<label for="autUser_urlPhoto"><span th:text="#{editAutUser.urlPhoto}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="autUser_urlPhoto" maxlength="100" required="required" th:field="*{urlPhoto}" />
+					</div>
+					
 				</div>
 				
 			</div>

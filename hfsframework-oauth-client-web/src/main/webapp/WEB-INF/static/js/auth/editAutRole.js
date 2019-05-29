@@ -33,6 +33,7 @@ class EditAutRole extends HFSSystemUtil {
 		this._autRoleName.val(obj.name);
 	}
 
+	/*
 	getFields(){
 		var sId = this._autRoleId.val();
 		var nId = sId.length == 0 ? null : parseInt(sId);
@@ -44,19 +45,21 @@ class EditAutRole extends HFSSystemUtil {
 		
 		return JSON.stringify(obj);
 	}
-
+	 */
+	
 	btnCancelClick(event) {
 		event.preventDefault();
 		
 		if (this._saveMethod==="PUT")
-			window.location.href=this._url.replace("/edit", "/list");
+			window.location.href=this._url.replace("/edit", "");
 		else
-			window.location.href=this._url.replace("/add", "/list");		
+			window.location.href=this._url.replace("/add", "");
 	}
+	
 	
 	btnSaveClick(event) {
 		event.preventDefault();
-
+		/*
 		$.ajax({
 			method: this._saveMethod,
 			url: this._urlApiServer,
@@ -72,14 +75,14 @@ class EditAutRole extends HFSSystemUtil {
 			this.removePersistedItem("saveMethod");
 			this.removePersistedItem("urlApiServer");
 			if (this._saveMethod==="PUT")
-    			window.location.href=this._url.replace("/edit", "/list");
+    			window.location.href=this._url.replace("/edit", "");
     		else
-    			window.location.href=this._url.replace("/add", "/list");
+    			window.location.href=this._url.replace("/add", "");
 		})
 		.fail(function(xhr, textStatus, msg){
 			this.dangerShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
-
+		 */
 	}
 	
 }
@@ -87,7 +90,7 @@ class EditAutRole extends HFSSystemUtil {
 $(function() {
 	const editAutRole = new EditAutRole();
 	
-	$('#btnSave').click(editAutRole.btnSaveClick.bind(editAutRole));
+	//$('#btnSave').click(editAutRole.btnSaveClick.bind(editAutRole));
 	$('#btnCancel').click(editAutRole.btnCancelClick.bind(editAutRole));
 	
 });

@@ -7,14 +7,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
 
 import br.com.hfsframework.base.client.BaseRestClient;
+import br.com.hfsframework.base.client.IBaseRestClient;
 import br.com.hfsframework.oauth.client.domain.Role;
 
-public class RoleRestClient extends BaseRestClient<Role, Long> {
+public class RoleRestClient extends BaseRestClient<Role, Long> implements IBaseRestClient<Role, Long> {
 	
 	private static final Logger log = LoggerFactory.getLogger(RoleRestClient.class);
 	
-	public RoleRestClient(String authServerURL, String accesToken) throws RestClientException {
-		super.init(authServerURL + "/api/v1/role", accesToken, Role.class);
+	public RoleRestClient() {
+		super();
+	}
+	
+	@Override
+	public boolean init(String authServerURL, String accesToken) throws RestClientException {
+		return super.init(authServerURL + "/api/v1/role", accesToken, Role.class);
 	}
 	
 	public Optional<Role> findByName(String name) throws RestClientException {

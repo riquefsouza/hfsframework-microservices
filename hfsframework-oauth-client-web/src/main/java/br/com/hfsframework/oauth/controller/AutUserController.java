@@ -14,7 +14,7 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 	private static final long serialVersionUID = 1L;
 
 	public AutUserController() {
-		super("/private/autRole/listAutUser", "/private/autRole/editAutUser", "AutUser");
+		super(new UserRestClient(), "/private/autUser/listAutUser", "/private/autUser/editAutUser", "AutUser");
 	}
 
 }
