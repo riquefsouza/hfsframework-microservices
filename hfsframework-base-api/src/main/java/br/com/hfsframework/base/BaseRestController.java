@@ -1,6 +1,7 @@
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -69,16 +70,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 		return ResponseEntity.ok(obj.get());
 	}
 
-	/**
-	 * GetAll.
-	 *
-	 * @param principal the principal
-	 * @return the iterable
-	 */
 	@ApiOperation("Get all")
 	@GetMapping
-	public ResponseEntity<Iterable<T>> getAll() {
-		Iterable<T> iter = service.getAll();
+	public ResponseEntity<List<T>> getAll() {
+		List<T> iter = service.getAll();
 
 		return ResponseEntity.ok(iter);
 	}

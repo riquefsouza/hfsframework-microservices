@@ -91,7 +91,7 @@ public abstract class BaseViewQuery<T, I extends Serializable,
 	 */
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView(paginaListar);
-		Iterable<T> lista = businessController.getAll();
+		List<T> lista = businessController.getAll();
 		mv.addObject("listaBean", lista);
 		return mv;
 	}	
@@ -102,7 +102,7 @@ public abstract class BaseViewQuery<T, I extends Serializable,
 	 * @param lista the lista
 	 * @return the model and view
 	 */
-	public ModelAndView listar(Iterable<T> lista) {
+	public ModelAndView listar(List<T> lista) {
 		ModelAndView mv = new ModelAndView(paginaListar);
 		mv.addObject("listaBean", lista);
 		return mv;

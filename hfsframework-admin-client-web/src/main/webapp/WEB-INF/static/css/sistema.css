@@ -5,11 +5,11 @@
 }
 */
 
-.tema-principal {
+.main-theme {
 	background-color: lightblue;
 }
 
-.rodape-central {
+.central-footer {
 	position: absolute;
 	bottom: 0;
 	width: 98%;

@@ -7,6 +7,7 @@
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -66,7 +67,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	 * @see br.com.hfsframework.base.IBaseCrud#getAll()
 	 */
 	@Override
-	public Iterable<T> getAll() {
+	public List<T> getAll() {
 		return repositorio.findAll();
 	}
 

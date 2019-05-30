@@ -3,11 +3,16 @@ class EditAutRole extends HFSSystemUtil {
 	{
 		super();
 		
+		this.hideQueryString();
+		
+		this._saveMethod = this.getPersistedItem("saveMethod");
+				
+		/*
 		this._urlApiServer = this.getPersistedItem("urlApiServer");
-		this._saveMethod = this.getPersistedItem("saveMethod");	
-
+					
 		this._autRoleId = $('#autRole_id');
 		this._autRoleName = $('#autRole_name');
+		
 		
 		if (this._saveMethod==="PUT"){
 			$.get({
@@ -25,15 +30,17 @@ class EditAutRole extends HFSSystemUtil {
 				this.dangerShow("An error occured on Edit: " + xhr.status + " " + xhr.statusText);
 		    });
 		}
+		*/
 
 	}
 	
+	/*
 	setFields(obj){
 		this._autRoleId.val(obj.id);
 		this._autRoleName.val(obj.name);
 	}
 
-	/*
+	
 	getFields(){
 		var sId = this._autRoleId.val();
 		var nId = sId.length == 0 ? null : parseInt(sId);
@@ -51,15 +58,15 @@ class EditAutRole extends HFSSystemUtil {
 		event.preventDefault();
 		
 		if (this._saveMethod==="PUT")
-			window.location.href=this._url.replace("/edit", "");
+			window.location.href=this._url.replace("View/edit", "View");
 		else
-			window.location.href=this._url.replace("/add", "");
+			window.location.href=this._url.replace("View/add", "View");		
 	}
 	
-	
+	/*
 	btnSaveClick(event) {
 		event.preventDefault();
-		/*
+		
 		$.ajax({
 			method: this._saveMethod,
 			url: this._urlApiServer,
@@ -75,16 +82,16 @@ class EditAutRole extends HFSSystemUtil {
 			this.removePersistedItem("saveMethod");
 			this.removePersistedItem("urlApiServer");
 			if (this._saveMethod==="PUT")
-    			window.location.href=this._url.replace("/edit", "");
-    		else
-    			window.location.href=this._url.replace("/add", "");
+				window.location.href=this._url.replace("View", "View/edit");
+			else
+				window.location.href=this._url.replace("View", "View/add");
 		})
 		.fail(function(xhr, textStatus, msg){
 			this.dangerShow("An error occured on save: " + xhr.status + " " + xhr.statusText);
 	    });
-		 */
+		
 	}
-	
+	 */
 }
 
 $(function() {

@@ -3,12 +3,16 @@ class ListAutRole extends HFSSystemUtil {
 	{
 		super();
 		
+		this.hideQueryString();
+		
 		this._urlApiServer = this._urlAuthServer + "/api/v1/role";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
 		this._tableList = $('#tableAutRole');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
+		
+		this._formListAutRole = $('#formListAutRole');
 		
 		$.get({
 			url: this._urlApiServer + "/pages",
@@ -21,7 +25,8 @@ class ListAutRole extends HFSSystemUtil {
 		})
 		.done(function(data) {
     		this.buildTable(this._urlApiServer + "/pages", this._authToken, data);
-    		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, this._dlgDeleteConfirmation);	        
+    		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, 
+    				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo);	        
 		})
 		.fail(function(xhr, textStatus, msg){
 			this.dangerShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
@@ -41,7 +46,9 @@ class ListAutRole extends HFSSystemUtil {
 		event.preventDefault();
 		
 		var sUrl = this._url + "/export";
-		sUrl += "?reportType=" + this._cmbReportType.val() + "&forceDownload=" + this._forceDownload[0].checked + "&params=1,2,3";
+		sUrl += "?reportType=" + this._cmbReportType.val() + 
+				"&forceDownload=" + this._forceDownload[0].checked + 
+				"&params=1,2,3";
 		
 		window.open(sUrl,'_blank');
 	}
@@ -50,9 +57,9 @@ class ListAutRole extends HFSSystemUtil {
 		event.preventDefault();
 		
 		this.persistItem("saveMethod", "POST");
-		this.persistItem("urlApiServer", this._urlApiServer);
+		//this.persistItem("urlApiServer", this._urlApiServer);
 		
-		window.location.href=this._url + "/add";
+		window.location.href=this._url.replace("View", "View/add");
 	}
 	
 	btnEditClick(event) {
@@ -62,6 +69,11 @@ class ListAutRole extends HFSSystemUtil {
 		var dataRowSelected = this._tableList.puidatatable('getSelection');		
 		
 		if (dataRowSelected.length > 0) {
+			this.persistItem("saveMethod", "PUT");
+			//this.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
+			this._formListAutRole.submit();	
+			
+			/*
 			$.get({
 				url: this._urlApiServer + "/" + dataRowSelected[0].id,
 				dataType: "json",
@@ -74,25 +86,19 @@ class ListAutRole extends HFSSystemUtil {
 			.done(function(responsePage) {
 				this.persistItem("saveMethod", "PUT");
 				this.persistItem("urlApiServer", this._urlApiServer + "/" + dataRowSelected[0].id);
-				window.location.href=this._url + "/edit";
+				window.location.href=this._url.replace("View", "View/edit");
 			})
 			.fail(function() {
 				this.dangerShow(this._messageSelectTable);
-				/*
-		    	setTimeout(function() {
-		    		this.dangerHide();
-				}, 1500);
-				*/
 	        });
+	        */
 		} else {
-			
-			console.log("ERRO=3");
-			
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
 	
-	buildDialogDelete(urlApiServer, authToken, tableList, dlgDeleteConfirmation){
+	buildDialogDelete(urlApiServer, authToken, tableList, 
+			dlgDeleteConfirmation, messageButtonYes, messageButtonNo){
 		this._dlgDeleteConfirmation.puidialog({
 		    minimizable: false,
 		    maximizable: false,
@@ -101,7 +107,7 @@ class ListAutRole extends HFSSystemUtil {
 		    minWidth: 200,
 		    modal: true,
 		    buttons: [{
-		            text: 'Yes',
+		            text: messageButtonYes,
 		            icon: 'fa-check',
 		            click: function() {
 		            	var dataRowSelected = tableList.puidatatable('getSelection');
@@ -118,6 +124,8 @@ class ListAutRole extends HFSSystemUtil {
 		        		        }
 		        			})
 		        			.done(function(data) {
+		        				$('#autRole_jsonText').val("");
+		        				
 		        				tableList.puidatatable('reload');
 		        				dlgDeleteConfirmation.puidialog('hide');
 			            	})
@@ -130,7 +138,7 @@ class ListAutRole extends HFSSystemUtil {
 		            }
 		        },
 		        {
-		            text: 'No',
+		            text: messageButtonNo,
 		            icon: 'fa-close',
 		            click: function() {
 		                dlgDeleteConfirmation.puidialog('hide');
@@ -214,7 +222,7 @@ class ListAutRole extends HFSSystemUtil {
 			    });
 			},	           
 			rowSelect: function(event, data) {
-				//console.log(data);
+				$('#autRole_jsonText').val(JSON.stringify(data));
 			}
 		});
 		

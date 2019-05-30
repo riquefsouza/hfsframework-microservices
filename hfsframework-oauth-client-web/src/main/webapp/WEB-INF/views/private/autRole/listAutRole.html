@@ -10,8 +10,10 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content" style="margin:5px 0;">
-	<form id="listAutRole">
+	<form id="formListAutRole" action="#" th:action="@{/private/roleView/edit}" method="get" th:object="${role}">
 
+		<input type="hidden" id="autRole_jsonText" th:field="*{jsonText}" />
+		
 		<div class="card">
 			<div class="card-header" 
 				style="font-weight: bold;font-size: large;">				
@@ -62,6 +64,7 @@
 		</div>
 
 		<div id="tableAutRole"></div>
+		
 	</form>
 </div>
 

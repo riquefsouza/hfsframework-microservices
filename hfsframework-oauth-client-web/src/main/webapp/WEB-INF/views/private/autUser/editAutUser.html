@@ -9,7 +9,7 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="editAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${user}">
+	<form id="formEditAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${user}">
 	
 		<div class="card">
 			<div class="card-header"
@@ -39,30 +39,48 @@
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-2 form-group">
-						<input type="hidden" id="autUser_id" th:field="*{id}" />
-						<input type="hidden" id="autUser_password" th:field="*{password}" />
-						
+					<div class="col-md-4 form-group">
 						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_username" maxlength="10" required="required" th:field="*{username}" />						
+						<input type="text" class="form-control" id="autUser_username" maxlength="64" required="required" th:field="*{username}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>						
 					</div>
 					
 					<div class="col-md-6 form-group">						
 						<label for="autUser_email"><span th:text="#{editAutUser.email}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="autUser_email" maxlength="100" required="required" th:field="*{email}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 					</div>
 					
 					<div class="col-md-6 form-group">
 						<label for="autUser_urlPhoto"><span th:text="#{editAutUser.urlPhoto}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="autUser_urlPhoto" maxlength="100" required="required" th:field="*{urlPhoto}" />
+						<input type="text" class="form-control" id="autUser_urlPhoto" maxlength="255" required="required" th:field="*{urlPhoto}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('urlPhoto')}" th:errors="*{urlPhoto}"></span>
 					</div>
-					
+				</div>
+				<div class="row">	
+					<div class="col-md-5">
+						<label for="autUser_pickListRoles"><span th:text="#{editAutUser.pickListRoles}" th:remove="tag"></span></label>
+						<div id="autUser_pickListRoles" class="picklistBigger">
+						    <select name="autUser_sourceRoles">
+						        <option th:each="itemRole : ${listSourceRoles}" th:value="${itemRole.id}" th:text="${itemRole.name}" ></option>
+						    </select>
+						    <select name="autUser_targetRoles">
+						    	<option th:each="role, itemStat : *{roles}" 
+						    		th:value="*{roles[__${itemStat.index}__].id}" 
+						    		th:text ="*{roles[__${itemStat.index}__].name}" >
+						    	</option>
+						    </select>
+						</div>
+					</div>
 				</div>
 				
 			</div>
 		</div>
 	</form>	
 </div>
+
+<span id="editAutUser-message-sourceCaptionRoles" th:text="#{editAutUser.sourceCaptionRoles}" style="display: none"></span>
+<span id="editAutUser-message-targetCaptionRoles" th:text="#{editAutUser.targetCaptionRoles}" style="display: none"></span>
  
 <script th:src="@{/js/auth/editAutUser.js}"></script>
 

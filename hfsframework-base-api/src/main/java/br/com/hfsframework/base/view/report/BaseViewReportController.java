@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -43,7 +45,7 @@ public abstract class BaseViewReportController
 	/** The renderer. */
 	@Autowired
 	private ReportRender renderer;
-
+	
 	/**
 	 * Instantiates a new base view relatorio controller.
 	 */
@@ -81,12 +83,12 @@ public abstract class BaseViewReportController
 		return "";
 	}
 	
-	public void export(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
+	public void export(IBaseReport relatorio, Collection<?> colecao, Map<String, Object> params,		
 			boolean forcarDownload) {
 		export(relatorio, colecao, params, forcarDownload, true);
 	}
 	
-	public byte[] export(IBaseReport relatorio, Iterable<?> colecao, Map<String, Object> params,		
+	public byte[] export(IBaseReport relatorio, Collection<?> colecao, Map<String, Object> params,		
 			boolean forcarDownload, boolean renderizar) {
 		byte[] buffer = null;
 		
@@ -148,11 +150,23 @@ public abstract class BaseViewReportController
 		List<ReportTypeEnum> subtipos;
 		
 		for (String grupo : ReportTypeEnum.getGroups()) {
+			String igrupo = "";
+			
 			subtipos = listaEnum
 				.stream()
 				.filter(item -> item.getGroup().equals(grupo))
 				.collect(Collectors.toList());
-			grupoVO = new ReportGroupVO(grupo, subtipos);
+			
+			if (grupo.equals(ReportTypeEnum.getGroups()[0])) 
+				igrupo = messageSource.getMessage("reportTypeGroups.docs", null, LocaleContextHolder.getLocale());		
+			if (grupo.equals(ReportTypeEnum.getGroups()[1])) 
+				igrupo = messageSource.getMessage("reportTypeGroups.sheets", null, LocaleContextHolder.getLocale());
+			if (grupo.equals(ReportTypeEnum.getGroups()[2])) 
+				igrupo = messageSource.getMessage("reportTypeGroups.text", null, LocaleContextHolder.getLocale());
+			if (grupo.equals(ReportTypeEnum.getGroups()[3])) 
+				igrupo = messageSource.getMessage("reportTypeGroups.others", null, LocaleContextHolder.getLocale());
+
+			grupoVO = new ReportGroupVO(igrupo, subtipos);
 			listaVO.add(grupoVO);
 		}
 		

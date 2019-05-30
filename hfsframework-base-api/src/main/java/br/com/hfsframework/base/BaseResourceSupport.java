@@ -59,7 +59,7 @@ public abstract class BaseResourceSupport<T, I extends Serializable,
 	}
 	
 	/*
-	public Resources<BaseResourceSupport> getLista(Iterable<T> lista) {
+	public Resources<BaseResourceSupport> getLista(List<T> lista) {
 		Stream<T> stream = StreamSupport.stream(lista.spliterator(), false);
 
 		List<BaseResourceSupport> listaResource = stream.map(BaseResourceSupport::new)

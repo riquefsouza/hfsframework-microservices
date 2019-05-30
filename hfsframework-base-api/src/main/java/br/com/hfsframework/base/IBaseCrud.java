@@ -7,6 +7,7 @@
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -47,7 +48,7 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 *
 	 * @return the list
 	 */
-	Iterable<T> getAll();
+	List<T> getAll();
 	
 	/**
 	 * Get all.

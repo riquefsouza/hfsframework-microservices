@@ -138,7 +138,7 @@ public abstract class BaseViewRegister<T extends Serializable, I extends Seriali
 	 */
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView(paginaListar);
-		Iterable<T> lista = businessController.getAll();
+		List<T> lista = businessController.getAll();
 		mv.addObject("listaBean", lista);
 		return mv;
 	}

@@ -26,7 +26,7 @@ import br.com.hfsframework.base.view.report.BaseViewReportController;
 import br.com.hfsframework.base.view.report.IBaseViewReport;
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
-public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<I>, I extends Serializable,
+public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<T, I>, I extends Serializable,
 	R extends BaseRestClient<T, I>> 
 	extends BaseViewReportController implements IBaseViewReport {
 
@@ -57,7 +57,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	}
 
 	@GetMapping
-	public ModelAndView list() {
+	public ModelAndView list(T bean) {
 		Optional<ModelAndView> mv = getPage(getListPage());
 		return mv.get();
 	}
@@ -65,17 +65,24 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	@GetMapping("/add")
 	public ModelAndView add(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
+		bean.clear();
 		return mv.get();
 	}
 
 	@GetMapping("/edit")
 	public ModelAndView edit(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
+		
+		Optional<T> obj = bean.fromJSON();
+		if (obj.isPresent()) {
+			bean = obj.get();
+		}
+		
 		return mv.get();
 	}
 
 	@PostMapping
-	public ModelAndView save(@Valid T bean, 
+	public ModelAndView save(@Valid @ModelAttribute T bean, 
 			BindingResult result, RedirectAttributes attributes) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
 		if (mv.isPresent()) {

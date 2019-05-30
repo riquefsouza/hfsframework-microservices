@@ -1,16 +1,9 @@
-/**
- * <p><b>HFS Framework Spring</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2018
- */
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class BaseDualList.
  *

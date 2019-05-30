@@ -197,13 +197,13 @@ public class BaseReportImpl implements IBaseReport {
 	/* (non-Javadoc)
 	 * @see br.com.hfsframework.base.relatorio.IBaseRelatorio#prepare(java.util.Collection, java.util.Map)
 	 */
-	public void prepare(Iterable<?> dataSource, Map<String, Object> param) {
+	public void prepare(Collection<?> dataSource, Map<String, Object> param) {
 		this.log.info(ReportBundle.getString("preenchendo-relatorio"));
 		loadReport();
 		try {			
-			Collection<?> source = StreamSupport.stream(dataSource.spliterator(), false)
-					.collect(Collectors.toList());			
-			this.print = JasperFillManager.fillReport(this.jasper, param, new JRBeanCollectionDataSource(source));
+			//Collection<?> source = StreamSupport.stream(dataSource.spliterator(), false)
+			//		.collect(Collectors.toList());			
+			this.print = JasperFillManager.fillReport(this.jasper, param, new JRBeanCollectionDataSource(dataSource));
 		} catch (JRException e) {
 			throw new ReportException(log, ReportBundle.getString("problema-preenchendo-relatorio"), e);
 		}
@@ -262,7 +262,7 @@ public class BaseReportImpl implements IBaseReport {
 		return BaseReportExporter.export(type, this.print).toByteArray();
 	}
 
-	public byte[] export(Iterable<?> dataSource, Map<String, Object> param, ReportTypeEnum type) {
+	public byte[] export(Collection<?> dataSource, Map<String, Object> param, ReportTypeEnum type) {
 		prepare(dataSource, param);
 		return export(type);
 	}

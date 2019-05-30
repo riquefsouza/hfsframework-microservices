@@ -1,24 +1,25 @@
 package br.com.hfsframework.base.client;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
 
-public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Serializable> extends BaseRestTemplateClient {
+public class BaseRestClient<T extends BaseEntityRestClient<T, I>, I extends Serializable> extends BaseRestTemplateClient {
 
 	private static final Logger log = LoggerFactory.getLogger(BaseRestClient.class);
 	
-	protected List<T> objList = new ArrayList<T>();
+	protected ParameterizedTypeReference<List<T>> objList;
 	
 	protected RestTemplate restTemplate;
 	
@@ -31,10 +32,11 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 		restTemplate = null;
 	}
 
-    protected boolean init(String server, String sAccesToken, Class<T> classEntity) throws RestClientException {
+    protected boolean init(String server, String sAccesToken, Class<T> classEntity, 
+    		ParameterizedTypeReference<List<T>> objList) throws RestClientException {
     	this.server = server;
     	this.classEntity = classEntity;
-    	
+    	this.objList = objList;
         restTemplate = restTemplate(sAccesToken);
         
         return (restTemplate!=null);
@@ -54,17 +56,17 @@ public class BaseRestClient<T extends BaseEntityRestClient<I>, I extends Seriali
 		//return Optional.empty();
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<T> getAll() throws RestClientException {
-		List<T> obj = new ArrayList<T>();
 		try {
-			obj = restTemplate.getForObject(
-					this.server, objList.getClass());
+			ResponseEntity<List<T>> obj = restTemplate.exchange(
+					this.server, HttpMethod.GET, null, objList);
+			
+			return obj.getBody();
+			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
 			throw new RestClientException(e.getMessage(), e);
 		}
-		return obj;
 	}
 
 	public Optional<T> getById(I id) throws RestClientException {

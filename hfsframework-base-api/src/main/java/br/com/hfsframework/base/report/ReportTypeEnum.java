@@ -51,7 +51,7 @@ public enum ReportTypeEnum {
 	private String fileExtension;
 	
 	private MediaType mediaType;
-	
+
 	private ReportTypeEnum(String group, String contentType, String description, String fileExtension) {
 		this.group = group;
 		this.contentType = contentType;
@@ -79,9 +79,9 @@ public enum ReportTypeEnum {
 	}
 
 	public static String[] getGroups(){
-		return new String[] {"Documentos", "Planilhas", "Texto puro", "Outros"};
+		return new String[] { "Documentos","Planilhas","Texto puro","Outros" };
 	}
-
+	
 	public String getFileExtension() {
 		return fileExtension;
 	}

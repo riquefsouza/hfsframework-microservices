@@ -6,7 +6,11 @@ class HFSSystemUtil {
 		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');
-		
+
+		this._messageSelectTable = $('#message-select-table').text();
+		this._messageButtonYes = $('#message-button-yes').text();
+		this._messageButtonNo = $('#message-button-no').text();
+
 		this._alertPrimary = $('#alert-primary');
 		this._textAlertPrimary = $('#text-alert-primary');
 		this._alertSecondary = $('#alert-secondary');
@@ -24,12 +28,19 @@ class HFSSystemUtil {
 		this._alertDark = $('#alert-dark');
 		this._textAlertDark = $('#text-alert-dark');
 		
-		this._messageSelectTable = $('#message-select-table').text();
 	}
 	
 	getSystemPage() {
 		var home = this._anchorHomePage[0].href;
 		return home.substring(0, home.lastIndexOf("/"));
+	}
+	
+	hideQueryString() {
+		var uri = window.location.toString();
+		if (uri.indexOf("?") > 0) {
+		    var clean_uri = uri.substring(0, uri.indexOf("?"));
+		    window.history.replaceState({}, document.title, clean_uri);
+		}		
 	}
 	
 	primaryShow(message) {

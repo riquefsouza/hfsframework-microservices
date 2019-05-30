@@ -170,9 +170,6 @@ public class BasePageResource<T> extends ResourceSupport implements Page<T> {
 		return page.isLast();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Iterable#iterator()
-	 */
 	@Override
 	public Iterator<T> iterator() {
 		return page.iterator();

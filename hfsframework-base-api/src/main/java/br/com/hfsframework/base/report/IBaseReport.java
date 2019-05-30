@@ -7,6 +7,7 @@
 package br.com.hfsframework.base.report;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JasperPrint;
@@ -46,9 +47,9 @@ public abstract interface IBaseReport extends Serializable {
 	 * @param paramMap
 	 *            the param map
 	 */
-	public abstract void prepare(Iterable<?> paramCollection, Map<String, Object> paramMap);
+	public abstract void prepare(Collection<?> paramCollection, Map<String, Object> paramMap);
 
-	public abstract byte[] export(Iterable<?> paramCollection, Map<String, Object> paramMap,
+	public abstract byte[] export(Collection<?> paramCollection, Map<String, Object> paramMap,
 			ReportTypeEnum paramType);
 
 	public abstract byte[] export(ReportTypeEnum paramType);
