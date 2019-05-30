@@ -16,6 +16,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.URL;
@@ -59,7 +61,8 @@ public class User implements Serializable {
 	@Column(nullable = false, length = 255)
 	private String urlPhoto;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL) 
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
 	private List<Role> roles; 
 
 	public User() {

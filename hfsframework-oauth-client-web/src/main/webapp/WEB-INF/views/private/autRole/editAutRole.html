@@ -9,7 +9,7 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="formEditAutRole" action="#" th:action="@{/private/roleView}" method="post" th:object="${role}">
+	<form id="formEditAutRole" action="#" th:action="@{/private/roleView}" method="post" th:object="${bean}">
 	
 		<div class="card">
 			<div class="card-header" 
@@ -41,7 +41,7 @@
 				</div>				
 				<div class="row">
 					<div class="col-md-4 form-group">
-						<input type="text" class="form-control" id="autRole_id" th:field="*{id}" />
+						<input type="hidden" id="autRole_id" th:field="*{id}" />
 						
 						<label for="autRole_name"><span th:text="#{editAutRole.name}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="autRole_name" maxlength="64" required="required" th:field="*{name}" />

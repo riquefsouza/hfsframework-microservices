@@ -7,8 +7,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
+import br.com.hfsframework.oauth.client.deserializer.UserDeserializer;
 import br.com.hfsframework.util.JSONConverter;
 import br.com.hfsframework.util.JSONListConverter;
 
@@ -22,6 +24,9 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 	@Size(min=4, max=64)
 	private String name;
 
+	@JsonDeserialize(using = UserDeserializer.class)
+	private User user;
+	
 	public Role() {
 		super();
 		this.clear();
@@ -37,6 +42,7 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 		this.jsonText = "";
 		this.id = null;
 		this.name = "";
+		this.user = new User();
 	}
 
 	@Override
@@ -129,6 +135,14 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

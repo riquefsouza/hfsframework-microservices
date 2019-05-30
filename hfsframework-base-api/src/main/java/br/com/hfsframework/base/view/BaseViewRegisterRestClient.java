@@ -3,6 +3,7 @@ package br.com.hfsframework.base.view;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -59,13 +60,21 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	@GetMapping
 	public ModelAndView list(T bean) {
 		Optional<ModelAndView> mv = getPage(getListPage());
+		if (mv.isPresent()) {
+			mv.get().addObject("bean", bean);
+		}
 		return mv.get();
 	}
 
 	@GetMapping("/add")
 	public ModelAndView add(T bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
-		bean.clear();
+		
+		if (mv.isPresent()) {
+			bean.clear();
+			mv.get().addObject("bean", bean);
+		}
+		
 		return mv.get();
 	}
 
@@ -76,6 +85,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 		Optional<T> obj = bean.fromJSON();
 		if (obj.isPresent()) {
 			bean = obj.get();
+			mv.get().addObject("bean", bean);
 		}
 		
 		return mv.get();
@@ -85,7 +95,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	public ModelAndView save(@Valid @ModelAttribute T bean, 
 			BindingResult result, RedirectAttributes attributes) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
-		if (mv.isPresent()) {
+		if (mv.isPresent()) {			
 			this.restClient.init(authServerURL, accesToken);
 		}
 
@@ -101,6 +111,8 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 			else
 				this.restClient.updateById(bean);
 			
+			mv.get().addObject("bean", bean);
+			
 		} catch (RestClientException e) {
 			this.showDangerMessage(mv.get(), e);
 			return mv.get();
@@ -109,6 +121,39 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 		return mv.get();
 	}
 
+	protected ModelAndView saveCallableBefore(@Valid @ModelAttribute T bean, 
+			BindingResult result, RedirectAttributes attributes, Callable<String> fnc) {
+		Optional<ModelAndView> mv = getPage(this.listPage);
+		if (mv.isPresent()) {			
+			this.restClient.init(authServerURL, accesToken);
+		}
+
+		if (result.hasErrors()){
+			mv.get().setViewName(this.editPage);
+			return mv.get();
+		}
+		
+		try {
+			
+			if (fnc!=null){
+				fnc.call();
+			}
+			
+			if (bean.getId()==null) 
+				this.restClient.add(bean);
+			else
+				this.restClient.updateById(bean);
+			
+			mv.get().addObject("bean", bean);
+			
+		} catch (Exception e) {
+			this.showDangerMessage(mv.get(), e);
+			return mv.get();
+		}
+		
+		return mv.get();
+	}
+	
 	@GetMapping("/delete")
 	public String delete() {
 		return getListPage();

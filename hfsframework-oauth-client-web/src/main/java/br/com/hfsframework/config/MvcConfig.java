@@ -15,6 +15,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -33,6 +34,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import br.com.hfsframework.oauth.client.formatter.RoleFormatter;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 import br.com.hfsframework.util.filter.AuthenticationFilter;
 
@@ -58,6 +60,11 @@ public class MvcConfig implements WebMvcConfigurer, ApplicationContextAware {
         registry.addMapping("/**");
     }
     */
+	
+	@Override
+    public void addFormatters(FormatterRegistry formatterRegistry) {
+        formatterRegistry.addFormatter(new RoleFormatter());
+	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

@@ -9,7 +9,7 @@
 <div th:replace="private/menu :: menu"></div>
 
 <div class="web-content">
-	<form id="formEditAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${user}">
+	<form id="formEditAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${bean}">
 	
 		<div class="card">
 			<div class="card-header"
@@ -40,6 +40,14 @@
 				</div>				
 				<div class="row">
 					<div class="col-md-4 form-group">
+						<input type="hidden" id="autUser_id" th:field="*{id}" />
+						
+						<input type="hidden" id="autUser_password" th:field="*{password}" />						
+						<input type="hidden" id="autUser_currentPassword" th:field="*{currentPassword}" />
+						<input type="hidden" id="autUser_newPassword" th:field="*{newPassword}" />
+						<input type="hidden" id="autUser_confirmNewPassword" th:field="*{confirmNewPassword}" />
+						
+					
 						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="autUser_username" maxlength="64" required="required" th:field="*{username}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>						
@@ -61,15 +69,19 @@
 					<div class="col-md-5">
 						<label for="autUser_pickListRoles"><span th:text="#{editAutUser.pickListRoles}" th:remove="tag"></span></label>
 						<div id="autUser_pickListRoles" class="picklistBigger">
-						    <select name="autUser_sourceRoles">
-						        <option th:each="itemRole : ${listSourceRoles}" th:value="${itemRole.id}" th:text="${itemRole.name}" ></option>
+						    <select name="autUser_sourceRoles" multiple="multiple">
+						        <option th:each="itemRole : ${listSourceRoles}" 
+						        	th:value="${itemRole.id}" 
+						        	th:text="${itemRole.name}" >
+						        </option>
 						    </select>
-						    <select name="autUser_targetRoles">
-						    	<option th:each="role, itemStat : *{roles}" 
-						    		th:value="*{roles[__${itemStat.index}__].id}" 
-						    		th:text ="*{roles[__${itemStat.index}__].name}" >
-						    	</option>
-						    </select>
+						    
+							<select id="autUser_targetRoles" multiple="multiple" th:field="*{roles}" >
+								<option th:each="role : ${listTargetRoles}"
+										th:value="${role.id}"
+										th:text="${role.name}">
+								</option>
+							</select>
 						</div>
 					</div>
 				</div>

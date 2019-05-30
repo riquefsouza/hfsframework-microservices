@@ -41,7 +41,7 @@ public class User implements BaseEntityRestClient<User, Long> {
 	private String urlPhoto;
 	
 	private List<Role> roles;
-
+	
 	@Size(min=4, max=64)
 	private String currentPassword;
 	
@@ -142,10 +142,6 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.roles = roles;
 	}
 
-	public void addRole(Role role) {
-        this.roles.add(role);
-    }
-	
 	public String getCurrentPassword() {
 		return currentPassword;
 	}
@@ -235,5 +231,5 @@ public class User implements BaseEntityRestClient<User, Long> {
 			return false;
 		return true;
 	}
-	
+
 }

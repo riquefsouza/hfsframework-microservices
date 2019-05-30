@@ -3,12 +3,19 @@ package br.com.hfsframework.oauth.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfsframework.base.BaseDualList;
 import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
@@ -30,13 +37,17 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 	
 	private BaseDualList<Role> dualListRole;
 	
+	private List<Role> listAllRoles;
+	
 	public AutUserController() {
 		super(new UserRestClient(), "/private/autUser/listAutUser", "/private/autUser/editAutUser", "AutUser");
+		this.listAllRoles = new ArrayList<Role>();
 	}
-
+	
 	private void carregarRoles(ModelAndView mv, User bean, boolean bEdit) {
-		List<Role> listRolesSelected;
+		List<Role> listRolesSelected;		 
 		List<Role> listRoles = roleClient.getAll();
+		listAllRoles.addAll(listRoles);
 		
 		if (bEdit) { 
 			listRolesSelected = bean.getRoles();
@@ -54,10 +65,17 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		bean.clear();
 		
+		//String pwdCrypt = BCrypt.hashpw("123456", BCrypt.gensalt());
+		bean.setPassword("null");
+		bean.setCurrentPassword("null");
+		bean.setNewPassword("null");		
+		bean.setConfirmNewPassword("null");
+				
 		if (mv.isPresent()) {
 			roleClient.init(this.authServerURL, this.accesToken);
-			carregarRoles(mv.get(), bean, true);
+			carregarRoles(mv.get(), bean, false);
 			mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
+			mv.get().addObject("bean", bean);
 		}
 		
 		return mv.get();
@@ -71,17 +89,49 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 		Optional<User> obj = bean.fromJSON();
 		if (obj.isPresent()) {
 			bean = obj.get();
+
+			bean.setCurrentPassword("null");
+			bean.setNewPassword("null");		
+			bean.setConfirmNewPassword("null");
 			
 			if (mv.isPresent()) {
 				roleClient.init(this.authServerURL, this.accesToken);
 				carregarRoles(mv.get(), bean, true);
 				mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
-				//mv.get().addObject("listTargetRoles", this.dualListRole.getTarget());
-				mv.get().addObject("user", bean);
+				mv.get().addObject("listTargetRoles", this.dualListRole.getTarget());
+				mv.get().addObject("bean", bean);
 			}
 		}
 		
 		return mv.get();
 	}
+
+	@Override
+	@PostMapping
+	public ModelAndView save(@Valid @ModelAttribute User bean, 
+			BindingResult result, RedirectAttributes attributes) {
 	
+		Optional<ModelAndView> mv = getPage(this.getListPage());
+		
+		return this.saveCallableBefore(bean, result, attributes, new Callable<String>() {
+			
+			@Override
+			public String call() throws Exception {
+				
+				if (mv.isPresent()) {
+					
+					bean.getRoles().forEach(item -> {					
+						listAllRoles.stream()
+							.filter(p -> p.getId().equals(item.getId()))
+							.findFirst()
+							.ifPresent(x -> item.setName(x.getName()));	
+					});
+					
+					mv.get().addObject("bean", bean);
+				}
+				
+				return "";
+			}
+		});
+	}
 }

@@ -11,7 +11,7 @@ class ListAutUser extends HFSSystemUtil {
 		this._forceDownload = $('#forceDownload');
 		this._tableList = $('#tableAutUser');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
-		
+		this._formTitle = $('#formTitle');
 		this._formListAutUser = $('#formListAutUser');
 		
 		$.get({
@@ -24,8 +24,8 @@ class ListAutUser extends HFSSystemUtil {
 	        }
 		})
 		.done(function(data) {
-    		this.buildTable(this._urlApiServer + "/pages", this._authToken, data);
-    		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, 
+    		this.buildTable(this._urlApiServer + "/pages", this._authToken, this._formTitle, data);
+    		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList,
     				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo);	        
 		})
 		.fail(function(xhr, textStatus, msg){
@@ -167,9 +167,9 @@ class ListAutUser extends HFSSystemUtil {
 		this._anchorHomePage[0].click();
 	}
 	
-	buildTable(urlApiServer, authToken, responsePage) {
+	buildTable(urlApiServer, authToken, formTitle, responsePage) {
 		this._tableList.puidatatable({
-			caption: 'Users',
+			caption: formTitle,
 			lazy: true,
 			responsive: true,	           
 			selectionMode: 'single',
