@@ -67,8 +67,7 @@ public class User implements Serializable {
 	private String urlPhoto;
 	
 	@JsonSerialize(using = RoleListSerializer.class)
-	//@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	private List<Role> roles; 
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Autowired
 	protected ApplicationUtil aplicacaoUtil;
 	
+	@Autowired
+	private EntityManager em;	
+
 	/* (non-Javadoc)
 	 * @see br.com.hfsframework.base.IBaseCrud#get(java.io.Serializable)
 	 */
@@ -72,9 +76,15 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Transactional
 	public void delete(T bean) throws TransactionException {
 		try {
+	        if (!em.contains(bean)){
+	            bean = em.merge(bean);
+	        }
+	        
+			repositorio.delete(bean);
+			repositorio.flush();
+			
 			log.info("DELETE: " + bean.toString());
 			
-			repositorio.delete(bean);
 		} catch (Exception e) {
 			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
@@ -87,6 +97,8 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Transactional
 	public Optional<T> add(T bean) throws TransactionException {
 		try {
+			bean = em.merge(bean);
+			
 			T obj = repositorio.saveAndFlush(bean);
 			
 			if (obj!=null) {
@@ -110,6 +122,8 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Transactional
 	public Optional<T> update(T bean) throws TransactionException {
 		try {
+			bean = em.merge(bean);
+			
 			T obj = repositorio.saveAndFlush(bean);
 			
 			if (obj!=null) {
