@@ -1,9 +1,3 @@
-/**
- * <p><b>HFS Framework</b></p>
- * @author Henrique Figueiredo de Souza
- * @version 1.0
- * @since 2017
- */
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
@@ -22,14 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.hfsframework.ApplicationUtil;
 import br.com.hfsframework.util.exceptions.TransactionException;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class BaseBusinessService.
- *
- * @param <T> the generic type
- * @param <I> the generic type
- * @param <C> the generic type
- */
 public abstract class BaseBusinessService<T, I extends Serializable, C extends JpaRepository<T, I>>
 		implements IBaseBusinessService<T, I, C> {
 
@@ -101,7 +87,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Transactional
 	public Optional<T> add(T bean) throws TransactionException {
 		try {
-			T obj = repositorio.save(bean);
+			T obj = repositorio.saveAndFlush(bean);
 			
 			if (obj!=null) {
 				log.info("INSERT: " + obj.toString());
@@ -124,7 +110,7 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 	@Transactional
 	public Optional<T> update(T bean) throws TransactionException {
 		try {
-			T obj = repositorio.save(bean);
+			T obj = repositorio.saveAndFlush(bean);
 			
 			if (obj!=null) {
 				log.info("UPDATE: " + obj.toString());

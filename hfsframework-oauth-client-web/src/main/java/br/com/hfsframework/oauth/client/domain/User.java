@@ -39,9 +39,7 @@ public class User implements BaseEntityRestClient<User, Long> {
 	@URL
 	@Size(min=8, max=255)
 	private String urlPhoto;
-	
-	private List<Role> roles;
-	
+			
 	@Size(min=4, max=64)
 	private String currentPassword;
 	
@@ -51,6 +49,9 @@ public class User implements BaseEntityRestClient<User, Long> {
 	@Size(min=4, max=64)
 	private String confirmNewPassword;
 
+	//@JsonManagedReference("role")
+	private List<Role> roles;
+	
 	public User() {
 		super();
 		roles = new ArrayList<Role>();
@@ -68,6 +69,18 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.confirmNewPassword = "";
 	}
 
+	public User(Long id, String username, String password, String email, String urlPhoto) {
+		this.id = id;
+		this.username = username;
+		this.password=password;
+		this.email=email;
+		this.urlPhoto=urlPhoto;
+		this.roles = new ArrayList<Role>();
+		this.currentPassword = "";
+		this.newPassword = "";
+		this.confirmNewPassword = "";
+	}
+	
 	@Override
 	public void clear() {
 		this.jsonText = "";

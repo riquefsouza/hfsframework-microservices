@@ -1,6 +1,7 @@
 package br.com.hfsframework.oauth.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.URL;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.com.hfsframework.oauth.serializer.RoleListSerializer;
 
 @Entity 
 @Table(name = "AUT_USER")
@@ -58,15 +63,18 @@ public class User implements Serializable {
 	@NotBlank
 	@URL
 	@Size(min=8, max=255)
-	@Column(nullable = false, length = 255)
+	@Column(name = "url_photo", nullable = false, length = 255)
 	private String urlPhoto;
 	
-	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonSerialize(using = RoleListSerializer.class)
+	//@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
 	private List<Role> roles; 
 
 	public User() {
 		super();
+		this.roles = new ArrayList<Role>();
 	} 
 
 	public User(String username, String password, String email, String urlPhoto, List<Role> roles) { 
@@ -75,6 +83,14 @@ public class User implements Serializable {
 		this.email = email;
 		this.urlPhoto = urlPhoto;
 		this.roles = roles; 
+	} 
+
+	public User(String username, String password, String email, String urlPhoto) { 
+		this.username = username; 
+		this.password = password; 
+		this.email = email;
+		this.urlPhoto = urlPhoto;
+		this.roles = new ArrayList<Role>();
 	} 
 	
 	public Long getId() {

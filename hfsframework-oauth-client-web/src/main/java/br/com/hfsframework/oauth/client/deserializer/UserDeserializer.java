@@ -20,22 +20,22 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		ObjectCodec oc = jp.getCodec();
 		JsonNode node = oc.readTree(jp);
 
-		//final Long id = node.get("id").asLong();
-		//final String descricao = node.get("descricao").asText();
-		//final Long ordem = node.get("ordem").asLong();
+		final Long id = node.get("id").asLong();
+		final String username = node.get("username").asText();
+		final String password = node.get("password").asText();
+		final String email = node.get("email").asText();
+		final String urlPhoto = node.get("urlPhoto").asText();
 		JsonNode roles = node.get("roles");
 
-		//Iterator<JsonNode> iter = parametros.elements();
-		
-		
+		// Iterator<JsonNode> iter = roles.elements();
+
 		Role role;
-		User pc = new User();
+		User pc = new User(id, username, password, email, urlPhoto);
 		for (JsonNode item : roles) {
-			role = new Role();
-			role.setId(item.asLong());
-			//pc.getParametros().add(parametro);			
+			role = new Role(item.asLong());
+			pc.getRoles().add(role);
 		}
-	
+
 		return pc;
 	}
 

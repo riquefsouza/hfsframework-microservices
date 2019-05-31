@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -39,24 +36,32 @@ public class Role implements Serializable {
 	@Column(nullable = false, length = 64)
 	private String name;
 
+	/*
+	@Column(name = "user_id", nullable=false)
+	private Long idUser;
+
 	@ManyToOne(optional = false, fetch=FetchType.EAGER)
-	@JoinColumn(name="id", nullable=false, insertable = false, updatable = false)
+	@JoinColumn(name="user_id", nullable=false, insertable = false, updatable = false)
 	private User user;
+	*/
 	
 	public Role() {
 		super();
 	}
 	
+	public Role(String name) { //, Long idUser, User user) {
+		super();
+		this.name = name;
+		//this.idUser = idUser;
+		//this.user = user;
+	}
+
 	public Long getId() {
 		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Role(String name) {
-		this.name = name;
 	}
 
 	public String getName() {
@@ -67,10 +72,23 @@ public class Role implements Serializable {
 		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
+	/*
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Long getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+	*/	
 
 	@Override
 	public int hashCode() {
@@ -97,12 +115,9 @@ public class Role implements Serializable {
 		return true;
 	}
 
-	public User getUser() {
-		return user;
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + "]";
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 }
