@@ -2,8 +2,8 @@ package br.com.hfsframework.base;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,26 +14,26 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
-public abstract class BaseListSerializer<T> extends StdSerializer<List<T>> {
+public abstract class BaseSetSerializer<T> extends StdSerializer<Set<T>> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = LoggerFactory.getLogger(BaseListSerializer.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseSetSerializer.class);
 
-	public BaseListSerializer() {
+	public BaseSetSerializer() {
 		this(null);
 	}
 
-	public BaseListSerializer(Class<List<T>> t) {
+	public BaseSetSerializer(Class<Set<T>> t) {
 		super(t);
 	}
 
 	@Override
-	public void serialize(List<T> items, JsonGenerator generator, SerializerProvider provider)
+	public void serialize(Set<T> items, JsonGenerator generator, SerializerProvider provider)
 			throws IOException, JsonProcessingException {
 		Method metodo;
 		Long valor;		
-		List<Long> ids = new ArrayList<Long>();
+		Set<Long> ids = new HashSet<Long>();
 		
 		for (T item : items) {
 			metodo = ReflectionUtils.findMethod(item.getClass(), "getId");

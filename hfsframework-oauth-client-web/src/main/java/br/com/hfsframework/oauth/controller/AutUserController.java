@@ -50,7 +50,7 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 		listAllRoles.addAll(listRoles);
 		
 		if (bEdit) { 
-			listRolesSelected = bean.getRoles();
+			listRolesSelected = new ArrayList<Role>(bean.getRoles());
 			listRoles.removeAll(listRolesSelected);
 		} else {
 			listRolesSelected = new ArrayList<Role>();

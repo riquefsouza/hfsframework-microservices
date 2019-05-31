@@ -1,7 +1,7 @@
 package br.com.hfsframework.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,7 @@ public class InfoUserRestController extends BaseViewController {
 			String email = this.getPrincipal().get().getEmail();
 			String urlPhoto = this.getPrincipal().get().getUrlPhoto();			
 
-			List<Role> roles = new ArrayList<Role>();
+			Set<Role> roles = new HashSet<Role>();
 			
 			this.getPrincipal().get().getAuthorities()
 				.forEach(item -> roles.add(new Role(item.getAuthority())));

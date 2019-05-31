@@ -1,6 +1,5 @@
 package br.com.hfsframework.controller;
 
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
+
+import com.google.common.collect.Sets;
 
 import br.com.hfsframework.base.view.BaseViewController;
 import br.com.hfsframework.oauth.client.RoleRestClient;
@@ -39,7 +40,7 @@ public class BecomeMemberController extends BaseViewController {
 			Optional<Role> userRole = roleClient.findByName("USER");
 			
 			if (userRole.isPresent()) {		
-				User user = new User(username, pwd, email, "http://temp", Arrays.asList(userRole.get()));
+				User user = new User(username, pwd, email, "http://temp", Sets.newHashSet(userRole.get()));
 				
 				UserRestClient userClient = new UserRestClient();
 				userClient.init(this.authServerURL, this.accesToken);

@@ -1,8 +1,9 @@
 package br.com.hfsframework.oauth.client.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -49,16 +50,15 @@ public class User implements BaseEntityRestClient<User, Long> {
 	@Size(min=4, max=64)
 	private String confirmNewPassword;
 
-	//@JsonManagedReference("role")
-	private List<Role> roles;
+	private Set<Role> roles;
 	
 	public User() {
 		super();
-		roles = new ArrayList<Role>();
+		roles = new HashSet<Role>();
 		this.clear();
 	}
 
-	public User(String username, String password, String email, String urlPhoto, List<Role> roles) {
+	public User(String username, String password, String email, String urlPhoto, Set<Role> roles) {
 		this.username = username;
 		this.password=password;
 		this.email=email;
@@ -75,7 +75,7 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.password=password;
 		this.email=email;
 		this.urlPhoto=urlPhoto;
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
 		this.currentPassword = "";
 		this.newPassword = "";
 		this.confirmNewPassword = "";
@@ -147,11 +147,11 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.urlPhoto = urlPhoto;
 	}
 	
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 

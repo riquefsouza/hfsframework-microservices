@@ -3,6 +3,7 @@ package br.com.hfsframework.security;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ public class HfsUserDetails implements UserDetails {
 		this.authorities = translate(user.getRoles());
 	} 
 
-	private Collection<? extends GrantedAuthority> translate(List<Role> roles) { 
+	private Collection<? extends GrantedAuthority> translate(Set<Role> roles) { 
 		List<GrantedAuthority> authorities = new ArrayList<>(); 
 		for (Role role : roles) { 
 			String name = role.getName().toUpperCase(); 

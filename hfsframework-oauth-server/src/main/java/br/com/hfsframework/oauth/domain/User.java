@@ -1,31 +1,25 @@
 package br.com.hfsframework.oauth.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.URL;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.com.hfsframework.oauth.serializer.RoleListSerializer;
 
 @Entity 
 @Table(name = "AUT_USER")
@@ -66,17 +60,19 @@ public class User implements Serializable {
 	@Column(name = "url_photo", nullable = false, length = 255)
 	private String urlPhoto;
 	
-	@JsonSerialize(using = RoleListSerializer.class)
-	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SUBSELECT)
-	private List<Role> roles; 
-
+	//@JsonSerialize(using = RoleSetSerializer.class)
+	@ManyToMany
+	@JoinTable(name="AUT_USER_ROLE", 
+		joinColumns={@JoinColumn(table="AUT_USER", name="user_id")}, 
+		inverseJoinColumns={@JoinColumn(table="AUT_ROLE", name="role_id")})
+	private Set<Role> roles;
+	
 	public User() {
 		super();
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
 	} 
 
-	public User(String username, String password, String email, String urlPhoto, List<Role> roles) { 
+	public User(String username, String password, String email, String urlPhoto, Set<Role> roles) { 
 		this.username = username; 
 		this.password = password; 
 		this.email = email;
@@ -89,7 +85,7 @@ public class User implements Serializable {
 		this.password = password; 
 		this.email = email;
 		this.urlPhoto = urlPhoto;
-		this.roles = new ArrayList<Role>();
+		this.roles = new HashSet<Role>();
 	} 
 	
 	public Long getId() {
@@ -116,11 +112,11 @@ public class User implements Serializable {
 		this.password = password; 
 	} 
 
-	public List<Role> getRoles() { 
+	public Set<Role> getRoles() { 
 		return roles; 
 	} 
 
-	public void setRoles(List<Role> roles) { 
+	public void setRoles(Set<Role> roles) { 
 		this.roles = roles; 
 	}
 

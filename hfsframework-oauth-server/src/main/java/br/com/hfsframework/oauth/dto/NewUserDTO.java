@@ -1,7 +1,7 @@
 package br.com.hfsframework.oauth.dto;
 
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -33,7 +33,7 @@ public class NewUserDTO {
 	@URL
 	private String urlPhoto;
 	
-	private List<Role> roles;
+	private Set<Role> roles;
 
 	public String getUsername() {
 		return username;
@@ -67,11 +67,11 @@ public class NewUserDTO {
 		this.urlPhoto = urlPhoto;
 	}
 	
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	} 
 

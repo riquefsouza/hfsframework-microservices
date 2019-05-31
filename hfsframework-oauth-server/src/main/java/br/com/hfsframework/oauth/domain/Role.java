@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -39,22 +36,13 @@ public class Role implements Serializable {
 	@Column(nullable = false, length = 64)
 	private String name;
 
-	@Column(name = "user_id", nullable=false)
-	private Long idUser;
-	
-	@ManyToOne(optional = false, fetch=FetchType.EAGER)
-	@JoinColumn(name="user_id", nullable=false, insertable = false, updatable = false)
-	private User user;
-	
 	public Role() {
 		super();
 	}
 	
-	public Role(String name, Long idUser, User user) {
+	public Role(String name) {
 		super();
 		this.name = name;
-		this.idUser = idUser;
-		this.user = user;
 	}
 
 	public Long getId() {
@@ -71,23 +59,6 @@ public class Role implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Long getIdUser() {
-		return idUser;
-	}
-
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
 	}
 
 	@Override
@@ -117,7 +88,7 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", idUser=" + idUser + ", user=" + user + "]";
+		return "Role [id=" + id + ", name=" + name + "]";
 	}
 
 }
