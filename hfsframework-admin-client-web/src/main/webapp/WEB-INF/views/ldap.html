@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="en-US">
+<head th:replace="fragments/header :: header">
+<title>About</title>
+</head>
+<body>
+
+<div th:replace="private/menu :: menu"></div>
+
+<div class="web-content">
+	
+	<table id="tableLdap" 
+			class="table table-striped table-bordered" style="width: 100%" >
+		<thead>
+			<tr class="main-theme">
+				<th>Registration</th>
+				<th>Login</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Ldap DN</th>				
+			</tr>
+		</thead>
+		<tbody>
+		 	<tr th:each="item : ${listaLdap}">
+		 		<td th:text="${item.registration}"></td>
+		 		<td th:text="${item.login}"></td>
+		 		<td th:text="${item.name}"></td>
+		 		<td th:text="${item.email}"></td>
+		 		<td th:text="${item.ldapDN}"></td>
+		    </tr>			
+		</tbody>
+	</table>
+	
+</div>
+	
+</body>
+</html>

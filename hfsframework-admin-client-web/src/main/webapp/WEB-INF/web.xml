@@ -3,13 +3,54 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
-	<display-name>HFS Framework Admin Client Web</display-name>
+	<display-name>HFS Framework Administrative Client Web</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>login.html</welcome-file>
+		<welcome-file>login.htm</welcome-file>
+		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
+<!-- 
+	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>dev</param-value>
+	</context-param>
+	<context-param>
+		<param-name>spring.profiles.default</param-name>
+		<param-value>dev</param-value>
+	</context-param>
+	<context-param>
+		<param-name>spring.liveBeansView.mbeanDomain</param-name>
+		<param-value>dev</param-value>
+	</context-param>
+ 
+	<filter>
+		<filter-name>x-frame-header</filter-name>
+		<filter-class>br.com.hfsframework.util.filter.XFrameHeaderFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>x-frame-header</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+-->
+
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>br.com.hfsframework.util.filter.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+<!--
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>hfsframework-oauth-client-web</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+ -->
 </web-app>

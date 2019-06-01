@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	lang="pt-BR">
+	xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="sessaoSistema">
+<div th:fragment="sessionSystem">
 
 	<form th:action="@{/logout}" method="post">
-		<!-- Modal -->
+
 		<div class="modal fade" id="timeoutSessionDialog" role="dialog">
 			<div class="modal-dialog modal-sm">
 	
@@ -14,21 +13,21 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Aviso de tempo de sessão.</h4>
+						<h4 class="modal-title"><span th:text="#{sessionTimeOut.title}" th:remove="tag"></span></h4>
 					</div>
 					<div class="modal-body">
-						<span class="ui-icon ui-icon-alert" style="display: inline-block;" />
-						Sua sessão irá expirar em 
+						<span class="ui-icon ui-icon-alert" style="display: inline-block;" ></span>
+						<span th:text="#{sessionTimeOut.expire}" th:remove="tag"></span>
 						<span id="dialog-countdown" style="font-weight: bold"></span>
-						segundos.
+						<span th:text="#{sessionTimeOut.seconds}" th:remove="tag"></span>						
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="timeoutSessionDialog_btnContinuar" 
 							 data-dismiss="modal">
-							<span class="glyphicon glyphicon-ok-sign"></span> Continuar conectado
+							<span class="glyphicon glyphicon-ok-sign"></span>&nbsp;<span th:text="#{sessionTimeOut.stay}" th:remove="tag"></span>
 						</button>
 						<button type="submit" class="btn" id="timeoutSessionDialog_btnSair" >
-							<span class="glyphicon  glyphicon-remove-sign"></span> Sair
+							<span class="glyphicon  glyphicon-remove-sign"></span>&nbsp;<span th:text="#{sessionTimeOut.leave}" th:remove="tag"></span> 
 						</button>
 					</div>
 				</div>
