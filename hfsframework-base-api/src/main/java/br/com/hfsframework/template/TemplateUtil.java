@@ -168,7 +168,7 @@ public class TemplateUtil implements Serializable {
 			String sPath = Paths.get(".").toAbsolutePath().normalize().toString();
 			caminho = sPath + "/src/main/java/" + TemplateUtil.class.getPackage().getName().replaceAll("[.]", "/");
 		}
-		Configuration cfg = new Configuration(Configuration.VERSION_2_3_23);
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
 		cfg.setDirectoryForTemplateLoading(new File(caminho));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);

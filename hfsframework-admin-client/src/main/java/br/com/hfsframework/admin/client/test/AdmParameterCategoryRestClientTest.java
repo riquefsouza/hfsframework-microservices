@@ -1,4 +1,4 @@
-package br.com.hfsframework.admin.client;
+package br.com.hfsframework.admin.client.test;
 
 import br.com.hfsframework.admin.client.domain.AdmParameterCategory;
 import br.com.hfsframework.base.test.BaseRestClientTest;

@@ -1,38 +1,36 @@
-package br.com.hfsframework.oauth.controller;
+package br.com.hfsframework.base.controller;
 
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfsframework.base.view.BaseViewController;
-import br.com.hfsframework.oauth.client.UserRestClient;
 import br.com.hfsframework.oauth.client.domain.User;
 
-@Controller
-@RequestMapping("/private/changePassword")
-public class ChangePasswordController extends BaseViewController {
+//@Controller
+//@RequestMapping("/private/changePassword")
+public class BaseChangePasswordController extends BaseViewController {
 	
 	//private static final Logger log = LoggerFactory.getLogger(ChangePasswordController.class);
 	
 	private String listPage;
 	
-	private UserRestClient restClient;
+	private IBaseUserRestClient restClient;
 	
 	private User userLogged;
 	
-	public ChangePasswordController() {
+	public BaseChangePasswordController(IBaseUserRestClient restClient) {
 		this.listPage = "private/changePassword";
-		this.restClient = new UserRestClient();
+		//this.restClient = new UserRestClient();
+		this.restClient = restClient; 
 	}
 
 	@GetMapping

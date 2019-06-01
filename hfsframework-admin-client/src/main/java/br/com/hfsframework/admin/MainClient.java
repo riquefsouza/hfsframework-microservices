@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import br.com.hfsframework.admin.client.AdmParameterCategoryRestClientTest;
+import br.com.hfsframework.admin.client.test.AdmParameterCategoryRestClientTest;
 import br.com.hfsframework.util.copyright.CopyrightEnum;
 import br.com.hfsframework.util.copyright.CopyrightUtil;
 

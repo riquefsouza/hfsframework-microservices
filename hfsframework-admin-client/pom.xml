@@ -41,7 +41,7 @@
 
 		<dependency>
 			<groupId>br.com</groupId>
-			<artifactId>hfsframework-base-api</artifactId>
+			<artifactId>hfsframework-admin-client-api</artifactId>
 			<version>1.0.0</version>
 			<type>jar</type>
 		</dependency>	

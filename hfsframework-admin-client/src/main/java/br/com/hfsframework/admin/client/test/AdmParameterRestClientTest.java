@@ -1,4 +1,4 @@
-package br.com.hfsframework.admin.client;
+package br.com.hfsframework.admin.client.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

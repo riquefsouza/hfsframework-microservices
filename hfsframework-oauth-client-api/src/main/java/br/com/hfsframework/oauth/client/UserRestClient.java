@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
 import br.com.hfsframework.base.client.BaseRestClient;
-import br.com.hfsframework.base.client.IBaseRestClient;
+import br.com.hfsframework.base.controller.IBaseUserRestClient;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.oauth.client.domain.User;
 
 @Service
-public class UserRestClient extends BaseRestClient<User, Long> implements IBaseRestClient<User, Long> {
+public class UserRestClient extends BaseRestClient<User, Long> implements IBaseUserRestClient {
 
 	private static final Logger log = LoggerFactory.getLogger(UserRestClient.class);
 	
