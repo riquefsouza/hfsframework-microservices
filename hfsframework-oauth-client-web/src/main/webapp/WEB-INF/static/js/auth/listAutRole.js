@@ -14,31 +14,12 @@ class ListAutRole extends HFSSystemUtil {
 		this._formTitle = $('#formTitle');
 		this._formListAutRole = $('#formListAutRole');
 		
-		$.get({
-			url: this._urlApiServer + "/pages",
-			dataType: "json",
-		    contentType: "application/json; charset=utf-8",								
-	        context: this,
-	        beforeSend: function (xhr) {
-	            xhr.setRequestHeader("Authorization", "Bearer " + this._authToken);
-	        }
-		})
-		.done(function(data) {
-    		this.buildTable(this._urlApiServer + "/pages", this._authToken, this._formTitle, data);
-    		this.buildDialogDelete(this._urlApiServer, this._authToken, this._tableList, 
-    				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo);	        
-		})
-		.fail(function(xhr, textStatus, msg){
-			this.dangerShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
-	    	/*
-	    	setTimeout(function() {
-	    		//this.dangerHide();
-			}, 1500);
-			*/
-	    })
-	    .always(function(){
-	    	//$('#spinner').toggle();
-	    });
+		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
+				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
+				$('#autRole_jsonText'),
+				[
+					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+				]);
 		
 	}
 	
@@ -96,57 +77,6 @@ class ListAutRole extends HFSSystemUtil {
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
-	
-	buildDialogDelete(urlApiServer, authToken, tableList, 
-			dlgDeleteConfirmation, messageButtonYes, messageButtonNo){
-		this._dlgDeleteConfirmation.puidialog({
-		    minimizable: false,
-		    maximizable: false,
-		    resizable: false,
-		    responsive: true,
-		    minWidth: 200,
-		    modal: true,
-		    buttons: [{
-		            text: messageButtonYes,
-		            icon: 'fa-check',
-		            click: function() {
-		            	var dataRowSelected = tableList.puidatatable('getSelection');
-		            	
-		            	if (dataRowSelected.length > 0) {
-		        			$.ajax({
-		        				method: "DELETE",
-		        				url: urlApiServer + "/" + dataRowSelected[0].id,
-		        				dataType: "json",
-		        			    contentType: "application/json; charset=utf-8",								
-		        		        context: this,
-		        		        beforeSend: function (xhr) {
-		        		            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-		        		        }
-		        			})
-		        			.done(function(data) {
-		        				$('#autRole_jsonText').val("");
-		        				
-		        				tableList.puidatatable('reload');
-		        				dlgDeleteConfirmation.puidialog('hide');
-			            	})
-			    			.fail(function(xhr){
-			    				this.dangerShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
-	        		        });
-
-		            	}
-		            	
-		            }
-		        },
-		        {
-		            text: messageButtonNo,
-		            icon: 'fa-close',
-		            click: function() {
-		                dlgDeleteConfirmation.puidialog('hide');
-		            }
-		        }
-		    ]
-		});	
-	}
 
 	btnDeleteClick(event) {
 		event.preventDefault();
@@ -165,69 +95,7 @@ class ListAutRole extends HFSSystemUtil {
 		event.preventDefault();
 		this._anchorHomePage[0].click();
 	}
-	
-	buildTable(urlApiServer, authToken, formTitle, responsePage) {
-		this._tableList.puidatatable({
-			caption: formTitle,
-			lazy: true,
-			responsive: true,	           
-			selectionMode: 'single',
-			paginator: {
-				rows: responsePage.size,
-				totalRecords: (responsePage.totalElements-responsePage.size)
-			},
-			columns: [
-				{field: 'name', headerText: 'Name', sortable: true, filter: false}
-			],
-			datasource: function(callback, ui) {
-				//ui.first = Index of the first record
-				//ui.rows = Number of rows to load
-				//ui.sortField = Field name of the sorted column
-				//ui.sortOrder = Sort order of the sorted column
-				//ui.sortMeta = Array of field names and sort orders of the sorted columns 
-				//ui.filters = Filtering information with field-value pairs like ui.filters['fieldname'] = 'filtervalue'
-				var uri = '';
-				var ascDesc = 'asc';
-				var fieldSort = 'id';
-				
-				//console.log(ui);
-				//if (ui.filters){
-				  // if (ui.filters.length > 0){
-				   	//	console.log(ui.filters[0].field);
-				   		//console.log(ui.filters[0].value);
-				   //}	        	   		
-				//}					           
-				
-				ui.sortField ? fieldSort = ui.sortField : fieldSort = 'id'; 	            
-				ui.sortOrder == 1 ? ascDesc='asc' : ascDesc='desc';
-				
-				if (ui.first==0)
-					uri = urlApiServer+'?page=0&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
-				else
-					uri = urlApiServer+'?page='+((ui.first/ui.rows)+1)+'&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
-				
-				$.ajax({
-					method: "GET",
-					url: uri,
-					dataType: "json",
-				    contentType: "application/json; charset=utf-8",								
-			        context: this,
-			        beforeSend: function (xhr) {
-			            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-			        }
-				}).done(function(data) {
-		        	callback.call(this, data.content);
-				}).fail(function(xhr){
-					this.dangerShow("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
-			    });
-			},	           
-			rowSelect: function(event, data) {
-				$('#autRole_jsonText').val(JSON.stringify(data));
-			}
-		});
-		
-	}
-	
+			
 }
 
 $(function() {

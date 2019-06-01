@@ -81,7 +81,22 @@ public class BaseRestTemplateClient {
 		
 		return token;
 	}
+
+	@SuppressWarnings("unchecked")
+	public RestTemplate restTemplate() throws RestClientException {
+
+		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+
+		RestTemplate rt = new RestTemplate();
+		rt.setInterceptors(interceptors);
 		
+		rt.getMessageConverters().addAll(HttpMessageConverterUtil.getMessageConverters());
+		mappingJackson2HttpMessageConverter = (HttpMessageConverter<Object>) rt.getMessageConverters().get(0);
+		
+		return rt; 
+	}
+
 	@SuppressWarnings("unchecked")
 	public RestTemplate restTemplate(String sAccesToken) throws RestClientException {
 
@@ -125,7 +140,7 @@ public class BaseRestTemplateClient {
 		return restTemplate(server, "hfsClient", "hfsSecret", login, password);
 	}
 	
-	private BaseRestUser login(String server, String clientId, String clientSecret, 
+	protected BaseRestUser login(String server, String clientId, String clientSecret, 
 			String login, String password) {
 		
 		List<String> listRoles = new ArrayList<String>();

@@ -48,7 +48,13 @@
 			<artifactId>hfsframework-base-api</artifactId>
 			<version>1.0.0</version>
 			<type>jar</type>
-		</dependency>	
+		</dependency>
+		<dependency>
+			<groupId>br.com</groupId>
+			<artifactId>hfsframework-useful-api</artifactId>
+			<version>1.0.0</version>
+			<type>jar</type>
+		</dependency>			
 
 		<!-- #################### JAVAX #################### -->
 		<dependency>

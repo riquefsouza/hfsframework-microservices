@@ -1,6 +1,8 @@
 package br.com.hfsframework.util.filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,7 +56,7 @@ public class AuthenticationFilter implements Filter {
 		//HttpUtil.logServletInfo(httpRequest);
 		
 		//HttpUtil.logClientInfo(httpRequest);
-		
+
 		if (!findResourceUrl(resourceHandler(), url)) {
 		
 			if (!url.equals(urlLogin) && !url.equals(urlLoginError)) {
@@ -80,7 +82,11 @@ public class AuthenticationFilter implements Filter {
 	private static boolean findResourceUrl(String[] resources, String url) {
 		boolean ret = false;
 		
-		for (String item : resources) {
+		ArrayList<String> resourcesList = new ArrayList<String>(Arrays.asList(resources));
+		resourcesList.add("/public/**");
+		String[] permitAll = resourcesList.stream().toArray(String[]::new);		
+		
+		for (String item : permitAll) {
 			item = item.replaceAll("[**]", "");
 
 			String pat = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]+"+item+"+[-a-zA-Z0-9+&@#/%=~_|]";

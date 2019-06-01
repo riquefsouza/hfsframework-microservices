@@ -16,9 +16,11 @@ class HFSInfoUser extends HFSSystemUtil {
 		})
 		.done(function(data) {
 			$('.infoUser-username').empty();
+			$('.infoUser-email').empty();
 			$('.infoUser-roles').empty();
 			
 			$('.infoUser-username').append(data.username);
+			$('.infoUser-email').append(data.email);
 			
 			data.roles.forEach(function(element, index, array){
 				$('.infoUser-roles').append(element.name);

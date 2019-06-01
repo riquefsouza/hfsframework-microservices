@@ -9,7 +9,8 @@ class HFSChangePassword extends HFSSystemUtil {
 		this._dlgChangePassword = $('#dlgChangePassword');
 		
 		
-		this.buildDialogChangePassword(this._dlgChangePassword, this._formChangePassword);
+		this.buildDialogChangePassword(this._dlgChangePassword, this._formChangePassword, 
+				this._messageButtonYes, this._messageButtonNo);
 	}
 	
 	btnSaveClick(event) {
@@ -18,7 +19,8 @@ class HFSChangePassword extends HFSSystemUtil {
 		this._dlgChangePassword.puidialog('show');
 	}
 
-	buildDialogChangePassword(dlgChangePassword, formChangePassword){
+	buildDialogChangePassword(dlgChangePassword, formChangePassword, 
+			messageButtonYes, messageButtonNo){
 		this._dlgChangePassword.puidialog({
 		    minimizable: false,
 		    maximizable: false,
@@ -27,7 +29,7 @@ class HFSChangePassword extends HFSSystemUtil {
 		    minWidth: 200,
 		    modal: true,
 		    buttons: [{
-		            text: 'Yes',
+		            text: messageButtonYes,
 		            icon: 'fa-check',
 		            click: function() {
 		            	formChangePassword.submit();
@@ -35,7 +37,7 @@ class HFSChangePassword extends HFSSystemUtil {
 		            }
 		        },
 		        {
-		            text: 'No',
+		            text: messageButtonNo,
 		            icon: 'fa-close',
 		            click: function() {
 		            	dlgChangePassword.puidialog('hide');

@@ -1,57 +1,55 @@
 package br.com.hfsframework.controller;
 
-import java.util.Locale;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.base.view.BaseViewController;
-import br.com.hfsframework.oauth.client.UserRestClient;
-import br.com.hfsframework.oauth.client.domain.User;
-import br.com.hfsframework.useful.mail.IMailUtil;
+import br.com.hfsframework.base.client.BaseRestTemplateClient;
 
 @Controller
-public class ForgotPasswordController extends BaseViewController {
+public class ForgotPasswordController extends BaseRestTemplateClient {
+
+	@Value("${oauth2.hfsframework.server}")
+	private String server;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	public ForgotPasswordController() {
 		super();
 	}
 
-	@Autowired
-	private IMailUtil mailUtil;
-
-	@PostMapping("/public/forgotPassword")
+	@GetMapping("/public/forgotPassword")
+	@ResponseBody
 	public String send(@RequestParam(name = "username", required = true) String username) {
-		
-		String subject =  messageSource.getMessage("login.forgotPassword", null, Locale.getDefault());
-		String text = messageSource.getMessage("forgotPassword.textMail", null, Locale.getDefault());
-		
+
+		String subject = messageSource.getMessage("login.forgotPassword", null, LocaleContextHolder.getLocale());
+		String text = messageSource.getMessage("forgotPassword.textMail", null, LocaleContextHolder.getLocale());
+
 		try {
-			UserRestClient restClient = new UserRestClient();
-			restClient.init(this.authServerURL, this.accesToken);
-			Optional<User> user = restClient.findByUsername(username);
-			
-			if (user.isPresent()) {
-				mailUtil.sendSimpleMessage(user.get().getEmail(), subject, text);
-			} else {		
-				user = restClient.findByEmail(username);
-				
-				if (user.isPresent()) {
-					mailUtil.sendSimpleMessage(user.get().getEmail(), subject, text);
-				} else {
-					//this.showErrorMessage(attributes, e);
-					return messageSource.getMessage("forgotPassword.noSendMail", null, Locale.getDefault());
-				}			
+			String url = this.server + "/api/public/forgotPassword?username=" + username + 
+					"&subject=" + subject + "&text=" + text;
+
+			ResponseEntity<String> obj = restTemplate().getForEntity(url, String.class);
+
+			if (obj.getBody().equals(username) && obj.getStatusCode().equals(HttpStatus.OK)) {
+				return messageSource.getMessage("forgotPassword.sendMail", null, LocaleContextHolder.getLocale());
+			} else {
+				return messageSource.getMessage("forgotPassword.noSendMail", null, LocaleContextHolder.getLocale());
 			}
+
 		} catch (RestClientException e) {
 			return "Error: " + e.getMessage();
 		}
-		
-		return "/login";
+
 	}
-	
+
 }

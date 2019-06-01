@@ -1,6 +1,5 @@
 package br.com.hfsframework.oauth.controller;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -21,10 +20,7 @@ import br.com.hfsframework.oauth.client.domain.User;
 
 @Controller
 @RequestMapping("/private/changePassword")
-public class ChangePasswordController extends BaseViewController implements Serializable {
-	
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 1L;
+public class ChangePasswordController extends BaseViewController {
 	
 	//private static final Logger log = LoggerFactory.getLogger(ChangePasswordController.class);
 	

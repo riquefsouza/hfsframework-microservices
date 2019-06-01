@@ -16,6 +16,7 @@ import br.com.hfsframework.oauth.domain.Role;
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.service.IRoleService;
 import br.com.hfsframework.oauth.service.IUserService;
+import br.com.hfsframework.util.exceptions.TransactionException;
 
 @Service
 @Transactional
@@ -27,15 +28,17 @@ public class SignupService {
 	@Autowired
 	private IRoleService roleService;
 
-	public User addUser(User user) {
+	public Optional<User> addUser(User user) throws TransactionException {
 		Optional<Role> role = roleService.findByName("USER");
 
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String senha = passwordEncoder.encode(user.getPassword());
-		user.setPassword(senha);
+		//BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		//String senha = passwordEncoder.encode(user.getPassword());
+		//user.setPassword(senha);
 		user.setRoles(Sets.newHashSet(role.get()));
 
-		return userService.add(user).get();
+		Optional<User> newUser = userService.add(user);
+		
+		return newUser;
 	}
 
 	@PostConstruct
