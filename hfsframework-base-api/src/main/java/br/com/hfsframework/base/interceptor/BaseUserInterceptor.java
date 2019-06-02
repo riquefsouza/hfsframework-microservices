@@ -44,8 +44,8 @@ public class BaseUserInterceptor extends HandlerInterceptorAdapter {
 				authServerURL = userLogged.get().getUrlAuthorizationServer();
 				String accesToken = userLogged.get().getAccessToken().getValue();
 				
-				session.setAttribute("authServerURL", authServerURL);
-				session.setAttribute("accesToken", accesToken); 
+				session.setAttribute("urlAuthServer", authServerURL);
+				session.setAttribute("authToken", accesToken); 
 				session.setAttribute("userLogged", userLogged.get());
 			}			
 		}

@@ -207,8 +207,8 @@ public abstract class BaseViewController {
 		Optional<BaseOAuth2RestUser> userLogged = AuthenticationUtil.getPrincipal();
 		if (userLogged.isPresent()) {		
 			
-			//this.authServerURL = userLogged.get().getUrlAuthorizationServer();
-			//this.accesToken = userLogged.get().getAccessToken().getValue();
+			this.authServerURL = userLogged.get().getUrlAuthorizationServer();
+			this.accesToken = userLogged.get().getAccessToken().getValue();
 			
 			return userLogged;
 		}

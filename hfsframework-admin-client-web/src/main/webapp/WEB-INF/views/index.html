@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	lang="en-US" >
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/header :: header">
 </head>
 <body>
@@ -12,33 +11,6 @@
 	<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
 	
 	<div class="web-content"></div>
-
-<div sec:authorize="isAuthenticated()">
-
-
-URI: <span th:text="${#httpServletRequest.requestURI}"></span>.
-Established locale country: <span th:text="${#locale.country}"></span>.
-<br>
-    Logged user: <span sec:authentication="name">Henrique</span> |
-<br>
-    Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
-    <br>
-    <!-- When using CSRF this needs to be a POST */-->
-    <form th:action="@{/logout}" method="post" style="display:inline"><input type="submit" value="Logout"/></form>
-    
-</div>
-
-<div sec:authorize="hasRole('ADMIN') or hasRole('USER')">
-    <p>Must have ROLE_ADMIN or ROLE_USER</p>
-</div>
-
-<div sec:authorize="hasRole('USER')">
-	<p>Text visible to role user.</p>
-</div>
-
-<div sec:authorize="hasRole('ADMIN')">
-	<p>Text visible to role admin.</p>
-</div>
         
 	<div th:replace="fragments/footer :: footer"></div>
 

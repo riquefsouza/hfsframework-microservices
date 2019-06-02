@@ -51,8 +51,6 @@
 			</select>	
 		 
 			<span id="infos-user" style="color: lightgray"> 				
-				<span th:text="#{menu.sessionExpires}"></span> 
-				<span id="dialog-countdown-geral"></span> 
 				<i class="fas fa-user fa-sm"></i> 
 				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">
 					<span sec:authentication="name" th:remove="tag"></span>
@@ -69,8 +67,6 @@
 
 </div>
  
-<div th:replace="sessionTimeOut :: sessionSystem"></div>
-	
 <div th:replace="fragments/infoUser :: infoUser"></div>
 
 </div>

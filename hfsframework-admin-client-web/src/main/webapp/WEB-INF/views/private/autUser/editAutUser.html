@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	lang="en-US">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+
+<div th:replace="private/menu :: menu"></div>
+
+<div class="web-content">
+	<form id="formEditAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${bean}">
+	
+		<div class="card">
+			<div class="card-header"
+				style="font-weight: bold;font-size: large;">				
+				<span th:text="#{editAutUser.title}" th:remove="tag"></span>
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text" th:text="#{button.save}"></span>
+					</button>			
+					<button type="reset" class="btn btn-light btn-icon-split" id="btnReset">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text" th:text="#{button.reset}"></span>
+					</button>
+
+					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancel">
+						<span class="icon text-white-50"> 
+							<i class="fa fa-times-circle"></i>
+						</span>	
+						<span class="text" th:text="#{button.cancel}"></span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<input type="hidden" id="autUser_id" th:field="*{id}" />
+						
+						<input type="hidden" id="autUser_password" th:field="*{password}" />						
+						<input type="hidden" id="autUser_currentPassword" th:field="*{currentPassword}" />
+						<input type="hidden" id="autUser_newPassword" th:field="*{newPassword}" />
+						<input type="hidden" id="autUser_confirmNewPassword" th:field="*{confirmNewPassword}" />
+						
+					
+						<label for="autUser_username"><span th:text="#{editAutUser.name}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="autUser_username" maxlength="64" required="required" th:field="*{username}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>						
+					</div>
+					
+					<div class="col-md-6 form-group">						
+						<label for="autUser_email"><span th:text="#{editAutUser.email}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="autUser_email" maxlength="100" required="required" th:field="*{email}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+					</div>
+					
+					<div class="col-md-6 form-group">
+						<label for="autUser_urlPhoto"><span th:text="#{editAutUser.urlPhoto}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="autUser_urlPhoto" maxlength="255" required="required" th:field="*{urlPhoto}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('urlPhoto')}" th:errors="*{urlPhoto}"></span>
+					</div>
+				</div>
+				<div class="row">	
+					<div class="col-md-5">
+						<label for="autUser_pickListRoles"><span th:text="#{editAutUser.pickListRoles}" th:remove="tag"></span></label>
+						<div id="autUser_pickListRoles" class="picklistBigger">
+						    <select name="autUser_sourceRoles" multiple="multiple">
+						        <option th:each="itemRole : ${listSourceRoles}" 
+						        	th:value="${itemRole.id}" 
+						        	th:text="${itemRole.name}" >
+						        </option>
+						    </select>
+						    
+							<select id="autUser_targetRoles" multiple="multiple" th:field="*{roles}" >
+								<option th:each="role : ${listTargetRoles}"
+										th:value="${role.id}"
+										th:text="${role.name}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</form>	
+</div>
+
+<span id="editAutUser-message-sourceCaptionRoles" th:text="#{editAutUser.sourceCaptionRoles}" style="display: none"></span>
+<span id="editAutUser-message-targetCaptionRoles" th:text="#{editAutUser.targetCaptionRoles}" style="display: none"></span>
+ 
+<script th:src="@{/js/auth/editAutUser.js}"></script>
+
+</body>
+</html>
+	

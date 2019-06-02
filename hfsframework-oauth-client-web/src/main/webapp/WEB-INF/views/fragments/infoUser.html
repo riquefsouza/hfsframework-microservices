@@ -20,15 +20,15 @@
 				<tbody>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{login.username}" th:remove="tag"></span></td>
-						<td class="infoUser-username" th:text="${userLogged.username}"></td>
+						<td class="infoUser-username" th:text="${#session.getAttribute('userLogged').username}"></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{infoUser.email}" th:remove="tag"></span></td>
-						<td class="infoUser-email" th:text="${userLogged.email}"></td>
+						<td class="infoUser-email" th:text="${#session.getAttribute('userLogged').email}"></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{infoUser.roles}" th:remove="tag"></span></td>
-						<td class="infoUser-roles" th:text="${userLogged.authorities}"></td>
+						<td class="infoUser-roles" th:text="${#session.getAttribute('userLogged').authorities}"></td>
 					</tr>
 				</tbody>
 			</table>
