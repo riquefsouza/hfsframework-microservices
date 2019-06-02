@@ -1,4 +1,4 @@
-package br.com.hfsframework.util.interceptors;
+package br.com.hfsframework.base.interceptor;
 
 import java.io.IOException;
 

@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.security.model.MenuVO;
 import br.com.hfsframework.security.model.UserAuthenticatedVO;
+import br.com.hfsframework.util.AuthenticationUtil;
 
 public abstract class BaseViewController {
 
@@ -205,18 +204,13 @@ public abstract class BaseViewController {
 	}
 	
 	public Optional<BaseOAuth2RestUser> getPrincipal() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null){ 
-			Object principal = authentication.getPrincipal();
+		Optional<BaseOAuth2RestUser> userLogged = AuthenticationUtil.getPrincipal();
+		if (userLogged.isPresent()) {		
 			
-			if (principal instanceof BaseOAuth2RestUser) {
-				BaseOAuth2RestUser userLogged = (BaseOAuth2RestUser) principal;
-				
-				this.authServerURL = userLogged.getUrlAuthorizationServer();
-				this.accesToken = userLogged.getAccessToken().getValue();
-				
-				return Optional.of(userLogged);
-			}
+			//this.authServerURL = userLogged.get().getUrlAuthorizationServer();
+			//this.accesToken = userLogged.get().getAccessToken().getValue();
+			
+			return userLogged;
 		}
 		return Optional.empty();
 	}
@@ -225,8 +219,8 @@ public abstract class BaseViewController {
 		if (getPrincipal().isPresent()) {
 			ModelAndView mv = new ModelAndView(pagina);
 			
-			mv.addObject("urlAuthServer", authServerURL);
-			mv.addObject("authToken", accesToken);
+			//mv.addObject("urlAuthServer", authServerURL);
+			//mv.addObject("authToken", accesToken);
 			return Optional.of(mv);
 		}		
 		return Optional.empty();

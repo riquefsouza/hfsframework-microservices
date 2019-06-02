@@ -72,6 +72,12 @@ public class BaseAppClientController extends BaseViewController {
     public String forbidden() {
         return "403";
     }
+    
+    @RequestMapping("/sessionExpired.html")
+    public String sessionExpired() {
+        return "sessionExpired";
+    }
+    
 	
     /*
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)

@@ -21,7 +21,7 @@ import br.com.hfsframework.base.security.BaseAuthenticationSuccessHandler;
 import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 import br.com.hfsframework.util.CookieUtil;
-import br.com.hfsframework.util.filter.AuthenticationFilter;
+import br.com.hfsframework.util.ResourceUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers(AuthenticationFilter.resourceHandler()).permitAll()       
+		.antMatchers(ResourceUtil.resourceHandler()).permitAll()       
 		.antMatchers("/public/**").permitAll()
 		.antMatchers("/private/**").access("hasRole('USER') or hasRole('ADMIN')")
 		.antMatchers("/anonymous*").anonymous()
@@ -66,18 +66,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/login.html")
 		//.loginProcessingUrl("/login.html")
 		//.defaultSuccessUrl("/index.html", true)		
-		.successHandler(authenticationSuccessHandler())
+		//.successHandler(authenticationSuccessHandler())
 		.failureUrl("/login-error.html")
 		//.failureForwardUrl("/failure-forwardUrl")
 		//.failureHandler(authenticationFailureHandler())
 		//.and()
 		//.rememberMe().rememberMeParameter("remember-me")
 		.and()
+        .rememberMe().key("hfsframework").tokenValiditySeconds(108000) // 30 minutes
+		.and()
 		.logout()
 		//.logoutUrl("/perform_logout")
 		.deleteCookies(CookieUtil.JSESSIONID)
-		//.logoutSuccessHandler(logoutSuccessHandler())
 		.logoutSuccessUrl("/index.html")
+		//.logoutSuccessHandler(logoutSuccessHandler())		
         .and()
         //.exceptionHandling().accessDeniedPage("/private/accessDenied");
         .exceptionHandling().accessDeniedHandler(accessDeniedHandler());

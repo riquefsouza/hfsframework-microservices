@@ -21,7 +21,7 @@ import br.com.hfsframework.base.security.BaseAuthenticationSuccessHandler;
 import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
 import br.com.hfsframework.util.CookieUtil;
-import br.com.hfsframework.util.filter.AuthenticationFilter;
+import br.com.hfsframework.util.ResourceUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -55,7 +55,7 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
     	http
 		.csrf().disable()
 		.authorizeRequests()
-		.antMatchers(AuthenticationFilter.resourceHandler()).permitAll()       
+		.antMatchers(ResourceUtil.resourceHandler()).permitAll()       
 		.antMatchers("/public/**").permitAll()
 		.antMatchers("/private/**").access("hasRole('USER') or hasRole('ADMIN')")
 		.antMatchers("/anonymous*").anonymous()
@@ -82,6 +82,8 @@ public class ChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 		//.failureHandler(authenticationFailureHandler())
 		//.and()
 		//.rememberMe().rememberMeParameter("remember-me")
+		.and()
+        .rememberMe().key("hfsframework").tokenValiditySeconds(108000) // 30 minutes		
 		.and()
 		.logout()
 		//.logoutUrl("/perform_logout")

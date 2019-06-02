@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedExc
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.web.client.RestClientException;
 
+import br.com.hfsframework.base.interceptor.BaseHeaderRequestInterceptor;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 
@@ -58,7 +60,11 @@ public abstract class BaseOAuth2RestTemplateClient {
 		resourceDetails.setUsername(login.trim());
 		resourceDetails.setPassword(password.trim());
 
+		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+
 		OAuth2RestTemplate rt = new OAuth2RestTemplate(resourceDetails);
+		rt.setInterceptors(interceptors);
 		rt.getMessageConverters().addAll(HttpMessageConverterUtil.getMessageConverters());
 		mappingJackson2HttpMessageConverter = (HttpMessageConverter<Object>) rt.getMessageConverters().get(0);
 		

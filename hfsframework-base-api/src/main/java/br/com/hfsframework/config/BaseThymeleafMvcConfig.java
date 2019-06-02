@@ -29,8 +29,9 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import br.com.hfsframework.base.interceptor.BaseUserInterceptor;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
-import br.com.hfsframework.util.filter.AuthenticationFilter;
+import br.com.hfsframework.util.ResourceUtil;
 
 public class BaseThymeleafMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
@@ -59,6 +60,11 @@ public class BaseThymeleafMvcConfig implements WebMvcConfigurer, ApplicationCont
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 	    registry.addInterceptor(localeChangeInterceptor());
+	    
+	    //registry.addInterceptor(new BaseLoggerInterceptor());
+        registry.addInterceptor(new BaseUserInterceptor());
+        //registry.addInterceptor(new BaseSessionTimerInterceptor());
+	    //registry.addInterceptor(new BaseAuthenticationInterceptor());
 	}
 	
 	@Bean
@@ -77,8 +83,8 @@ public class BaseThymeleafMvcConfig implements WebMvcConfigurer, ApplicationCont
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler(AuthenticationFilter.resourceHandler())
-				.addResourceLocations(AuthenticationFilter.resourceLocations());
+		registry.addResourceHandler(ResourceUtil.resourceHandler())
+				.addResourceLocations(ResourceUtil.resourceLocations());
 	}
 
 	@Override

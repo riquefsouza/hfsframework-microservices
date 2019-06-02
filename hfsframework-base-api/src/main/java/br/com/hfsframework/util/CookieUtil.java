@@ -15,7 +15,7 @@ public final class CookieUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final Logger log = LoggerFactory.getLogger(CookieUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(CookieUtil.class);
 	
 	public static final String JSESSIONID = "JSESSIONID";
 	

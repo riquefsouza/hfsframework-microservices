@@ -20,15 +20,15 @@
 				<tbody>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{login.username}" th:remove="tag"></span></td>
-						<td class="infoUser-username"></td>
+						<td class="infoUser-username" th:text="${userLogged.username}"></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{infoUser.email}" th:remove="tag"></span></td>
-						<td class="infoUser-email"></td>
+						<td class="infoUser-email" th:text="${userLogged.email}"></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><span th:text="#{infoUser.roles}" th:remove="tag"></span></td>
-						<td class="infoUser-roles"></td>
+						<td class="infoUser-roles" th:text="${userLogged.authorities}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -41,8 +41,6 @@
 	</div>
 
 </form>
-
-<script th:src="@{/js/hfsframework/hfsframework-infoUser.js}"></script>
 
 </div>
 
