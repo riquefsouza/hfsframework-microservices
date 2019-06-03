@@ -35,6 +35,7 @@
 #dismiss:hover {
     background: #fff;
     color: #808080;
+    border-radius: 25px;
 }
 
 .overlay {
@@ -73,9 +74,16 @@
     display: block;
 }
 
+#sidebar ul li ul {
+	background-color: white; 
+    border-radius: 25px;
+}
+    
 #sidebar ul li a:hover {
-    color: #808080;
-    background: #fff;
+    color: #fff;
+    background: #408080;
+    border: 1px solid #408080;
+    border-radius: 20px;
 }
 
 #sidebar ul li.active>a,
