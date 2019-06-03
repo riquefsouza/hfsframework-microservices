@@ -10,8 +10,6 @@
 </head>
 <body>
 
-<%@include file="private/menu.jsp" %>
-
 <div class="web-content">
 	<h2><spring:message code="accessDenied.text" /></h2>	
 	<a href="<c:url value="/index.html" />"><spring:message code="accessDenied.backHome" /></a>

@@ -11,7 +11,7 @@ import br.com.hfsframework.config.BaseJspMvcConfig;
 @Configuration
 @EnableWebMvc
 @EnableSpringDataWebSupport
-@ComponentScan(basePackages = { "br.com.hfsstore" })
+@ComponentScan(basePackages = { "br.com.hfsframework", "br.com.hfsstore" })
 public class MvcConfig extends BaseJspMvcConfig {
 
 	public MvcConfig() {

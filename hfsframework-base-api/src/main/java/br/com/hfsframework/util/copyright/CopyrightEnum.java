@@ -14,7 +14,9 @@ public enum CopyrightEnum {
 	
 	ADMINISTRATIVE_CLIENT_CONSOLE("copyright_administrative_client_console.txt"),
 	
-	ADMINISTRATIVE_CLIENT_WEB("copyright_administrative_client_web.txt");
+	ADMINISTRATIVE_CLIENT_WEB("copyright_administrative_client_web.txt"),
+	
+	HFSSTORE_PRIMEUI_CLIENT_WEB("copyright_hfsstore_primeui_client_web.txt");
 
 	private String fileName;
 

@@ -33,7 +33,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		log.info("------------------------------------------------------------------------");
 		log.info("Starting HFS Store Web Primeui..."); 
 		
-		//System.out.print(CopyrightUtil.getAsString(CopyrightEnum.AUTHORIZATION_CLIENT_WEB));
+		System.out.print(CopyrightUtil.getAsString(CopyrightEnum.HFSSTORE_PRIMEUI_CLIENT_WEB));
 				
 		//return new Class<?>[] { SecurityConfig.class };
 		return null;

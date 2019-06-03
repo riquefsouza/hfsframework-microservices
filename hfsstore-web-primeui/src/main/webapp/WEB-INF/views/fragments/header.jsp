@@ -53,7 +53,7 @@
 	
 <link rel="stylesheet" href="<c:url value="/vendor/sidebar/sidebar.css" />" />
 <link rel="stylesheet" href="<c:url value="/vendor/sidebar/jquery.mCustomScrollbar.min.css" />" />
-<script src="<c:url value="/vendor/sidebar/popper.min.js" />"></script>
+<script src="<c:url value="/vendor/popper/popper.min.js" />"></script>
 <script src="<c:url value="/vendor/sidebar/jquery.mCustomScrollbar.concat.min.js" />"></script>
 
 <link rel="stylesheet" type="text/css" href="<c:url value="/css/system.css" />" />

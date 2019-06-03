@@ -4,7 +4,8 @@
 <body>
 	<div class="central-footer hidden-xs" th:fragment="footer">
 		<div class="info-browser">
-			<span>All rights reserved to Henrique Figueiredo de Souza</span>
+			<span th:text="#{about.rights}">&nbsp;Henrique Figueiredo de Souza</span>
+			<span th:text="#{about.version}&nbsp;#{build.version}&nbsp;#{build.timestamp}"></span>
 		</div>
 	</div>	
 </body>

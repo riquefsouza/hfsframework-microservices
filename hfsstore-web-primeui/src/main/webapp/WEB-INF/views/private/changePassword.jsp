@@ -3,18 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-</head>
-<body>
+<t:layout>
+<jsp:attribute name="header">
+  <title><spring:message code="changePassword.title" /></title>
+</jsp:attribute>
+<jsp:body>    
 
-<%@include file="private/menu.jsp" %>
-
-<div class="web-content">
 	<form:form id="formChangePassword" style="max-width: 650px; margin-top: 10px;"
-	 action="<c:url value="/private/changePassword" />" method="POST" modelAttribute="user">
+	 action="${pageContext.request.contextPath}/private/changePassword" method="POST" modelAttribute="user">
 	 
 		<div class="card">
 			<div class="card-header" style="font-weight: bold;font-size: large;">
@@ -61,14 +59,14 @@
 				</div>
 				<div class="row">
 					<div class="col-md-6 form-group">
-						<form:label for="newPassword"><spring:message code="changePassword.newPassword" /></form:label>
+						<form:label for="newPassword" path="newPassword"><spring:message code="changePassword.newPassword" /></form:label>
 						<form:input type="password" class="form-control" id="newPassword" required="required" maxlength="64" autocomplete="off" path="newPassword" />
 						<form:errors cssStyle="color: red;" path="newPassword" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6 form-group">
-						<form:label for="confirmNewPassword"><spring:message code="changePassword.confirmNewPassword" /></form:label>
+						<form:label for="confirmNewPassword" path="confirmNewPassword"><spring:message code="changePassword.confirmNewPassword" /></form:label>
 						<form:input type="password" class="form-control" id="confirmNewPassword" required="required" maxlength="64" autocomplete="off" path="confirmNewPassword" />
 						<form:errors cssStyle="color: red;" path="confirmNewPassword" />
 					</div>
@@ -82,9 +80,9 @@
 		</div>
 		
 	</form:form>
-</div>
 
 <script src="<c:url value="/js/hfsframework/hfsframework-changePassword.js" />"></script>
 
-</body>
-</html>
+</jsp:body>
+
+</t:layout>
