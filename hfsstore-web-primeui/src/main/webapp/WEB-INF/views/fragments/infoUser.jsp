@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <form id="infoUserForm">
 
 	<div id="infoUserDialog" class="modal fade" role="dialog">
@@ -14,15 +20,15 @@
 				<tbody>
 					<tr>
 						<td style="font-weight: bold;"><spring:message code="login.username" /></td>
-						<td class="infoUser-username"><% session.getAttribute("userLogged").username; %></td>
+						<td class="infoUser-username"><c:out value="${sessionScope.userLogged.username}"/></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><spring:message code="infoUser.email" /></td>
-						<td class="infoUser-email"><c:out value='${sessionScope.userLogged}'/></td>
+						<td class="infoUser-email"><c:out value="${sessionScope.userLogged}"/></td>
 					</tr>
 					<tr>
 						<td style="font-weight: bold;"><spring:message code="infoUser.roles" /></td>
-						<td class="infoUser-roles" ><c:out value='${sessionScope.userLogged.authorities}'/></td>
+						<td class="infoUser-roles" ><c:out value="${sessionScope.userLogged.authorities}"/></td>
 					</tr>
 				</tbody>
 			</table>

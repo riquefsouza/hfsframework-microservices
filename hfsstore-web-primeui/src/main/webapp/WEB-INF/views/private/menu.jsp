@@ -1,5 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" id="anchorHomePage" th:href="@{'/index.html'}"  
+  <a class="navbar-brand" id="anchorHomePage" href="<c:url value="/index.html" />"  
     style="float: left; height: 50px; padding: 5px 5px; font-size: 14px; text-decoration:none">
   	<span><spring:message code="main.framework" /></span><br>
   	<span><spring:message code="main.app.title" /></span>
@@ -11,14 +17,16 @@
   <div class="collapse navbar-collapse" id="navb">
     <ul class="navbar-nav mr-auto">
 
-	  <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="menu.administrative" /></a>
-		<div class="dropdown-menu">
-		  <a class="dropdown-item" href="<c:url value="/private/roleView" />"><spring:message code="menu.roles" /></a>
-		  <a class="dropdown-item" href="<c:url value="/private/userView" />"><spring:message code="menu.users" /></a> 
-		</div>
-	  </li>
-	  
+		<security:authorize access="hasRole('ROLE_ADMIN')">
+		  <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="menu.administrative" /></a>
+			<div class="dropdown-menu">
+			  <a class="dropdown-item" href="<c:url value="/private/roleView" />"><spring:message code="menu.roles" /></a>
+			  <a class="dropdown-item" href="<c:url value="/private/userView" />"><spring:message code="menu.users" /></a> 
+			</div>
+		  </li>
+		</security:authorize>
+	   
 	  <li class="nav-item dropdown">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><spring:message code="menu.settings" /></a>
 		<div class="dropdown-menu">
@@ -29,7 +37,7 @@
 	  </li>	  
 	  <li class="nav-item">
 	  	<a class="nav-link" href="<c:url value="/logout" />">
-	  		<img class="inverted-image" th:src="@{/img/sair.png}" />
+	  		<img class="inverted-image" src="<c:url value="/img/sair.png" />" />
 	  		<spring:message code="menu.exit" />
 	  	</a>
 	  </li>	
@@ -48,7 +56,7 @@
 			<span id="infos-user" style="color: lightgray"> 				
 				<i class="fas fa-user fa-sm"></i> 
 				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">
-					<security:authentication="name">
+					<security:authentication property="name"/>
 				</a>
 			</span>
 		</small>
@@ -57,11 +65,11 @@
   </div>
 
 </nav>
- <!-- 
+  
 <div class="web-content" style="margin:5px 0;">
-	<@include file="fragments/alertMessages.jsp" %>
+	<%@include file="../fragments/alertMessages.jsp" %>
 </div>
- -->
-<%@include file="fragments/infoUser.jsp" %>
+ 
+<%@include file="../fragments/infoUser.jsp" %>
 
  
