@@ -11,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.client.RestClientException;
 
+import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.base.client.BaseOAuth2RestTemplateClient;
 
-public class BaseRestClientTest<T extends BaseEntityRestClientTest<I>, I> extends BaseOAuth2RestTemplateClient {
+public class BaseRestClientTest<T extends BaseEntityRestClient<T, I>, I> extends BaseOAuth2RestTemplateClient {
 
 	private static final Logger log = LogManager.getLogger(BaseRestClientTest.class);
 	
@@ -81,7 +82,7 @@ public class BaseRestClientTest<T extends BaseEntityRestClientTest<I>, I> extend
 	public void updateById() {
 		log.info(METHOD_ACTION.UPDATE_BY_ID);
 
-		this.objList.stream().forEach(bean -> bean.setDescription("DESC "+bean.getId()));
+		//this.objList.stream().forEach(bean -> bean.setDescription("DESC "+bean.getId()));
     	
     	this.objList.stream().forEach(bean -> {
 			try {

@@ -2,11 +2,18 @@ package br.com.hfsframework.admin.client.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import br.com.hfsframework.base.test.BaseEntityRestClientTest;
+import com.fasterxml.jackson.core.type.TypeReference;
 
-public class AdmParameterCategory implements BaseEntityRestClientTest<Long> {
+import br.com.hfsframework.base.client.BaseEntityRestClient;
+import br.com.hfsframework.util.JSONConverter;
+import br.com.hfsframework.util.JSONListConverter;
 
+public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCategory, Long> {
+
+	private String jsonText;
+	
 	private Long id;
 
 	private String description;
@@ -19,7 +26,7 @@ public class AdmParameterCategory implements BaseEntityRestClientTest<Long> {
 	public AdmParameterCategory() {
 		super();
 		this.admParameters = new ArrayList<Long>();
-		limpar();
+		this.clear();
 	}
 
 	/*
@@ -43,13 +50,6 @@ public class AdmParameterCategory implements BaseEntityRestClientTest<Long> {
 		this.description = description;
 		this.order = order;
 		this.admParameters = new ArrayList<Long>();
-	}
-
-	public void limpar() {
-		this.id = null;
-		this.description = null;
-		this.order = null;
-		this.admParameters.clear();
 	}
 
 	public Long getId() {
@@ -113,6 +113,59 @@ public class AdmParameterCategory implements BaseEntityRestClientTest<Long> {
 	public String toString() {
 		return "ParameterCategory [id=" + id + ", description=" + description + ", order=" + order + ", parameters="
 				+ admParameters + "]";
+	}
+
+	@Override
+	public String getJsonText() {
+		return this.jsonText;
+	}
+
+	@Override
+	public void setJsonText(String jsonText) {
+		this.jsonText = jsonText;		
+	}
+
+	@Override
+	public void clear() {
+		this.jsonText = "";
+		this.id = null;
+		this.description = null;
+		this.order = null;
+		this.admParameters.clear();
+	}
+
+	@Override
+	public String toJSON() {
+		JSONConverter<AdmParameterCategory> conv = new JSONConverter<AdmParameterCategory>();
+		return conv.toJSON(this);
+	}
+
+	@Override
+	public Optional<AdmParameterCategory> fromJSON(String jsonText) {
+		JSONConverter<AdmParameterCategory> conv = new JSONConverter<AdmParameterCategory>();
+		TypeReference<AdmParameterCategory> mapType = new TypeReference<AdmParameterCategory>() {};		
+		return conv.jsonToObject(jsonText, mapType);
+	}
+
+	@Override
+	public Optional<AdmParameterCategory> fromJSON() {
+		if (!this.jsonText.isEmpty()) {
+			return this.fromJSON(this.jsonText);
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public String listToJSON(List<AdmParameterCategory> list) {
+		JSONListConverter<AdmParameterCategory> conv = new JSONListConverter<AdmParameterCategory>();
+		return conv.listToJSON(list);
+	}
+
+	@Override
+	public List<AdmParameterCategory> jsonToLista(String jsonText) {
+		JSONListConverter<AdmParameterCategory> conv = new JSONListConverter<AdmParameterCategory>();
+		TypeReference<List<AdmParameterCategory>> mapType = new TypeReference<List<AdmParameterCategory>>() {};
+		return conv.jsonToList(jsonText, mapType);
 	}
 
 }
