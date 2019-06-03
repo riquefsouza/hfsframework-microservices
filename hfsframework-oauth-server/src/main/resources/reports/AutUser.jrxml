@@ -6,7 +6,7 @@
 	<parameter name="IMAGE" class="java.lang.String"/>
 	<parameter name="PARAMETER1" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
-	<field name="roles" class="java.util.List"/>
+	<field name="roles" class="java.util.Set"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

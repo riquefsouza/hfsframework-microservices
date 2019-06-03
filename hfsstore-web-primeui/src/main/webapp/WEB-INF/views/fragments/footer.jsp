@@ -6,9 +6,9 @@
 	<div class="info-browser">
 		<span><spring:message code="about.rights" />&nbsp;Henrique Figueiredo de Souza</span>
 		<span>
-			<spring:message code="about.version" />&nbsp;
-			<spring:message code="build.version" />&nbsp;
-			<spring:message code="build.timestamp" />
+			&nbsp;<spring:message code="about.version" />
+			&nbsp;<spring:message code="build.version" />
+			&nbsp;<spring:message code="build.timestamp" />
 		</span>
 	</div>
 </div>	
