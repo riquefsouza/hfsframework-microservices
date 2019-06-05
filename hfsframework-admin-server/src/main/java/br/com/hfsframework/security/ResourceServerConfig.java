@@ -1,7 +1,10 @@
 package br.com.hfsframework.security;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +19,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.DelegatingJwtClaimsSetVerifier;
+import org.springframework.security.oauth2.provider.token.store.IssuerClaimVerifier;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtClaimsSetVerifier;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import br.com.hfsframework.base.security.BaseAccessTokenConverter;
+import br.com.hfsframework.base.security.BaseClaimVerifier;
 
 @Configuration
 @EnableResourceServer
@@ -34,10 +41,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.
 		anonymous().disable()
-		.requestMatchers().antMatchers("/api/public/**", "/api/v1/**", "/swagger-ui.html", "/webjars/**", 
-				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
-		.and()
+		//.requestMatchers().antMatchers("/api/public/**", "/api/v1/**", "/swagger-ui.html", "/webjars/**", 
+			//	"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
+		//.and()
 		.authorizeRequests()
+		.antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", 
+				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
 		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
 		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
@@ -66,7 +75,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setAccessTokenConverter(customAccessTokenConverter);
-        //converter.setJwtClaimsSetVerifier(jwtClaimsSetVerifier());
+        converter.setJwtClaimsSetVerifier(jwtClaimsSetVerifier());
         //converter.setSigningKey("123");
 		converter.setVerifierKey(getPublicKeyAsString());
 		return converter;
@@ -82,8 +91,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		}
 		return publicKey;
     }
-
-    /*
+    
     @Bean
     public JwtClaimsSetVerifier jwtClaimsSetVerifier() {
         return new DelegatingJwtClaimsSetVerifier(Arrays.asList(issuerClaimVerifier(), customJwtClaimVerifier()));
@@ -102,5 +110,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public JwtClaimsSetVerifier customJwtClaimVerifier() {
         return new BaseClaimVerifier();
     }
-    */    
+    
 }

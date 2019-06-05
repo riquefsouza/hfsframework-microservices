@@ -8,7 +8,7 @@ import br.com.hfsframework.admin.service.IAdmParameterCategoryService;
 import br.com.hfsframework.base.BaseRestController;
 
 @RestController
-@RequestMapping("/api/v1/parametroCategoria")
+@RequestMapping("/api/v1/parameterCategory")
 public class AdmParameterCategoryRestController
 		extends BaseRestController<AdmParameterCategory, Long, IAdmParameterCategoryService> {
 
