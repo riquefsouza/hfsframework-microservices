@@ -16,10 +16,23 @@ public enum TemplateEnum {
 	Resource("resource", "Resource", "Resource Suporte"),
 	
 	/** The Repository. */
-	Repository("data", "Repository", "Data Access Object"),
+	IRepository("domain", "Repository", "Data Access Object"),
 	
-	/** The bc. */
-	BC("business", "BC", "Business Controller"),
+	Formatter("serializer", "Formatter", "Formatter"),
+	
+	Deserializer("deserializer", "Deserializer", "Deserializer"),
+	
+	ListSerializer("serializer", "ListSerializer", "List Serializer"),
+	
+	Service("service", "Service", "Service Controller"),
+	
+	IService("service", "Service", "IService Controller"),
+	
+	RestController("controller", "RestController", "Rest Controller"),
+	
+	RestClient("client", "RestClient", "Rest Client"),
+	
+	Controller("controller", "Controller", "Server Controller"),
 	
 	ViewController("view", "Controller", "Controller"),
 	
@@ -30,11 +43,19 @@ public enum TemplateEnum {
 	Converter("converters", "Converter", "Converter"),
 
 	/** The list. */
-	list("", "list", "listar página"),
+	list("", "list", "listar página thymeleaf"),
 	
 	/** The edit. */
-	edit("", "edit", "editar página"),
+	edit("", "edit", "editar página thymeleaf"),
+
+	JSPList("", "list", "listar página jsp"),
 	
+	JSPEdit("", "edit", "editar página jsp"),
+
+	JSList("", "list", "listar javascript"),
+	
+	JSEdit("", "edit", "editar javascript"),
+
 	/** The report. */
 	report("", "report", "reportar página"),
 	

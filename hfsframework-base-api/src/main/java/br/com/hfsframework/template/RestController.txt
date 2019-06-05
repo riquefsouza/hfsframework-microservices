@@ -1,0 +1,17 @@
+package ${package}.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import ${package}.domain.${class};
+import ${package}.service.I${class}Service;
+import br.com.hfsframework.base.BaseRestController;
+
+@RestController
+@RequestMapping("/api/v1/${object}")
+public class ${class}RestController
+		extends BaseRestController<${class}, ${idType}, I${class}Service> {
+
+	private static final long serialVersionUID = 1L;
+
+}

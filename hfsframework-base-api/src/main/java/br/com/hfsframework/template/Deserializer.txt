@@ -1,0 +1,36 @@
+package ${package}.client.deserializer;
+
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import ${package}.client.domain.${class};
+
+public class ${class}Deserializer extends JsonDeserializer<${class}> {
+
+	@Override
+	public ${class} deserialize(JsonParser jp, DeserializationContext ctxt) 
+			throws IOException, JsonProcessingException {
+		ObjectCodec oc = jp.getCodec();
+		JsonNode node = oc.readTree(jp);
+
+		final ${idType} id = node.get("id").as${idType}();
+		//JsonNode sublist = node.get();
+
+		// Iterator<JsonNode> iter = sublist.elements();
+
+		${class} pc = new ${class}(id);
+		for (JsonNode item : sublist) {
+			//objSubList = new ClassSubList(item.as${idType}());
+			//pc.getSubClass().add(objSubList);
+		}
+
+		return pc;
+	}
+
+}

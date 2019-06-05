@@ -1,0 +1,10 @@
+package ${package}.serializer;
+
+import ${package}.domain.${class};
+import br.com.hfsframework.base.BaseListSerializer;
+
+public class ${class}ListSerializer extends BaseListSerializer<${class}> {
+
+	private static final long serialVersionUID = 1L;
+	
+}

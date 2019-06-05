@@ -1,0 +1,9 @@
+package ${package}.service;
+
+import ${package}.domain.${class};
+import ${package}.repository.I${class}Repository;
+import br.com.hfsframework.base.IBaseBusinessService;
+
+public interface I${class}Service
+		extends IBaseBusinessService<${class}, ${idType}, I${class}Repository> {
+}

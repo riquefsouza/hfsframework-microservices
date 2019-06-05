@@ -1,0 +1,20 @@
+package ${package}.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
+import ${package}.client.${class}RestClient;
+import ${package}.client.domain.${class};
+
+@Controller
+@RequestMapping(value = "/private/${object}View")
+public class ${class}Controller extends BaseViewRegisterRestClient<${class}, ${idType}, ${class}RestClient> {
+
+	private static final long serialVersionUID = 1L;
+
+	public ${class}Controller() {
+		super(new ${class}RestClient(), "/private/${object}/list${class}", "/private/${object}/edit${class}", "${class}");
+	}
+	
+}

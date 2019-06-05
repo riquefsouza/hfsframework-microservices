@@ -35,22 +35,30 @@ public class TemplateExample {
         //ctx.reconfigure();
 
 		String[][] classes = {	
-				{"AdmMenu", "Long"},
-				{"AdmPagina", "Long"},
-				{"AdmParametro", "Long"},
-				{"AdmParametroCategoria", "Long"},
-				{"AdmPerfil", "Long"},
-				{"AdmUsuario", "Long"},
-				{"VwAdmLog", "Long"},
-				{"VwAdmLogValor", "Long"}
+				{"AdmParameter", "Long"},
+				{"AdmParameterCategory", "Long"}
 		};
 		
-        String saida = "C:/Temp/destino";
+        String saida = "C:/Temp/blob";
         
-        String caminhoModelo = "";
-        //String caminhoModelo = "C:/ambiente/workspace/hfssistema/src/main/java/br/com/hfsframework/template";
+        //String caminhoModelo = "";
+        String caminhoModelo = "C:/ambiente/workspace/hfsframework-microservices/hfsframework-base-api/src/main/java/br/com/hfsframework/template";
         
-        TemplateUtil.gerarCodigoFonte(TemplateEnum.ServiceTest, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.IRepository, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.IService, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.Service, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.RestController, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.Controller, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.RestClient, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.Formatter, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.Deserializer, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.ListSerializer, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.list, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.edit, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.JSPList, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.JSPEdit, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.JSList, caminhoModelo, pacote, classes, saida);
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.JSEdit, caminhoModelo, pacote, classes, saida);
 	}
 /*	
 	private static class PrivateManager extends LogManager {

@@ -78,6 +78,12 @@ public class TemplateUtil implements Serializable {
 
 		Template templateModelo = configurar(caminhoModelo, modelo);
 
+		if (params.equals(TemplateEnum.JSPList) || params.equals(TemplateEnum.JSPEdit)) {
+			extensao = ".jsp";
+		}
+		if (params.equals(TemplateEnum.JSList) || params.equals(TemplateEnum.JSEdit)) {
+			extensao = ".js";
+		}
 		if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {
 			extensao = ".html";
 		}

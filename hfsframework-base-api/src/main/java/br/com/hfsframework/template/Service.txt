@@ -1,0 +1,16 @@
+package ${package}.service;
+
+import org.springframework.stereotype.Service;
+
+import ${package}.domain.${class};
+import ${package}.repository.I${class}Repository;
+import br.com.hfsframework.base.BaseBusinessService;
+
+@Service
+public class ${class}Service
+		extends BaseBusinessService<${class}, ${idType}, I${class}Repository>
+		implements I${class}Service {
+
+	private static final long serialVersionUID = 1L;
+
+}
