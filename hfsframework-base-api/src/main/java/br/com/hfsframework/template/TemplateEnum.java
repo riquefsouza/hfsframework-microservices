@@ -21,8 +21,7 @@ public enum TemplateEnum {
 	/** The bc. */
 	BC("business", "BC", "Business Controller"),
 	
-	/** The mb. */
-	CadastroController("view", "Controller", "Controller"),
+	ViewController("view", "Controller", "Controller"),
 	
 	/** The Rel MB. */
 	RelController("view", "RelController", "Controller de Relatório"),
@@ -30,20 +29,20 @@ public enum TemplateEnum {
 	/** The Converter. */
 	Converter("converters", "Converter", "Converter"),
 
-	/** The listar. */
-	listar("", "listar", "listar página"),
+	/** The list. */
+	list("", "list", "listar página"),
 	
-	/** The editar. */
-	editar("", "editar", "editar página"),
+	/** The edit. */
+	edit("", "edit", "editar página"),
 	
-	/** The reportar. */
-	reportar("", "reportar", "reportar página"),
+	/** The report. */
+	report("", "report", "reportar página"),
 	
-	/** The retrato. */
-	retrato("relatorios", "Retrato", "Relatório de Orientação Retrato"),
+	/** The portrait. */
+	portrait("relatorios", "Portrait", "Relatório de Orientação Retrato"),
 	
 	/** The paisagem. */
-	paisagem("relatorios", "Paisagem", "Relatório de Orientação Paisagem"),
+	landscape("relatorios", "Landscape", "Relatório de Orientação Paisagem"),
 	
 	ServiceTest("test", "ServiceTest", "Service Test"),
 	

@@ -17,8 +17,8 @@ import freemarker.template.TemplateException;
 public class TemplateExample {
 
 	/** The Constant pacote. */
-	//private static final String pacote = "br.com.hfsframework.admin";
-	private static final String pacote = "br.com.hfsframework.test.admin";
+	private static final String pacote = "br.com.hfsframework.admin";
+	//private static final String pacote = "br.com.hfsframework.test.admin";
 	
 	/**
 	 * The main method.
@@ -48,7 +48,7 @@ public class TemplateExample {
         String saida = "C:/Temp/destino";
         
         String caminhoModelo = "";
-        //String caminhoModelo = "C:/demoiselle3/workspace/hfssistema/src/main/java/br/com/hfsframework/template";
+        //String caminhoModelo = "C:/ambiente/workspace/hfssistema/src/main/java/br/com/hfsframework/template";
         
         TemplateUtil.gerarCodigoFonte(TemplateEnum.ServiceTest, caminhoModelo, pacote, classes, saida);
 	}

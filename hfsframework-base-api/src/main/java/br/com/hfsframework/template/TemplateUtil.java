@@ -78,14 +78,14 @@ public class TemplateUtil implements Serializable {
 
 		Template templateModelo = configurar(caminhoModelo, modelo);
 
-		if (params.name().equals("listar") || params.name().equals("editar") || params.name().equals("reportar")) {
+		if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {
 			extensao = ".html";
 		}
-		if (params.name().equals("paisagem") || params.name().equals("retrato")) {
+		if (params.equals(TemplateEnum.landscape) || params.equals(TemplateEnum.portrait)) {
 			extensao = ".jrxml";
 		}
 
-		if (params.name().equals("listar") || params.name().equals("editar") || params.name().equals("reportar")) {
+		if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {
 			for (int i = 0; i < classes.length; i++) {
 				dir = new File(diretorioSaida + "/" + StringUtils.uncapitalize(classes[i][0]));
 				if (!dir.exists()) {
@@ -107,7 +107,7 @@ public class TemplateUtil implements Serializable {
 		}
 
 		for (int i = 0; i < classes.length; i++) {
-			if (params.name().equals("listar") || params.name().equals("editar") || params.name().equals("reportar")) {
+			if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {	
 				saida = diretorioSaida + "/" + StringUtils.uncapitalize(classes[i][0]) + "/" + params.getTipo()
 						+ classes[i][0] + extensao;
 			} else {
@@ -120,20 +120,20 @@ public class TemplateUtil implements Serializable {
 							+ params.getTipo() + extensao;
 			}
 
-			parametros.put("pacote", pacote);
-			parametros.put("classe", classes[i][0]);
-			parametros.put("objeto", StringUtils.uncapitalize(classes[i][0]));
-			parametros.put("idTipo", classes[i][1]);
+			parametros.put("package", pacote);
+			parametros.put("class", classes[i][0]);
+			parametros.put("object", StringUtils.uncapitalize(classes[i][0]));
+			parametros.put("idType", classes[i][1]);
 
-			if (params.name().equals("paisagem") || params.name().equals("retrato")) {
+			if (params.equals(TemplateEnum.landscape) || params.equals(TemplateEnum.portrait)) {
 				listaCampos = EntityUtil.lerCampos(pacote + ".model.", classes[i][0]);
-				parametros.put("campos", listaCampos);
+				parametros.put("fields", listaCampos);
 			}
 
 			arquivo = processar(templateModelo, parametros, saida);
 
-			if (params.name().equals("listar") || params.name().equals("editar") || params.name().equals("reportar")
-					|| params.name().equals("paisagem") || params.name().equals("retrato")) {
+			if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)
+					|| params.equals(TemplateEnum.landscape) || params.equals(TemplateEnum.portrait)) {
 
 				texto = FileUtils.readFileToString(arquivo, StandardCharsets.UTF_8);
 				texto = texto.replace("\\{", "{");
@@ -209,30 +209,6 @@ public class TemplateUtil implements Serializable {
 	}
 
 	/**
-	 * Gerar pages.
-	 *
-	 * @param diretorio
-	 *            the diretorio
-	 * @param classes
-	 *            the classes
-	 * @return the string
-	 */
-	public static String gerarPages(String diretorio, String[][] classes) {
-		String txt = "";
-		for (int i = 0; i < classes.length; i++) {
-			txt += "@View(basePath = \"" + diretorio + StringUtils.uncapitalize(classes[i][0]) + "/\")\n";
-			txt += "class Listar" + classes[i][0] + " implements ViewConfig {\n";
-			txt += "}\n";
-			txt += "\n";
-			txt += "@View(basePath = \"" + diretorio + StringUtils.uncapitalize(classes[i][0]) + "/\")\n";
-			txt += "class Editar" + classes[i][0] + " implements ViewConfig {\n";
-			txt += "}\n";
-			txt += "\n";
-		}
-		return txt;
-	}
-
-	/**
 	 * Gerar menu.
 	 *
 	 * @param diretorio
@@ -285,11 +261,11 @@ public class TemplateUtil implements Serializable {
 		LogAdmVO logAdmVO;
 		List<LogAdmValorVO> listaLogAdmValorVO = new ArrayList<LogAdmValorVO>();
 		LogAdmValorVO logAdmValorVO;
-		parametros.put("opcao", opcao);
+		parametros.put("option", opcao);
 
 		Metadata md = mu.getMetadados(esquema);
 		for (MetadataObject t : md.getObjetos()) {
-			parametros.put("esquema", t.getEsquema().toLowerCase());
+			parametros.put("scheme", t.getEsquema().toLowerCase());
 			
 			if (!t.getObjeto().equalsIgnoreCase("ADM_USUARIO") 
 					&& !t.getObjeto().equalsIgnoreCase("ADM_AUDITORIA_REVISAO")
@@ -373,10 +349,10 @@ public class TemplateUtil implements Serializable {
 				}
 				
 				classe = "Adm" + prop;
-				parametros.put("classe", classe);
-				parametros.put("tabela", t.getObjeto().toLowerCase());
-				parametros.put("listaColunasPK", t.getNomeColunasPK());
-				parametros.put("listaColunas", t.getColunas());
+				parametros.put("class", classe);
+				parametros.put("table", t.getObjeto().toLowerCase());
+				parametros.put("listColumnsPK", t.getNomeColunasPK());
+				parametros.put("listColumns", t.getColunas());
 	
 				Template templateModelo = TemplateUtil.configurar("", "csharp_hbm_xml.txt");
 				TemplateUtil.processar(templateModelo, parametros, diretorioSaida + "/"+classe+".hbm.xml");
