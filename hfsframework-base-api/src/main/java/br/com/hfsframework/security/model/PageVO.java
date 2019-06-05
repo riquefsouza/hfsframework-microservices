@@ -25,20 +25,20 @@ public class PageVO implements Serializable {
 	/** The id. */
 	private Long id;
 
-	/** The descricao. */
-	private String descricao;
+	/** The description. */
+	private String description;
 
 	/** The url. */
 	private String url;
 
 	/** The perfils. */
-	private List<RoleVO> perfils;
+	private List<ProfileVO> perfils;
 
 	/**
 	 * Instantiates a new pagina VO.
 	 */
 	public PageVO() {
-		this.perfils = new ArrayList<RoleVO>();
+		this.perfils = new ArrayList<ProfileVO>();
 		limpar();
 	}
 	
@@ -47,7 +47,7 @@ public class PageVO implements Serializable {
 	 */
 	public void limpar() {
 		this.id = null;
-		this.descricao = null;
+		this.description = null;
 		this.url = null;
 		this.perfils.clear();
 	}
@@ -72,22 +72,22 @@ public class PageVO implements Serializable {
 	}
 
 	/**
-	 * Gets the descricao.
+	 * Gets the description.
 	 *
-	 * @return the descricao
+	 * @return the description
 	 */
-	public String getDescricao() {
-		return this.descricao;
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
-	 * Sets the descricao.
+	 * Sets the description.
 	 *
-	 * @param descricao
-	 *            the new descricao
+	 * @param description
+	 *            the new description
 	 */
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class PageVO implements Serializable {
 	 *
 	 * @return the perfils
 	 */
-	public List<RoleVO> getPerfils() {
+	public List<ProfileVO> getPerfils() {
 		return this.perfils;
 	}
 
@@ -124,7 +124,7 @@ public class PageVO implements Serializable {
 	 * @param perfils
 	 *            the new perfils
 	 */
-	public void setPerfils(List<RoleVO> perfils) {
+	public void setPerfils(List<ProfileVO> perfils) {
 		this.perfils = perfils;
 	}
 	
@@ -175,8 +175,8 @@ public class PageVO implements Serializable {
 	 */
 	public String getPerfisPagina() {
 		String ret = "";
-		for (RoleVO item : getPerfils()) {
-			ret = ret.concat(item.getDescricao()).concat(", ");
+		for (ProfileVO item : getPerfils()) {
+			ret = ret.concat(item.getDescription()).concat(", ");
 		}
 		if (ret != "") {
 			ret = ret.substring(0, ret.length() - 2);

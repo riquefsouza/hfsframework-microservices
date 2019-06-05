@@ -23,17 +23,17 @@ public class PermissionVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The perfil. */
-	private RoleVO perfil;
+	private ProfileVO perfil;
 	
-	/** The paginas. */
-	private List<PageVO> paginas;
+	/** The pages. */
+	private List<PageVO> pages;
 
 	/**
 	 * Instantiates a new permissao VO.
 	 */
 	public PermissionVO() {
 		super();
-		this.paginas = new ArrayList<PageVO>();
+		this.pages = new ArrayList<PageVO>();
 		limpar();
 	}
 
@@ -41,8 +41,8 @@ public class PermissionVO implements Serializable {
 	 * Limpar.
 	 */
 	public void limpar() {
-		this.perfil = new RoleVO();
-		this.paginas.clear();
+		this.perfil = new ProfileVO();
+		this.pages.clear();
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class PermissionVO implements Serializable {
 	 *
 	 * @return o the perfil
 	 */
-	public RoleVO getPerfil() {
+	public ProfileVO getPerfil() {
 		return perfil;
 	}
 
@@ -60,27 +60,27 @@ public class PermissionVO implements Serializable {
 	 * @param perfil
 	 *            o novo the perfil
 	 */
-	public void setPerfil(RoleVO perfil) {
+	public void setPerfil(ProfileVO perfil) {
 		this.perfil = perfil;
 	}
 
 	/**
-	 * Pega o the paginas.
+	 * Pega o the pages.
 	 *
-	 * @return o the paginas
+	 * @return o the pages
 	 */
-	public List<PageVO> getPaginas() {
-		return paginas;
+	public List<PageVO> getPages() {
+		return pages;
 	}
 
 	/**
-	 * Atribui o the paginas.
+	 * Atribui o the pages.
 	 *
-	 * @param paginas
-	 *            o novo the paginas
+	 * @param pages
+	 *            o novo the pages
 	 */
-	public void setPaginas(List<PageVO> paginas) {
-		this.paginas = paginas;
+	public void setPages(List<PageVO> pages) {
+		this.pages = pages;
 	}
 
 	/* (non-Javadoc)
@@ -88,7 +88,7 @@ public class PermissionVO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "PermissaoVO [perfil=" + perfil + ", paginas=" + paginas + "]";
+		return "PermissaoVO [perfil=" + perfil + ", pages=" + pages + "]";
 	}
 
 

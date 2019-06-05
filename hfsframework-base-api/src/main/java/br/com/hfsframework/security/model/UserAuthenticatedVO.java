@@ -218,8 +218,8 @@ public class UserAuthenticatedVO implements Serializable {
 	 *            the id perfil
 	 * @return the perfil
 	 */
-	public RoleVO getPerfil(Long idPerfil){
-		RoleVO admPerfil = null;
+	public ProfileVO getPerfil(Long idPerfil){
+		ProfileVO admPerfil = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
 			if (permissaoVO.getPerfil().getId() == idPerfil){
 				admPerfil = permissaoVO.getPerfil(); 
@@ -247,10 +247,10 @@ public class UserAuthenticatedVO implements Serializable {
 	 *            the perfil
 	 * @return the perfil
 	 */
-	public RoleVO getPerfil(String perfil){
-		RoleVO admPerfil = null;
+	public ProfileVO getPerfil(String perfil){
+		ProfileVO admPerfil = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getDescricao().equalsIgnoreCase(perfil)){
+			if (permissaoVO.getPerfil().getDescription().equalsIgnoreCase(perfil)){
 				admPerfil = permissaoVO.getPerfil(); 
 				break;
 			}
@@ -274,8 +274,8 @@ public class UserAuthenticatedVO implements Serializable {
 	 *
 	 * @return the perfil geral
 	 */
-	public RoleVO getPerfilGeral(){
-		RoleVO admPerfil = null;
+	public ProfileVO getPerfilGeral(){
+		ProfileVO admPerfil = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
 			if (permissaoVO.getPerfil().getGeral()){
 				admPerfil = permissaoVO.getPerfil(); 
@@ -290,10 +290,10 @@ public class UserAuthenticatedVO implements Serializable {
 	 *
 	 * @return the perfil administrador
 	 */
-	public RoleVO getPerfilAdministrador(){
-		RoleVO admPerfil = null;
+	public ProfileVO getPerfilAdministrator(){
+		ProfileVO admPerfil = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getAdministrador()){
+			if (permissaoVO.getPerfil().getAdministrator()){
 				admPerfil = permissaoVO.getPerfil(); 
 				break;
 			}
@@ -307,7 +307,7 @@ public class UserAuthenticatedVO implements Serializable {
 	 * @return true, if is geral
 	 */
 	public boolean isGeral(){
-        RoleVO perfil = this.getPerfilGeral();
+        ProfileVO perfil = this.getPerfilGeral();
         if (perfil!=null){
         	return perfil.getGeral();
         }
@@ -319,10 +319,10 @@ public class UserAuthenticatedVO implements Serializable {
 	 *
 	 * @return true, if is administrador
 	 */
-	public boolean isAdministrador(){
-        RoleVO perfil = this.getPerfilAdministrador();
+	public boolean isAdministrator(){
+        ProfileVO perfil = this.getPerfilAdministrator();
         if (perfil!=null){
-        	return perfil.getAdministrador();
+        	return perfil.getAdministrator();
         }
         return false;
 	}
@@ -372,24 +372,24 @@ public class UserAuthenticatedVO implements Serializable {
 	 *            the id menu
 	 * @return the pagina by menu
 	 */
-	public PageVO getPaginaByMenu(Long idMenu) {
-		PageVO admPagina = null;
+	public PageVO getPageByMenu(Long idMenu) {
+		PageVO admPage = null;
 		
 		if (listaMenus!= null && !listaMenus.isEmpty()){
 			for (MenuVO admMenu : listaMenus) {
-				admPagina = admMenu.getPagina();
+				admPage = admMenu.getPage();
 				break;
 			}			
 		}
 		
 		if (listaAdminMenus!= null && !listaAdminMenus.isEmpty()){
 			for (MenuVO admMenu : listaAdminMenus) {
-				admPagina = admMenu.getPagina();
+				admPage = admMenu.getPage();
 				break;
 			}			
 		}
 		
-		return admPagina;
+		return admPage;
 	}
 	
 	/**
@@ -418,8 +418,8 @@ public class UserAuthenticatedVO implements Serializable {
 		}
 
 		for (PermissionVO permissao : this.getListaPermissao()) {
-			for (PageVO admPagina : permissao.getPaginas()) {
-				if (admPagina.getUrl().equals(url)) {
+			for (PageVO admPage : permissao.getPages()) {
+				if (admPage.getUrl().equals(url)) {
 					return true;
 				}
 			}

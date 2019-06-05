@@ -12,12 +12,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class PerfilVO.
- */
 @Component
-public class RoleVO implements Serializable {
+public class ProfileVO implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -25,27 +21,24 @@ public class RoleVO implements Serializable {
 	/** The id. */
 	private Long id;
 
-	/** The administrador. */
-	private Boolean administrador;
+	/** The administrator. */
+	private Boolean administrator;
 
-	/** The descricao. */
-	private String descricao;
+	/** The description. */
+	private String description;
 
 	/** The geral. */
 	private Boolean geral;
 
-	/** The paginas. */
-	private List<PageVO> paginas;
+	/** The pages. */
+	private List<PageVO> pages;
 	
-	/** The usuarios. */
-	private List<UserVO> usuarios;
+	/** The users. */
+	private List<UserVO> users;
 		
-	/**
-	 * Instantiates a new perfil VO.
-	 */
-	public RoleVO() {
-		this.paginas = new ArrayList<PageVO>();
-		this.usuarios = new ArrayList<UserVO>();
+	public ProfileVO() {
+		this.pages = new ArrayList<PageVO>();
+		this.users = new ArrayList<UserVO>();
 		limpar();
 	}
 
@@ -54,11 +47,11 @@ public class RoleVO implements Serializable {
 	 */
 	public void limpar() {
 		this.id = null;
-		this.administrador = null;
-		this.descricao = null;
+		this.administrator = null;
+		this.description = null;
 		this.geral = null;
-		this.paginas.clear();
-		this.usuarios.clear();
+		this.pages.clear();
+		this.users.clear();
 	}
 
 	/**
@@ -81,41 +74,41 @@ public class RoleVO implements Serializable {
 	}
 
 	/**
-	 * Gets the administrador.
+	 * Gets the administrator.
 	 *
-	 * @return the administrador
+	 * @return the administrator
 	 */
-	public Boolean getAdministrador() {
-		return this.administrador;
+	public Boolean getAdministrator() {
+		return this.administrator;
 	}
 
 	/**
-	 * Sets the administrador.
+	 * Sets the administrator.
 	 *
-	 * @param administrador
-	 *            the new administrador
+	 * @param administrator
+	 *            the new administrator
 	 */
-	public void setAdministrador(Boolean administrador) {
-		this.administrador = administrador;
+	public void setAdministrator(Boolean administrator) {
+		this.administrator = administrator;
 	}
 
 	/**
-	 * Gets the descricao.
+	 * Gets the description.
 	 *
-	 * @return the descricao
+	 * @return the description
 	 */
-	public String getDescricao() {
-		return this.descricao;
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
-	 * Sets the descricao.
+	 * Sets the description.
 	 *
-	 * @param descricao
-	 *            the new descricao
+	 * @param description
+	 *            the new description
 	 */
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
@@ -138,41 +131,41 @@ public class RoleVO implements Serializable {
 	}
 
 	/**
-	 * Gets the paginas.
+	 * Gets the pages.
 	 *
-	 * @return the paginas
+	 * @return the pages
 	 */
-	public List<PageVO> getPaginas() {
-		return paginas;
+	public List<PageVO> getPages() {
+		return pages;
 	}
 
 	/**
-	 * Sets the paginas.
+	 * Sets the pages.
 	 *
-	 * @param paginas
-	 *            the new paginas
+	 * @param pages
+	 *            the new pages
 	 */
-	public void setPaginas(List<PageVO> paginas) {
-		this.paginas = paginas;
+	public void setPages(List<PageVO> pages) {
+		this.pages = pages;
 	}
 
 	/**
-	 * Gets the usuarios.
+	 * Gets the users.
 	 *
-	 * @return the usuarios
+	 * @return the users
 	 */
-	public List<UserVO> getUsuarios() {
-		return usuarios;
+	public List<UserVO> getUsers() {
+		return users;
 	}
 
 	/**
-	 * Sets the usuarios.
+	 * Sets the users.
 	 *
-	 * @param usuarios
-	 *            the new usuarios
+	 * @param users
+	 *            the new users
 	 */
-	public void setUsuarios(List<UserVO> usuarios) {
-		this.usuarios = usuarios;
+	public void setUsers(List<UserVO> users) {
+		this.users = users;
 	}
 
 	/* (non-Javadoc)
@@ -197,7 +190,7 @@ public class RoleVO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RoleVO other = (RoleVO) obj;
+		ProfileVO other = (ProfileVO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -211,7 +204,7 @@ public class RoleVO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return descricao;
+		return description;
 	}
 	
 }

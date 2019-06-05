@@ -41,8 +41,8 @@ public class UserVO implements Serializable {
 	/** The login. */
 	private String login;
 
-	/** The nome. */
-	private String nome;
+	/** The name. */
+	private String name;
 
 	/** The senha. */
 	private String senha;
@@ -65,7 +65,7 @@ public class UserVO implements Serializable {
 		this.email = "";
 		this.ldapDN = "";
 		this.login = "";
-		this.nome = "";
+		this.name = "";
 		this.senha = "";
 	}
 
@@ -184,22 +184,22 @@ public class UserVO implements Serializable {
 	}
 
 	/**
-	 * Pega o the nome.
+	 * Pega o the name.
 	 *
-	 * @return o the nome
+	 * @return o the name
 	 */
-	public String getNome() {
-		return this.nome;
+	public String getName() {
+		return this.name;
 	}
 
 	/**
-	 * Atribui o the nome.
+	 * Atribui o the name.
 	 *
-	 * @param nome
-	 *            o novo the nome
+	 * @param name
+	 *            o novo the name
 	 */
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -275,7 +275,7 @@ public class UserVO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return nome;
+		return name;
 	}
 
 }

@@ -27,20 +27,19 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	/** The id. */
 	private Long id;
 
-	/** The descricao. */
-	private String descricao;
+	/** The description. */
+	private String description;
 
-	/** The ordem. */
-	private Integer ordem;
+	/** The order. */
+	private Integer order;
 
-	/** The id pagina. */
-	private Long idPagina;
+	/** The id page. */
+	private Long idPage;
 
-	/** The pagina. */
-	private PageVO pagina;
+	/** The page. */
+	private PageVO page;
 
-	/** The menu pai. */
-	private MenuVO menuPai;
+	private MenuVO menuParent;
 
 	/** The sub menus. */
 	private List<MenuVO> subMenus;
@@ -58,11 +57,11 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 */
 	public void limpar() {
 		this.id = null;
-		this.descricao = null;
-		this.ordem = null;
-		this.idPagina = null;
-		this.pagina = new PageVO();
-		this.menuPai = null;
+		this.description = null;
+		this.order = null;
+		this.idPage = null;
+		this.page = new PageVO();
+		this.menuParent = null;
 		this.subMenus.clear();
 	}
 
@@ -86,60 +85,60 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	}
 
 	/**
-	 * Pega o the descricao.
+	 * Pega o the description.
 	 *
-	 * @return o the descricao
+	 * @return o the description
 	 */
-	public String getDescricao() {
-		return this.descricao;
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
-	 * Atribui o the descricao.
+	 * Atribui o the description.
 	 *
-	 * @param descricao
-	 *            o novo the descricao
+	 * @param description
+	 *            o novo the description
 	 */
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**
-	 * Pega o the ordem.
+	 * Pega o the order.
 	 *
-	 * @return o the ordem
+	 * @return o the order
 	 */
-	public Integer getOrdem() {
-		return this.ordem;
+	public Integer getOrder() {
+		return this.order;
 	}
 
 	/**
-	 * Atribui o the ordem.
+	 * Atribui o the order.
 	 *
-	 * @param ordem
-	 *            o novo the ordem
+	 * @param order
+	 *            o novo the order
 	 */
-	public void setOrdem(Integer ordem) {
-		this.ordem = ordem;
+	public void setOrder(Integer order) {
+		this.order = order;
 	}
 
 	/**
-	 * Pega o the adm pagina.
+	 * Pega o the adm page.
 	 *
-	 * @return o the adm pagina
+	 * @return o the adm page
 	 */
-	public PageVO getPagina() {
-		return this.pagina;
+	public PageVO getPage() {
+		return this.page;
 	}
 
 	/**
-	 * Atribui o the adm pagina.
+	 * Atribui o the adm page.
 	 *
-	 * @param pagina
-	 *            o novo the adm pagina
+	 * @param page
+	 *            o novo the adm page
 	 */
-	public void setPagina(PageVO pagina) {
-		this.pagina = pagina;
+	public void setPage(PageVO page) {
+		this.page = page;
 	}
 
 	/**
@@ -147,18 +146,18 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 *
 	 * @return o the adm menu
 	 */
-	public MenuVO getMenuPai() {
-		return this.menuPai;
+	public MenuVO getMenuParent() {
+		return this.menuParent;
 	}
 
 	/**
 	 * Atribui o the adm menu.
 	 *
-	 * @param menuPai
+	 * @param menuParent
 	 *            o novo the adm menu
 	 */
-	public void setMenuPai(MenuVO menuPai) {
-		this.menuPai = menuPai;
+	public void setMenuParent(MenuVO menuParent) {
+		this.menuParent = menuParent;
 	}
 
 	/**
@@ -171,7 +170,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 			Collections.sort(this.subMenus, new Comparator<MenuVO>() {
 				@Override
 				public int compare(MenuVO o1, MenuVO o2) {
-					return o1.getOrdem().compareTo(o2.getOrdem());
+					return o1.getOrder().compareTo(o2.getOrder());
 				}
 			});
 		}
@@ -197,7 +196,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 */
 	public MenuVO addSubMenus(MenuVO subMenus) {
 		getSubMenus().add(subMenus);
-		subMenus.setMenuPai(this);
+		subMenus.setMenuParent(this);
 
 		return subMenus;
 	}
@@ -211,7 +210,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 */
 	public MenuVO removeSubMenus(MenuVO subMenus) {
 		getSubMenus().remove(subMenus);
-		subMenus.setMenuPai(null);
+		subMenus.setMenuParent(null);
 
 		return subMenus;
 	}
@@ -225,8 +224,8 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((menuPai == null) ? 0 : menuPai.hashCode());
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((menuParent == null) ? 0 : menuParent.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -245,15 +244,15 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 		if (getClass() != obj.getClass())
 			return false;
 		MenuVO other = (MenuVO) obj;
-		if (menuPai == null) {
-			if (other.menuPai != null)
+		if (menuParent == null) {
+			if (other.menuParent != null)
 				return false;
-		} else if (!menuPai.equals(other.menuPai))
+		} else if (!menuParent.equals(other.menuParent))
 			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (description == null) {
+			if (other.description != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
+		} else if (!description.equals(other.description))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -269,7 +268,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 * @return true, if is sub menu
 	 */
 	public boolean isSubMenu() {
-		return getPagina() == null;
+		return getPage() == null;
 	}
 
 	/*
@@ -279,7 +278,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 */
 	@Override
 	public int compareTo(MenuVO m) {
-		return getDescricao().compareTo(m.getDescricao());
+		return getDescription().compareTo(m.getDescription());
 	}
 
 	/**
@@ -288,7 +287,7 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 * @return the url
 	 */
 	public String getUrl() {
-		return this.pagina != null ? this.pagina.getUrl() : null;
+		return this.page != null ? this.page.getUrl() : null;
 	}
 
 	/* (non-Javadoc)
@@ -296,26 +295,26 @@ public class MenuVO implements Serializable, Comparable<MenuVO> {
 	 */
 	@Override
 	public String toString() {
-		return this.descricao;
+		return this.description;
 	}
 
 	/**
-	 * Pega o the id pagina.
+	 * Pega o the id page.
 	 *
-	 * @return o the id pagina
+	 * @return o the id page
 	 */
-	public Long getIdPagina() {
-		return idPagina;
+	public Long getIdPage() {
+		return idPage;
 	}
 
 	/**
-	 * Atribui o the id pagina.
+	 * Atribui o the id page.
 	 *
-	 * @param idPagina
-	 *            o novo the id pagina
+	 * @param idPage
+	 *            o novo the id page
 	 */
-	public void setIdPagina(Long idPagina) {
-		this.idPagina = idPagina;
+	public void setIdPage(Long idPage) {
+		this.idPage = idPage;
 	}
 
 }
