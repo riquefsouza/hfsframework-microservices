@@ -31,14 +31,14 @@ public class PageVO implements Serializable {
 	/** The url. */
 	private String url;
 
-	/** The perfils. */
-	private List<ProfileVO> perfils;
+	/** The profiles. */
+	private List<ProfileVO> profiles;
 
 	/**
 	 * Instantiates a new pagina VO.
 	 */
 	public PageVO() {
-		this.perfils = new ArrayList<ProfileVO>();
+		this.profiles = new ArrayList<ProfileVO>();
 		limpar();
 	}
 	
@@ -49,7 +49,7 @@ public class PageVO implements Serializable {
 		this.id = null;
 		this.description = null;
 		this.url = null;
-		this.perfils.clear();
+		this.profiles.clear();
 	}
 
 	/**
@@ -110,22 +110,22 @@ public class PageVO implements Serializable {
 	}
 
 	/**
-	 * Gets the perfils.
+	 * Gets the profiles.
 	 *
-	 * @return the perfils
+	 * @return the profiles
 	 */
-	public List<ProfileVO> getPerfils() {
-		return this.perfils;
+	public List<ProfileVO> getProfiles() {
+		return this.profiles;
 	}
 
 	/**
-	 * Sets the perfils.
+	 * Sets the profiles.
 	 *
-	 * @param perfils
-	 *            the new perfils
+	 * @param profiles
+	 *            the new profiles
 	 */
-	public void setPerfils(List<ProfileVO> perfils) {
-		this.perfils = perfils;
+	public void setProfiles(List<ProfileVO> profiles) {
+		this.profiles = profiles;
 	}
 	
 
@@ -175,7 +175,7 @@ public class PageVO implements Serializable {
 	 */
 	public String getPerfisPagina() {
 		String ret = "";
-		for (ProfileVO item : getPerfils()) {
+		for (ProfileVO item : getProfiles()) {
 			ret = ret.concat(item.getDescription()).concat(", ");
 		}
 		if (ret != "") {

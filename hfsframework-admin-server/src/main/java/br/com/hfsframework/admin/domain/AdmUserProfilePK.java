@@ -15,12 +15,12 @@ public class AdmUserProfilePK implements Serializable {
 	@Column(name = "USP_USU_SEQ")
 	private Long userSeq;
 
-	/** The perfil seq. */
+	/** The profile seq. */
 	@Column(name = "USP_PRF_SEQ", insertable = false, updatable = false)
 	private Long profileSeq;
 
 	/**
-	 * Instantiates a new adm usuario perfil PK.
+	 * Instantiates a new adm usuario profile PK.
 	 */
 	public AdmUserProfilePK() {
 		super();
@@ -54,21 +54,21 @@ public class AdmUserProfilePK implements Serializable {
 	}
 
 	/**
-	 * Pega o the perfil seq.
+	 * Pega o the profile seq.
 	 *
-	 * @return o the perfil seq
+	 * @return o the profile seq
 	 */
-	public Long getPerfilSeq() {
+	public Long getProfileSeq() {
 		return profileSeq;
 	}
 
 	/**
-	 * Atribui o the perfil seq.
+	 * Atribui o the profile seq.
 	 *
 	 * @param profileSeq
-	 *            o novo the perfil seq
+	 *            o novo the profile seq
 	 */
-	public void setPerfilSeq(Long profileSeq) {
+	public void setProfileSeq(Long profileSeq) {
 		this.profileSeq = profileSeq;
 	}
 

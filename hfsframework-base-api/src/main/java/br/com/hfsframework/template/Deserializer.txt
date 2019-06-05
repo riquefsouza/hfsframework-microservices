@@ -25,10 +25,10 @@ public class ${class}Deserializer extends JsonDeserializer<${class}> {
 		// Iterator<JsonNode> iter = sublist.elements();
 
 		${class} pc = new ${class}(id);
-		for (JsonNode item : sublist) {
+		//for (JsonNode item : sublist) {
 			//objSubList = new ClassSubList(item.as${idType}());
 			//pc.getSubClass().add(objSubList);
-		}
+		//}
 
 		return pc;
 	}

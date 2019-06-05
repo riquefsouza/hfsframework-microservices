@@ -15,13 +15,13 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.ObjectUtils;
 
 @Entity
-@Table(name = "VW_ADM_LOG_VALOR")
+@Table(name = "VW_ADM_LOG_VALUE")
 @NamedQueries({
-	@NamedQuery(name = "VwAdmLogValor.findByFiltros", query = "SELECT DISTINCT v FROM VwAdmLogValor v "
-			+ "WHERE v.user = ?1 AND v.dataNumero = ?2 "
-			+ "AND v.operacao = ?3  AND v.ip = ?4 "
-			+ "AND v.entidade = ?5 AND v.tabela = ?6 AND v.chave = ?7 "
-			+ "ORDER BY v.dataNumero DESC, v.coluna ASC")	
+	@NamedQuery(name = "VwAdmLogValue.findByFilters", query = "SELECT DISTINCT v FROM VwAdmLogValue v "
+			+ "WHERE v.user = ?1 AND v.dateNumber = ?2 "
+			+ "AND v.operation = ?3  AND v.ip = ?4 "
+			+ "AND v.entity = ?5 AND v.mtable = ?6 AND v.key = ?7 "
+			+ "ORDER BY v.dateNumber DESC, v.mcolumn ASC")	
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class VwAdmLogValue implements Serializable {
@@ -38,46 +38,46 @@ public class VwAdmLogValue implements Serializable {
 	@Column(name = "user")
 	private String user;
 
-	/** The data. */
+	/** The date. */
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data")
-	private Date data;
+	@Column(name = "date")
+	private Date date;
 
-	/** The data numero. */
-	@Column(name = "datanumero")
-	private Long dataNumero;
+	/** The date numero. */
+	@Column(name = "datenumber")
+	private Long dateNumber;
 
-	/** The operacao. */
-	@Column(name = "operacao")
-	private String operacao;
+	/** The operation. */
+	@Column(name = "operation")
+	private String operation;
 
 	/** The ip. */
 	@Column(name = "ip")
 	private String ip;
 
-	/** The entidade. */
-	@Column(name = "entidade")
-	private String entidade;
+	/** The entity. */
+	@Column(name = "entity")
+	private String entity;
 
-	/** The tabela. */
-	@Column(name = "tabela")
-	private String tabela;
+	/** The mtable. */
+	@Column(name = "mtable")
+	private String mtable;
 
-	/** The chave. */
-	@Column(name = "chave")
-	private String chave;
+	/** The key. */
+	@Column(name = "key")
+	private String key;
 
-	/** The coluna. */
-	@Column(name = "coluna")
-	private String coluna;
+	/** The mcolumn. */
+	@Column(name = "mcolumn")
+	private String mcolumn;
 
-	/** The valor anterior. */
-	@Column(name = "valoranterior")
-	private String valorAnterior;
+	/** The value anterior. */
+	@Column(name = "previousvalue")
+	private String previousValue;
 
-	/** The valor. */
-	@Column(name = "valor")
-	private String valor;
+	/** The value. */
+	@Column(name = "value")
+	private String value;
 
 	/**
 	 * Instantiates a new vw adm log.
@@ -89,36 +89,36 @@ public class VwAdmLogValue implements Serializable {
 		
 
 	/**
-	 * Instantiates a new vw adm log valor.
+	 * Instantiates a new vw adm log value.
 	 *
 	 * @param id the id
 	 * @param user the user
-	 * @param data the data
-	 * @param dataNumero the data numero
-	 * @param operacao the operacao
+	 * @param date the date
+	 * @param dateNumber the date numero
+	 * @param operation the operation
 	 * @param ip the ip
-	 * @param entidade the entidade
-	 * @param tabela the tabela
-	 * @param chave the chave
-	 * @param coluna the coluna
-	 * @param valorAnterior the valor anterior
-	 * @param valor the valor
+	 * @param entity the entity
+	 * @param mtable the mtable
+	 * @param key the key
+	 * @param mcolumn the mcolumn
+	 * @param previousValue the value anterior
+	 * @param value the value
 	 */
-	public VwAdmLogValue(Long id, String user, Date data, String operacao, String ip, String entidade, String tabela, 
-			String chave, Long dataNumero, String coluna, String valorAnterior, String valor) {
+	public VwAdmLogValue(Long id, String user, Date date, String operation, String ip, String entity, String mtable, 
+			String key, Long dateNumber, String mcolumn, String previousValue, String value) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.data = data;
-		this.dataNumero = dataNumero;
-		this.operacao = operacao;
+		this.date = date;
+		this.dateNumber = dateNumber;
+		this.operation = operation;
 		this.ip = ip;
-		this.entidade = entidade;
-		this.tabela = tabela;
-		this.chave = chave;
-		this.coluna = coluna;
-		this.valorAnterior = valorAnterior;
-		this.valor = valor;
+		this.entity = entity;
+		this.mtable = mtable;
+		this.key = key;
+		this.mcolumn = mcolumn;
+		this.previousValue = previousValue;
+		this.value = value;
 	}
 
 
@@ -128,29 +128,29 @@ public class VwAdmLogValue implements Serializable {
 	public void limpar() {
 		this.id = 0L;
 		this.user = "";
-		this.data = new Date();
-		this.operacao = "";
+		this.date = new Date();
+		this.operation = "";
 		this.ip = "";
-		this.entidade = "";
-		this.tabela = "";
-		this.chave = "";
-		this.dataNumero = 0L;
-		this.coluna = "";
-		this.valorAnterior = "";
-		this.valor = "";
+		this.entity = "";
+		this.mtable = "";
+		this.key = "";
+		this.dateNumber = 0L;
+		this.mcolumn = "";
+		this.previousValue = "";
+		this.value = "";
 	}
 
 	/**
-	 * Gets the operacao texto.
+	 * Gets the operation texto.
 	 *
-	 * @return the operacao texto
+	 * @return the operation texto
 	 */
-	public String getOperacaoTexto() {
-		if ((operacao != null) && (!operacao.isEmpty())) {
-			if (operacao.equals("I")) {
+	public String getOperationTexto() {
+		if ((operation != null) && (!operation.isEmpty())) {
+			if (operation.equals("I")) {
 				return "Inclusão";
 			}
-			if (operacao.equals("U")) {
+			if (operation.equals("U")) {
 				return "Alteração";
 			}
 			return "Exclusão";
@@ -197,60 +197,60 @@ public class VwAdmLogValue implements Serializable {
 	}
 
 	/**
-	 * Pega o the data.
+	 * Pega o the date.
 	 *
-	 * @return o the data
+	 * @return o the date
 	 */
-	public Date getData() {
-		return data;
+	public Date getDate() {
+		return date;
 	}
 
 	/**
-	 * Atribui o the data.
+	 * Atribui o the date.
 	 *
-	 * @param data
-	 *            o novo the data
+	 * @param date
+	 *            o novo the date
 	 */
-	public void setData(Date data) {
-		this.data = data;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	/**
-	 * Pega o the data numero.
+	 * Pega o the date numero.
 	 *
-	 * @return o the data numero
+	 * @return o the date numero
 	 */
-	public Long getDataNumero() {
-		return dataNumero;
+	public Long getDateNumber() {
+		return dateNumber;
 	}
 
 	/**
-	 * Atribui o the data numero.
+	 * Atribui o the date numero.
 	 *
-	 * @param dataNumero
-	 *            o novo the data numero
+	 * @param dateNumber
+	 *            o novo the date numero
 	 */
-	public void setDataNumero(Long dataNumero) {
-		this.dataNumero = dataNumero;
+	public void setDateNumber(Long dateNumber) {
+		this.dateNumber = dateNumber;
 	}
 
 	/**
-	 * Pega o the operacao.
+	 * Pega o the operation.
 	 *
-	 * @return o the operacao
+	 * @return o the operation
 	 */
-	public String getOperacao() {
-		return operacao;
+	public String getOperation() {
+		return operation;
 	}
 
 	/**
-	 * Atribui o the operacao.
+	 * Atribui o the operation.
 	 *
-	 * @param operacao
-	 *            o novo the operacao
+	 * @param operation
+	 *            o novo the operation
 	 */
-	public void setOperacao(String operacao) {
-		this.operacao = operacao;
+	public void setOperation(String operation) {
+		this.operation = operation;
 	}
 
 	/**
@@ -273,117 +273,117 @@ public class VwAdmLogValue implements Serializable {
 	}
 
 	/**
-	 * Pega o the entidade.
+	 * Pega o the entity.
 	 *
-	 * @return o the entidade
+	 * @return o the entity
 	 */
-	public String getEntidade() {
-		return entidade;
+	public String getEntity() {
+		return entity;
 	}
 
 	/**
-	 * Atribui o the entidade.
+	 * Atribui o the entity.
 	 *
-	 * @param entidade
-	 *            o novo the entidade
+	 * @param entity
+	 *            o novo the entity
 	 */
-	public void setEntidade(String entidade) {
-		this.entidade = entidade;
+	public void setEntity(String entity) {
+		this.entity = entity;
 	}
 
 	/**
-	 * Pega o the tabela.
+	 * Pega o the mtable.
 	 *
-	 * @return o the tabela
+	 * @return o the mtable
 	 */
-	public String getTabela() {
-		return tabela;
+	public String getMtable() {
+		return mtable;
 	}
 
 	/**
-	 * Atribui o the tabela.
+	 * Atribui o the mtable.
 	 *
-	 * @param tabela
-	 *            o novo the tabela
+	 * @param mtable
+	 *            o novo the mtable
 	 */
-	public void setTabela(String tabela) {
-		this.tabela = tabela;
+	public void setMtable(String mtable) {
+		this.mtable = mtable;
 	}
 
 	/**
-	 * Pega o the chave.
+	 * Pega o the key.
 	 *
-	 * @return o the chave
+	 * @return o the key
 	 */
-	public String getChave() {
-		return chave;
+	public String getKey() {
+		return key;
 	}
 
 	/**
-	 * Atribui o the chave.
+	 * Atribui o the key.
 	 *
-	 * @param chave
-	 *            o novo the chave
+	 * @param key
+	 *            o novo the key
 	 */
-	public void setChave(String chave) {
-		this.chave = chave;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	/**
-	 * Pega o the coluna.
+	 * Pega o the mcolumn.
 	 *
-	 * @return o the coluna
+	 * @return o the mcolumn
 	 */
-	public String getColuna() {
-		return coluna;
+	public String getMcolumn() {
+		return mcolumn;
 	}
 
 	/**
-	 * Atribui o the coluna.
+	 * Atribui o the mcolumn.
 	 *
-	 * @param coluna
-	 *            o novo the coluna
+	 * @param mcolumn
+	 *            o novo the mcolumn
 	 */
-	public void setColuna(String coluna) {
-		this.coluna = coluna;
+	public void setMcolumn(String mcolumn) {
+		this.mcolumn = mcolumn;
 	}
 
 	/**
-	 * Pega o the valor anterior.
+	 * Pega o the value anterior.
 	 *
-	 * @return o the valor anterior
+	 * @return o the value anterior
 	 */
-	public String getValorAnterior() {
-		return valorAnterior;
+	public String getPreviousValue() {
+		return previousValue;
 	}
 
 	/**
-	 * Atribui o the valor anterior.
+	 * Atribui o the value anterior.
 	 *
-	 * @param valorAnterior
-	 *            o novo the valor anterior
+	 * @param previousValue
+	 *            o novo the value anterior
 	 */
-	public void setValorAnterior(String valorAnterior) {
-		this.valorAnterior = valorAnterior;
+	public void setPreviousValue(String previousValue) {
+		this.previousValue = previousValue;
 	}
 
 	/**
-	 * Pega o the valor.
+	 * Pega o the value.
 	 *
-	 * @return o the valor
+	 * @return o the value
 	 */
-	public String getValor() {
-		return valor;
+	public String getValue() {
+		return value;
 	}
 
 	/**
-	 * Atribui o the valor.
+	 * Atribui o the value.
 	 *
-	 * @param valor
-	 *            o novo the valor
+	 * @param value
+	 *            o novo the value
 	 */
-	public void setValor(String valor) {
-		this.valor = valor;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	/**
@@ -391,8 +391,8 @@ public class VwAdmLogValue implements Serializable {
 	 *
 	 * @return true, if is alterado
 	 */
-	public boolean isAlterado() {
-		return ObjectUtils.compare(this.valor, this.valorAnterior) != 0;
+	public boolean isChanged() {
+		return ObjectUtils.compare(this.value, this.previousValue) != 0;
 	}
 
 	/* (non-Javadoc)
@@ -400,6 +400,6 @@ public class VwAdmLogValue implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "coluna=" + getColuna() + ", valorAnterior=" + valorAnterior + ", valor=" + valor;
+		return "mcolumn=" + getMcolumn() + ", previousValue=" + previousValue + ", value=" + value;
 	}
 }

@@ -9,16 +9,16 @@ public class AdmUserIpPK implements Serializable {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The usuarioSeq. */
+	/** The userSeq. */
 	@Column(name = "UIP_USU_SEQ")
-	private Long usuarioSeq;
+	private Long userSeq;
 
 	/** The ip. */
 	@Column(name = "UIP_IP")
 	private String ip;
 
 	/**
-	 * Instantiates a new adm usuario PK.
+	 * Instantiates a new adm user PK.
 	 */
 	public AdmUserIpPK() {
 		super();
@@ -29,27 +29,27 @@ public class AdmUserIpPK implements Serializable {
 	 * Limpar.
 	 */
 	public void limpar() {
-		this.usuarioSeq = 0L;
+		this.userSeq = 0L;
 		this.ip = "";
 	}
 
 	/**
-	 * Gets the usuario seq.
+	 * Gets the user seq.
 	 *
-	 * @return the usuario seq
+	 * @return the user seq
 	 */
-	public Long getUsuarioSeq() {
-		return usuarioSeq;
+	public Long getUserSeq() {
+		return userSeq;
 	}
 
 	/**
-	 * Sets the usuario seq.
+	 * Sets the user seq.
 	 *
-	 * @param usuarioSeq
-	 *            the new usuario seq
+	 * @param userSeq
+	 *            the new user seq
 	 */
-	public void setUsuarioSeq(Long usuarioSeq) {
-		this.usuarioSeq = usuarioSeq;
+	public void setUserSeq(Long userSeq) {
+		this.userSeq = userSeq;
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class AdmUserIpPK implements Serializable {
 			return false;
 		}
 		AdmUserIpPK castOther = (AdmUserIpPK) other;
-		return (this.usuarioSeq == castOther.usuarioSeq) && this.ip.equals(castOther.ip);
+		return (this.userSeq == castOther.userSeq) && this.ip.equals(castOther.ip);
 	}
 
 	/* (non-Javadoc)
@@ -91,7 +91,7 @@ public class AdmUserIpPK implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
-		hash = hash * prime + ((int) (this.usuarioSeq ^ (this.usuarioSeq >>> 32)));
+		hash = hash * prime + ((int) (this.userSeq ^ (this.userSeq >>> 32)));
 		hash = hash * prime + this.ip.hashCode();
 
 		return hash;

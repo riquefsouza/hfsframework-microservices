@@ -35,15 +35,23 @@ public class TemplateExample {
         //ctx.reconfigure();
 
 		String[][] classes = {	
+				{"AdmMenu", "Long"},
+				{"AdmPage", "Long"},
 				{"AdmParameter", "Long"},
-				{"AdmParameterCategory", "Long"}
+				{"AdmParameterCategory", "Long"},
+				{"AdmUser", "Long"},
+				{"AdmUserIp", "AdmUserIpPK"},
+				{"AdmUserProfile", "AdmUserProfilePK"},
+				{"VwAdmLog", "Long"},
+				{"VwAdmLogValue", "Long"}
 		};
 		
         String saida = "C:/Temp/blob";
         
         //String caminhoModelo = "";
         String caminhoModelo = "C:/ambiente/workspace/hfsframework-microservices/hfsframework-base-api/src/main/java/br/com/hfsframework/template";
-        
+                
+        TemplateUtil.gerarCodigoFonte(TemplateEnum.ClientDomain, caminhoModelo, pacote, classes, saida);
         TemplateUtil.gerarCodigoFonte(TemplateEnum.IRepository, caminhoModelo, pacote, classes, saida);
         TemplateUtil.gerarCodigoFonte(TemplateEnum.IService, caminhoModelo, pacote, classes, saida);
         TemplateUtil.gerarCodigoFonte(TemplateEnum.Service, caminhoModelo, pacote, classes, saida);

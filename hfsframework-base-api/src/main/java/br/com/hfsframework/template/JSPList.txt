@@ -11,7 +11,7 @@
 </jsp:attribute>
 <jsp:body>    
 
-	<form:form id="formList${class}" action="${pageContext.request.contextPath}/private/${object}View/edit" method="POST" modelAttribute="bean">
+	<form:form id="formList${class}" action="$\{pageContext.request.contextPath\}/private/${object}View/edit" method="POST" modelAttribute="bean">
 
 		<form:input type="hidden" id="${object}_jsonText" path="jsonText" />
 		

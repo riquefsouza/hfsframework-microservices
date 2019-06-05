@@ -7,61 +7,61 @@ public class TestModeVO implements Serializable {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The ativo. */
-	private Boolean ativo;
+	/** The active. */
+	private Boolean active;
 	
 	/** The login. */
 	private String login;
 	
-	/** The setor. */
-	private String setor;
+	/** The sector. */
+	private String sector;
 	
-	/** The cargo. */
-	private Long cargo;
+	/** The custom. */
+	private Long custom;
 	
 	/**
 	 * Instantiates a new modo teste VO.
 	 */
 	public TestModeVO() {
 		super();
-		this.ativo = false;
+		this.active = false;
 		this.login = "";
-		this.setor = "";
-		this.cargo = -1L;
+		this.sector = "";
+		this.custom = -1L;
 	}
 
 	/**
 	 * Instantiates a new modo teste VO.
 	 *
-	 * @param ativo the ativo
+	 * @param active the active
 	 * @param login the login
-	 * @param setor the setor
-	 * @param cargo the cargo
+	 * @param sector the sector
+	 * @param custom the custom
 	 */
-	public TestModeVO(Boolean ativo, String login, String setor, Long cargo) {
+	public TestModeVO(Boolean active, String login, String sector, Long custom) {
 		super();
-		this.ativo = ativo;
+		this.active = active;
 		this.login = login;
-		this.setor = setor;
-		this.cargo = cargo;
+		this.sector = sector;
+		this.custom = custom;
 	}
 
 	/**
-	 * Gets the ativo.
+	 * Gets the active.
 	 *
-	 * @return the ativo
+	 * @return the active
 	 */
-	public Boolean getAtivo() {
-		return ativo;
+	public Boolean getActive() {
+		return active;
 	}
 
 	/**
-	 * Sets the ativo.
+	 * Sets the active.
 	 *
-	 * @param ativo the new ativo
+	 * @param active the new active
 	 */
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	/**
@@ -83,49 +83,49 @@ public class TestModeVO implements Serializable {
 	}
 
 	/**
-	 * Gets the setor.
+	 * Gets the sector.
 	 *
-	 * @return the setor
+	 * @return the sector
 	 */
-	public String getSetor() {
-		return setor;
+	public String getSector() {
+		return sector;
 	}
 
 	/**
-	 * Sets the setor.
+	 * Sets the sector.
 	 *
-	 * @param setor the new setor
+	 * @param sector the new sector
 	 */
-	public void setSetor(String setor) {
-		this.setor = setor;
+	public void setSector(String sector) {
+		this.sector = sector;
 	}
 
 	/**
-	 * Gets the cargo.
+	 * Gets the custom.
 	 *
-	 * @return the cargo
+	 * @return the custom
 	 */
-	public Long getCargo() {
-		return cargo;
+	public Long getCustom() {
+		return custom;
 	}
 
 	/**
-	 * Sets the cargo.
+	 * Sets the custom.
 	 *
-	 * @param cargo the new cargo
+	 * @param custom the new custom
 	 */
-	public void setCargo(Long cargo) {
-		this.cargo = cargo;
+	public void setCustom(Long custom) {
+		this.custom = custom;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((ativo == null) ? 0 : ativo.hashCode());
-		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
+		result = prime * result + ((active == null) ? 0 : active.hashCode());
+		result = prime * result + ((custom == null) ? 0 : custom.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((setor == null) ? 0 : setor.hashCode());
+		result = prime * result + ((sector == null) ? 0 : sector.hashCode());
 		return result;
 	}
 
@@ -138,32 +138,32 @@ public class TestModeVO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TestModeVO other = (TestModeVO) obj;
-		if (ativo == null) {
-			if (other.ativo != null)
+		if (active == null) {
+			if (other.active != null)
 				return false;
-		} else if (!ativo.equals(other.ativo))
+		} else if (!active.equals(other.active))
 			return false;
-		if (cargo == null) {
-			if (other.cargo != null)
+		if (custom == null) {
+			if (other.custom != null)
 				return false;
-		} else if (!cargo.equals(other.cargo))
+		} else if (!custom.equals(other.custom))
 			return false;
 		if (login == null) {
 			if (other.login != null)
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (setor == null) {
-			if (other.setor != null)
+		if (sector == null) {
+			if (other.sector != null)
 				return false;
-		} else if (!setor.equals(other.setor))
+		} else if (!sector.equals(other.sector))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "ModoTesteVO [ativo=" + ativo + ", login=" + login + ", setor=" + setor + ", cargo=" + cargo + "]";
+		return "ModoTesteVO [active=" + active + ", login=" + login + ", sector=" + sector + ", custom=" + custom + "]";
 	}
 
 	

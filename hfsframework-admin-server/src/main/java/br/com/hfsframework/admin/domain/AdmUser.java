@@ -19,12 +19,13 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -43,7 +44,7 @@ import br.com.hfsframework.util.CPFCNPJUtil;
 
 @NamedQueries({
 	@NamedQuery(name = "AdmUser.findByLogin", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.login=?1"),
-	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.senha=?2")
+	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.password=?2")
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "AdmUser.findIPByOracle", query = "SELECT SYS_CONTEXT('USERENV', 'IP_ADDRESS', 15) FROM DUAL"),
@@ -56,7 +57,7 @@ import br.com.hfsframework.util.CPFCNPJUtil;
 		@NamedStoredProcedureQuery(name = "AdmUser.setOracleLoginAndIP", procedureName = "pkg_adm.setar_usuario_ip",
 				// resultClasses = { LoginModel.class },
 				parameters = { @StoredProcedureParameter(name = "login", type = String.class, mode = ParameterMode.IN),
-						@StoredProcedureParameter(name = "senha", type = String.class, mode = ParameterMode.IN) })
+						@StoredProcedureParameter(name = "password", type = String.class, mode = ParameterMode.IN) })
 
 })
 */
@@ -69,9 +70,15 @@ public class AdmUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	@Id
-	@SequenceGenerator(name="ADM_USER_ID_GENERATOR", sequenceName="ADM_USER_SEQ", initialValue=1, allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADM_USER_ID_GENERATOR")	
+	@Id	
+	@GenericGenerator(name = "ADM_USER_ID_GENERATOR",
+	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+    	@Parameter(name = "sequence_name", value = "ADM_USER_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+	})		
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_USER_ID_GENERATOR")	
 	@Column(name = "USU_SEQ")
 	private Long id;
 
@@ -95,10 +102,10 @@ public class AdmUser implements Serializable {
 	@Column(name = "USU_NAME")
 	private String name;
 
-	/** The senha. */
+	/** The password. */
 	@JsonIgnore
 	@Column(name = "USU_SENHA")	
-	private String senha;
+	private String password;
 
 	/** The adm usuarioIps. */
 	//bi-directional many-to-one association to AdmUserIp
@@ -135,15 +142,15 @@ public class AdmUser implements Serializable {
 	
     @JsonIgnore
     @Transient
-	private String senhaAtual;
+	private String passwordAtual;
 	
     @JsonIgnore
 	@Transient
-	private String senhaNova;
+	private String passwordNova;
 	
 	@JsonIgnore
 	@Transient
-	private String confirmaSenhaNova;
+	private String confirmaPasswordNova;
     
 	/**
 	 * Instantiates a new adm usuario.
@@ -154,11 +161,11 @@ public class AdmUser implements Serializable {
 		limpar();
 	}
 
-	public AdmUser(Long id, String login, String senha) {
+	public AdmUser(Long id, String login, String password) {
 		super();
 		this.id = id;
 		this.login = login;
-		this.senha = senha;
+		this.password = password;
 	}
 	
 	/**
@@ -170,10 +177,10 @@ public class AdmUser implements Serializable {
 	 * @param ldapDN the ldap DN
 	 * @param login the login
 	 * @param name the name
-	 * @param senha the senha
+	 * @param password the password
 	 */
 	public AdmUser(Long id, String login, String name, BigDecimal cpf, String email, String ldapDN,
-			String senha) {
+			String password) {
 		super();
 		this.id = id;
 		this.cpf = cpf;
@@ -181,7 +188,7 @@ public class AdmUser implements Serializable {
 		this.ldapDN = ldapDN;
 		this.login = login;
 		this.name = name;
-		this.senha = senha;
+		this.password = password;
 	}
 
 	/**
@@ -198,7 +205,7 @@ public class AdmUser implements Serializable {
 		this.ldapDN = u.getLdapDN();
 		this.login = u.getLogin();
 		this.name = u.getName();
-		this.senha = u.getSenha();
+		this.password = u.getPassword();
 	}
 	
 	/**
@@ -211,7 +218,7 @@ public class AdmUser implements Serializable {
 		this.ldapDN = "";
 		this.login = "";
 		this.name = "";
-		this.senha = "";
+		this.password = "";
 		this.admUserIps.clear();
 		this.ip = "";		
 	}
@@ -331,21 +338,21 @@ public class AdmUser implements Serializable {
 	}
 
 	/**
-	 * Gets the senha.
+	 * Gets the password.
 	 *
-	 * @return the senha
+	 * @return the password
 	 */
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
 	/**
-	 * Sets the senha.
+	 * Sets the password.
 	 *
-	 * @param senha the new senha
+	 * @param password the new password
 	 */
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	/**
@@ -480,7 +487,7 @@ public class AdmUser implements Serializable {
 		u.setLdapDN(ldapDN);
 		u.setLogin(login);
 		u.setName(name);
-		u.setSenha(senha);
+		u.setPassword(password);
 		
 		return u;
 	}
@@ -557,32 +564,32 @@ public class AdmUser implements Serializable {
 		this.modifiedBy = modifiedBy;
 	}
 
-	public String getSenhaAtual() {
-		return senhaAtual;
+	public String getPasswordAtual() {
+		return passwordAtual;
 	}
 
 
-	public void setSenhaAtual(String senhaAtual) {
-		this.senhaAtual = senhaAtual;
+	public void setPasswordAtual(String passwordAtual) {
+		this.passwordAtual = passwordAtual;
 	}
 
 
-	public String getSenhaNova() {
-		return senhaNova;
+	public String getPasswordNova() {
+		return passwordNova;
 	}
 
 
-	public void setSenhaNova(String senhaNova) {
-		this.senhaNova = senhaNova;
+	public void setPasswordNova(String passwordNova) {
+		this.passwordNova = passwordNova;
 	}
 
 
-	public String getConfirmaSenhaNova() {
-		return confirmaSenhaNova;
+	public String getConfirmaPasswordNova() {
+		return confirmaPasswordNova;
 	}
 
 
-	public void setConfirmaSenhaNova(String confirmaSenhaNova) {
-		this.confirmaSenhaNova = confirmaSenhaNova;
+	public void setConfirmaPasswordNova(String confirmaPasswordNova) {
+		this.confirmaPasswordNova = confirmaPasswordNova;
 	}
  }

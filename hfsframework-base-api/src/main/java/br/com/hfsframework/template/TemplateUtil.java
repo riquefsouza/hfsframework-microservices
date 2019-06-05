@@ -91,7 +91,9 @@ public class TemplateUtil implements Serializable {
 			extensao = ".jrxml";
 		}
 
-		if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {
+		if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)
+				|| params.equals(TemplateEnum.JSPList) || params.equals(TemplateEnum.JSPEdit)
+				|| params.equals(TemplateEnum.JSList) || params.equals(TemplateEnum.JSEdit)) {
 			for (int i = 0; i < classes.length; i++) {
 				dir = new File(diretorioSaida + "/" + StringUtils.uncapitalize(classes[i][0]));
 				if (!dir.exists()) {
@@ -113,9 +115,14 @@ public class TemplateUtil implements Serializable {
 		}
 
 		for (int i = 0; i < classes.length; i++) {
-			if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)) {	
+			if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)
+					|| params.equals(TemplateEnum.JSPList) || params.equals(TemplateEnum.JSPEdit)
+					|| params.equals(TemplateEnum.JSList) || params.equals(TemplateEnum.JSEdit)) {
 				saida = diretorioSaida + "/" + StringUtils.uncapitalize(classes[i][0]) + "/" + params.getTipo()
 						+ classes[i][0] + extensao;
+			} else if (params.equals(TemplateEnum.IRepository) || params.equals(TemplateEnum.IService) ) {
+				saida = diretorioSaida + "/" + StringUtils.uncapitalize(params.getDiretorio()) + "/I" + classes[i][0]
+						+ params.getTipo() + extensao;
 			} else {
 				if (params.getDiretorio().equals("view"))
 					saida = diretorioSaida + "/" + StringUtils.uncapitalize(params.getDiretorio()) + "/"
@@ -139,7 +146,8 @@ public class TemplateUtil implements Serializable {
 			arquivo = processar(templateModelo, parametros, saida);
 
 			if (params.equals(TemplateEnum.list) || params.equals(TemplateEnum.edit) || params.equals(TemplateEnum.report)
-					|| params.equals(TemplateEnum.landscape) || params.equals(TemplateEnum.portrait)) {
+					|| params.equals(TemplateEnum.landscape) || params.equals(TemplateEnum.portrait)
+					|| params.equals(TemplateEnum.JSPList) || params.equals(TemplateEnum.JSPEdit)) {
 
 				texto = FileUtils.readFileToString(arquivo, StandardCharsets.UTF_8);
 				texto = texto.replace("\\{", "{");

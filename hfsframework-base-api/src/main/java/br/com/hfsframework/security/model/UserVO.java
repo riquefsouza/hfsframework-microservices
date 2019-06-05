@@ -44,8 +44,8 @@ public class UserVO implements Serializable {
 	/** The name. */
 	private String name;
 
-	/** The senha. */
-	private String senha;
+	/** The password. */
+	private String password;
 
 	/**
 	 * Instantiates a new adm usuario.
@@ -66,7 +66,7 @@ public class UserVO implements Serializable {
 		this.ldapDN = "";
 		this.login = "";
 		this.name = "";
-		this.senha = "";
+		this.password = "";
 	}
 
 	/**
@@ -203,21 +203,21 @@ public class UserVO implements Serializable {
 	}
 
 	/**
-	 * Gets the senha.
+	 * Gets the password.
 	 *
-	 * @return the senha
+	 * @return the password
 	 */
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
 	/**
-	 * Sets the senha.
+	 * Sets the password.
 	 *
-	 * @param senha the new senha
+	 * @param password the new password
 	 */
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	/**

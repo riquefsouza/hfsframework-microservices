@@ -22,8 +22,8 @@ public class PermissionVO implements Serializable {
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The perfil. */
-	private ProfileVO perfil;
+	/** The profile. */
+	private ProfileVO profile;
 	
 	/** The pages. */
 	private List<PageVO> pages;
@@ -41,27 +41,27 @@ public class PermissionVO implements Serializable {
 	 * Limpar.
 	 */
 	public void limpar() {
-		this.perfil = new ProfileVO();
+		this.profile = new ProfileVO();
 		this.pages.clear();
 	}
 
 	/**
-	 * Pega o the perfil.
+	 * Pega o the profile.
 	 *
-	 * @return o the perfil
+	 * @return o the profile
 	 */
-	public ProfileVO getPerfil() {
-		return perfil;
+	public ProfileVO getProfile() {
+		return profile;
 	}
 
 	/**
-	 * Atribui o the perfil.
+	 * Atribui o the profile.
 	 *
-	 * @param perfil
-	 *            o novo the perfil
+	 * @param profile
+	 *            o novo the profile
 	 */
-	public void setPerfil(ProfileVO perfil) {
-		this.perfil = perfil;
+	public void setProfile(ProfileVO profile) {
+		this.profile = profile;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class PermissionVO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "PermissaoVO [perfil=" + perfil + ", pages=" + pages + "]";
+		return "PermissaoVO [profile=" + profile + ", pages=" + pages + "]";
 	}
 
 

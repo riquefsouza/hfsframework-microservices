@@ -212,93 +212,93 @@ public class UserAuthenticatedVO implements Serializable {
 	}
 
 	/**
-	 * Gets the perfil.
+	 * Gets the profile.
 	 *
-	 * @param idPerfil
-	 *            the id perfil
-	 * @return the perfil
+	 * @param idProfile
+	 *            the id profile
+	 * @return the profile
 	 */
-	public ProfileVO getPerfil(Long idPerfil){
-		ProfileVO admPerfil = null;
+	public ProfileVO getProfile(Long idProfile){
+		ProfileVO admProfile = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getId() == idPerfil){
-				admPerfil = permissaoVO.getPerfil(); 
+			if (permissaoVO.getProfile().getId() == idProfile){
+				admProfile = permissaoVO.getProfile(); 
 				break;
 			}
 		}
-		return admPerfil;
+		return admProfile;
 	}
 
 	/**
-	 * Checks if is perfil.
+	 * Checks if is profile.
 	 *
-	 * @param idPerfil
-	 *            the id perfil
-	 * @return true, if is perfil
+	 * @param idProfile
+	 *            the id profile
+	 * @return true, if is profile
 	 */
-	public boolean isPerfil(Long idPerfil){
-		return (getPerfil(idPerfil)!=null);
+	public boolean isProfile(Long idProfile){
+		return (getProfile(idProfile)!=null);
 	}
 
 	/**
-	 * Existe perfil.
+	 * Existe profile.
 	 *
-	 * @param perfil
-	 *            the perfil
-	 * @return the perfil
+	 * @param profile
+	 *            the profile
+	 * @return the profile
 	 */
-	public ProfileVO getPerfil(String perfil){
-		ProfileVO admPerfil = null;
+	public ProfileVO getProfile(String profile){
+		ProfileVO admProfile = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getDescription().equalsIgnoreCase(perfil)){
-				admPerfil = permissaoVO.getPerfil(); 
+			if (permissaoVO.getProfile().getDescription().equalsIgnoreCase(profile)){
+				admProfile = permissaoVO.getProfile(); 
 				break;
 			}
 		}
-		return admPerfil;
+		return admProfile;
 	}
 
 	/**
-	 * Checks if is perfil.
+	 * Checks if is profile.
 	 *
-	 * @param perfil
-	 *            the perfil
-	 * @return true, if is perfil
+	 * @param profile
+	 *            the profile
+	 * @return true, if is profile
 	 */
-	public boolean isPerfil(String perfil){
-		return (getPerfil(perfil)!=null);
+	public boolean isProfile(String profile){
+		return (getProfile(profile)!=null);
 	}
 	
 	/**
-	 * Gets the perfil geral.
+	 * Gets the profile geral.
 	 *
-	 * @return the perfil geral
+	 * @return the profile geral
 	 */
-	public ProfileVO getPerfilGeral(){
-		ProfileVO admPerfil = null;
+	public ProfileVO getProfileGeral(){
+		ProfileVO admProfile = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getGeral()){
-				admPerfil = permissaoVO.getPerfil(); 
+			if (permissaoVO.getProfile().getGeral()){
+				admProfile = permissaoVO.getProfile(); 
 				break;
 			}
 		}
-		return admPerfil;
+		return admProfile;
 	}
 
 	/**
-	 * Gets the perfil administrador.
+	 * Gets the profile administrador.
 	 *
-	 * @return the perfil administrador
+	 * @return the profile administrador
 	 */
-	public ProfileVO getPerfilAdministrator(){
-		ProfileVO admPerfil = null;
+	public ProfileVO getProfileAdministrator(){
+		ProfileVO admProfile = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getPerfil().getAdministrator()){
-				admPerfil = permissaoVO.getPerfil(); 
+			if (permissaoVO.getProfile().getAdministrator()){
+				admProfile = permissaoVO.getProfile(); 
 				break;
 			}
 		}
-		return admPerfil;
+		return admProfile;
 	}
 	
 	/**
@@ -307,9 +307,9 @@ public class UserAuthenticatedVO implements Serializable {
 	 * @return true, if is geral
 	 */
 	public boolean isGeral(){
-        ProfileVO perfil = this.getPerfilGeral();
-        if (perfil!=null){
-        	return perfil.getGeral();
+        ProfileVO profile = this.getProfileGeral();
+        if (profile!=null){
+        	return profile.getGeral();
         }
         return false;
 	}
@@ -320,9 +320,9 @@ public class UserAuthenticatedVO implements Serializable {
 	 * @return true, if is administrador
 	 */
 	public boolean isAdministrator(){
-        ProfileVO perfil = this.getPerfilAdministrator();
-        if (perfil!=null){
-        	return perfil.getAdministrator();
+        ProfileVO profile = this.getProfileAdministrator();
+        if (profile!=null){
+        	return profile.getAdministrator();
         }
         return false;
 	}

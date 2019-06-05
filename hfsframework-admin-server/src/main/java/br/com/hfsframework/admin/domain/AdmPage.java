@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -45,9 +46,15 @@ public class AdmPage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	@Id
-	@SequenceGenerator(name="ADM_PAGE_ID_GENERATOR", sequenceName="ADM_PAGE_SEQ", initialValue=1, allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ADM_PAGE_ID_GENERATOR")
+	@Id	
+	@GenericGenerator(name = "ADM_PAGE_ID_GENERATOR",
+	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+    	@Parameter(name = "sequence_name", value = "ADM_PAGE_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+	})		
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_PAGE_ID_GENERATOR")	
 	@Column(name="PAG_SEQ")
 	private Long id;
 
@@ -65,7 +72,7 @@ public class AdmPage implements Serializable {
 	@Column(name="PAG_URL", unique = true)
 	private String url;
 
-	/** The adm perfils. */ 
+	/** The adm profiles. */ 
 	//bi-directional many-to-many association to AdmProfile
 	//@ManyToMany(mappedBy="admPages", fetch = FetchType.LAZY) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	//@JsonIgnore
@@ -180,19 +187,19 @@ public class AdmPage implements Serializable {
 	}
 
 	/**
-	 * Pega o the adm perfils.
+	 * Pega o the adm profiles.
 	 *
-	 * @return o the adm perfils
+	 * @return o the adm profiles
 	 */
 	public List<AdmProfile> getAdmProfiles() {
 		return this.admProfiles;
 	}
 
 	/**
-	 * Atribui o the adm perfils.
+	 * Atribui o the adm profiles.
 	 *
 	 * @param admProfiles
-	 *            o novo the adm perfils
+	 *            o novo the adm profiles
 	 */
 	public void setAdmProfiles(List<AdmProfile> admProfiles) {
 		this.admProfiles = admProfiles;

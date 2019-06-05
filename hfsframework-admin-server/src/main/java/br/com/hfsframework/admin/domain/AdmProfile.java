@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -41,16 +42,16 @@ import br.com.hfsframework.security.model.UserVO;
 	@NamedQuery(name = "AdmProfile.countNovo", query = "SELECT COUNT(c) FROM AdmProfile c WHERE LOWER(c.description) = ?1"),
 	@NamedQuery(name = "AdmProfile.countAntigo", query = "SELECT COUNT(c) FROM AdmProfile c WHERE LOWER(c.description) <> ?1 AND LOWER(c.description) = ?2"),
 	@NamedQuery(name = "AdmProfile.findPagesPorProfile", query = "SELECT distinct pag FROM AdmProfile p inner join p.admPages pag where p = ?1"),
-	@NamedQuery(name = "AdmProfile.findUsersPorProfile", query = "SELECT distinct fp.id.usuarioSeq FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.perfilSeq AND p = ?1"),
-	@NamedQuery(name = "AdmProfile.findPerfisPorUser", query = "SELECT distinct p FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.perfilSeq AND fp.id.usuarioSeq = ?1"),	
-	@NamedQuery(name = "AdmProfile.findAdminMenuPaiByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuPai.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9) ORDER BY t.ordem, t.id"),
-	@NamedQuery(name = "AdmProfile.findMenuPaiByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuPai.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id > 9) ORDER BY t.ordem, t.id"),
-	@NamedQuery(name = "AdmProfile.findAdminMenuByProfile", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9 AND m.admMenuPai = ?2 ORDER BY m.ordem, m.id"),
-	@NamedQuery(name = "AdmProfile.findMenuByProfile", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id > 9 AND m.admMenuPai = ?2 ORDER BY m.ordem, m.id"),
-	@NamedQuery(name = "AdmProfile.findAdminMenuPaiByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuPai.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9) ORDER BY t.id, t.ordem"),
-	@NamedQuery(name = "AdmProfile.findMenuPaiByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuPai.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9) ORDER BY t.ordem, t.id"),
-	@NamedQuery(name = "AdmProfile.findAdminMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9 AND m.admMenuPai = ?2 ORDER BY m.id, m.ordem"),
-	@NamedQuery(name = "AdmProfile.findMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9 AND m.admMenuPai = ?2 ORDER BY m.id, m.ordem")			
+	@NamedQuery(name = "AdmProfile.findUsersPorProfile", query = "SELECT distinct fp.id.userSeq FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND p = ?1"),
+	@NamedQuery(name = "AdmProfile.findPerfisPorUser", query = "SELECT distinct p FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND fp.id.userSeq = ?1"),	
+	@NamedQuery(name = "AdmProfile.findAdminMenuParentByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9) ORDER BY t.order, t.id"),
+	@NamedQuery(name = "AdmProfile.findMenuParentByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id > 9) ORDER BY t.order, t.id"),
+	@NamedQuery(name = "AdmProfile.findAdminMenuByProfile", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9 AND m.admMenuParent = ?2 ORDER BY m.order, m.id"),
+	@NamedQuery(name = "AdmProfile.findMenuByProfile", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id > 9 AND m.admMenuParent = ?2 ORDER BY m.order, m.id"),
+	@NamedQuery(name = "AdmProfile.findAdminMenuParentByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9) ORDER BY t.id, t.order"),
+	@NamedQuery(name = "AdmProfile.findMenuParentByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9) ORDER BY t.order, t.id"),
+	@NamedQuery(name = "AdmProfile.findAdminMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order"),
+	@NamedQuery(name = "AdmProfile.findMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order")			
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AdmProfile implements Serializable {
@@ -59,8 +60,14 @@ public class AdmProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	@Id
-	@SequenceGenerator(name = "ADM_PROFILE_ID_GENERATOR", sequenceName="ADM_PROFILE_SEQ", initialValue=1, allocationSize=1)
+	@Id	
+	@GenericGenerator(name = "ADM_PROFILE_ID_GENERATOR",
+	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+    	@Parameter(name = "sequence_name", value = "ADM_PROFILE_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+	})		
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_PROFILE_ID_GENERATOR")
 	@Column(name = "PRF_SEQ")
 	private Long id;
@@ -87,7 +94,7 @@ public class AdmProfile implements Serializable {
 	@JsonSerialize(using = AdmPageListSerializer.class)
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.EAGER) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-	@JoinTable(name = "ADM_PAGINA_PERFIL", joinColumns = { 
+	@JoinTable(name = "ADM_PAGE_PROFILE", joinColumns = { 
 			@JoinColumn(name = "PGL_PRF_SEQ") }, inverseJoinColumns = {	@JoinColumn(name = "PGL_PAG_SEQ") })
 	private List<AdmPage> admPages;
 	
@@ -96,13 +103,13 @@ public class AdmProfile implements Serializable {
 	@JsonSerialize(using = AdmUserListSerializer.class)
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.EAGER) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-	@JoinTable(name = "ADM_USUARIO_PERFIL", joinColumns = {
+	@JoinTable(name = "ADM_USER_PROFILE", joinColumns = {
 			@JoinColumn(name = "USP_PRF_SEQ") }, inverseJoinColumns = { @JoinColumn(name = "USP_USU_SEQ") })
 	private List<AdmUser> admUsers;
 		
 
 	/**
-	 * Instantiates a new adm perfil.
+	 * Instantiates a new adm profile.
 	 */
 	public AdmProfile() {
 		super();
@@ -120,7 +127,7 @@ public class AdmProfile implements Serializable {
 	}
 
 	/**
-	 * Instantiates a new adm perfil.
+	 * Instantiates a new adm profile.
 	 *
 	 * @param p
 	 *            the p
@@ -248,19 +255,19 @@ public class AdmProfile implements Serializable {
 	}
 
 	/**
-	 * Gets the adm usuarios.
+	 * Gets the adm users.
 	 *
-	 * @return the adm usuarios
+	 * @return the adm users
 	 */
 	public List<AdmUser> getAdmUsers() {
 		return admUsers;
 	}
 
 	/**
-	 * Sets the adm usuarios.
+	 * Sets the adm users.
 	 *
 	 * @param admUsers
-	 *            the new adm usuarios
+	 *            the new adm users
 	 */
 	public void setAdmUsers(List<AdmUser> admUsers) {
 		this.admUsers = admUsers;
@@ -307,9 +314,9 @@ public class AdmProfile implements Serializable {
 	}
 	
 	/**
-	 * To perfil VO.
+	 * To profile VO.
 	 *
-	 * @return the perfil VO
+	 * @return the profile VO
 	 */
 	public ProfileVO toProfileVO(){
 		ProfileVO p = new ProfileVO();

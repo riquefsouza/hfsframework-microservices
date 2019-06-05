@@ -16,9 +16,11 @@ public enum TemplateEnum {
 	Resource("resource", "Resource", "Resource Suporte"),
 	
 	/** The Repository. */
-	IRepository("domain", "Repository", "Data Access Object"),
+	IRepository("irepository", "Repository", "Data Access Object"),
 	
-	Formatter("serializer", "Formatter", "Formatter"),
+	ClientDomain("client.domain", "", "ClientDomain"),
+	
+	Formatter("formatter", "Formatter", "Formatter"),
 	
 	Deserializer("deserializer", "Deserializer", "Deserializer"),
 	
@@ -26,7 +28,7 @@ public enum TemplateEnum {
 	
 	Service("service", "Service", "Service Controller"),
 	
-	IService("service", "Service", "IService Controller"),
+	IService("iservice", "Service", "IService Controller"),
 	
 	RestController("controller", "RestController", "Rest Controller"),
 	

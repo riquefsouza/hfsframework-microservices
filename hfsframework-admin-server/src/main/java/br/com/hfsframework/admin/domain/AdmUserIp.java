@@ -24,12 +24,12 @@ public class AdmUserIp implements Serializable {
 	@EmbeddedId
 	private AdmUserIpPK id;
 
-	/** The ativo. */
+	/** The active. */
 	@Convert(converter=BooleanToStringConverter.class)
 	@Column(name = "UIP_ATIVO")
-	private Boolean ativo;
+	private Boolean active;
 	
-	/** The adm perfil. */
+	/** The adm profile. */
 	// bi-directional many-to-one association to AdmUser
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "UIP_USU_SEQ", nullable=false, insertable = false, updatable = false)
@@ -49,7 +49,7 @@ public class AdmUserIp implements Serializable {
 	public void limpar() {
 		this.id = new AdmUserIpPK();
 		//this.admUser = new AdmUser();
-		this.ativo = false;
+		this.active = false;
 	}
 
 	/**
@@ -72,22 +72,22 @@ public class AdmUserIp implements Serializable {
 	}
 
 	/**
-	 * Pega o the ativo.
+	 * Pega o the active.
 	 *
-	 * @return o the ativo
+	 * @return o the active
 	 */
-	public Boolean getAtivo() {
-		return this.ativo;
+	public Boolean getActive() {
+		return this.active;
 	}
 
 	/**
-	 * Atribui o the ativo.
+	 * Atribui o the active.
 	 *
-	 * @param ativo
-	 *            o novo the ativo
+	 * @param active
+	 *            o novo the active
 	 */
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 	
 	/**

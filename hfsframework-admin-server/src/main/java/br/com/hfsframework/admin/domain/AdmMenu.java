@@ -17,11 +17,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -54,8 +55,14 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	@Id
-	@SequenceGenerator(name = "ADM_MENU_ID_GENERATOR", sequenceName="ADM_MENU_SEQ", initialValue=1, allocationSize=1)
+	@Id	
+	@GenericGenerator(name = "ADM_MENU_ID_GENERATOR",
+	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+    	@Parameter(name = "sequence_name", value = "ADM_MENU_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+	})		
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_MENU_ID_GENERATOR")
 	@Column(name = "MNU_SEQ")
 	private Long id;

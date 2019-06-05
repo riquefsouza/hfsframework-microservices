@@ -12,10 +12,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ADM_USER_PERFIL")
+@Table(name = "ADM_USER_PROFILE")
 @NamedQueries({
-	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.perfilSeq = ?1"),
-	@NamedQuery(name = "AdmUserProfile.deleteByCodUsuario", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.usuarioSeq = ?1")
+	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.profileSeq = ?1"),
+	@NamedQuery(name = "AdmUserProfile.deleteByCodUsuario", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.userSeq = ?1")
 })	
 public class AdmUserProfile implements Serializable {
 	
@@ -26,14 +26,14 @@ public class AdmUserProfile implements Serializable {
 	@EmbeddedId
 	private AdmUserProfilePK id;
 
-	/* The adm perfil. */
+	/* The adm profile. */
 	// bi-directional many-to-one association to AdmProfile
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "USP_PRF_SEQ", nullable=false, insertable = false, updatable = false)
 	private AdmProfile admProfile;
 
 	/**
-	 * Instantiates a new adm cargo perfil.
+	 * Instantiates a new adm cargo profile.
 	 */
 	public AdmUserProfile() {
 		limpar();
@@ -67,19 +67,19 @@ public class AdmUserProfile implements Serializable {
 	}
 
 	/*
-	 * Pega o the adm perfil.
+	 * Pega o the adm profile.
 	 *
-	 * @return o the adm perfil
+	 * @return o the adm profile
 	 */
 	public AdmProfile getAdmProfile() {
 		return this.admProfile;
 	}
 
 	/**
-	 * Atribui o the adm perfil.
+	 * Atribui o the adm profile.
 	 *
 	 * @param admProfile
-	 *            o novo the adm perfil
+	 *            o novo the adm profile
 	 */
 	public void setAdmProfile(AdmProfile admProfile) {
 		this.admProfile = admProfile;

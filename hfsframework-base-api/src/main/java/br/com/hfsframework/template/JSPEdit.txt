@@ -11,7 +11,7 @@
 </jsp:attribute>
 <jsp:body>    
 
-	<form:form id="formEdit${class}" action="${pageContext.request.contextPath}/private/${object}View" method="POST" modelAttribute="bean">
+	<form:form id="formEdit${class}" action="$\{pageContext.request.contextPath\}/private/${object}View" method="POST" modelAttribute="bean">
 	
 		<div class="card">
 			<div class="card-header" 
