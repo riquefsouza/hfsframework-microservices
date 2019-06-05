@@ -5,8 +5,12 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
-
-<div th:replace="private/menu :: menu"></div>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->	>
 
 <div class="web-content">
 	<form id="formEditAutUser" action="#" th:action="@{/private/userView}" method="post" th:object="${bean}">
@@ -95,6 +99,14 @@
 <span id="editAutUser-message-targetCaptionRoles" th:text="#{editAutUser.targetCaptionRoles}" style="display: none"></span>
  
 <script th:src="@{/js/auth/editAutUser.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 
 </body>
 </html>

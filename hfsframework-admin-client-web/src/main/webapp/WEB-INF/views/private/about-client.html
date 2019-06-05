@@ -6,8 +6,12 @@
 <title th:text="#{about.title}"></title>
 </head>
 <body>
-
-<div th:replace="private/menu :: menu"></div>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->	
 
 <div class="web-content">
 	<hr>
@@ -51,6 +55,14 @@ Established locale country: <span th:text="${#locale.country}"></span>.
 </div>
 	
 </div>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 	
 </body>
 </html>

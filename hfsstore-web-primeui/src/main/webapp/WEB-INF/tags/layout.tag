@@ -17,7 +17,6 @@
     </div>
 
     <div class="overlay"></div>
-
-	<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
+	
 </body>
 </html>

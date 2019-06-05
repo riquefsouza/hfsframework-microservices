@@ -5,8 +5,12 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
-
-<div th:replace="private/menu :: menu"></div>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->	
 
 <div class="web-content">
 	<form id="formEditAutRole" action="#" th:action="@{/private/roleView}" method="post" th:object="${bean}">
@@ -55,6 +59,14 @@
 </div>
  
 <script th:src="@{/js/auth/editAutRole.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 
 </body>
 </html>

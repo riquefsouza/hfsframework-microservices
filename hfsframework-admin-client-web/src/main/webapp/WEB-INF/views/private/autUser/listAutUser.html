@@ -6,8 +6,12 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
-
-<div th:replace="private/menu :: menu"></div>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->	
 
 <div class="web-content" style="margin:5px 0;">
 	<form id="formListAutUser" action="#" th:action="@{/private/userView/edit}" method="get" th:object="${bean}">
@@ -68,6 +72,14 @@
 </div>
 
 <script th:src="@{/js/auth/listAutUser.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 
 </body>
 </html>

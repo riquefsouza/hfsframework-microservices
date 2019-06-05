@@ -11,5 +11,6 @@
 	<jsp:body>
 		<p style="padding: 20px;"><spring:message code="main.app.welcome" /></p>
 	</jsp:body>
+	<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
 </t:layout>
 

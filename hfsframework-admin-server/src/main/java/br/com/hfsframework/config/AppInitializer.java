@@ -2,11 +2,13 @@ package br.com.hfsframework.config;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import br.com.hfsframework.util.copyright.CopyrightEnum;
 import br.com.hfsframework.util.copyright.CopyrightUtil;
 
+@Order(1)
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	
 	private static final Logger log = LogManager.getLogger(AppInitializer.class);
@@ -26,6 +28,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		
 		System.out.print(CopyrightUtil.getAsString(CopyrightEnum.ADMINISTRATIVE_SERVER));
 		
+		//return new Class<?>[] { SecurityConfig.class };
     	return null;
     }
   

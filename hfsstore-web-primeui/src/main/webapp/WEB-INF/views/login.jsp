@@ -9,7 +9,7 @@
 
 <t:layout>
 	<jsp:attribute name="header">
-	  <title><spring:message code="main.framework" /></title>
+	  <title><spring:message code="main.framework" />&nbsp;<spring:message code="main.app.title" /></title>
 	</jsp:attribute>
 	<jsp:body>    
 	    <c:if test="${not empty loginError}" >

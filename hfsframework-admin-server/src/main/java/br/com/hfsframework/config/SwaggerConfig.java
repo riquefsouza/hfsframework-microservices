@@ -79,9 +79,9 @@ public class SwaggerConfig {
 
 	private String serviceDesc = "HFS Framework Admin using springframework";
 
-	String clientId = "hfsClient";
+	String clientId = "";
 
-	String clientSecret = "hfsSecret";
+	String clientSecret = "";
 	
 	//@Value("http://${server.address}:${server.port}")
 	//@Value("${oauth.server.uri}:${server.port}")
@@ -89,7 +89,7 @@ public class SwaggerConfig {
 	
 	@Bean
 	public Docket postsApi() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("HFSFramework Admin Spring Restful")
+		return new Docket(DocumentationType.SWAGGER_2).groupName("HFSFramework Admin Server")
 				//.apiInfo(apiInfo()).select().paths(postPaths())
 				//.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))	
 				//.paths(springBootActuatorJmxPaths())

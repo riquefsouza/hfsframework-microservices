@@ -6,7 +6,12 @@
 </head>
 <body>
 
-	<div th:replace="private/menu :: menu"></div>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->	
 
 	<div class="web-content">
 		<div class="row-fluid">
@@ -16,6 +21,14 @@
 			</div>
 		</div>
 	</div>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 
 </body>
 </html>

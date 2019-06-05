@@ -5,14 +5,17 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
- 
-	<div th:replace="private/menu :: menu"></div>
+    <div class="wrapper">
+    	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+        <div id="content">
+			<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+			<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
+            <div class="web-content"></div>            
+        </div>
+    </div>
 
-	<p style="padding: 20px;"><span th:text="#{main.app.welcome}" th:remove="tag"></span></p>
-	
-	<div class="web-content"></div>
+    <div class="overlay"></div>	
         
 	<div th:replace="fragments/footer :: footer"></div>
-
 </body>
 </html>
