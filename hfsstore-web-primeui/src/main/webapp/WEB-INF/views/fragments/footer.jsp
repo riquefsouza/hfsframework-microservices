@@ -4,12 +4,11 @@
 
 <div class="central-footer hidden-xs">
 	<div class="info-browser">
-		<span><spring:message code="about.rights" />&nbsp;Henrique Figueiredo de Souza</span>
-		<span>
-			&nbsp;<spring:message code="about.version" />
-			&nbsp;<spring:message code="build.version" />
-			&nbsp;<spring:message code="build.timestamp" />
-		</span>
+		<span><spring:message code="about.rights" /></span>
+		Henrique Figueiredo de Souza
+		&nbsp;<span><spring:message code="about.version" /></span>
+		&nbsp;<span><spring:message code="build.version" /></span>
+		&nbsp;<span><spring:message code="build.timestamp" /></span>				
 	</div>
 </div>	
 

@@ -11,7 +11,8 @@
 	<jsp:attribute name="header">
 	  <title><spring:message code="main.framework" />&nbsp;<spring:message code="main.app.title" /></title>
 	</jsp:attribute>
-	<jsp:body>    
+	<jsp:body>  
+
 	    <c:if test="${not empty loginError}" >
 	    	<div class="alert alert-danger alert-dismissible">
 	  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -86,6 +87,7 @@
 		
 		<%@include file="fragments/forgotPassword.jsp"%>
 	
+		<jsp:include page="/WEB-INF/views/fragments/footer.jsp" />
     </jsp:body>
 
 </t:layout>
