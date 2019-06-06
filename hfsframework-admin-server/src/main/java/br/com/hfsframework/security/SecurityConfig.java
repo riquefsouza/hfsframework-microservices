@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	//private static String REALM = "HFS_REALM";	
+	private static String REALM = "HFS_REALM";
 
     @Override
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -23,19 +23,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.csrf().disable()
-		//.requestMatchers().antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", 
-			//	"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
+		//.requestMatchers().antMatchers("/api/public/**") //, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
 		//.and()
 		.authorizeRequests()
-		.antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", 
-				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
-		.antMatchers("/api/v1/**").access("hasRole('USER') or hasRole('ADMIN')")
+		.antMatchers("/api/public/**").permitAll()
+		//, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
+		//.antMatchers("/api/v1/**").access("hasRole('USER') or hasRole('ADMIN')")
 	  	//.antMatchers("/api/v1/**").authenticated()
         //.antMatchers("/api/v1/**").hasRole("ADMIN")
         //.antMatchers("/api/v1/**").hasRole("USER")
         .anyRequest().authenticated()
-	  	.and().httpBasic();
-	  	//.realmName(REALM);	  	  
+	  	.and().httpBasic()
+	  	.realmName(REALM);	  	  
     }
 
 	

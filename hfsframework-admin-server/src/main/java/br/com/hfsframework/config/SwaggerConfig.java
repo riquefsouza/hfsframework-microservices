@@ -5,8 +5,10 @@ import static com.google.common.collect.Lists.newArrayList;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.OAuthBuilder;
@@ -27,9 +29,18 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 @Configuration
-//@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.properties")
 @EnableSwagger2
 public class SwaggerConfig {
+	
+	@Value("${oauth2.hfsframework.server}")
+	private String authServer;
+
+	@Value("${oauth2.hfsframework.client-id}")
+	private String authClientId;
+	
+	@Value("${oauth2.hfsframework.client-secret}")
+	private String authClientSecret;
 	
 /*
 	
@@ -79,14 +90,6 @@ public class SwaggerConfig {
 
 	private String serviceDesc = "HFS Framework Admin using springframework";
 
-	String clientId = "";
-
-	String clientSecret = "";
-	
-	//@Value("http://${server.address}:${server.port}")
-	//@Value("${oauth.server.uri}:${server.port}")
-	private String oAuthServerUri = "http://localhost:8080/hfsframework-oauth-server";
-	
 	@Bean
 	public Docket postsApi() {
 		return new Docket(DocumentationType.SWAGGER_2).groupName("HFSFramework Admin Server")
@@ -118,11 +121,11 @@ public class SwaggerConfig {
 	@Bean
 	List<GrantType> grantTypes() {
 		List<GrantType> grantTypes = new ArrayList<>();
-		//TokenRequestEndpoint tokenRequestEndpoint = new TokenRequestEndpoint(oAuthServerUri+"/oauth/authorize", clientId, clientSecret );
-        //TokenEndpoint tokenEndpoint = new TokenEndpoint(oAuthServerUri+"/oauth/token", "token");
+		//TokenRequestEndpoint tokenRequestEndpoint = new TokenRequestEndpoint(authServer+"/oauth/authorize", authClientId, authClientSecret );
+        //TokenEndpoint tokenEndpoint = new TokenEndpoint(authServer+"/oauth/token", "token");
 		//grantTypes.add(new AuthorizationCodeGrant(tokenRequestEndpoint, tokenEndpoint));
-        grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(oAuthServerUri+"/oauth/token"));
-		//grantTypes.add(new ClientCredentialsGrant(oAuthServerUri+"/oauth/token"));
+        grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(authServer+"/oauth/token"));
+		//grantTypes.add(new ClientCredentialsGrant(authServer+"/oauth/token"));
 		
 		//LoginEndpoint loginEndpoint = new LoginEndpoint(url);
 		//grantTypes.add(new ImplicitGrant(loginEndpoint, tokenName));
@@ -174,8 +177,8 @@ public class SwaggerConfig {
 	@Bean
     public SecurityConfiguration securityInfo() {
 		return SecurityConfigurationBuilder.builder()
-		        .clientId(clientId)
-		        .clientSecret(clientSecret)
+		        .clientId(authClientId)
+		        .clientSecret(authClientSecret)
 		        .scopeSeparator(",")
 		        .useBasicAuthenticationWithAccessCodeGrant(true)
 		        .build();

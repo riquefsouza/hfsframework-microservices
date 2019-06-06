@@ -8,8 +8,10 @@ import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,8 +31,12 @@ import br.com.hfsframework.base.security.BaseAccessTokenConverter;
 import br.com.hfsframework.base.security.BaseClaimVerifier;
 
 @Configuration
+@PropertySource("classpath:application.properties")
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+
+	@Value("${oauth2.hfsframework.server}")
+	private String authServer;
 
     @Autowired
     private BaseAccessTokenConverter customAccessTokenConverter;
@@ -41,12 +47,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.
 		anonymous().disable()
-		//.requestMatchers().antMatchers("/api/public/**", "/api/v1/**", "/swagger-ui.html", "/webjars/**", 
-			//	"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
+		//.requestMatchers().antMatchers("/api/public/**") //, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
 		//.and()
 		.authorizeRequests()
-		.antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", 
-				"/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
+		//.antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
 		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
 		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
@@ -100,7 +104,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtClaimsSetVerifier issuerClaimVerifier() {
         try {
-            return new IssuerClaimVerifier(new URL("http://localhost:8080"));
+            return new IssuerClaimVerifier(new URL(authServer));
         } catch (final MalformedURLException e) {
             throw new RuntimeException(e);
         }
