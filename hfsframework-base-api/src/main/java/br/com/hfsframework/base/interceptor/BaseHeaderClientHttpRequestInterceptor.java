@@ -11,19 +11,19 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.StreamUtils;
 
-public class BaseHeaderRequestInterceptor implements ClientHttpRequestInterceptor {
+public class BaseHeaderClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
-	private static final Logger log = LoggerFactory.getLogger(BaseHeaderRequestInterceptor.class);
+	private static final Logger log = LoggerFactory.getLogger(BaseHeaderClientHttpRequestInterceptor.class);
 
 	private final String headerName;
 
 	private final String headerValue;
 
-	public BaseHeaderRequestInterceptor(String headerName, String headerValue) {
+	public BaseHeaderClientHttpRequestInterceptor(String headerName, String headerValue) {
 		this.headerName = headerName;
 		this.headerValue = headerValue;
 
-		log.info("BaseHeaderRequestInterceptor: " + headerName + " - " + headerValue);
+		log.info("BaseHeaderClientHttpRequestInterceptor: " + headerName + " - " + headerValue);
 	}
 
 	@Override

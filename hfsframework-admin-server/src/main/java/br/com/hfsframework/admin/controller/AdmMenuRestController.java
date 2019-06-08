@@ -14,4 +14,7 @@ public class AdmMenuRestController
 
 	private static final long serialVersionUID = 1L;
 
+	public AdmMenuRestController() {
+		super(true);
+	}
 }

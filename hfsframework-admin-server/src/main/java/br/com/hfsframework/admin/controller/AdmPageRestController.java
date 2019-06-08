@@ -14,4 +14,7 @@ public class AdmPageRestController
 
 	private static final long serialVersionUID = 1L;
 
+	public AdmPageRestController() {
+		super(true);
+	}
 }

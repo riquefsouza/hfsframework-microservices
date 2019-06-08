@@ -6,11 +6,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,7 @@ import br.com.hfsframework.base.report.IBaseReport;
 import br.com.hfsframework.base.report.ReportTypeEnum;
 import br.com.hfsframework.base.view.report.BaseViewReportController;
 import br.com.hfsframework.base.view.report.ReportParamsDTO;
+import br.com.hfsframework.util.AuthenticationUtil;
 import br.com.hfsframework.util.exceptions.TransactionException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,7 +52,33 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 	@Autowired
 	protected S service;
+	
+	@Autowired
+	private HttpServletRequest request;
 
+	@Autowired
+	private HttpServletResponse response;
+	
+	@Value("${oauth2.hfsframework.client-id}")
+	private String authClientId;
+	
+	private boolean validateAuthorizationToken;
+
+	public BaseRestController(boolean validateAuthorizationToken) {
+		super();
+		this.validateAuthorizationToken = validateAuthorizationToken;
+		//this.authClientId = authClientId;
+	}
+	
+	private boolean validateAuthorization() {
+		if (validateAuthorizationToken) {
+			if (AuthenticationUtil.isTokenExpiredOrUnauthorized(request, response, authClientId)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Get.
 	 *
@@ -60,6 +89,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Get by id")
 	@GetMapping("/{id}")
 	public ResponseEntity<T> get(@PathVariable I id) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
@@ -73,6 +106,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Get all")
 	@GetMapping
 	public ResponseEntity<List<T>> getAll() {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		List<T> iter = service.getAll();
 
 		return ResponseEntity.ok(iter);
@@ -88,8 +125,12 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Pages")
 	@GetMapping("/pages")
 	@ResponseBody
-	public Page<T> pages(Pageable p) {
-		return service.getAll(p);
+	public ResponseEntity<Page<T>> pages(Pageable p) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		return ResponseEntity.ok(service.getAll(p));
 	}
 
 	/**
@@ -102,6 +143,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Insert bean")
 	@PostMapping
 	public ResponseEntity<T> insert(@Valid @RequestBody T bean) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		Optional<T> obj = service.add(bean);
 
 		if (obj.isPresent()) {
@@ -122,6 +167,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Update bean")
 	@PutMapping("/{id}")
 	public ResponseEntity<T> update(@PathVariable I id, @Valid @RequestBody T bean) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
@@ -150,6 +199,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Delete bean")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<I> delete(@PathVariable I id) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
 		Optional<T> obj = service.get(id);
 
 		if (!obj.isPresent()) {
@@ -166,6 +219,9 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Export Report")
 	@PostMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ByteArrayResource> report(HttpServletRequest request, @RequestBody ReportParamsDTO reportParamsDTO) {
+		if (validateAuthorization()) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 
 		Map<String, Object> params = this.getParametros();
 		params.put("PARAMETER1", "");

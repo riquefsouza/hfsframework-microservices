@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Component
 public final class JSONConverter<T> implements Serializable {
@@ -21,11 +22,14 @@ public final class JSONConverter<T> implements Serializable {
 	/** The log. */
 	private static final Logger log = LoggerFactory.getLogger(JSONConverter.class);
 
-	public String toJSON(T obj) {
+	public String toJSON(T obj, boolean prettyPrint) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			//objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
+			
+			if (prettyPrint) {
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			}
+			
 			return objectMapper.writeValueAsString(obj);
 
 		} catch (JsonProcessingException e) {
@@ -34,6 +38,10 @@ public final class JSONConverter<T> implements Serializable {
 		return "";
 	}
 
+	public String toJSON(T obj) {
+		return toJSON(obj, false);
+	}
+	
 	public Optional<T> jsonToObject(String textJSON, TypeReference<T> mapType) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();

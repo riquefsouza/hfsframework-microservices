@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedExc
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.base.interceptor.BaseHeaderRequestInterceptor;
+import br.com.hfsframework.base.interceptor.BaseHeaderClientHttpRequestInterceptor;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 
@@ -61,7 +61,7 @@ public abstract class BaseOAuth2RestTemplateClient {
 		resourceDetails.setPassword(password.trim());
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+		interceptors.add(new BaseHeaderClientHttpRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
 
 		OAuth2RestTemplate rt = new OAuth2RestTemplate(resourceDetails);
 		rt.setInterceptors(interceptors);

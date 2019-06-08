@@ -14,4 +14,7 @@ public class VwAdmLogRestController
 
 	private static final long serialVersionUID = 1L;
 
+	public VwAdmLogRestController() {
+		super(true);
+	}
 }

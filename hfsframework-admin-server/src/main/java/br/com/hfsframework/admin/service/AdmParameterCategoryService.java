@@ -1,5 +1,7 @@
 package br.com.hfsframework.admin.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.admin.domain.AdmParameterCategory;
@@ -13,5 +15,10 @@ public class AdmParameterCategoryService
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	@Override
+	public Optional<AdmParameterCategory> findByDescription(String description) {
+		return getRepositorio().findByDescription(description);
+	}
 
 }

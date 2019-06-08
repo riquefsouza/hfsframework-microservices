@@ -29,6 +29,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import br.com.hfsframework.base.security.BaseAccessTokenConverter;
 import br.com.hfsframework.base.security.BaseClaimVerifier;
+import br.com.hfsframework.util.ResourceUtil;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -47,11 +48,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.
 		anonymous().disable()
-		//.requestMatchers().antMatchers("/api/public/**") //, "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**")
-		//.and()
+		.requestMatchers().antMatchers(ResourceUtil.resourceSwagger())
+		.requestMatchers().antMatchers("/api/public/**")
+		.and()
 		.authorizeRequests()
-		//.antMatchers("/api/public/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**").permitAll()
-		.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
+		//.antMatchers("/api/v1/**").access("hasRole('ADMIN') or hasRole('USER')")
+		.antMatchers(ResourceUtil.resourceSwagger()).permitAll()
+		.antMatchers("/api/public/**").permitAll()
+		.antMatchers("/api/v1/**").permitAll()
 		.and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 	}
 	

@@ -22,14 +22,18 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = new HashMap<>();
         
-        additionalInfo.put("organization", "TRT-RJ");
-        
 		Optional<User> obj = userService.findByUsername(authentication.getName());
 		
 		if (obj.isPresent()) {
 			additionalInfo.put("email", obj.get().getEmail());
 			additionalInfo.put("url_photo", obj.get().getUrlPhoto());
 		}
+
+        additionalInfo.put("organization", "HFS");
+        additionalInfo.put("authenticated", authentication.isAuthenticated());
+        additionalInfo.put("client_aplication_only", authentication.isClientOnly());
+        additionalInfo.put("expiration_date", accessToken.getExpiration().getTime());
+        additionalInfo.put("expires_in_seconds", accessToken.getExpiresIn());
 		
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;

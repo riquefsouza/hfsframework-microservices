@@ -1,9 +1,6 @@
 package br.com.hfsframework.config;
 
-import static com.google.common.collect.Lists.newArrayList;
-
-import java.util.ArrayList;
-import java.util.List;
+import static springfox.documentation.builders.PathSelectors.regex;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,20 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.OAuthBuilder;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.GrantType;
-import springfox.documentation.service.ResourceOwnerPasswordCredentialsGrant;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.service.SecurityScheme;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.SecurityConfiguration;
-import springfox.documentation.swagger.web.SecurityConfigurationBuilder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
@@ -93,15 +80,21 @@ public class SwaggerConfig {
 	@Bean
 	public Docket postsApi() {
 		return new Docket(DocumentationType.SWAGGER_2).groupName("HFSFramework Admin Server")
+
+				//.pathProvider(pathProvider())
+                //.host(hostName)
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("br.com.hfsframework.admin"))				
 				//.apiInfo(apiInfo()).select().paths(postPaths())
 				//.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))	
 				//.paths(springBootActuatorJmxPaths())
-				.apiInfo(apiInfo()).select().paths(PathSelectors.any())
-				.apis(RequestHandlerSelectors.any())
-				.build()		
-				.securitySchemes(newArrayList(oauth()))
+				.paths(regex("/api.*"))
+				//.apiInfo(apiInfo()).select().paths(PathSelectors.any())
+				//.apis(RequestHandlerSelectors.any())
+				.build();
+				//.securitySchemes(newArrayList(oauth()))
 				//.securitySchemes(Collections.singletonList(oauth()));
-				.securityContexts(newArrayList(securityContext()));
+				//.securityContexts(newArrayList(securityContext()));
 	}
 
 	/*
@@ -118,6 +111,7 @@ public class SwaggerConfig {
 		return new ApiInfoBuilder().title(serviceName).description(serviceDesc).build();
 	}	
 	
+	/*
 	@Bean
 	List<GrantType> grantTypes() {
 		List<GrantType> grantTypes = new ArrayList<>();
@@ -150,12 +144,12 @@ public class SwaggerConfig {
     }
 
     private List<SecurityReference> defaultAuth() {
-    	/*
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
-        authorizationScopes[0] = new AuthorizationScope("write", "write and read");
-        authorizationScopes[1] = new AuthorizationScope("read", "read only");
-        authorizationScopes[2] = new AuthorizationScope("trust","Grants read write and delete access");
-        */
+    	
+        //AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
+        //authorizationScopes[0] = new AuthorizationScope("write", "write and read");
+        //authorizationScopes[1] = new AuthorizationScope("read", "read only");
+        //authorizationScopes[2] = new AuthorizationScope("trust","Grants read write and delete access");
+        
     	AuthorizationScope[] authorizationScopes = scopes()
     			.stream()
     			.toArray(AuthorizationScope[]::new);        
@@ -183,5 +177,5 @@ public class SwaggerConfig {
 		        .useBasicAuthenticationWithAccessCodeGrant(true)
 		        .build();
 	}
-	
+	*/
 }

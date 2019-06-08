@@ -24,7 +24,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.hfsframework.base.interceptor.BaseHeaderRequestInterceptor;
+import br.com.hfsframework.base.interceptor.BaseHeaderClientHttpRequestInterceptor;
 import br.com.hfsframework.base.security.BaseRestUser;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 
@@ -86,7 +86,7 @@ public class BaseRestTemplateClient {
 	public RestTemplate restTemplate() throws RestClientException {
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+		interceptors.add(new BaseHeaderClientHttpRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
 
 		RestTemplate rt = new RestTemplate();
 		rt.setInterceptors(interceptors);
@@ -101,8 +101,8 @@ public class BaseRestTemplateClient {
 	public RestTemplate restTemplate(String sAccesToken) throws RestClientException {
 
 		List<ClientHttpRequestInterceptor> interceptors = new ArrayList<ClientHttpRequestInterceptor>();
-		interceptors.add(new BaseHeaderRequestInterceptor("Authorization", "Bearer " + sAccesToken));
-		interceptors.add(new BaseHeaderRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
+		interceptors.add(new BaseHeaderClientHttpRequestInterceptor("Authorization", "Bearer " + sAccesToken));
+		interceptors.add(new BaseHeaderClientHttpRequestInterceptor("Accept", MediaType.APPLICATION_JSON_VALUE));
 
 		RestTemplate rt = new RestTemplate();
 		rt.setInterceptors(interceptors);

@@ -28,6 +28,10 @@ public class UserRestController extends BaseRestController<User, Long, IUserServ
 
 	private static final long serialVersionUID = 1L;
 	
+	public UserRestController() {
+		super(false);
+	}
+	
 	@InitBinder("newUserDTO")
 	public void init(WebDataBinder binder) {
 		binder.addValidators(new UsernameAndPasswordDifferentValidator(), new NewUserValidator(this.service));

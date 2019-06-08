@@ -13,9 +13,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import br.com.hfsframework.base.interceptor.BaseHttpHeaderInterceptor;
 import br.com.hfsframework.util.HttpMessageConverterUtil;
 
 @Configuration
@@ -62,4 +64,8 @@ public class MvcConfig implements WebMvcConfigurer {
     	converters.addAll(HttpMessageConverterUtil.getMessageConverters());
     }
 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new BaseHttpHeaderInterceptor());
+	}    
 }

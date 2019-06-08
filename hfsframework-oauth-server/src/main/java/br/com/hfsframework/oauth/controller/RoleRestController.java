@@ -19,6 +19,10 @@ public class RoleRestController extends BaseRestController<Role, Long, IRoleServ
 
 	private static final long serialVersionUID = 1L;
 	
+	public RoleRestController() {
+		super(false);
+	}
+	
 	@ApiOperation("Find by name")
 	@GetMapping("/find")
 	public ResponseEntity<Role> findByName(@RequestParam(name = "name", required = true) String name) {

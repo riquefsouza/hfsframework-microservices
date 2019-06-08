@@ -8,9 +8,12 @@ import br.com.hfsframework.admin.service.IAdmParameterService;
 import br.com.hfsframework.base.BaseRestController;
 
 @RestController
-@RequestMapping("/api/v1/parameter")
+@RequestMapping("/api/v1/admParameter")
 public class AdmParameterRestController extends BaseRestController<AdmParameter, Long, IAdmParameterService> {
 
 	private static final long serialVersionUID = 1L;
 
+	public AdmParameterRestController() {
+		super(true);
+	}
 }

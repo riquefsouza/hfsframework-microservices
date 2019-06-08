@@ -31,6 +31,11 @@ public class ResourceUtil implements Serializable {
 		return res;
 	}
 	
+	public static String[] resourceSwagger() {
+		String[] res = { "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs/**", "/configuration/**" };
+		return res;
+	}
+	
 	public static boolean findResourceUrl(String[] resources, String url) {
 		boolean ret = false;
 		
