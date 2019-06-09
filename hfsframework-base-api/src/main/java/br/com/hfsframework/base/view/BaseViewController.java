@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
@@ -34,9 +35,12 @@ public abstract class BaseViewController {
 	
 	protected static final String ERRO_DELETE = "Error Transaction When Excluding: ";
 	
-	protected static String authServerURL;
+	protected String authServerURL;
 	
 	protected String accesToken;
+	
+	@Value("${resource-server}")
+	protected String resourceServer;
 	
 	@Autowired
 	protected MessageSource messageSource;
@@ -207,7 +211,7 @@ public abstract class BaseViewController {
 		Optional<BaseOAuth2RestUser> userLogged = AuthenticationUtil.getPrincipal();
 		if (userLogged.isPresent()) {		
 			
-			BaseViewController.authServerURL = userLogged.get().getUrlAuthorizationServer();
+			this.authServerURL = userLogged.get().getUrlAuthorizationServer();
 			this.accesToken = userLogged.get().getAccessToken().getValue();
 			
 			return userLogged;
@@ -220,6 +224,7 @@ public abstract class BaseViewController {
 			ModelAndView mv = new ModelAndView(pagina);
 			
 			//mv.addObject("urlAuthServer", authServerURL);
+			mv.addObject("urlResourceServer", resourceServer);
 			//mv.addObject("authToken", accesToken);
 			return Optional.of(mv);
 		}		

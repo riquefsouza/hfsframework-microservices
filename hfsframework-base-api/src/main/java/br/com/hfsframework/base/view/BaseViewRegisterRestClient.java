@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,9 +34,6 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	@Value("${resource-server}")
-	private String resourceServer;
-
 	private String listPage;
 
 	private String editPage;

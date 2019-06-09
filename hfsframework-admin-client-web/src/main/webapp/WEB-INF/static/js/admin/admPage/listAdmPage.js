@@ -1,25 +1,25 @@
-class ListAdmParameterCategory extends HFSSystemUtil {
+class ListAdmPage extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admParameterCategory";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/admPage";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmParameterCategory');
+		this._tableList = $('#tableAdmPage');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
+		this._formListAdmPage = $('#formListAdmPage');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admParameterCategory_jsonText'),
+				$('#admPage_jsonText'),
 				[
 					{field: 'description', headerText: 'Description', sortable: true, filter: false},
-					{field: 'order', headerText: 'Order', sortable: true, filter: false}
+					{field: 'url', headerText: 'Url', sortable: true, filter: false}
 				]);
 		
 	}
@@ -50,7 +50,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmParameterCategory.submit();	
+			this._formListAdmPage.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -77,13 +77,13 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmParameterCategory = new ListAdmParameterCategory();
+	const listAdmPage = new ListAdmPage();
 	
-	$('#btnExport').click(listAdmParameterCategory.btnExportClick.bind(listAdmParameterCategory));
-	$('#btnAdd').click(listAdmParameterCategory.btnAddClick.bind(listAdmParameterCategory));
-	$('#btnEdit').click(listAdmParameterCategory.btnEditClick.bind(listAdmParameterCategory));
-	$('#btnDelete').click(listAdmParameterCategory.btnDeleteClick.bind(listAdmParameterCategory));
-	$('#btnBack').click(listAdmParameterCategory.btnBackClick.bind(listAdmParameterCategory));
+	$('#btnExport').click(listAdmPage.btnExportClick.bind(listAdmPage));
+	$('#btnAdd').click(listAdmPage.btnAddClick.bind(listAdmPage));
+	$('#btnEdit').click(listAdmPage.btnEditClick.bind(listAdmPage));
+	$('#btnDelete').click(listAdmPage.btnDeleteClick.bind(listAdmPage));
+	$('#btnBack').click(listAdmPage.btnBackClick.bind(listAdmPage));
 	
 	
 });

@@ -1,24 +1,26 @@
-class ListAdmProfile extends HFSSystemUtil {
+class ListAdmParameter extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admProfile";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/admParameter";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmProfile');
+		this._tableList = $('#tableAdmParameter');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmProfile = $('#formListAdmProfile');
+		this._formListAdmParameter = $('#formListAdmParameter');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admProfile_jsonText'),
+				$('#admParameter_jsonText'),
 				[
-					{field: 'description', headerText: 'description', sortable: true, filter: false}
+					{field: 'code', headerText: 'Code', sortable: true, filter: false},
+					{field: 'description', headerText: 'Description', sortable: true, filter: false},
+					{field: 'value', headerText: 'Value', sortable: true, filter: false}
 				]);
 		
 	}
@@ -49,7 +51,7 @@ class ListAdmProfile extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmProfile.submit();	
+			this._formListAdmParameter.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -76,13 +78,13 @@ class ListAdmProfile extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmProfile = new ListAdmProfile();
+	const listAdmParameter = new ListAdmParameter();
 	
-	$('#btnExport').click(listAdmProfile.btnExportClick.bind(listAdmProfile));
-	$('#btnAdd').click(listAdmProfile.btnAddClick.bind(listAdmProfile));
-	$('#btnEdit').click(listAdmProfile.btnEditClick.bind(listAdmProfile));
-	$('#btnDelete').click(listAdmProfile.btnDeleteClick.bind(listAdmProfile));
-	$('#btnBack').click(listAdmProfile.btnBackClick.bind(listAdmProfile));
+	$('#btnExport').click(listAdmParameter.btnExportClick.bind(listAdmParameter));
+	$('#btnAdd').click(listAdmParameter.btnAddClick.bind(listAdmParameter));
+	$('#btnEdit').click(listAdmParameter.btnEditClick.bind(listAdmParameter));
+	$('#btnDelete').click(listAdmParameter.btnDeleteClick.bind(listAdmParameter));
+	$('#btnBack').click(listAdmParameter.btnBackClick.bind(listAdmParameter));
 	
 	
 });

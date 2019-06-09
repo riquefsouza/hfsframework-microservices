@@ -13,6 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 
 <meta name="URL-AUTH-SERVER" content="${urlAuthServer}"/>
+<meta name="URL-RESOURCE-SERVER" content="${urlResourceServer}"/>
 <meta name="X-AUTH-TOKEN" content="${authToken}"/>	
 
 <!-- Custom fonts for this template-->

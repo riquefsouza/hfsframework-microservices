@@ -1,25 +1,24 @@
-class ListAdmMenu extends HFSSystemUtil {
+class ListVwAdmLog extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admMenu";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/vwAdmLog";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmMenu');
+		this._tableList = $('#tableVwAdmLog');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmMenu = $('#formListAdmMenu');
+		this._formListVwAdmLog = $('#formListVwAdmLog');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admMenu_jsonText'),
+				$('#vwAdmLog_jsonText'),
 				[
-					{field: 'description', headerText: 'description', sortable: true, filter: false},
-					{field: 'order', headerText: 'Order', sortable: true, filter: false}
+					{field: 'name', headerText: 'Name', sortable: true, filter: false}
 				]);
 		
 	}
@@ -50,7 +49,7 @@ class ListAdmMenu extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmMenu.submit();	
+			this._formListVwAdmLog.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -77,13 +76,13 @@ class ListAdmMenu extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmMenu = new ListAdmMenu();
+	const listVwAdmLog = new ListVwAdmLog();
 	
-	$('#btnExport').click(listAdmMenu.btnExportClick.bind(listAdmMenu));
-	$('#btnAdd').click(listAdmMenu.btnAddClick.bind(listAdmMenu));
-	$('#btnEdit').click(listAdmMenu.btnEditClick.bind(listAdmMenu));
-	$('#btnDelete').click(listAdmMenu.btnDeleteClick.bind(listAdmMenu));
-	$('#btnBack').click(listAdmMenu.btnBackClick.bind(listAdmMenu));
+	$('#btnExport').click(listVwAdmLog.btnExportClick.bind(listVwAdmLog));
+	$('#btnAdd').click(listVwAdmLog.btnAddClick.bind(listVwAdmLog));
+	$('#btnEdit').click(listVwAdmLog.btnEditClick.bind(listVwAdmLog));
+	$('#btnDelete').click(listVwAdmLog.btnDeleteClick.bind(listVwAdmLog));
+	$('#btnBack').click(listVwAdmLog.btnBackClick.bind(listVwAdmLog));
 	
 	
 });

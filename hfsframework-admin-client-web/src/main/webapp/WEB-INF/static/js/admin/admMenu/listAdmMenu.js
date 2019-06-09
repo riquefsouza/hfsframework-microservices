@@ -1,24 +1,25 @@
-class ListAdmUserProfile extends HFSSystemUtil {
+class ListAdmMenu extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admUserProfile";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/admMenu";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmUserProfile');
+		this._tableList = $('#tableAdmMenu');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmUserProfile = $('#formListAdmUserProfile');
+		this._formListAdmMenu = $('#formListAdmMenu');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admUserProfile_jsonText'),
+				$('#admMenu_jsonText'),
 				[
-					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+					{field: 'description', headerText: 'description', sortable: true, filter: false},
+					{field: 'order', headerText: 'Order', sortable: true, filter: false}
 				]);
 		
 	}
@@ -49,7 +50,7 @@ class ListAdmUserProfile extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmUserProfile.submit();	
+			this._formListAdmMenu.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -76,13 +77,13 @@ class ListAdmUserProfile extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmUserProfile = new ListAdmUserProfile();
+	const listAdmMenu = new ListAdmMenu();
 	
-	$('#btnExport').click(listAdmUserProfile.btnExportClick.bind(listAdmUserProfile));
-	$('#btnAdd').click(listAdmUserProfile.btnAddClick.bind(listAdmUserProfile));
-	$('#btnEdit').click(listAdmUserProfile.btnEditClick.bind(listAdmUserProfile));
-	$('#btnDelete').click(listAdmUserProfile.btnDeleteClick.bind(listAdmUserProfile));
-	$('#btnBack').click(listAdmUserProfile.btnBackClick.bind(listAdmUserProfile));
+	$('#btnExport').click(listAdmMenu.btnExportClick.bind(listAdmMenu));
+	$('#btnAdd').click(listAdmMenu.btnAddClick.bind(listAdmMenu));
+	$('#btnEdit').click(listAdmMenu.btnEditClick.bind(listAdmMenu));
+	$('#btnDelete').click(listAdmMenu.btnDeleteClick.bind(listAdmMenu));
+	$('#btnBack').click(listAdmMenu.btnBackClick.bind(listAdmMenu));
 	
 	
 });

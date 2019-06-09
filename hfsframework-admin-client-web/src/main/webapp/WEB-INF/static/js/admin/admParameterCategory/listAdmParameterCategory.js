@@ -1,24 +1,25 @@
-class ListAdmUserIp extends HFSSystemUtil {
+class ListAdmParameterCategory extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admUserIp";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/admParameterCategory";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmUserIp');
+		this._tableList = $('#tableAdmParameterCategory');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmUserIp = $('#formListAdmUserIp');
+		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admUserIp_jsonText'),
+				$('#admParameterCategory_jsonText'),
 				[
-					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+					{field: 'description', headerText: 'Description', sortable: true, filter: false},
+					{field: 'order', headerText: 'Order', sortable: true, filter: false}
 				]);
 		
 	}
@@ -49,7 +50,7 @@ class ListAdmUserIp extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmUserIp.submit();	
+			this._formListAdmParameterCategory.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -76,13 +77,13 @@ class ListAdmUserIp extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmUserIp = new ListAdmUserIp();
+	const listAdmParameterCategory = new ListAdmParameterCategory();
 	
-	$('#btnExport').click(listAdmUserIp.btnExportClick.bind(listAdmUserIp));
-	$('#btnAdd').click(listAdmUserIp.btnAddClick.bind(listAdmUserIp));
-	$('#btnEdit').click(listAdmUserIp.btnEditClick.bind(listAdmUserIp));
-	$('#btnDelete').click(listAdmUserIp.btnDeleteClick.bind(listAdmUserIp));
-	$('#btnBack').click(listAdmUserIp.btnBackClick.bind(listAdmUserIp));
+	$('#btnExport').click(listAdmParameterCategory.btnExportClick.bind(listAdmParameterCategory));
+	$('#btnAdd').click(listAdmParameterCategory.btnAddClick.bind(listAdmParameterCategory));
+	$('#btnEdit').click(listAdmParameterCategory.btnEditClick.bind(listAdmParameterCategory));
+	$('#btnDelete').click(listAdmParameterCategory.btnDeleteClick.bind(listAdmParameterCategory));
+	$('#btnBack').click(listAdmParameterCategory.btnBackClick.bind(listAdmParameterCategory));
 	
 	
 });

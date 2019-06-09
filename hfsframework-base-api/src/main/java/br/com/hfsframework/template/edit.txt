@@ -53,7 +53,7 @@
 	</form>	
 </div>
  
-<script th:src="@\{/js/auth/edit${class}.js\}"></script>
+<script th:src="@\{/js/${object}/edit${class}.js\}"></script>
 
 </body>
 </html>

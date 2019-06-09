@@ -67,7 +67,7 @@
 	</form>
 </div>
 
-<script th:src="@\{/js/auth/list${class}.js\}"></script>
+<script th:src="@\{/js/${object}/list${class}.js\}"></script>
 
 </body>
 </html>

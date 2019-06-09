@@ -3,6 +3,7 @@ class HFSSystemUtil {
 	{
 		this._url = window.location.href;
 		this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
+		this._urlResourceServer = $("meta[name='URL-RESOURCE-SERVER']").attr("content");
 		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');

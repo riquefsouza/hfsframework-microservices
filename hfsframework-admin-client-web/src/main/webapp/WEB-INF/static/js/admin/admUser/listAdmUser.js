@@ -1,25 +1,24 @@
-class ListAdmPage extends HFSSystemUtil {
+class ListAdmUser extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._urlApiServer = this._urlAuthServer + "/api/v1/admPage";
+		this._urlApiServer = this._urlResourceServer + "/api/v1/admUser";
 		
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmPage');
+		this._tableList = $('#tableAdmUser');
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmPage = $('#formListAdmPage');
+		this._formListAdmUser = $('#formListAdmUser');
 		
 		this.buildGetPages(this._urlApiServer, this._authToken, this._formTitle, this._tableList, 
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
-				$('#admPage_jsonText'),
+				$('#admUser_jsonText'),
 				[
-					{field: 'description', headerText: 'Description', sortable: true, filter: false},
-					{field: 'url', headerText: 'Url', sortable: true, filter: false}
+					{field: 'name', headerText: 'Name', sortable: true, filter: false}
 				]);
 		
 	}
@@ -50,7 +49,7 @@ class ListAdmPage extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {
 			this.persistItem("saveMethod", "PUT");
-			this._formListAdmPage.submit();	
+			this._formListAdmUser.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -77,13 +76,13 @@ class ListAdmPage extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmPage = new ListAdmPage();
+	const listAdmUser = new ListAdmUser();
 	
-	$('#btnExport').click(listAdmPage.btnExportClick.bind(listAdmPage));
-	$('#btnAdd').click(listAdmPage.btnAddClick.bind(listAdmPage));
-	$('#btnEdit').click(listAdmPage.btnEditClick.bind(listAdmPage));
-	$('#btnDelete').click(listAdmPage.btnDeleteClick.bind(listAdmPage));
-	$('#btnBack').click(listAdmPage.btnBackClick.bind(listAdmPage));
+	$('#btnExport').click(listAdmUser.btnExportClick.bind(listAdmUser));
+	$('#btnAdd').click(listAdmUser.btnAddClick.bind(listAdmUser));
+	$('#btnEdit').click(listAdmUser.btnEditClick.bind(listAdmUser));
+	$('#btnDelete').click(listAdmUser.btnDeleteClick.bind(listAdmUser));
+	$('#btnBack').click(listAdmUser.btnBackClick.bind(listAdmUser));
 	
 	
 });
