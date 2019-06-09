@@ -82,12 +82,12 @@ public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCa
 		this.order = order;
 	}
 
-	public Set<AdmParameter> getParameters() {
+	public Set<AdmParameter> getAdmParameters() {
 		return this.admParameters;
 	}
 
-	public void setParameters(Set<AdmParameter> parameters) {
-		this.admParameters = parameters;
+	public void setAdmParameters(Set<AdmParameter> admParameters) {
+		this.admParameters = admParameters;
 	}
 
 	@Override

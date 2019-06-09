@@ -26,7 +26,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import br.com.hfsframework.admin.serializer.AdmParameterListSerializer;
+import br.com.hfsframework.admin.serializer.AdmParameterSetSerializer;
 
 @Entity
 @Table(name="ADM_PARAMETER_CATEGORY")
@@ -66,7 +66,7 @@ public class AdmParameterCategory implements Serializable {
 	@Column(name="PMC_ORDER")
 	private Long order;
 
-	@JsonSerialize(using = AdmParameterListSerializer.class)
+	@JsonSerialize(using = AdmParameterSetSerializer.class)
 	@OneToMany(mappedBy="admParameterCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
 	private Set<AdmParameter> admParameters;

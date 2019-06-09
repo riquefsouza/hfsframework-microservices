@@ -7,7 +7,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.hfsframework.admin.client.deserializer.AdmParameterCategoryDeserializer;
 import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
@@ -32,7 +34,7 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 
 	private Long idAdmParameterCategory;
 
-	//@JsonDeserialize(using = ParameterCategoryDeserializer.class)
+	@JsonDeserialize(using = AdmParameterCategoryDeserializer.class)
 	//@JsonBackReference("parameter")
 	private AdmParameterCategory admParameterCategory;
 

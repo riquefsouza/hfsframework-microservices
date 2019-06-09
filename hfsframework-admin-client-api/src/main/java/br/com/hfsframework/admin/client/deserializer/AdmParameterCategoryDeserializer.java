@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import br.com.hfsframework.admin.client.domain.AdmParameter;
 import br.com.hfsframework.admin.client.domain.AdmParameterCategory;
 
 public class AdmParameterCategoryDeserializer extends JsonDeserializer<AdmParameterCategory> {
@@ -22,18 +23,17 @@ public class AdmParameterCategoryDeserializer extends JsonDeserializer<AdmParame
 		final Long id = node.get("id").asLong();
 		final String description = node.get("description").asText();
 		final Long order = node.get("order").asLong();
-		//JsonNode admParameters = node.get("admParameters");
+		JsonNode admParameters = node.get("admParameters");
 
 		//Iterator<JsonNode> iter = admParameters.elements();
 		
-		//AdmParameter admParameter;
+		AdmParameter admParameter;
 		AdmParameterCategory pc = new AdmParameterCategory(id, description, order);
-		/*
 		for (JsonNode item : admParameters) {
 			admParameter = new AdmParameter(item.asLong());
-			//pc.getParametros().add(admParameter);			
+			pc.getAdmParameters().add(admParameter);			
 		}
-		 */	
+		 
 		return pc;
 	}
 
