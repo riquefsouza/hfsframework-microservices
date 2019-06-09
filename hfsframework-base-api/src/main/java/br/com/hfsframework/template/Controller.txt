@@ -14,7 +14,10 @@ public class ${class}Controller extends BaseViewRegisterRestClient<${class}, ${i
 	private static final long serialVersionUID = 1L;
 
 	public ${class}Controller() {
-		super(new ${class}RestClient(), "/private/${object}/list${class}", "/private/${object}/edit${class}", "${class}");
+		super(new ${class}RestClient(), 
+			"/private/${object}/list${class}", 
+			"/private/${object}/edit${class}", 
+			"${class}");
 	}
-	
+
 }

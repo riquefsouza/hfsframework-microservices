@@ -5,10 +5,13 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
 
-<div th:replace="private/menu :: menu"></div>
-
-<div class="web-content" style="margin:5px 0;">
 	<form id="formListVwAdmLogValue" action="#" th:action="@{/private/vwAdmLogValueView/edit}" method="get" th:object="${bean}">
 
 		<input type="hidden" id="vwAdmLogValue_jsonText" th:field="*{jsonText}" />
@@ -65,9 +68,16 @@
 		<div id="tableVwAdmLogValue"></div>
 		
 	</form>
-</div>
 
 <script th:src="@{/js/auth/listVwAdmLogValue.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
 
 </body>
 </html>

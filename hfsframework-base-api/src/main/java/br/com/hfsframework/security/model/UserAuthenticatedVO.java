@@ -277,7 +277,7 @@ public class UserAuthenticatedVO implements Serializable {
 	public ProfileVO getProfileGeral(){
 		ProfileVO admProfile = null;
 		for (PermissionVO permissaoVO : listaPermissao) {
-			if (permissaoVO.getProfile().getGeral()){
+			if (permissaoVO.getProfile().getGeneral()){
 				admProfile = permissaoVO.getProfile(); 
 				break;
 			}
@@ -309,7 +309,7 @@ public class UserAuthenticatedVO implements Serializable {
 	public boolean isGeral(){
         ProfileVO profile = this.getProfileGeral();
         if (profile!=null){
-        	return profile.getGeral();
+        	return profile.getGeneral();
         }
         return false;
 	}

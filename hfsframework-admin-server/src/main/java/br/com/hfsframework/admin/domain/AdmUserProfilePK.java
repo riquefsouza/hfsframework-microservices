@@ -12,7 +12,7 @@ public class AdmUserProfilePK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The cod usuario. */
-	@Column(name = "USP_USU_SEQ")
+	@Column(name = "USP_USE_SEQ")
 	private Long userSeq;
 
 	/** The profile seq. */

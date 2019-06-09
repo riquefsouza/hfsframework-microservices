@@ -32,8 +32,7 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 	@Email
 	private String email;
 
-	@NotEmpty
-	@Size(min=4, max=255)
+	@Size(max=255)
 	private String ldapDN;
 
 	@NotEmpty

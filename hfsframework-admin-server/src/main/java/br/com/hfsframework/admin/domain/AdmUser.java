@@ -96,8 +96,7 @@ public class AdmUser implements Serializable {
 	private String email;
 
 	/** The ldap DN. */
-	@NotEmpty
-	@Size(min=4, max=255)
+	@Size(max=255)
 	@Column(name = "USU_LDAP_DN", length = 255)
 	private String ldapDN;
 
@@ -117,7 +116,7 @@ public class AdmUser implements Serializable {
 	@JsonIgnore
 	@NotEmpty
 	@Size(min=4, max=128)
-	@Column(name = "USU_SENHA", nullable = false, length = 128)
+	@Column(name = "USU_PASSWORD", nullable = false, length = 128)
 	private String password;
 
 	/** The adm usuarioIps. */

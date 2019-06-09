@@ -24,8 +24,8 @@ public class UserRestClient extends BaseRestClient<User, Long> implements IBaseU
 	}
 
 	@Override
-	public boolean init(String authServerURL, String sAccesToken) throws RestClientException {
-		return super.init(authServerURL + "/api/v1/user", sAccesToken, User.class,
+	public boolean init(String serverURL, String sAccesToken) throws RestClientException {
+		return super.init(serverURL + "/api/v1/user", sAccesToken, User.class,
 				new ParameterizedTypeReference<List<User>>() {});
 	}
 	

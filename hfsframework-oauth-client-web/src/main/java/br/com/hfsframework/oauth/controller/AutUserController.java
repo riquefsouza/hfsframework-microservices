@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,17 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 	private List<Role> listAllRoles;
 	
 	public AutUserController() {
-		super(new UserRestClient(), "/private/autUser/listAutUser", "/private/autUser/editAutUser", "AutUser");
+		super(new UserRestClient(), 
+				"/private/autUser/listAutUser", 
+				"/private/autUser/editAutUser", 
+				"AutUser");
 		this.listAllRoles = new ArrayList<Role>();
 	}
+	
+	@PostConstruct
+	public void init() {
+		//
+	}	
 	
 	private void carregarRoles(ModelAndView mv, User bean, boolean bEdit) {
 		List<Role> listRolesSelected;		 
@@ -72,7 +81,7 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 		bean.setConfirmNewPassword("null");
 				
 		if (mv.isPresent()) {
-			roleClient.init(this.authServerURL, this.accesToken);
+			roleClient.init(authServerURL, this.accesToken);
 			carregarRoles(mv.get(), bean, false);
 			mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
 			mv.get().addObject("bean", bean);
@@ -95,7 +104,7 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 			bean.setConfirmNewPassword("null");
 			
 			if (mv.isPresent()) {
-				roleClient.init(this.authServerURL, this.accesToken);
+				roleClient.init(authServerURL, this.accesToken);
 				carregarRoles(mv.get(), bean, true);
 				mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
 				mv.get().addObject("listTargetRoles", this.dualListRole.getTarget());

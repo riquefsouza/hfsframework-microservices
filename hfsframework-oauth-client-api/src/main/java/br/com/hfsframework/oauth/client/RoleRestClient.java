@@ -23,8 +23,8 @@ public class RoleRestClient extends BaseRestClient<Role, Long> implements IBaseR
 	}
 	
 	@Override
-	public boolean init(String authServerURL, String accesToken) throws RestClientException {
-		return super.init(authServerURL + "/api/v1/role", accesToken, Role.class, 
+	public boolean init(String serverURL, String accesToken) throws RestClientException {
+		return super.init(serverURL + "/api/v1/role", accesToken, Role.class, 
 				new ParameterizedTypeReference<List<Role>>() {});
 	}
 	

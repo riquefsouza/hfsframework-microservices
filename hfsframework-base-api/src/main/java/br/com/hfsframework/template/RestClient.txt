@@ -3,8 +3,6 @@ package ${package}.client;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -16,15 +14,13 @@ import ${package}.client.domain.${class};
 @Service
 public class ${class}RestClient extends BaseRestClient<${class}, ${idType}> implements IBaseRestClient<${class}, ${idType}> {
 	
-	private static final Logger log = LoggerFactory.getLogger(${class}RestClient.class);
-	
 	public ${class}RestClient() {
 		super();
 	}
 	
 	@Override
-	public boolean init(String authServerURL, String accesToken) throws RestClientException {
-		return super.init(authServerURL + "/api/v1/${object}", accesToken, ${class}.class, 
+	public boolean init(String server, String accesToken) throws RestClientException {
+		return super.init(server + "/api/v1/${object}", accesToken, ${class}.class, 
 				new ParameterizedTypeReference<List<${class}>>() {});
 	}
 	

@@ -86,10 +86,10 @@ public class AdmProfile implements Serializable {
 	@Column(name = "PRF_DESCRIPTION", unique = true, nullable = false, length = 255)
 	private String description;
 
-	/** The geral. */
+	/** The general. */
 	@Convert(converter = BooleanToStringConverter.class)
-	@Column(name = "PRF_GERAL")
-	private Boolean geral;
+	@Column(name = "PRF_GENERAL")
+	private Boolean general;
 
 	/** The adm paginas. */
 	//@JsonIgnore
@@ -106,7 +106,7 @@ public class AdmProfile implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@ManyToMany(fetch = FetchType.EAGER) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "ADM_USER_PROFILE", joinColumns = {
-			@JoinColumn(name = "USP_PRF_SEQ") }, inverseJoinColumns = { @JoinColumn(name = "USP_USU_SEQ") })
+			@JoinColumn(name = "USP_PRF_SEQ") }, inverseJoinColumns = { @JoinColumn(name = "USP_USE_SEQ") })
 	private Set<AdmUser> admUsers;		
 
 	/**
@@ -119,12 +119,12 @@ public class AdmProfile implements Serializable {
 		clear();
 	}
 		
-	public AdmProfile(Long id, String description, Boolean administrator, Boolean geral) {
+	public AdmProfile(Long id, String description, Boolean administrator, Boolean general) {
 		super();
 		this.id = id;
 		this.administrator = administrator;
 		this.description = description;
-		this.geral = geral;
+		this.general = general;
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class AdmProfile implements Serializable {
 		this.id = p.getId();
 		this.administrator = p.getAdministrator();
 		this.description = p.getDescription();
-		this.geral = p.getGeral();
+		this.general = p.getGeneral();
 		for (PageVO page : p.getPages()) {
 			this.admPages.add(new AdmPage(page));	
 		}
@@ -155,7 +155,7 @@ public class AdmProfile implements Serializable {
 		this.id = null;
 		this.administrator = null;
 		this.description = null;
-		this.geral = null;
+		this.general = null;
 		this.admPages.clear();
 		this.admUsers.clear();		
 	}
@@ -218,22 +218,22 @@ public class AdmProfile implements Serializable {
 	}
 
 	/**
-	 * Pega o the geral.
+	 * Pega o the general.
 	 *
-	 * @return o the geral
+	 * @return o the general
 	 */
-	public Boolean getGeral() {
-		return this.geral;
+	public Boolean getGeneral() {
+		return this.general;
 	}
 
 	/**
-	 * Atribui o the geral.
+	 * Atribui o the general.
 	 *
-	 * @param geral
-	 *            o novo the geral
+	 * @param general
+	 *            o novo the general
 	 */
-	public void setGeral(Boolean geral) {
-		this.geral = geral;
+	public void setGeneral(Boolean general) {
+		this.general = general;
 	}
 
 	/**
@@ -324,7 +324,7 @@ public class AdmProfile implements Serializable {
 		p.setId(id);
 		p.setAdministrator(administrator);
 		p.setDescription(description);
-		p.setGeral(geral);
+		p.setGeneral(general);
 		for (AdmPage admPage : admPages) {
 			p.getPages().add(admPage.toPageVO());
 		}

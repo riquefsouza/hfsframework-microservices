@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +34,9 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	@Value("${resource-server}")
+	private String resourceServer;
 
 	private String listPage;
 
@@ -96,7 +100,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 			BindingResult result, RedirectAttributes attributes) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
 		if (mv.isPresent()) {			
-			this.restClient.init(authServerURL, accesToken);
+			this.restClient.init(resourceServer, accesToken);
 		}
 
 		if (result.hasErrors()){
@@ -125,7 +129,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 			BindingResult result, RedirectAttributes attributes, Callable<String> fnc) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
 		if (mv.isPresent()) {			
-			this.restClient.init(authServerURL, accesToken);
+			this.restClient.init(resourceServer, accesToken);
 		}
 
 		if (result.hasErrors()){
@@ -167,7 +171,7 @@ public abstract class BaseViewRegisterRestClient<T extends BaseEntityRestClient<
 			@RequestParam(name = "params", required = false) List<String> params) {
 		
 		if (getPrincipal().isPresent()) {
-			this.restClient.init(authServerURL, accesToken);
+			this.restClient.init(resourceServer, accesToken);
 			
 			ReportParamsDTO reportParamsDTO = new ReportParamsDTO();
 			reportParamsDTO.setReportName(reportName.isEmpty() ? "report" : reportName);

@@ -1,5 +1,7 @@
 package br.com.hfsframework.oauth.controller;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,7 +16,14 @@ public class AutRoleController extends BaseViewRegisterRestClient<Role, Long, Ro
 	private static final long serialVersionUID = 1L;
 
 	public AutRoleController() {
-		super(new RoleRestClient(), "/private/autRole/listAutRole", "/private/autRole/editAutRole", "AutRole");
+		super(new RoleRestClient(), 
+				"/private/autRole/listAutRole", 
+				"/private/autRole/editAutRole", 
+				"AutRole");
 	}
 	
+	@PostConstruct
+	public void init() {
+		//
+	}		
 }

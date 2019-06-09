@@ -28,7 +28,7 @@ public class ProfileVO implements Serializable {
 	private String description;
 
 	/** The geral. */
-	private Boolean geral;
+	private Boolean general;
 
 	/** The pages. */
 	private List<PageVO> pages;
@@ -49,7 +49,7 @@ public class ProfileVO implements Serializable {
 		this.id = null;
 		this.administrator = null;
 		this.description = null;
-		this.geral = null;
+		this.general = null;
 		this.pages.clear();
 		this.users.clear();
 	}
@@ -112,22 +112,22 @@ public class ProfileVO implements Serializable {
 	}
 
 	/**
-	 * Gets the geral.
+	 * Gets the general.
 	 *
-	 * @return the geral
+	 * @return the general
 	 */
-	public Boolean getGeral() {
-		return this.geral;
+	public Boolean getGeneral() {
+		return this.general;
 	}
 
 	/**
-	 * Sets the geral.
+	 * Sets the general.
 	 *
 	 * @param geral
-	 *            the new geral
+	 *            the new general
 	 */
-	public void setGeral(Boolean geral) {
-		this.geral = geral;
+	public void setGeneral(Boolean general) {
+		this.general = general;
 	}
 
 	/**

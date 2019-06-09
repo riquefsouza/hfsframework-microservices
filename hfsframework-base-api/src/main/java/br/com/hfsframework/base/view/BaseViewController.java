@@ -34,7 +34,7 @@ public abstract class BaseViewController {
 	
 	protected static final String ERRO_DELETE = "Error Transaction When Excluding: ";
 	
-	protected String authServerURL;
+	protected static String authServerURL;
 	
 	protected String accesToken;
 	
@@ -207,7 +207,7 @@ public abstract class BaseViewController {
 		Optional<BaseOAuth2RestUser> userLogged = AuthenticationUtil.getPrincipal();
 		if (userLogged.isPresent()) {		
 			
-			this.authServerURL = userLogged.get().getUrlAuthorizationServer();
+			BaseViewController.authServerURL = userLogged.get().getUrlAuthorizationServer();
 			this.accesToken = userLogged.get().getAccessToken().getValue();
 			
 			return userLogged;

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(name = "ADM_USER_PROFILE")
 @NamedQueries({
 	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.profileSeq = ?1"),
-	@NamedQuery(name = "AdmUserProfile.deleteByCodUsuario", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.userSeq = ?1")
+	@NamedQuery(name = "AdmUserProfile.deleteByCodUser", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.userSeq = ?1")
 })	
 public class AdmUserProfile implements Serializable {
 	

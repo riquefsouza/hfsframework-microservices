@@ -15,7 +15,7 @@ import br.com.hfsframework.util.copyright.CopyrightUtil;
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	
 	private static final Logger log = LogManager.getLogger(AppInitializer.class);
-	
+
     public AppInitializer() {
         super();
     }
@@ -56,5 +56,5 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
         encodingFilter.setForceEncoding(true);
         return new Filter[] { encodingFilter };
     }
-    
+   
 }
