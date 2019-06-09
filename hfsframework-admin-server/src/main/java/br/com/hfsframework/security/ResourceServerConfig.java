@@ -29,7 +29,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import br.com.hfsframework.base.security.BaseAccessTokenConverter;
 import br.com.hfsframework.base.security.BaseClaimVerifier;
-import br.com.hfsframework.util.ResourceUtil;
+import br.com.hfsframework.util.network.ResourceUtil;
 
 @Configuration
 @PropertySource("classpath:application.properties")

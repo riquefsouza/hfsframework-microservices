@@ -1,8 +1,8 @@
 package br.com.hfsframework.admin.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -80,8 +81,9 @@ public class AdmProfile implements Serializable {
 	/** The description. */
 	@NotNull
 	@NotBlank
-	@NotEmpty	
-	@Column(name = "PRF_DESCRIPTION", unique = true)
+	@NotEmpty
+	@Size(min=4, max=255)
+	@Column(name = "PRF_DESCRIPTION", unique = true, nullable = false, length = 255)
 	private String description;
 
 	/** The geral. */
@@ -96,7 +98,7 @@ public class AdmProfile implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "ADM_PAGE_PROFILE", joinColumns = { 
 			@JoinColumn(name = "PGL_PRF_SEQ") }, inverseJoinColumns = {	@JoinColumn(name = "PGL_PAG_SEQ") })
-	private List<AdmPage> admPages;
+	private Set<AdmPage> admPages;
 	
 	/** The adm funcionarios. */
 	//@JsonIgnore
@@ -105,17 +107,16 @@ public class AdmProfile implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	@JoinTable(name = "ADM_USER_PROFILE", joinColumns = {
 			@JoinColumn(name = "USP_PRF_SEQ") }, inverseJoinColumns = { @JoinColumn(name = "USP_USU_SEQ") })
-	private List<AdmUser> admUsers;
-		
+	private Set<AdmUser> admUsers;		
 
 	/**
 	 * Instantiates a new adm profile.
 	 */
 	public AdmProfile() {
 		super();
-		this.admPages = new ArrayList<AdmPage>();
-		this.admUsers = new ArrayList<AdmUser>();
-		limpar();
+		this.admPages = new HashSet<AdmPage>();
+		this.admUsers = new HashSet<AdmUser>();
+		clear();
 	}
 		
 	public AdmProfile(Long id, String description, Boolean administrator, Boolean geral) {
@@ -150,7 +151,7 @@ public class AdmProfile implements Serializable {
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clear() {
 		this.id = null;
 		this.administrator = null;
 		this.description = null;
@@ -240,7 +241,7 @@ public class AdmProfile implements Serializable {
 	 *
 	 * @return o the adm paginas
 	 */
-	public List<AdmPage> getAdmPages() {
+	public Set<AdmPage> getAdmPages() {
 		return this.admPages;
 	}
 
@@ -250,7 +251,7 @@ public class AdmProfile implements Serializable {
 	 * @param admPages
 	 *            o novo the adm paginas
 	 */
-	public void setAdmPages(List<AdmPage> admPages) {
+	public void setAdmPages(Set<AdmPage> admPages) {
 		this.admPages = admPages;
 	}
 
@@ -259,7 +260,7 @@ public class AdmProfile implements Serializable {
 	 *
 	 * @return the adm users
 	 */
-	public List<AdmUser> getAdmUsers() {
+	public Set<AdmUser> getAdmUsers() {
 		return admUsers;
 	}
 
@@ -269,7 +270,7 @@ public class AdmProfile implements Serializable {
 	 * @param admUsers
 	 *            the new adm users
 	 */
-	public void setAdmUsers(List<AdmUser> admUsers) {
+	public void setAdmUsers(Set<AdmUser> admUsers) {
 		this.admUsers = admUsers;
 	}
 	

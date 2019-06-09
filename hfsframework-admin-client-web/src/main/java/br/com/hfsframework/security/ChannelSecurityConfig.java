@@ -20,8 +20,8 @@ import br.com.hfsframework.base.security.BaseAuthenticationFailureHandler;
 import br.com.hfsframework.base.security.BaseAuthenticationSuccessHandler;
 import br.com.hfsframework.base.security.BaseLogoutSuccessHandler;
 import br.com.hfsframework.base.security.BaseOAuth2AuthenticationProvider;
-import br.com.hfsframework.util.CookieUtil;
-import br.com.hfsframework.util.ResourceUtil;
+import br.com.hfsframework.util.network.CookieUtil;
+import br.com.hfsframework.util.network.ResourceUtil;
 
 @Configuration
 @EnableWebSecurity

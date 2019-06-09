@@ -14,32 +14,32 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
+public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 
 	private String jsonText;
 	
 	private Long id;
+
+	private Boolean administrator;
 	
 	@NotBlank
 	@Size(min=4, max=255)
 	private String description;
-
-	@NotBlank
-	@Size(min=4, max=255)
-	private String url;
 	
-	private Set<AdmProfile> admProfiles;
+	private Boolean geral;
 	
-	private Set<AdmMenu> admMenus;
-		
-	public AdmPage() {
+	private Set<AdmPage> admPages;
+	
+	private Set<AdmUser> admUsers;
+	
+	public AdmProfile() {
 		super();
-		admProfiles = new HashSet<AdmProfile>();
-		admMenus = new HashSet<AdmMenu>();
+		this.admPages = new HashSet<AdmPage>();
+		this.admUsers = new HashSet<AdmUser>();		
 		this.clear();
 	}
 
-	public AdmPage(Long id) {
+	public AdmProfile(Long id) {
 		super();
 	    this.id = id;
 	}
@@ -62,6 +62,46 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 		this.jsonText = jsonText;		
 	}	
 
+	public Boolean getAdministrator() {
+		return administrator;
+	}
+
+	public void setAdministrator(Boolean administrator) {
+		this.administrator = administrator;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getGeral() {
+		return geral;
+	}
+
+	public void setGeral(Boolean geral) {
+		this.geral = geral;
+	}
+
+	public Set<AdmPage> getAdmPages() {
+		return admPages;
+	}
+
+	public void setAdmPages(Set<AdmPage> admPages) {
+		this.admPages = admPages;
+	}
+
+	public Set<AdmUser> getAdmUsers() {
+		return admUsers;
+	}
+
+	public void setAdmUsers(Set<AdmUser> admUsers) {
+		this.admUsers = admUsers;
+	}	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,7 +118,7 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmPage other = (AdmPage) obj;
+		AdmProfile other = (AdmProfile) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -91,27 +131,28 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 	public void clear() {
 		this.jsonText = "";
 		this.id = null;
+		this.administrator = false;
 		this.description = "";
-		this.url = "";
-		admProfiles.clear();
-		admMenus.clear();
+		this.geral = false;
+		this.admPages.clear();
+		this.admUsers.clear();		
 	}
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmPage> conv = new JSONConverter<AdmPage>();
+		JSONConverter<AdmProfile> conv = new JSONConverter<AdmProfile>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmPage> fromJSON(String jsonText) {
-		JSONConverter<AdmPage> conv = new JSONConverter<AdmPage>();
-		TypeReference<AdmPage> mapType = new TypeReference<AdmPage>() {};		
+	public Optional<AdmProfile> fromJSON(String jsonText) {
+		JSONConverter<AdmProfile> conv = new JSONConverter<AdmProfile>();
+		TypeReference<AdmProfile> mapType = new TypeReference<AdmProfile>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmPage> fromJSON() {
+	public Optional<AdmProfile> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -119,48 +160,16 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmPage> list) {
-		JSONListConverter<AdmPage> conv = new JSONListConverter<AdmPage>();
+	public String listToJSON(List<AdmProfile> list) {
+		JSONListConverter<AdmProfile> conv = new JSONListConverter<AdmProfile>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmPage> jsonToLista(String jsonText) {
-		JSONListConverter<AdmPage> conv = new JSONListConverter<AdmPage>();
-		TypeReference<List<AdmPage>> mapType = new TypeReference<List<AdmPage>>() {};
+	public List<AdmProfile> jsonToLista(String jsonText) {
+		JSONListConverter<AdmProfile> conv = new JSONListConverter<AdmProfile>();
+		TypeReference<List<AdmProfile>> mapType = new TypeReference<List<AdmProfile>>() {};
 		return conv.jsonToList(jsonText, mapType);
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public Set<AdmProfile> getAdmProfiles() {
-		return admProfiles;
-	}
-
-	public void setAdmProfiles(Set<AdmProfile> admProfiles) {
-		this.admProfiles = admProfiles;
-	}
-
-	public Set<AdmMenu> getAdmMenus() {
-		return admMenus;
-	}
-
-	public void setAdmMenus(Set<AdmMenu> admMenus) {
-		this.admMenus = admMenus;
 	}
 
 }

@@ -26,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.hfsframework.base.interceptor.BaseHeaderClientHttpRequestInterceptor;
 import br.com.hfsframework.base.security.BaseRestUser;
-import br.com.hfsframework.util.HttpMessageConverterUtil;
+import br.com.hfsframework.util.network.HttpMessageConverterUtil;
 
 public class BaseRestTemplateClient {
 

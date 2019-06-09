@@ -25,28 +25,28 @@
 	<ul class="list-unstyled components">
 
 		<li class="nav-item" sec:authorize="hasRole('ADMIN')">
-			<a href="#adminSubmenu"
-				data-toggle="collapse" aria-expanded="false"
+			<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
 				class="nav-link dropdown-toggle" style="color: black;"> <span th:text="#{menu.administrative}" th:remove="tag"></span>
 			</a>
-				<ul class="collapse list-unstyled" id="adminSubmenu">
-					<li><a class="dropdown-item"
-						th:href="@{/private/roleView}"><span th:text="#{menu.roles}" th:remove="tag"></span></a></li>
-					<li><a class="dropdown-item"
-						th:href="@{/private/userView}"><span th:text="#{menu.users}" th:remove="tag"></span></a></li>
-				</ul>
+			<ul class="collapse list-unstyled" id="adminSubmenu">
+				<li><a class="dropdown-item" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a></li>
+			</ul>
 		</li>
 
-		<li class="nav-item"><a href="#settingsSubmenu"
-			data-toggle="collapse" aria-expanded="false"
-			class="nav-link dropdown-toggle" style="color: black;"><span th:text="#{menu.settings}" th:remove="tag"></span>
-		</a>
+		<li class="nav-item">
+			<a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false"
+				class="nav-link dropdown-toggle" style="color: black;"><span th:text="#{menu.settings}" th:remove="tag"></span>
+			</a>
 			<ul class="collapse list-unstyled" id="settingsSubmenu">
-				<li><a class="dropdown-item"
-					th:href="@{/private/changePassword}"><span th:text="#{menu.changePassword}" th:remove="tag"></span></a></li>
-				<li><a class="dropdown-item"
-					th:href="@{/private/about}"><span th:text="#{menu.about}" th:remove="tag"></span></a></li>
-			</ul></li>
+				<li><a class="dropdown-item" th:href="@{/private/changePassword}"><span th:text="#{menu.changePassword}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/about}"><span th:text="#{menu.about}" th:remove="tag"></span></a></li>
+			</ul>
+		</li>
 		<li><a class="dropdown-item" th:href="@{/logout}" >
 				<img class="inverted-image" th:src="@{/img/sair.png}" />
 				<span th:text="#{menu.exit}" th:remove="tag"></span>

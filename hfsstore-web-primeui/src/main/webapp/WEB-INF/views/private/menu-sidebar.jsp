@@ -24,38 +24,38 @@
 	<ul class="list-unstyled components">
 
 		<security:authorize access="hasRole('ROLE_ADMIN')">
-			<li class="nav-item"><a href="#adminSubmenu"
-				data-toggle="collapse" aria-expanded="false"
-				class="nav-link dropdown-toggle" style="color: black;"> <spring:message
-						code="menu.administrative" />
-			</a>
+			<li class="nav-item">
+				<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false" 
+					class="nav-link dropdown-toggle" style="color: black;">
+					<spring:message code="menu.administrative" />
+				</a>
 				<ul class="collapse list-unstyled" id="adminSubmenu">
-					<li><a class="dropdown-item"
-						href="<c:url value="/private/roleView" />"><spring:message
-								code="menu.roles" /></a></li>
-					<li><a class="dropdown-item"
-						href="<c:url value="/private/userView" />"><spring:message
-								code="menu.users" /></a></li>
-				</ul></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admParameterCategoryView" />"><spring:message code="menu.admParameterCategory" /></a></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admParameterView" />"><spring:message code="menu.admParameter" /></a></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admPageView" />"><spring:message code="menu.admPage" /></a></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admMenuView" />"><spring:message code="menu.admMenu" /></a></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admProfileView" />"><spring:message code="menu.admProfile" /></a></li>
+					<li><a class="dropdown-item" href="<c:url value="/private/admUserView" />"><spring:message code="menu.admUser" /></a></li>				
+				</ul>
+			</li>
 		</security:authorize>
 
-		<li class="nav-item"><a href="#settingsSubmenu"
-			data-toggle="collapse" aria-expanded="false"
-			class="nav-link dropdown-toggle" style="color: black;"> <spring:message
-					code="menu.settings" />
-		</a>
+		<li class="nav-item">
+			<a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false" 
+				class="nav-link dropdown-toggle" style="color: black;">
+					<spring:message code="menu.settings" />
+			</a>
 			<ul class="collapse list-unstyled" id="settingsSubmenu">
-				<li><a class="dropdown-item"
-					href="<c:url value="/private/changePassword" />"><spring:message
-							code="menu.changePassword" /></a></li>
-				<li><a class="dropdown-item"
-					href="<c:url value="/private/about" />"><spring:message
-							code="menu.about" /></a></li>
-			</ul></li>
-		<li><a class="dropdown-item" href="<c:url value="/logout" />">
+				<li><a class="dropdown-item" href="<c:url value="/private/changePassword" />"><spring:message code="menu.changePassword" /></a></li>
+				<li><a class="dropdown-item" href="<c:url value="/private/about" />"><spring:message code="menu.about" /></a></li>
+			</ul>
+		</li>
+		<li>
+			<a class="dropdown-item" href="<c:url value="/logout" />">
 				<img class="inverted-image" src="<c:url value="/img/sair.png" />" />
 				<spring:message code="menu.exit" />
-		</a></li>
+			</a>
+		</li>
 
 	</ul>
 

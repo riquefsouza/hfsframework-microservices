@@ -1,8 +1,8 @@
 package br.com.hfsframework.admin.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
@@ -57,7 +58,8 @@ public class AdmParameterCategory implements Serializable {
 	@NotNull
 	@NotBlank
 	@NotEmpty
-	@Column(name="PMC_DESCRIPTION", unique = true)
+	@Size(min=4, max=64)
+	@Column(name="PMC_DESCRIPTION", unique = true, nullable = false, length = 64)
 	private String description;
 
 	/** The order. */
@@ -67,13 +69,13 @@ public class AdmParameterCategory implements Serializable {
 	@JsonSerialize(using = AdmParameterListSerializer.class)
 	@OneToMany(mappedBy="admParameterCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
-	private List<AdmParameter> admParameters;
+	private Set<AdmParameter> admParameters;
 
 	/**
 	 * Instantiates a new parameter category.
 	 */
 	public AdmParameterCategory() {
-		this.admParameters = new ArrayList<AdmParameter>();
+		this.admParameters = new HashSet<AdmParameter>();
 		limpar();
 	}
 
@@ -161,7 +163,7 @@ public class AdmParameterCategory implements Serializable {
 	 *
 	 * @return o the parameters
 	 */
-	public List<AdmParameter> getparameters() {
+	public Set<AdmParameter> getparameters() {
 		return this.admParameters;
 	}
 
@@ -171,7 +173,7 @@ public class AdmParameterCategory implements Serializable {
 	 * @param parameters
 	 *            o novo the parameters
 	 */
-	public void setparameters(List<AdmParameter> parameters) {
+	public void setparameters(Set<AdmParameter> parameters) {
 		this.admParameters = parameters;
 	}
 

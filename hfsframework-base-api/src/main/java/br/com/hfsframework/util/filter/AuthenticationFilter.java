@@ -18,9 +18,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import br.com.hfsframework.util.AuthenticationUtil;
-import br.com.hfsframework.util.HttpUtil;
-import br.com.hfsframework.util.ResourceUtil;
-import br.com.hfsframework.util.UrlUtil;
+import br.com.hfsframework.util.network.HttpUtil;
+import br.com.hfsframework.util.network.ResourceUtil;
+import br.com.hfsframework.util.network.UrlUtil;
 
 public class AuthenticationFilter implements Filter {
 

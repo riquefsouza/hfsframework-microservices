@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.StringUtils;
 
-import br.com.hfsframework.util.CookieUtil;
+import br.com.hfsframework.util.network.CookieUtil;
 import io.jsonwebtoken.MalformedJwtException;
 
 public class TokenAuthenticationService {	

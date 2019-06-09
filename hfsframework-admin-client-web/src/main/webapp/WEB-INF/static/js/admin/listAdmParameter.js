@@ -18,7 +18,9 @@ class ListAdmParameter extends HFSSystemUtil {
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
 				$('#admParameter_jsonText'),
 				[
-					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+					{field: 'code', headerText: 'Code', sortable: true, filter: false},
+					{field: 'description', headerText: 'Description', sortable: true, filter: false},
+					{field: 'value', headerText: 'Value', sortable: true, filter: false}
 				]);
 		
 	}

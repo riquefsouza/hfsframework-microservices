@@ -14,4 +14,7 @@ public class ${class}RestController
 
 	private static final long serialVersionUID = 1L;
 
+	public ${class}RestController() {
+		super(true);
+	}
 }

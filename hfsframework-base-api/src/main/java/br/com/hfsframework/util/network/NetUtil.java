@@ -4,7 +4,7 @@
  * @version 1.0
  * @since 2018
  */
-package br.com.hfsframework.util;
+package br.com.hfsframework.util.network;
 
 import java.io.Serializable;
 import java.net.InetAddress;

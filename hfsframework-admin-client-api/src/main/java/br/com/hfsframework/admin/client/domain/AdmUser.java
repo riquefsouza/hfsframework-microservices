@@ -1,22 +1,66 @@
 package br.com.hfsframework.admin.client.domain;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
-import br.com.hfsframework.util.JSONConverter;
-import br.com.hfsframework.util.JSONListConverter;
+import br.com.hfsframework.util.CPFCNPJUtil;
+import br.com.hfsframework.util.converter.JSONConverter;
+import br.com.hfsframework.util.converter.JSONListConverter;
 
 public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 
 	private String jsonText;
 	
 	private Long id;
+	
+	@Size(max=11)
+	private BigDecimal cpf;
+
+	@NotEmpty
+	@Size(min=4, max=255)
+	@Email
+	private String email;
+
+	@NotEmpty
+	@Size(min=4, max=255)
+	private String ldapDN;
+
+	@NotEmpty
+	@Size(min=4, max=64)
+	private String login;
+
+	@NotEmpty
+	@Size(min=4, max=64)
+	private String name;
+
+	@NotEmpty
+	@Size(min=4, max=128)
+	private String password;
+
+	private Set<String> admUserIps;
+	
+    private LocalDateTime createdDate;
+ 
+    private LocalDateTime modifiedDate;
+
+    private String createdBy;
+ 
+    private String modifiedBy;
 
 	public AdmUser() {
 		super();
+		this.admUserIps = new HashSet<String>();
 		this.clear();
 	}
 
@@ -43,6 +87,87 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 		this.jsonText = jsonText;		
 	}	
 
+
+	public BigDecimal getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(BigDecimal cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getLdapDN() {
+		return ldapDN;
+	}
+
+	public void setLdapDN(String ldapDN) {
+		this.ldapDN = ldapDN;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getModifiedDate() {
+		return modifiedDate;
+	}
+
+	public void setModifiedDate(LocalDateTime modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,6 +197,13 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 	public void clear() {
 		this.jsonText = "";
 		this.id = null;
+		this.cpf = BigDecimal.ZERO;
+		this.email = "";
+		this.ldapDN = "";
+		this.login = "";
+		this.name = "";
+		this.password = "";
+		this.admUserIps.clear();
 	}
 
 	@Override
@@ -106,6 +238,14 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 		JSONListConverter<AdmUser> conv = new JSONListConverter<AdmUser>();
 		TypeReference<List<AdmUser>> mapType = new TypeReference<List<AdmUser>>() {};
 		return conv.jsonToList(jsonText, mapType);
+	}
+
+	public String getCpfFormatado() {
+		try {
+			return CPFCNPJUtil.formatCPForCPNJ(cpf.longValue(), false);
+		} catch (Exception e) {
+			return this.cpf.toString();
+		}
 	}
 
 }

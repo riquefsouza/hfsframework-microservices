@@ -1,8 +1,8 @@
 package br.com.hfsframework.admin.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,15 +20,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.com.hfsframework.admin.serializer.AdmProfileListSerializer;
 import br.com.hfsframework.security.model.PageVO;
 
 @Entity
@@ -62,38 +60,40 @@ public class AdmPage implements Serializable {
 	@NotNull
 	@NotBlank
 	@NotEmpty
-	@Column(name="PAG_DESCRIPTION", unique = true)
+	@Size(min=4, max=255)
+	@Column(name="PAG_DESCRIPTION", unique = true, nullable = false, length = 255)
 	private String description;
 
 	/** The url. */
 	@NotNull
 	@NotBlank
 	@NotEmpty	
-	@Column(name="PAG_URL", unique = true)
+	@Size(min=4, max=255)
+	@Column(name="PAG_URL", unique = true, nullable = false, length = 255)
 	private String url;
 
 	/** The adm profiles. */ 
 	//bi-directional many-to-many association to AdmProfile
 	//@ManyToMany(mappedBy="admPages", fetch = FetchType.LAZY) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
 	//@JsonIgnore
-	@JsonSerialize(using = AdmProfileListSerializer.class)
+	//@JsonSerialize(using = AdmProfileSetSerializer.class)
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "ADM_PAGE_PROFILE", joinColumns = { 
 			@JoinColumn(name = "PGL_PAG_SEQ") }, inverseJoinColumns = {@JoinColumn(name = "PGL_PRF_SEQ") })
-	private List<AdmProfile> admProfiles;
+	private Set<AdmProfile> admProfiles;
 	
 	/** The adm menus. */
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "admPage", fetch = FetchType.EAGER)	
-	private List<AdmMenu> admMenus;	
+	private Set<AdmMenu> admMenus;	
 	
 	/**
 	 * Instantiates a new adm pagina.
 	 */
 	public AdmPage() {
 		super();
-		this.admProfiles = new ArrayList<AdmProfile>();
-		this.admMenus = new ArrayList<AdmMenu>();
+		this.admProfiles = new HashSet<AdmProfile>();
+		this.admMenus = new HashSet<AdmMenu>();
 		limpar();
 	}
 	
@@ -191,7 +191,7 @@ public class AdmPage implements Serializable {
 	 *
 	 * @return o the adm profiles
 	 */
-	public List<AdmProfile> getAdmProfiles() {
+	public Set<AdmProfile> getAdmProfiles() {
 		return this.admProfiles;
 	}
 
@@ -201,7 +201,7 @@ public class AdmPage implements Serializable {
 	 * @param admProfiles
 	 *            o novo the adm profiles
 	 */
-	public void setAdmProfiles(List<AdmProfile> admProfiles) {
+	public void setAdmProfiles(Set<AdmProfile> admProfiles) {
 		this.admProfiles = admProfiles;
 	}
 	

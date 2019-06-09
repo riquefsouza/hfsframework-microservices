@@ -1,4 +1,4 @@
-package br.com.hfsframework.util;
+package br.com.hfsframework.util.network;
 
 import java.io.Serializable;
 import java.util.ArrayList;

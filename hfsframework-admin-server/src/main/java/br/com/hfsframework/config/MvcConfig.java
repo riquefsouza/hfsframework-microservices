@@ -18,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.com.hfsframework.base.interceptor.BaseHttpHeaderInterceptor;
-import br.com.hfsframework.util.HttpMessageConverterUtil;
+import br.com.hfsframework.util.network.HttpMessageConverterUtil;
 
 @Configuration
 @EnableWebMvc

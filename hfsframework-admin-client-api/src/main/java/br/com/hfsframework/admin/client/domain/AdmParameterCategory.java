@@ -1,14 +1,18 @@
 package br.com.hfsframework.admin.client.domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
-import br.com.hfsframework.util.JSONConverter;
-import br.com.hfsframework.util.JSONListConverter;
+import br.com.hfsframework.util.converter.JSONConverter;
+import br.com.hfsframework.util.converter.JSONListConverter;
 
 public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCategory, Long> {
 
@@ -16,16 +20,18 @@ public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCa
 	
 	private Long id;
 
+	@NotBlank
+	@Size(min=4, max=64)
 	private String description;
 
 	private Long order;
 
 	//@JsonManagedReference("admParameter")
-	private List<Long> admParameters;
+	private Set<AdmParameter> admParameters;
 
 	public AdmParameterCategory() {
 		super();
-		this.admParameters = new ArrayList<Long>();
+		this.admParameters = new HashSet<AdmParameter>();
 		this.clear();
 	}
 
@@ -34,14 +40,14 @@ public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCa
 	public admParameterCategory(@JsonProperty("admParameterCategory") Long id ) {
 		super();		
 	    this.id = id;
-	    this.admParameters = new ArrayList<Long>();
+	    this.admParameters = new HashSet<Long>();
 	}
 	*/
 
 	public AdmParameterCategory(Long id) {
 		super();
 		this.id = id;
-		this.admParameters = new ArrayList<Long>();
+		this.admParameters = new HashSet<AdmParameter>();
 	}
 
 	public AdmParameterCategory(Long id, String description, Long order) {
@@ -49,7 +55,7 @@ public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCa
 		this.id = id;
 		this.description = description;
 		this.order = order;
-		this.admParameters = new ArrayList<Long>();
+		this.admParameters = new HashSet<AdmParameter>();
 	}
 
 	public Long getId() {
@@ -76,11 +82,11 @@ public class AdmParameterCategory implements BaseEntityRestClient<AdmParameterCa
 		this.order = order;
 	}
 
-	public List<Long> getParameters() {
+	public Set<AdmParameter> getParameters() {
 		return this.admParameters;
 	}
 
-	public void setParameters(List<Long> parameters) {
+	public void setParameters(Set<AdmParameter> parameters) {
 		this.admParameters = parameters;
 	}
 

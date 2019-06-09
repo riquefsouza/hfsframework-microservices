@@ -3,8 +3,8 @@ package br.com.hfsframework.admin.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +21,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -33,9 +36,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import br.com.hfsframework.admin.serializer.AdmUserIpListSerializer;
 import br.com.hfsframework.security.model.UserVO;
 import br.com.hfsframework.util.CPFCNPJUtil;
 
@@ -83,37 +84,49 @@ public class AdmUser implements Serializable {
 	private Long id;
 
 	/** The cpf. */
-	@Column(name = "USU_CPF")
+	@Size(max=11)
+	@Column(name = "USU_CPF", length = 11)
 	private BigDecimal cpf;
 
 	/** The email. */
-	@Column(name = "USU_EMAIL")
+	@NotEmpty
+	@Size(min=4, max=255)
+	@Email
+	@Column(name = "USU_EMAIL", length = 255)
 	private String email;
 
 	/** The ldap DN. */
-	@Column(name = "USU_LDAP_DN")
+	@NotEmpty
+	@Size(min=4, max=255)
+	@Column(name = "USU_LDAP_DN", length = 255)
 	private String ldapDN;
 
 	/** The login. */
-	@Column(name = "USU_LOGIN")
+	@NotEmpty
+	@Size(min=4, max=64)
+	@Column(name = "USU_LOGIN", nullable = false, length = 64)
 	private String login;
 
 	/** The name. */
-	@Column(name = "USU_NAME")
+	@NotEmpty
+	@Size(min=4, max=64)
+	@Column(name = "USU_NAME", nullable = false, length = 64)
 	private String name;
 
 	/** The password. */
 	@JsonIgnore
-	@Column(name = "USU_SENHA")	
+	@NotEmpty
+	@Size(min=4, max=128)
+	@Column(name = "USU_SENHA", nullable = false, length = 128)
 	private String password;
 
 	/** The adm usuarioIps. */
 	//bi-directional many-to-one association to AdmUserIp
 	//@JsonIgnore
-	@JsonSerialize(using = AdmUserIpListSerializer.class)	
+	//@JsonSerialize(using = AdmUserIpSetSerializer.class)	
 	@OneToMany(mappedBy="admUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
-	private List<AdmUserIp> admUserIps;
+	private Set<AdmUserIp> admUserIps;
 	
 	/** The created date. */
 	@Column(name = "created_date", nullable = false, updatable = false)
@@ -157,8 +170,8 @@ public class AdmUser implements Serializable {
 	 */
 	public AdmUser() {
 		super();
-		this.admUserIps = new ArrayList<AdmUserIp>();
-		limpar();
+		this.admUserIps = new HashSet<AdmUserIp>();
+		clear();
 	}
 
 	public AdmUser(Long id, String login, String password) {
@@ -208,10 +221,7 @@ public class AdmUser implements Serializable {
 		this.password = u.getPassword();
 	}
 	
-	/**
-	 * Limpar.
-	 */
-	public void limpar() {
+	public void clear() {
 		this.id = 0L;
 		this.cpf = BigDecimal.ZERO;
 		this.email = "";
@@ -360,7 +370,7 @@ public class AdmUser implements Serializable {
 	 *
 	 * @return o the adm usuarioIps
 	 */
-	public List<AdmUserIp> getAdmUserIps() {
+	public Set<AdmUserIp> getAdmUserIps() {
 		return this.admUserIps;
 	}
 
@@ -370,7 +380,7 @@ public class AdmUser implements Serializable {
 	 * @param admUserIps
 	 *            o novo the adm usuarioIps
 	 */
-	public void setAdmUserIps(List<AdmUserIp> admUserIps) {
+	public void setAdmUserIps(Set<AdmUserIp> admUserIps) {
 		this.admUserIps = admUserIps;
 	}
 

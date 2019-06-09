@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import br.com.hfsframework.util.JSONConverter;
-import br.com.hfsframework.util.JSONListConverter;
+import br.com.hfsframework.util.converter.JSONConverter;
+import br.com.hfsframework.util.converter.JSONListConverter;
 
 public class BaseErrorDescription {
 

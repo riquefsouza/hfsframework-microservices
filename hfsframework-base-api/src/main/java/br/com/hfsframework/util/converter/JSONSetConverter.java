@@ -1,8 +1,9 @@
-package br.com.hfsframework.util;
+package br.com.hfsframework.util.converter;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,26 +12,22 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Component
-public final class JSONConverter<T> implements Serializable {
+public final class JSONSetConverter<T> implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The log. */
-	private static final Logger log = LoggerFactory.getLogger(JSONConverter.class);
+	private static final Logger log = LoggerFactory.getLogger(JSONSetConverter.class);
 
-	public String toJSON(T obj, boolean prettyPrint) {
+	public String setToJSON(Set<T> list) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			
-			if (prettyPrint) {
-				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-			}
-			
-			return objectMapper.writeValueAsString(obj);
+			//objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+			return objectMapper.writeValueAsString(list);
 
 		} catch (JsonProcessingException e) {
 			log.error(e.getMessage());
@@ -38,25 +35,19 @@ public final class JSONConverter<T> implements Serializable {
 		return "";
 	}
 
-	public String toJSON(T obj) {
-		return toJSON(obj, false);
-	}
-	
-	public Optional<T> jsonToObject(String textJSON, TypeReference<T> mapType) {
+	public Set<T> jsonToSet(String textJSON, TypeReference<Set<T>> mapType) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			//objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-			//TypeReference<T> mapType = new TypeReference<T>() {
+			//TypeReference<Set<T>> mapType = new TypeReference<Set<T>>() {
 			//};
-			T obj = objectMapper.readValue(textJSON, mapType);
-			
-			return Optional.of(obj);
-			
+			Set<T> jsonToSet = objectMapper.readValue(textJSON, mapType);
+			return jsonToSet;			
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
-		return Optional.empty();
+		return new HashSet<T>();
 	}
 
 }

@@ -3,11 +3,14 @@ package br.com.hfsframework.admin.client.domain;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
-import br.com.hfsframework.util.JSONConverter;
-import br.com.hfsframework.util.JSONListConverter;
+import br.com.hfsframework.util.converter.JSONConverter;
+import br.com.hfsframework.util.converter.JSONListConverter;
 
 public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 
@@ -15,10 +18,16 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 	
 	private Long id;
 
+	@NotBlank
+	@Size(min=4, max=64)
 	private String code;
 
+	@NotBlank
+	@Size(min=4, max=255)
 	private String description;
 
+	@NotBlank
+	@Size(min=4, max=4000)
 	private String value;
 
 	private Long idAdmParameterCategory;

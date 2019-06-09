@@ -17,7 +17,7 @@ import org.springframework.web.client.RestClientException;
 
 import br.com.hfsframework.base.interceptor.BaseHeaderClientHttpRequestInterceptor;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
-import br.com.hfsframework.util.HttpMessageConverterUtil;
+import br.com.hfsframework.util.network.HttpMessageConverterUtil;
 
 public abstract class BaseOAuth2RestTemplateClient {
 	

@@ -1,22 +1,42 @@
 package br.com.hfsframework.admin.client.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import br.com.hfsframework.base.client.BaseEntityRestClient;
-import br.com.hfsframework.util.JSONConverter;
-import br.com.hfsframework.util.JSONListConverter;
+import br.com.hfsframework.util.converter.JSONConverter;
+import br.com.hfsframework.util.converter.JSONListConverter;
 
 public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 
 	private String jsonText;
 	
 	private Long id;
+	
+	@NotBlank
+	@Size(min=4, max=255)
+	private String description;
+	
+	private Integer order;
+	
+	private Long idPage;
+	
+	private AdmPage admPage;
+	
+	private AdmMenu admMenuParent;
+	
+	private List<AdmMenu> admSubMenus;
 
 	public AdmMenu() {
 		super();
+		admSubMenus = new ArrayList<AdmMenu>();
+		admPage = new AdmPage();
 		this.clear();
 	}
 
@@ -41,8 +61,56 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 	@Override
 	public void setJsonText(String jsonText) {
 		this.jsonText = jsonText;		
-	}	
+	}
 
+	public Integer getOrder() {
+		return order;
+	}
+
+	public void setOrder(Integer order) {
+		this.order = order;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getIdPage() {
+		return idPage;
+	}
+
+	public void setIdPage(Long idPage) {
+		this.idPage = idPage;
+	}
+
+	public AdmPage getAdmPage() {
+		return admPage;
+	}
+
+	public void setAdmPage(AdmPage admPage) {
+		this.admPage = admPage;
+	}
+
+	public AdmMenu getAdmMenuParent() {
+		return admMenuParent;
+	}
+
+	public void setAdmMenuParent(AdmMenu admMenuParent) {
+		this.admMenuParent = admMenuParent;
+	}
+
+	public List<AdmMenu> getAdmSubMenus() {
+		return admSubMenus;
+	}
+
+	public void setAdmSubMenus(List<AdmMenu> admSubMenus) {
+		this.admSubMenus = admSubMenus;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -72,6 +140,12 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 	public void clear() {
 		this.jsonText = "";
 		this.id = null;
+		description = "";		
+		order = null;
+		idPage = null;
+		admPage.clear();
+		admMenuParent = null;
+		admSubMenus.clear();		
 	}
 
 	@Override

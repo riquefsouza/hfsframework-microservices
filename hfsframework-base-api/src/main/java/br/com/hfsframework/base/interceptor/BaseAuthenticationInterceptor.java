@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import br.com.hfsframework.util.AuthenticationUtil;
-import br.com.hfsframework.util.UrlUtil;
+import br.com.hfsframework.util.network.UrlUtil;
 
 public class BaseAuthenticationInterceptor extends HandlerInterceptorAdapter {
 

@@ -1,9 +1,8 @@
-package br.com.hfsframework.util;
+package br.com.hfsframework.util.converter;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,22 +11,26 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 @Component
-public final class JSONListConverter<T> implements Serializable {
+public final class JSONConverter<T> implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The log. */
-	private static final Logger log = LoggerFactory.getLogger(JSONListConverter.class);
+	private static final Logger log = LoggerFactory.getLogger(JSONConverter.class);
 
-	public String listToJSON(List<T> list) {
+	public String toJSON(T obj, boolean prettyPrint) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-			//objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-			return objectMapper.writeValueAsString(list);
+			
+			if (prettyPrint) {
+				objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+			}
+			
+			return objectMapper.writeValueAsString(obj);
 
 		} catch (JsonProcessingException e) {
 			log.error(e.getMessage());
@@ -35,19 +38,25 @@ public final class JSONListConverter<T> implements Serializable {
 		return "";
 	}
 
-	public List<T> jsonToList(String textJSON, TypeReference<List<T>> mapType) {
+	public String toJSON(T obj) {
+		return toJSON(obj, false);
+	}
+	
+	public Optional<T> jsonToObject(String textJSON, TypeReference<T> mapType) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			//objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-			//TypeReference<List<T>> mapType = new TypeReference<List<T>>() {
+			//TypeReference<T> mapType = new TypeReference<T>() {
 			//};
-			List<T> jsonToList = objectMapper.readValue(textJSON, mapType);
-			return jsonToList;			
+			T obj = objectMapper.readValue(textJSON, mapType);
+			
+			return Optional.of(obj);
+			
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
-		return new ArrayList<T>();
+		return Optional.empty();
 	}
 
 }

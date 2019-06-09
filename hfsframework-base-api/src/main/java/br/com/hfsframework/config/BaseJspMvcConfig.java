@@ -26,8 +26,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import br.com.hfsframework.base.interceptor.BaseUserInterceptor;
-import br.com.hfsframework.util.HttpMessageConverterUtil;
-import br.com.hfsframework.util.ResourceUtil;
+import br.com.hfsframework.util.network.HttpMessageConverterUtil;
+import br.com.hfsframework.util.network.ResourceUtil;
 
 public class BaseJspMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 

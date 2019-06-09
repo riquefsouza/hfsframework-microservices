@@ -42,9 +42,19 @@
 					<div class="col-md-4 form-group">
 						<input type="hidden" id="admParameter_id" th:field="*{id}" />
 						
-						<label for="admParameter_name"><span th:text="#{editAdmParameter.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="admParameter_name" maxlength="64" required="required" th:field="*{name}" />
-						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+						<label for="admParameter_code"><span th:text="#{editAdmParameter.code}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admParameter_code" maxlength="64" required="required" th:field="*{code}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="admParameter_description"><span th:text="#{editAdmParameter.description}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admParameter_description" maxlength="255" required="required" th:field="*{description}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+					</div>
+					<div class="col-md-6 form-group">
+						<label for="admParameter_value"><span th:text="#{editAdmParameter.value}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admParameter_value" maxlength="4000" required="required" th:field="*{value}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
 					</div>
 				</div>
 				

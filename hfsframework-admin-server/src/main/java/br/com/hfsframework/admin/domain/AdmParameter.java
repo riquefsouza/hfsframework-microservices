@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -47,18 +48,23 @@ public class AdmParameter implements Serializable {
 	private Long id;
 
 	/** The code. */
-	@Column(name="PAR_CODE")
+	@NotBlank
+	@Size(min=4, max=64)
+	@Column(name="PAR_CODE", nullable = false, length = 64)
 	private String code;
 
 	/** The description. */
 	@NotNull
 	@NotBlank
 	@NotEmpty	
-	@Column(name="PAR_DESCRIPTION", unique = true)
+	@Size(min=4, max=255)
+	@Column(name="PAR_DESCRIPTION", unique = true, nullable = false, length = 255)
 	private String description;
 
 	/** The value. */
-	@Column(name="PAR_VALUE")
+	@NotBlank
+	@Size(min=4, max=4000)
+	@Column(name="PAR_VALUE", nullable = false, length = 4000)
 	private String value;
 	
 	/** The id adm parameter category. */

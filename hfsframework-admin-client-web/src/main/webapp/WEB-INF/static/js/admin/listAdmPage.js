@@ -18,7 +18,8 @@ class ListAdmPage extends HFSSystemUtil {
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
 				$('#admPage_jsonText'),
 				[
-					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+					{field: 'description', headerText: 'Description', sortable: true, filter: false},
+					{field: 'url', headerText: 'Url', sortable: true, filter: false}
 				]);
 		
 	}

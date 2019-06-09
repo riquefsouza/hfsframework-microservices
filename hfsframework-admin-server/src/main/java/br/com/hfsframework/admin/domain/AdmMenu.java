@@ -18,6 +18,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -68,7 +71,10 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	private Long id;
 
 	/** The description. */
-	@Column(name = "MNU_DESCRIPTION", unique = true)
+	@NotNull
+	@NotBlank
+	@Size(min=4, max=255)
+	@Column(name = "MNU_DESCRIPTION", unique = true, nullable = false, length = 255)
 	private String description;
 
 	/** The order. */

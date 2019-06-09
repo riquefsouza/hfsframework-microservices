@@ -18,7 +18,8 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 				this._dlgDeleteConfirmation, this._messageButtonYes, this._messageButtonNo, 
 				$('#admParameterCategory_jsonText'),
 				[
-					{field: 'name', headerText: 'Name', sortable: true, filter: false}
+					{field: 'description', headerText: 'Description', sortable: true, filter: false},
+					{field: 'order', headerText: 'Order', sortable: true, filter: false}
 				]);
 		
 	}

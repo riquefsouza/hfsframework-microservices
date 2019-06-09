@@ -30,8 +30,8 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 import br.com.hfsframework.base.interceptor.BaseUserInterceptor;
-import br.com.hfsframework.util.HttpMessageConverterUtil;
-import br.com.hfsframework.util.ResourceUtil;
+import br.com.hfsframework.util.network.HttpMessageConverterUtil;
+import br.com.hfsframework.util.network.ResourceUtil;
 
 public class BaseThymeleafMvcConfig implements WebMvcConfigurer, ApplicationContextAware {
 
