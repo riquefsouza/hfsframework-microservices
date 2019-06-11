@@ -9,12 +9,12 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import br.com.hfsframework.admin.client.deserializer.AdmParameterCategoryDeserializer;
+import br.com.hfsframework.admin.client.deserializer.AdmParameterCategoryDTODeserializer;
 import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
+public class AdmParameterDTO implements BaseEntityRestClient<AdmParameterDTO, Long> {
 
 	private String jsonText;
 	
@@ -34,22 +34,22 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 
 	private Long idAdmParameterCategory;
 
-	@JsonDeserialize(using = AdmParameterCategoryDeserializer.class)
+	@JsonDeserialize(using = AdmParameterCategoryDTODeserializer.class)
 	//@JsonBackReference("parameter")
-	private AdmParameterCategory admParameterCategory;
+	private AdmParameterCategoryDTO admParameterCategory;
 
-	public AdmParameter() {
+	public AdmParameterDTO() {
 		super();
-		this.admParameterCategory = new AdmParameterCategory();
+		this.admParameterCategory = new AdmParameterCategoryDTO();
 		this.clear();
 	}
 
-	public AdmParameter(Long id) {
+	public AdmParameterDTO(Long id) {
 		super();
 	    this.id = id;
 	}
 	
-	public AdmParameter(Long id, String value, String description, String code, Long idParameterCategory, AdmParameterCategory parameterCategory) {
+	public AdmParameterDTO(Long id, String value, String description, String code, Long idParameterCategory, AdmParameterCategoryDTO parameterCategory) {
 		super();
 		this.id = id;
 		this.code = code;
@@ -67,11 +67,11 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 		this.id = id;
 	}
 
-	public String getCodigo() {
+	public String getCode() {
 		return this.code;
 	}
 
-	public void setCodigo(String code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
@@ -91,20 +91,20 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 		this.value = value;
 	}
 
-	public AdmParameterCategory getParameterCategory() {
+	public AdmParameterCategoryDTO getAdmParameterCategory() {
 		return this.admParameterCategory;
 	}
 
-	public void setParameterCategory(AdmParameterCategory parameterCategory) {
-		this.admParameterCategory = parameterCategory;
+	public void setAdmParameterCategory(AdmParameterCategoryDTO admParameterCategory) {
+		this.admParameterCategory = admParameterCategory;
 	}
 
-	public Long getIdParameterCategory() {
+	public Long getIdAdmParameterCategory() {
 		return idAdmParameterCategory;
 	}
 
-	public void setIdParameterCategory(Long idParameterCategory) {
-		this.idAdmParameterCategory = idParameterCategory;
+	public void setIdAdmParameterCategory(Long idAdmParameterCategory) {
+		this.idAdmParameterCategory = idAdmParameterCategory;
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmParameter other = (AdmParameter) obj;
+		AdmParameterDTO other = (AdmParameterDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -161,19 +161,19 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmParameter> conv = new JSONConverter<AdmParameter>();
+		JSONConverter<AdmParameterDTO> conv = new JSONConverter<AdmParameterDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmParameter> fromJSON(String jsonText) {
-		JSONConverter<AdmParameter> conv = new JSONConverter<AdmParameter>();
-		TypeReference<AdmParameter> mapType = new TypeReference<AdmParameter>() {};		
+	public Optional<AdmParameterDTO> fromJSON(String jsonText) {
+		JSONConverter<AdmParameterDTO> conv = new JSONConverter<AdmParameterDTO>();
+		TypeReference<AdmParameterDTO> mapType = new TypeReference<AdmParameterDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmParameter> fromJSON() {
+	public Optional<AdmParameterDTO> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -181,15 +181,15 @@ public class AdmParameter implements BaseEntityRestClient<AdmParameter, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmParameter> list) {
-		JSONListConverter<AdmParameter> conv = new JSONListConverter<AdmParameter>();
+	public String listToJSON(List<AdmParameterDTO> list) {
+		JSONListConverter<AdmParameterDTO> conv = new JSONListConverter<AdmParameterDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmParameter> jsonToLista(String jsonText) {
-		JSONListConverter<AdmParameter> conv = new JSONListConverter<AdmParameter>();
-		TypeReference<List<AdmParameter>> mapType = new TypeReference<List<AdmParameter>>() {};
+	public List<AdmParameterDTO> jsonToLista(String jsonText) {
+		JSONListConverter<AdmParameterDTO> conv = new JSONListConverter<AdmParameterDTO>();
+		TypeReference<List<AdmParameterDTO>> mapType = new TypeReference<List<AdmParameterDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 

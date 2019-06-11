@@ -6,13 +6,13 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.admin.client.domain.AdmParameter;
+import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.base.client.IBaseRestClient;
 
 @Service
-public class AdmParameterRestClient extends BaseRestClient<AdmParameter, Long>
-		implements IBaseRestClient<AdmParameter, Long> {
+public class AdmParameterRestClient extends BaseRestClient<AdmParameterDTO, Long>
+		implements IBaseRestClient<AdmParameterDTO, Long> {
 
 	public AdmParameterRestClient() {
 		super();
@@ -20,8 +20,8 @@ public class AdmParameterRestClient extends BaseRestClient<AdmParameter, Long>
 	
 	@Override
 	public boolean init(String authServerURL, String accesToken) throws RestClientException {
-		return super.init(authServerURL + "/api/v1/AdmParameter", accesToken, AdmParameter.class, 
-				new ParameterizedTypeReference<List<AdmParameter>>() {});
+		return super.init(authServerURL + "/api/v1/AdmParameter", accesToken, AdmParameterDTO.class, 
+				new ParameterizedTypeReference<List<AdmParameterDTO>>() {});
 	}	
 
 }

@@ -9,13 +9,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.com.hfsframework.admin.client.domain.AdmParameter;
-import br.com.hfsframework.admin.client.domain.AdmParameterCategory;
+import br.com.hfsframework.admin.client.domain.AdmParameterCategoryDTO;
 
-public class AdmParameterCategoryDeserializer extends JsonDeserializer<AdmParameterCategory> {
+public class AdmParameterCategoryDTODeserializer extends JsonDeserializer<AdmParameterCategoryDTO> {
 
 	@Override
-	public AdmParameterCategory deserialize(JsonParser jp, DeserializationContext ctxt)
+	public AdmParameterCategoryDTO deserialize(JsonParser jp, DeserializationContext ctxt)
 			throws IOException, JsonProcessingException {
 		ObjectCodec oc = jp.getCodec();
 		JsonNode node = oc.readTree(jp);
@@ -27,11 +26,12 @@ public class AdmParameterCategoryDeserializer extends JsonDeserializer<AdmParame
 
 		//Iterator<JsonNode> iter = admParameters.elements();
 		
-		AdmParameter admParameter;
-		AdmParameterCategory pc = new AdmParameterCategory(id, description, order);
+		//AdmParameter admParameter;
+		AdmParameterCategoryDTO pc = new AdmParameterCategoryDTO(id, description, order);
 		for (JsonNode item : admParameters) {
-			admParameter = new AdmParameter(item.asLong());
-			pc.getAdmParameters().add(admParameter);			
+			//admParameter = new AdmParameter(item.asLong());
+			//pc.getAdmParameters().add(admParameter);
+			pc.getAdmParameters().add(item.asLong());
 		}
 		 
 		return pc;

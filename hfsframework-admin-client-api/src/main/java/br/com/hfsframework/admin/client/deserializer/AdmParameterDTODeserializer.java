@@ -9,12 +9,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.com.hfsframework.admin.client.domain.AdmParameter;
+import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
 
-public class AdmParameterDeserializer extends JsonDeserializer<AdmParameter> {
+public class AdmParameterDTODeserializer extends JsonDeserializer<AdmParameterDTO> {
 
 	@Override
-	public AdmParameter deserialize(JsonParser jp, DeserializationContext ctxt) 
+	public AdmParameterDTO deserialize(JsonParser jp, DeserializationContext ctxt) 
 			throws IOException, JsonProcessingException {
 		ObjectCodec oc = jp.getCodec();
 		JsonNode node = oc.readTree(jp);
@@ -24,7 +24,7 @@ public class AdmParameterDeserializer extends JsonDeserializer<AdmParameter> {
 
 		// Iterator<JsonNode> iter = sublist.elements();
 
-		AdmParameter pc = new AdmParameter(id);
+		AdmParameterDTO pc = new AdmParameterDTO(id);
 		//for (JsonNode item : sublist) {
 			//objSubList = new ClassSubList(item.asLong());
 			//pc.getSubClass().add(objSubList);

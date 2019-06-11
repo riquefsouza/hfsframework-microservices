@@ -24,9 +24,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.com.hfsframework.admin.serializer.AdmParameterSetSerializer;
+import br.com.hfsframework.admin.client.domain.AdmParameterCategoryDTO;
 
 @Entity
 @Table(name="ADM_PARAMETER_CATEGORY")
@@ -36,6 +34,7 @@ import br.com.hfsframework.admin.serializer.AdmParameterSetSerializer;
 	@NamedQuery(name = "AdmParameterCategory.countOld", query = "SELECT COUNT(c) FROM AdmParameterCategory c WHERE LOWER(c.description) <> ?1 AND LOWER(c.description) = ?2")
 })	
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIgnoreProperties(value = { "admParameters" }, ignoreUnknown = true)
 public class AdmParameterCategory implements Serializable {
 	
 	/** The Constant serialVersionUID. */
@@ -66,7 +65,7 @@ public class AdmParameterCategory implements Serializable {
 	@Column(name="PMC_ORDER")
 	private Long order;
 
-	@JsonSerialize(using = AdmParameterSetSerializer.class)
+	//@JsonSerialize(using = AdmParameterSetSerializer.class)
 	@OneToMany(mappedBy="admParameterCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
 	private Set<AdmParameter> admParameters;
@@ -236,4 +235,15 @@ public class AdmParameterCategory implements Serializable {
 		return true;
 	}
 
+	public AdmParameterCategoryDTO toDTO() {
+		AdmParameterCategoryDTO dto = new AdmParameterCategoryDTO();
+		
+		dto.setId(id);
+		dto.setDescription(description);
+		dto.setOrder(order);
+		this.getparameters().forEach(item -> dto.getAdmParameters().add(item.getId()));
+		
+		return dto;
+	}
+	
 }

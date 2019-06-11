@@ -21,9 +21,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import br.com.hfsframework.admin.serializer.AdmParameterCategorySerializer;
+import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
 
 @Entity
 @Table(name="ADM_PARAMETER")
@@ -77,7 +75,7 @@ public class AdmParameter implements Serializable {
 
 	/** The adm parameter category. */
 	//bi-directional many-to-one association to AdmParameterCategory
-	@JsonSerialize(using = AdmParameterCategorySerializer.class)
+	//@JsonSerialize(using = AdmParameterCategorySerializer.class)
 	@ManyToOne(optional = false, fetch=FetchType.EAGER)
 	@JoinColumn(name="PAR_PMC_SEQ", nullable=false, insertable = false, updatable = false)
 	private AdmParameterCategory admParameterCategory;
@@ -262,6 +260,18 @@ public class AdmParameter implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public AdmParameterDTO toDTO() {
+		AdmParameterDTO dto = new AdmParameterDTO();
+		dto.setId(id);
+		dto.setCode(code);
+		dto.setDescription(description);
+		dto.setValue(value);
+		dto.setIdAdmParameterCategory(idAdmParameterCategory);
+		dto.setAdmParameterCategory(admParameterCategory.toDTO());
+		
+		return dto;
 	}
 
 }

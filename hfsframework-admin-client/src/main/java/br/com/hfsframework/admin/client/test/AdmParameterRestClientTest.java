@@ -11,15 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.admin.client.domain.AdmParameter;
-import br.com.hfsframework.admin.client.domain.AdmParameterCategory;
+import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
+import br.com.hfsframework.admin.client.domain.AdmParameterCategoryDTO;
 import br.com.hfsframework.base.client.BaseOAuth2RestTemplateClient;
 
 public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
 
 	private static final Logger log = LogManager.getLogger(AdmParameterRestClientTest.class);
 	
-	private List<AdmParameter> objList = new ArrayList<AdmParameter>();
+	private List<AdmParameterDTO> objList = new ArrayList<AdmParameterDTO>();
 	
 	private OAuth2RestTemplate oauth2RestTemplate = null;
 	
@@ -28,10 +28,10 @@ public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
     public AdmParameterRestClientTest(String oauthServer, String adminServer) {
     	this.adminServer = adminServer + "/api/v1/parametro";
     	
-    	objList.add(new AdmParameter(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new AdmParameterCategory(1L)));
-    	objList.add(new AdmParameter(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new AdmParameterCategory(1L)));
-    	objList.add(new AdmParameter(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new AdmParameterCategory(1L)));
-    	objList.add(new AdmParameter(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new AdmParameterCategory(1L)));
+    	objList.add(new AdmParameterDTO(1L, "ALFA valor", "ALFA descricao", "ALFA codigo", 1L, new AdmParameterCategoryDTO(1L)));
+    	objList.add(new AdmParameterDTO(2L, "BETA valor", "BETA descricao", "BETA codigo", 1L, new AdmParameterCategoryDTO(1L)));
+    	objList.add(new AdmParameterDTO(3L, "GAMA valor", "GAMA descricao", "GAMA codigo", 1L, new AdmParameterCategoryDTO(1L)));
+    	objList.add(new AdmParameterDTO(4L, "TETA valor", "TETA descricao", "TETA codigo", 1L, new AdmParameterCategoryDTO(1L)));
         
         oauth2RestTemplate = restTemplate(oauthServer, "admin", "admin");
 	}
@@ -42,8 +42,8 @@ public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
     	this.objList.stream().forEach(bean -> {
     		try {
     			
-    			AdmParameter saved = oauth2RestTemplate.postForObject(
-    					this.adminServer, bean, AdmParameter.class);
+    			AdmParameterDTO saved = oauth2RestTemplate.postForObject(
+    					this.adminServer, bean, AdmParameterDTO.class);
     			
     			bean.setId(saved.getId());
     			
@@ -58,8 +58,8 @@ public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
 		log.info(METHOD_ACTION.GET_ALL);
 		
 		try {
-			AdmParameter[] obj = oauth2RestTemplate.getForObject(
-					this.adminServer, AdmParameter[].class);
+			AdmParameterDTO[] obj = oauth2RestTemplate.getForObject(
+					this.adminServer, AdmParameterDTO[].class);
 			Arrays.asList(obj).stream().forEach(bean -> log.info("getAll: " + bean));
 		} catch (RestClientException e) {
 			log.error(e.getMessage());			
@@ -71,8 +71,8 @@ public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
     	this.objList.stream().forEach(bean -> {
     		
 			try {
-				AdmParameter obj = oauth2RestTemplate.getForObject(
-						this.adminServer + "/{id}", AdmParameter.class, bean.getId());
+				AdmParameterDTO obj = oauth2RestTemplate.getForObject(
+						this.adminServer + "/{id}", AdmParameterDTO.class, bean.getId());
 				
 				log.info("getById: " + obj);
     		} catch (RestClientException e) {
@@ -100,9 +100,9 @@ public class AdmParameterRestClientTest extends BaseOAuth2RestTemplateClient {
 	public void getEntity() {
 		this.objList.stream().forEach(bean -> {
 			try {
-				ResponseEntity<AdmParameter> entity = oauth2RestTemplate.getForEntity(this.adminServer + "/{id}", 
-						AdmParameter.class, bean.getId());
-				AdmParameter obj = (AdmParameter) entity.getBody();
+				ResponseEntity<AdmParameterDTO> entity = oauth2RestTemplate.getForEntity(this.adminServer + "/{id}", 
+						AdmParameterDTO.class, bean.getId());
+				AdmParameterDTO obj = (AdmParameterDTO) entity.getBody();
 				log.info("getEntity: " + obj);
 		
 				HttpHeaders responseHeaders = entity.getHeaders();
