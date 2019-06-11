@@ -1,7 +1,7 @@
 package br.com.hfsframework.admin.serializer;
 
 import br.com.hfsframework.admin.domain.VwAdmLogValue;
-import br.com.hfsframework.base.BaseListSerializer;
+import br.com.hfsframework.base.serializer.BaseListSerializer;
 
 public class VwAdmLogValueListSerializer extends BaseListSerializer<VwAdmLogValue> {
 

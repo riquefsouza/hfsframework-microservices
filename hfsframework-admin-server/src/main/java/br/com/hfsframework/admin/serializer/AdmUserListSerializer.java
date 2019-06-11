@@ -7,7 +7,7 @@
 package br.com.hfsframework.admin.serializer;
 
 import br.com.hfsframework.admin.domain.AdmUser;
-import br.com.hfsframework.base.BaseListSerializer;
+import br.com.hfsframework.base.serializer.BaseListSerializer;
 
 // TODO: Auto-generated Javadoc
 /**

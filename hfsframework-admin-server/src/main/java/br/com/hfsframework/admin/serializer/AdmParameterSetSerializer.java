@@ -7,7 +7,7 @@
 package br.com.hfsframework.admin.serializer;
 
 import br.com.hfsframework.admin.domain.AdmParameter;
-import br.com.hfsframework.base.BaseSetSerializer;
+import br.com.hfsframework.base.serializer.BaseSetSerializer;
 
 public class AdmParameterSetSerializer extends BaseSetSerializer<AdmParameter> {
 

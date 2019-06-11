@@ -21,6 +21,10 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import br.com.hfsframework.admin.serializer.AdmParameterCategorySerializer;
+
 @Entity
 @Table(name="ADM_PARAMETER")
 @NamedQueries({
@@ -73,6 +77,7 @@ public class AdmParameter implements Serializable {
 
 	/** The adm parameter category. */
 	//bi-directional many-to-one association to AdmParameterCategory
+	@JsonSerialize(using = AdmParameterCategorySerializer.class)
 	@ManyToOne(optional = false, fetch=FetchType.EAGER)
 	@JoinColumn(name="PAR_PMC_SEQ", nullable=false, insertable = false, updatable = false)
 	private AdmParameterCategory admParameterCategory;
@@ -257,12 +262,6 @@ public class AdmParameter implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Parameter [id=" + id + ", code=" + code + ", description=" + description + ", value=" + value
-				+ ", idParameterCategory=" + idAdmParameterCategory + ", parameterCategory=" + admParameterCategory + "]";
 	}
 
 }

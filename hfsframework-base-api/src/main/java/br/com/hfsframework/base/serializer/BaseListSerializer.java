@@ -1,4 +1,4 @@
-package br.com.hfsframework.base;
+package br.com.hfsframework.base.serializer;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

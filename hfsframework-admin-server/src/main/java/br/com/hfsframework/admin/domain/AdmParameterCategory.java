@@ -236,10 +236,4 @@ public class AdmParameterCategory implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "ParameterCategory [id=" + id + ", description=" + description + ", order=" + order + ", parameters="
-				+ admParameters + "]";
-	}
-	
 }
