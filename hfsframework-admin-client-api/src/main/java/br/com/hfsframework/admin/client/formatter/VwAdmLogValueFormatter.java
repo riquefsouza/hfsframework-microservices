@@ -5,18 +5,18 @@ import java.util.Locale;
 
 import org.springframework.format.Formatter;
 
-import br.com.hfsframework.admin.client.domain.VwAdmLogValue;
+import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
 
-public class VwAdmLogValueFormatter implements Formatter<VwAdmLogValue> {
+public class VwAdmLogValueFormatter implements Formatter<VwAdmLogValueDTO> {
 
 	@Override
-	public String print(VwAdmLogValue object, Locale locale) {
+	public String print(VwAdmLogValueDTO object, Locale locale) {
 		return object.getId().toString();
 	}
 
 	@Override
-	public VwAdmLogValue parse(String text, Locale locale) throws ParseException {
-		VwAdmLogValue obj = new VwAdmLogValue();
+	public VwAdmLogValueDTO parse(String text, Locale locale) throws ParseException {
+		VwAdmLogValueDTO obj = new VwAdmLogValueDTO();
 		obj.setId(Long.parseLong(text));
 		return obj;
 	}

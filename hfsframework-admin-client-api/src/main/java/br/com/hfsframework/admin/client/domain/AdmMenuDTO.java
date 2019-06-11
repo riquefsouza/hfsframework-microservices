@@ -13,7 +13,7 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
+public class AdmMenuDTO implements BaseEntityRestClient<AdmMenuDTO, Long> {
 
 	private String jsonText;
 	
@@ -27,20 +27,20 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 	
 	private Long idPage;
 	
-	private AdmPage admPage;
+	private AdmPageDTO admPage;
 	
-	private AdmMenu admMenuParent;
+	private AdmMenuDTO admMenuParent;
 	
-	private List<AdmMenu> admSubMenus;
+	private List<Long> admSubMenus;
 
-	public AdmMenu() {
+	public AdmMenuDTO() {
 		super();
-		admSubMenus = new ArrayList<AdmMenu>();
-		admPage = new AdmPage();
+		admSubMenus = new ArrayList<Long>();
+		admPage = new AdmPageDTO();
 		this.clear();
 	}
 
-	public AdmMenu(Long id) {
+	public AdmMenuDTO(Long id) {
 		super();
 	    this.id = id;
 	}
@@ -87,27 +87,27 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 		this.idPage = idPage;
 	}
 
-	public AdmPage getAdmPage() {
+	public AdmPageDTO getAdmPage() {
 		return admPage;
 	}
 
-	public void setAdmPage(AdmPage admPage) {
+	public void setAdmPage(AdmPageDTO admPage) {
 		this.admPage = admPage;
 	}
 
-	public AdmMenu getAdmMenuParent() {
+	public AdmMenuDTO getAdmMenuParent() {
 		return admMenuParent;
 	}
 
-	public void setAdmMenuParent(AdmMenu admMenuParent) {
+	public void setAdmMenuParent(AdmMenuDTO admMenuParent) {
 		this.admMenuParent = admMenuParent;
 	}
 
-	public List<AdmMenu> getAdmSubMenus() {
+	public List<Long> getAdmSubMenus() {
 		return admSubMenus;
 	}
 
-	public void setAdmSubMenus(List<AdmMenu> admSubMenus) {
+	public void setAdmSubMenus(List<Long> admSubMenus) {
 		this.admSubMenus = admSubMenus;
 	}
 	
@@ -127,7 +127,7 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmMenu other = (AdmMenu) obj;
+		AdmMenuDTO other = (AdmMenuDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -150,19 +150,19 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmMenu> conv = new JSONConverter<AdmMenu>();
+		JSONConverter<AdmMenuDTO> conv = new JSONConverter<AdmMenuDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmMenu> fromJSON(String jsonText) {
-		JSONConverter<AdmMenu> conv = new JSONConverter<AdmMenu>();
-		TypeReference<AdmMenu> mapType = new TypeReference<AdmMenu>() {};		
+	public Optional<AdmMenuDTO> fromJSON(String jsonText) {
+		JSONConverter<AdmMenuDTO> conv = new JSONConverter<AdmMenuDTO>();
+		TypeReference<AdmMenuDTO> mapType = new TypeReference<AdmMenuDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmMenu> fromJSON() {
+	public Optional<AdmMenuDTO> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -170,15 +170,15 @@ public class AdmMenu implements BaseEntityRestClient<AdmMenu, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmMenu> list) {
-		JSONListConverter<AdmMenu> conv = new JSONListConverter<AdmMenu>();
+	public String listToJSON(List<AdmMenuDTO> list) {
+		JSONListConverter<AdmMenuDTO> conv = new JSONListConverter<AdmMenuDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmMenu> jsonToLista(String jsonText) {
-		JSONListConverter<AdmMenu> conv = new JSONListConverter<AdmMenu>();
-		TypeReference<List<AdmMenu>> mapType = new TypeReference<List<AdmMenu>>() {};
+	public List<AdmMenuDTO> jsonToLista(String jsonText) {
+		JSONListConverter<AdmMenuDTO> conv = new JSONListConverter<AdmMenuDTO>();
+		TypeReference<List<AdmMenuDTO>> mapType = new TypeReference<List<AdmMenuDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 

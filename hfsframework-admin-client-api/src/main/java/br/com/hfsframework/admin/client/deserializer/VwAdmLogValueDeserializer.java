@@ -9,12 +9,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.com.hfsframework.admin.client.domain.VwAdmLogValue;
+import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
 
-public class VwAdmLogValueDeserializer extends JsonDeserializer<VwAdmLogValue> {
+public class VwAdmLogValueDeserializer extends JsonDeserializer<VwAdmLogValueDTO> {
 
 	@Override
-	public VwAdmLogValue deserialize(JsonParser jp, DeserializationContext ctxt) 
+	public VwAdmLogValueDTO deserialize(JsonParser jp, DeserializationContext ctxt) 
 			throws IOException, JsonProcessingException {
 		ObjectCodec oc = jp.getCodec();
 		JsonNode node = oc.readTree(jp);
@@ -24,7 +24,7 @@ public class VwAdmLogValueDeserializer extends JsonDeserializer<VwAdmLogValue> {
 
 		// Iterator<JsonNode> iter = sublist.elements();
 
-		VwAdmLogValue pc = new VwAdmLogValue(id);
+		VwAdmLogValueDTO pc = new VwAdmLogValueDTO(id);
 		//for (JsonNode item : sublist) {
 			//objSubList = new ClassSubList(item.asLong());
 			//pc.getSubClass().add(objSubList);

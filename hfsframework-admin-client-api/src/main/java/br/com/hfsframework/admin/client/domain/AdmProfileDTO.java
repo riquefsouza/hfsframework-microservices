@@ -14,7 +14,7 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
+public class AdmProfileDTO implements BaseEntityRestClient<AdmProfileDTO, Long> {
 
 	private String jsonText;
 	
@@ -26,20 +26,20 @@ public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 	@Size(min=4, max=255)
 	private String description;
 	
-	private Boolean geral;
+	private Boolean general;
 	
-	private Set<AdmPage> admPages;
+	private Set<Long> admPages;
 	
-	private Set<AdmUser> admUsers;
+	private Set<Long> admUsers;
 	
-	public AdmProfile() {
+	public AdmProfileDTO() {
 		super();
-		this.admPages = new HashSet<AdmPage>();
-		this.admUsers = new HashSet<AdmUser>();		
+		this.admPages = new HashSet<Long>();
+		this.admUsers = new HashSet<Long>();		
 		this.clear();
 	}
 
-	public AdmProfile(Long id) {
+	public AdmProfileDTO(Long id) {
 		super();
 	    this.id = id;
 	}
@@ -78,27 +78,27 @@ public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 		this.description = description;
 	}
 
-	public Boolean getGeral() {
-		return geral;
+	public Boolean getGeneral() {
+		return general;
 	}
 
-	public void setGeral(Boolean geral) {
-		this.geral = geral;
+	public void setGeneral(Boolean general) {
+		this.general = general;
 	}
 
-	public Set<AdmPage> getAdmPages() {
+	public Set<Long> getAdmPages() {
 		return admPages;
 	}
 
-	public void setAdmPages(Set<AdmPage> admPages) {
+	public void setAdmPages(Set<Long> admPages) {
 		this.admPages = admPages;
 	}
 
-	public Set<AdmUser> getAdmUsers() {
+	public Set<Long> getAdmUsers() {
 		return admUsers;
 	}
 
-	public void setAdmUsers(Set<AdmUser> admUsers) {
+	public void setAdmUsers(Set<Long> admUsers) {
 		this.admUsers = admUsers;
 	}	
 
@@ -118,7 +118,7 @@ public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmProfile other = (AdmProfile) obj;
+		AdmProfileDTO other = (AdmProfileDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -133,26 +133,26 @@ public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 		this.id = null;
 		this.administrator = false;
 		this.description = "";
-		this.geral = false;
+		this.general = false;
 		this.admPages.clear();
 		this.admUsers.clear();		
 	}
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmProfile> conv = new JSONConverter<AdmProfile>();
+		JSONConverter<AdmProfileDTO> conv = new JSONConverter<AdmProfileDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmProfile> fromJSON(String jsonText) {
-		JSONConverter<AdmProfile> conv = new JSONConverter<AdmProfile>();
-		TypeReference<AdmProfile> mapType = new TypeReference<AdmProfile>() {};		
+	public Optional<AdmProfileDTO> fromJSON(String jsonText) {
+		JSONConverter<AdmProfileDTO> conv = new JSONConverter<AdmProfileDTO>();
+		TypeReference<AdmProfileDTO> mapType = new TypeReference<AdmProfileDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmProfile> fromJSON() {
+	public Optional<AdmProfileDTO> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -160,15 +160,15 @@ public class AdmProfile implements BaseEntityRestClient<AdmProfile, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmProfile> list) {
-		JSONListConverter<AdmProfile> conv = new JSONListConverter<AdmProfile>();
+	public String listToJSON(List<AdmProfileDTO> list) {
+		JSONListConverter<AdmProfileDTO> conv = new JSONListConverter<AdmProfileDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmProfile> jsonToLista(String jsonText) {
-		JSONListConverter<AdmProfile> conv = new JSONListConverter<AdmProfile>();
-		TypeReference<List<AdmProfile>> mapType = new TypeReference<List<AdmProfile>>() {};
+	public List<AdmProfileDTO> jsonToLista(String jsonText) {
+		JSONListConverter<AdmProfileDTO> conv = new JSONListConverter<AdmProfileDTO>();
+		TypeReference<List<AdmProfileDTO>> mapType = new TypeReference<List<AdmProfileDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 

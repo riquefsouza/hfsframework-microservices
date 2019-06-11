@@ -6,12 +6,12 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.admin.client.domain.VwAdmLog;
+import br.com.hfsframework.admin.client.domain.VwAdmLogDTO;
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.base.client.IBaseRestClient;
 
 @Service
-public class VwAdmLogRestClient extends BaseRestClient<VwAdmLog, Long> implements IBaseRestClient<VwAdmLog, Long> {
+public class VwAdmLogRestClient extends BaseRestClient<VwAdmLogDTO, Long> implements IBaseRestClient<VwAdmLogDTO, Long> {
 	
 	//private static final Logger log = LoggerFactory.getLogger(VwAdmLogRestClient.class);
 	
@@ -21,8 +21,8 @@ public class VwAdmLogRestClient extends BaseRestClient<VwAdmLog, Long> implement
 	
 	@Override
 	public boolean init(String server, String accesToken) throws RestClientException {
-		return super.init(server + "/api/v1/vwAdmLog", accesToken, VwAdmLog.class, 
-				new ParameterizedTypeReference<List<VwAdmLog>>() {});
+		return super.init(server + "/api/v1/vwAdmLog", accesToken, VwAdmLogDTO.class, 
+				new ParameterizedTypeReference<List<VwAdmLogDTO>>() {});
 	}
 	
 }

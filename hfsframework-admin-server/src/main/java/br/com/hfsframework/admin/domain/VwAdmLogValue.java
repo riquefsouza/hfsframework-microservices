@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.lang3.ObjectUtils;
 
+import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
+
 @Entity
 @Table(name = "VW_ADM_LOG_VALUE")
 @NamedQueries({
@@ -402,4 +404,23 @@ public class VwAdmLogValue implements Serializable {
 	public String toString() {
 		return "mcolumn=" + getMcolumn() + ", previousValue=" + previousValue + ", value=" + value;
 	}
+	
+	public VwAdmLogValueDTO toDTO() {
+		VwAdmLogValueDTO dto = new VwAdmLogValueDTO();
+		dto.setId(id);
+		dto.setUser(user);
+		dto.setDate(date);
+		dto.setDateNumber(dateNumber);
+		dto.setOperation(operation);
+		dto.setIp(ip);
+		dto.setEntity(entity);
+		dto.setMtable(mtable);
+		dto.setKey(key);
+		dto.setMcolumn(mcolumn);
+		dto.setPreviousValue(previousValue);
+		dto.setValue(value);
+		
+		return dto;
+	}
+	
 }

@@ -29,6 +29,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.com.hfsframework.admin.client.domain.AdmMenuDTO;
 import br.com.hfsframework.admin.serializer.AdmMenuListSerializer;
 import br.com.hfsframework.security.model.MenuVO;
 
@@ -485,6 +486,18 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		return this.getNomeRecursivo(this);
 	}
 
+	public AdmMenuDTO toDTO() {
+		AdmMenuDTO dto = new AdmMenuDTO();
+		dto.setId(id);
+		dto.setOrder(order);
+		dto.setDescription(description);
+		dto.setIdPage(idPage);
+		dto.setAdmPage(admPage.toDTO());
+		dto.setAdmMenuParent(admMenuParent.toDTO());
+		this.getAdmSubMenus().forEach(item -> dto.getAdmSubMenus().add(item.getId()));
+		
+		return dto;
+	}
 	
 		
 }

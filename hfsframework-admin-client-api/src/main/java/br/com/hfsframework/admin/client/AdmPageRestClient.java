@@ -6,12 +6,12 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-import br.com.hfsframework.admin.client.domain.AdmPage;
+import br.com.hfsframework.admin.client.domain.AdmPageDTO;
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.base.client.IBaseRestClient;
 
 @Service
-public class AdmPageRestClient extends BaseRestClient<AdmPage, Long> implements IBaseRestClient<AdmPage, Long> {
+public class AdmPageRestClient extends BaseRestClient<AdmPageDTO, Long> implements IBaseRestClient<AdmPageDTO, Long> {
 	
 	//private static final Logger log = LoggerFactory.getLogger(AdmPageRestClient.class);
 	
@@ -21,8 +21,8 @@ public class AdmPageRestClient extends BaseRestClient<AdmPage, Long> implements 
 	
 	@Override
 	public boolean init(String server, String accesToken) throws RestClientException {
-		return super.init(server + "/api/v1/admPage", accesToken, AdmPage.class, 
-				new ParameterizedTypeReference<List<AdmPage>>() {});
+		return super.init(server + "/api/v1/admPage", accesToken, AdmPageDTO.class, 
+				new ParameterizedTypeReference<List<AdmPageDTO>>() {});
 	}
 	
 }

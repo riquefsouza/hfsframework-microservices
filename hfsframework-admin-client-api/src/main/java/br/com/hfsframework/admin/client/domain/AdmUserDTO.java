@@ -18,7 +18,7 @@ import br.com.hfsframework.util.CPFCNPJUtil;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
+public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 
 	private String jsonText;
 	
@@ -48,8 +48,8 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 	private String password;
 
 	private Set<String> admUserIps;
-	
-    private LocalDateTime createdDate;
+
+	private LocalDateTime createdDate;
  
     private LocalDateTime modifiedDate;
 
@@ -57,13 +57,13 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
  
     private String modifiedBy;
 
-	public AdmUser() {
+	public AdmUserDTO() {
 		super();
 		this.admUserIps = new HashSet<String>();
 		this.clear();
 	}
 
-	public AdmUser(Long id) {
+	public AdmUserDTO(Long id) {
 		super();
 	    this.id = id;
 	}
@@ -134,6 +134,14 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+    public Set<String> getAdmUserIps() {
+		return admUserIps;
+	}
+
+	public void setAdmUserIps(Set<String> admUserIps) {
+		this.admUserIps = admUserIps;
+	}	
 
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
@@ -183,7 +191,7 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmUser other = (AdmUser) obj;
+		AdmUserDTO other = (AdmUserDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -207,19 +215,19 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmUser> conv = new JSONConverter<AdmUser>();
+		JSONConverter<AdmUserDTO> conv = new JSONConverter<AdmUserDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmUser> fromJSON(String jsonText) {
-		JSONConverter<AdmUser> conv = new JSONConverter<AdmUser>();
-		TypeReference<AdmUser> mapType = new TypeReference<AdmUser>() {};		
+	public Optional<AdmUserDTO> fromJSON(String jsonText) {
+		JSONConverter<AdmUserDTO> conv = new JSONConverter<AdmUserDTO>();
+		TypeReference<AdmUserDTO> mapType = new TypeReference<AdmUserDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmUser> fromJSON() {
+	public Optional<AdmUserDTO> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -227,15 +235,15 @@ public class AdmUser implements BaseEntityRestClient<AdmUser, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmUser> list) {
-		JSONListConverter<AdmUser> conv = new JSONListConverter<AdmUser>();
+	public String listToJSON(List<AdmUserDTO> list) {
+		JSONListConverter<AdmUserDTO> conv = new JSONListConverter<AdmUserDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmUser> jsonToLista(String jsonText) {
-		JSONListConverter<AdmUser> conv = new JSONListConverter<AdmUser>();
-		TypeReference<List<AdmUser>> mapType = new TypeReference<List<AdmUser>>() {};
+	public List<AdmUserDTO> jsonToLista(String jsonText) {
+		JSONListConverter<AdmUserDTO> conv = new JSONListConverter<AdmUserDTO>();
+		TypeReference<List<AdmUserDTO>> mapType = new TypeReference<List<AdmUserDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 

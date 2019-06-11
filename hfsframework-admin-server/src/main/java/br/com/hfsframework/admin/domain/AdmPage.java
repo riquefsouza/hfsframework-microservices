@@ -27,6 +27,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import br.com.hfsframework.admin.client.domain.AdmPageDTO;
 import br.com.hfsframework.security.model.PageVO;
 
 @Entity
@@ -86,7 +87,7 @@ public class AdmPage implements Serializable {
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "admPage", fetch = FetchType.EAGER)	
 	private Set<AdmMenu> admMenus;	
-	
+
 	/**
 	 * Instantiates a new adm pagina.
 	 */
@@ -205,7 +206,14 @@ public class AdmPage implements Serializable {
 		this.admProfiles = admProfiles;
 	}
 	
+	public Set<AdmMenu> getAdmMenus() {
+		return admMenus;
+	}
 
+	public void setAdmMenus(Set<AdmMenu> admMenus) {
+		this.admMenus = admMenus;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -273,4 +281,16 @@ public class AdmPage implements Serializable {
 		p.setUrl(url);
 		return p;
 	}
+	
+	public AdmPageDTO toDTO() {
+		AdmPageDTO dto = new AdmPageDTO();
+		dto.setId(id);
+		dto.setDescription(description);
+		dto.setUrl(url);
+		this.getAdmProfiles().forEach(item -> dto.getAdmProfiles().add(item.getId()));
+		this.getAdmMenus().forEach(item -> dto.getAdmMenus().add(item.getId()));
+		
+		return dto;
+	}
+	
 }

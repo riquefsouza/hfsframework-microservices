@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.hfsframework.admin.client.AdmUserRestClient;
-import br.com.hfsframework.admin.client.domain.AdmUser;
+import br.com.hfsframework.admin.client.domain.AdmUserDTO;
 import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
 
 @Controller
 @RequestMapping(value = "/private/admUserView")
-public class AdmUserController extends BaseViewRegisterRestClient<AdmUser, Long, AdmUserRestClient> {
+public class AdmUserController extends BaseViewRegisterRestClient<AdmUserDTO, Long, AdmUserRestClient> {
 
 	private static final long serialVersionUID = 1L;
 

@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import br.com.hfsframework.admin.client.domain.VwAdmLogDTO;
 import br.com.hfsframework.util.CalendarUtil;
 
 @Entity
@@ -78,14 +79,14 @@ public class VwAdmLog implements Serializable {
 	
 	/** The lista log value. */
 	@Transient
-	private List<VwAdmLogValue> listaLogValue;
+	private List<VwAdmLogValue> listLogValue;
 
 	/**
 	 * Instantiates a new vw adm log.
 	 */
 	public VwAdmLog() {
 		super();
-		this.listaLogValue = new ArrayList<VwAdmLogValue>();
+		this.listLogValue = new ArrayList<VwAdmLogValue>();
 		limpar();
 	}
 			
@@ -132,7 +133,7 @@ public class VwAdmLog implements Serializable {
 		this.keyValue = null;
 		this.startDate = null;
 		this.endDate = null;
-		this.listaLogValue.clear();
+		this.listLogValue.clear();
 	}
 
 	/**
@@ -382,22 +383,22 @@ public class VwAdmLog implements Serializable {
 	}
 
 	/**
-	 * Gets the lista log value.
+	 * Gets the list log value.
 	 *
-	 * @return the lista log value
+	 * @return the list log value
 	 */
-	public List<VwAdmLogValue> getListaLogValue() {
-		return listaLogValue;
+	public List<VwAdmLogValue> getListLogValue() {
+		return listLogValue;
 	}
 
 	/**
-	 * Sets the lista log value.
+	 * Sets the list log value.
 	 *
-	 * @param listaLogValue
-	 *            the new lista log value
+	 * @param listLogValue
+	 *            the new list log value
 	 */
-	public void setListaLogValue(List<VwAdmLogValue> listaLogValue) {
-		this.listaLogValue = listaLogValue;
+	public void setListLogValue(List<VwAdmLogValue> listLogValue) {
+		this.listLogValue = listLogValue;
 	}
 
 	/**
@@ -452,6 +453,21 @@ public class VwAdmLog implements Serializable {
 	 */
 	public String getEndDateFormated() {
 		return CalendarUtil.Formatar(this.endDate, CalendarUtil.DATA_PADRAO);
+	}
+
+	public VwAdmLogDTO toDTO() {
+		VwAdmLogDTO dto = new VwAdmLogDTO();
+		dto.setId(id);
+		dto.setUser(user);
+		dto.setDate(date);
+		dto.setDateNumber(dateNumber);
+		dto.setOperation(operation);
+		dto.setIp(ip);
+		dto.setEntity(entity);
+		dto.setMtable(mtable);
+		dto.setKey(key);
+		
+		return dto;
 	}
 	
 }

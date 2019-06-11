@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.hfsframework.admin.client.VwAdmLogValueRestClient;
-import br.com.hfsframework.admin.client.domain.VwAdmLogValue;
+import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
 import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
 
 @Controller
 @RequestMapping(value = "/private/vwAdmLogValueView")
-public class VwAdmLogValueController extends BaseViewRegisterRestClient<VwAdmLogValue, Long, VwAdmLogValueRestClient> {
+public class VwAdmLogValueController extends BaseViewRegisterRestClient<VwAdmLogValueDTO, Long, VwAdmLogValueRestClient> {
 
 	private static final long serialVersionUID = 1L;
 

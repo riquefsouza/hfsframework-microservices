@@ -37,6 +37,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hfsframework.admin.client.domain.AdmUserDTO;
 import br.com.hfsframework.security.model.UserVO;
 import br.com.hfsframework.util.CPFCNPJUtil;
 
@@ -601,4 +602,23 @@ public class AdmUser implements Serializable {
 	public void setConfirmaPasswordNova(String confirmaPasswordNova) {
 		this.confirmaPasswordNova = confirmaPasswordNova;
 	}
+	
+	public AdmUserDTO toDTO() {
+		AdmUserDTO dto = new AdmUserDTO();
+		dto.setId(id);
+		dto.setCpf(cpf);
+		dto.setEmail(email);
+		dto.setLdapDN(ldapDN);
+		dto.setLogin(login);
+		dto.setName(name);
+		dto.setPassword(password);
+		this.getAdmUserIps().forEach(item -> dto.getAdmUserIps().add(item.getId().getIp()));
+		dto.setCreatedDate(createdDate);
+		dto.setModifiedDate(modifiedDate);
+		dto.setCreatedBy(createdBy);
+		dto.setModifiedBy(modifiedBy);
+		
+		return dto;
+	}
+	
  }

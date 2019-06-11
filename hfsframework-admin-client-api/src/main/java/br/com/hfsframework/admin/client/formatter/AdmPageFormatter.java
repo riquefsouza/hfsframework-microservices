@@ -5,18 +5,18 @@ import java.util.Locale;
 
 import org.springframework.format.Formatter;
 
-import br.com.hfsframework.admin.client.domain.AdmPage;
+import br.com.hfsframework.admin.client.domain.AdmPageDTO;
 
-public class AdmPageFormatter implements Formatter<AdmPage> {
+public class AdmPageFormatter implements Formatter<AdmPageDTO> {
 
 	@Override
-	public String print(AdmPage object, Locale locale) {
+	public String print(AdmPageDTO object, Locale locale) {
 		return object.getId().toString();
 	}
 
 	@Override
-	public AdmPage parse(String text, Locale locale) throws ParseException {
-		AdmPage obj = new AdmPage();
+	public AdmPageDTO parse(String text, Locale locale) throws ParseException {
+		AdmPageDTO obj = new AdmPageDTO();
 		obj.setId(Long.parseLong(text));
 		return obj;
 	}

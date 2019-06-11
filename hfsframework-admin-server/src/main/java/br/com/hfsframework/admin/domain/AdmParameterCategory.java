@@ -162,7 +162,7 @@ public class AdmParameterCategory implements Serializable {
 	 *
 	 * @return o the parameters
 	 */
-	public Set<AdmParameter> getparameters() {
+	public Set<AdmParameter> getAdmParameters() {
 		return this.admParameters;
 	}
 
@@ -172,7 +172,7 @@ public class AdmParameterCategory implements Serializable {
 	 * @param parameters
 	 *            o novo the parameters
 	 */
-	public void setparameters(Set<AdmParameter> parameters) {
+	public void setAdmParameters(Set<AdmParameter> parameters) {
 		this.admParameters = parameters;
 	}
 
@@ -184,7 +184,7 @@ public class AdmParameterCategory implements Serializable {
 	 * @return the parameter
 	 */
 	public AdmParameter addParameter(AdmParameter parameter) {
-		getparameters().add(parameter);
+		getAdmParameters().add(parameter);
 		parameter.setParameterCategory(this);
 
 		return parameter;
@@ -198,7 +198,7 @@ public class AdmParameterCategory implements Serializable {
 	 * @return the parameter
 	 */
 	public AdmParameter removeAdmParameter(AdmParameter parameter) {
-		getparameters().remove(parameter);
+		getAdmParameters().remove(parameter);
 		parameter.setParameterCategory(null);
 
 		return parameter;
@@ -241,7 +241,7 @@ public class AdmParameterCategory implements Serializable {
 		dto.setId(id);
 		dto.setDescription(description);
 		dto.setOrder(order);
-		this.getparameters().forEach(item -> dto.getAdmParameters().add(item.getId()));
+		this.getAdmParameters().forEach(item -> dto.getAdmParameters().add(item.getId()));
 		
 		return dto;
 	}

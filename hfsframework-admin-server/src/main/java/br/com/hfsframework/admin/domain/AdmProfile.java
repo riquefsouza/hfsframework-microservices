@@ -29,6 +29,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.com.hfsframework.admin.client.domain.AdmProfileDTO;
 import br.com.hfsframework.admin.serializer.AdmPageListSerializer;
 import br.com.hfsframework.admin.serializer.AdmUserListSerializer;
 import br.com.hfsframework.converter.BooleanToStringConverter;
@@ -333,4 +334,17 @@ public class AdmProfile implements Serializable {
 		}
 		return p;
 	}
+	
+	public AdmProfileDTO toDTO() {
+		AdmProfileDTO dto = new AdmProfileDTO();
+		dto.setId(id);
+		dto.setDescription(description);
+		dto.setAdministrator(administrator);
+		dto.setGeneral(general);
+		this.getAdmPages().forEach(item -> dto.getAdmPages().add(item.getId()));
+		this.getAdmUsers().forEach(item -> dto.getAdmUsers().add(item.getId()));
+		
+		return dto;
+	}
+	
 }

@@ -5,18 +5,18 @@ import java.util.Locale;
 
 import org.springframework.format.Formatter;
 
-import br.com.hfsframework.admin.client.domain.AdmMenu;
+import br.com.hfsframework.admin.client.domain.AdmMenuDTO;
 
-public class AdmMenuFormatter implements Formatter<AdmMenu> {
+public class AdmMenuFormatter implements Formatter<AdmMenuDTO> {
 
 	@Override
-	public String print(AdmMenu object, Locale locale) {
+	public String print(AdmMenuDTO object, Locale locale) {
 		return object.getId().toString();
 	}
 
 	@Override
-	public AdmMenu parse(String text, Locale locale) throws ParseException {
-		AdmMenu obj = new AdmMenu();
+	public AdmMenuDTO parse(String text, Locale locale) throws ParseException {
+		AdmMenuDTO obj = new AdmMenuDTO();
 		obj.setId(Long.parseLong(text));
 		return obj;
 	}

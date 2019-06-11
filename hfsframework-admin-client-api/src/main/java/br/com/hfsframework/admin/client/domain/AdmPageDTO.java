@@ -14,7 +14,7 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
+public class AdmPageDTO implements BaseEntityRestClient<AdmPageDTO, Long> {
 
 	private String jsonText;
 	
@@ -28,18 +28,18 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 	@Size(min=4, max=255)
 	private String url;
 	
-	private Set<AdmProfile> admProfiles;
+	private Set<Long> admProfiles;
 	
-	private Set<AdmMenu> admMenus;
+	private Set<Long> admMenus;
 		
-	public AdmPage() {
+	public AdmPageDTO() {
 		super();
-		admProfiles = new HashSet<AdmProfile>();
-		admMenus = new HashSet<AdmMenu>();
+		admProfiles = new HashSet<Long>();
+		admMenus = new HashSet<Long>();
 		this.clear();
 	}
 
-	public AdmPage(Long id) {
+	public AdmPageDTO(Long id) {
 		super();
 	    this.id = id;
 	}
@@ -78,7 +78,7 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmPage other = (AdmPage) obj;
+		AdmPageDTO other = (AdmPageDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -99,19 +99,19 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<AdmPage> conv = new JSONConverter<AdmPage>();
+		JSONConverter<AdmPageDTO> conv = new JSONConverter<AdmPageDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<AdmPage> fromJSON(String jsonText) {
-		JSONConverter<AdmPage> conv = new JSONConverter<AdmPage>();
-		TypeReference<AdmPage> mapType = new TypeReference<AdmPage>() {};		
+	public Optional<AdmPageDTO> fromJSON(String jsonText) {
+		JSONConverter<AdmPageDTO> conv = new JSONConverter<AdmPageDTO>();
+		TypeReference<AdmPageDTO> mapType = new TypeReference<AdmPageDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<AdmPage> fromJSON() {
+	public Optional<AdmPageDTO> fromJSON() {
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -119,15 +119,15 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<AdmPage> list) {
-		JSONListConverter<AdmPage> conv = new JSONListConverter<AdmPage>();
+	public String listToJSON(List<AdmPageDTO> list) {
+		JSONListConverter<AdmPageDTO> conv = new JSONListConverter<AdmPageDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<AdmPage> jsonToLista(String jsonText) {
-		JSONListConverter<AdmPage> conv = new JSONListConverter<AdmPage>();
-		TypeReference<List<AdmPage>> mapType = new TypeReference<List<AdmPage>>() {};
+	public List<AdmPageDTO> jsonToLista(String jsonText) {
+		JSONListConverter<AdmPageDTO> conv = new JSONListConverter<AdmPageDTO>();
+		TypeReference<List<AdmPageDTO>> mapType = new TypeReference<List<AdmPageDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 
@@ -147,19 +147,19 @@ public class AdmPage implements BaseEntityRestClient<AdmPage, Long> {
 		this.url = url;
 	}
 
-	public Set<AdmProfile> getAdmProfiles() {
+	public Set<Long> getAdmProfiles() {
 		return admProfiles;
 	}
 
-	public void setAdmProfiles(Set<AdmProfile> admProfiles) {
+	public void setAdmProfiles(Set<Long> admProfiles) {
 		this.admProfiles = admProfiles;
 	}
 
-	public Set<AdmMenu> getAdmMenus() {
+	public Set<Long> getAdmMenus() {
 		return admMenus;
 	}
 
-	public void setAdmMenus(Set<AdmMenu> admMenus) {
+	public void setAdmMenus(Set<Long> admMenus) {
 		this.admMenus = admMenus;
 	}
 
