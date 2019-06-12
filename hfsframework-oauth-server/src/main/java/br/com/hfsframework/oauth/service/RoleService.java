@@ -5,11 +5,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.base.BaseBusinessService;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
 import br.com.hfsframework.oauth.domain.Role;
 import br.com.hfsframework.oauth.repository.IRoleRepository;
 
 @Service
-public class RoleService extends BaseBusinessService<Role, Long, IRoleRepository> 
+public class RoleService extends BaseBusinessService<RoleDTO, Role, Long, IRoleRepository> 
 	implements IRoleService {
 
 	/** The Constant serialVersionUID. */

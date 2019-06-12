@@ -22,12 +22,12 @@ import br.com.hfsframework.base.BaseDualList;
 import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
 import br.com.hfsframework.oauth.client.RoleRestClient;
 import br.com.hfsframework.oauth.client.UserRestClient;
-import br.com.hfsframework.oauth.client.domain.Role;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
 @Controller
 @RequestMapping(value = "/private/userView")
-public class AutUserController extends BaseViewRegisterRestClient<User, Long, UserRestClient> {
+public class AutUserController extends BaseViewRegisterRestClient<UserDTO, Long, UserRestClient> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,16 +36,16 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 	@Autowired
 	private RoleRestClient roleClient;
 	
-	private BaseDualList<Role> dualListRole;
+	private BaseDualList<RoleDTO> dualListRole;
 	
-	private List<Role> listAllRoles;
+	private List<RoleDTO> listAllRoles;
 	
 	public AutUserController() {
 		super(new UserRestClient(), 
 				"/private/autUser/listAutUser", 
 				"/private/autUser/editAutUser", 
 				"AutUser");
-		this.listAllRoles = new ArrayList<Role>();
+		this.listAllRoles = new ArrayList<RoleDTO>();
 	}
 	
 	@PostConstruct
@@ -53,24 +53,24 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 		//
 	}	
 	
-	private void carregarRoles(ModelAndView mv, User bean, boolean bEdit) {
-		List<Role> listRolesSelected;		 
-		List<Role> listRoles = roleClient.getAll();
+	private void carregarRoles(ModelAndView mv, UserDTO bean, boolean bEdit) {
+		List<RoleDTO> listRolesSelected;		 
+		List<RoleDTO> listRoles = roleClient.getAll();
 		listAllRoles.addAll(listRoles);
 		
 		if (bEdit) { 
-			listRolesSelected = new ArrayList<Role>(bean.getRoles());
+			listRolesSelected = new ArrayList<RoleDTO>(bean.getRoles());
 			listRoles.removeAll(listRolesSelected);
 		} else {
-			listRolesSelected = new ArrayList<Role>();
+			listRolesSelected = new ArrayList<RoleDTO>();
 		}
 		
-		this.dualListRole = new BaseDualList<Role>(listRoles, listRolesSelected);		
+		this.dualListRole = new BaseDualList<RoleDTO>(listRoles, listRolesSelected);		
 	}
 	
 	@Override
 	@GetMapping("/add")	
-	public ModelAndView add(User bean) {
+	public ModelAndView add(UserDTO bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 		bean.clear();
 		
@@ -92,10 +92,10 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 
 	@Override
 	@GetMapping("/edit")
-	public ModelAndView edit(User bean) {
+	public ModelAndView edit(UserDTO bean) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
 
-		Optional<User> obj = bean.fromJSON();
+		Optional<UserDTO> obj = bean.fromJSON();
 		if (obj.isPresent()) {
 			bean = obj.get();
 
@@ -117,7 +117,7 @@ public class AutUserController extends BaseViewRegisterRestClient<User, Long, Us
 
 	@Override
 	@PostMapping
-	public ModelAndView save(@Valid @ModelAttribute User bean, 
+	public ModelAndView save(@Valid @ModelAttribute UserDTO bean, 
 			BindingResult result, RedirectAttributes attributes) {
 	
 		Optional<ModelAndView> mv = getPage(this.getListPage());

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hfsframework.base.BaseRestController;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.dto.NewUserDTO;
 import br.com.hfsframework.oauth.service.IUserService;
@@ -24,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/user")
-public class UserRestController extends BaseRestController<User, Long, IUserService> {
+public class UserRestController extends BaseRestController<UserDTO, User, Long, IUserService> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -48,8 +49,8 @@ public class UserRestController extends BaseRestController<User, Long, IUserServ
 	
 	@ApiOperation("Find by username")
 	@GetMapping("/find")
-	public ResponseEntity<User> findByUsername(@RequestParam(name = "username", required = true) String username) {
-		Optional<User> obj = this.service.findByUsername(username);
+	public ResponseEntity<UserDTO> findByUsername(@RequestParam(name = "username", required = true) String username) {
+		Optional<UserDTO> obj = this.service.findByUsername(username);
 		
 		if (!obj.isPresent()) {
 			log.info("FIND BY USERNAME NOT FOUND: " + username);
@@ -61,8 +62,8 @@ public class UserRestController extends BaseRestController<User, Long, IUserServ
 
 	@ApiOperation("Find by email")
 	@GetMapping("/findemail")
-	public ResponseEntity<User> findByEmail(@RequestParam(name = "email", required = true) String email) {
-		Optional<User> obj = this.service.findByEmail(email);
+	public ResponseEntity<UserDTO> findByEmail(@RequestParam(name = "email", required = true) String email) {
+		Optional<UserDTO> obj = this.service.findByEmail(email);
 		
 		if (!obj.isPresent()) {
 			log.info("FIND BY EMAIL NOT FOUND: " + email);

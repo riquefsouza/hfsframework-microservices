@@ -42,8 +42,9 @@ import io.swagger.annotations.ApiOperation;
  * @param <R> the generic type
  */
 @Api
-public abstract class BaseResourceRestController<T, I extends Serializable, 
-	S extends BaseBusinessService<T, I, ? extends JpaRepository<T, I>>,
+public abstract class BaseResourceRestController<D, T extends IBaseToDTO<D>,
+	I extends Serializable, 
+	S extends BaseBusinessService<D, T, I, ? extends JpaRepository<T, I>>,
 	R extends ResourceSupport> {
 
 	/** The log. */

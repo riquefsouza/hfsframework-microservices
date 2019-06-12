@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.hfsframework.base.IBaseCrud;
+import br.com.hfsframework.base.IBaseToDTO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -25,8 +26,9 @@ import br.com.hfsframework.base.IBaseCrud;
  * @param <B>
  *            the generic type
  */
-public abstract class BaseViewReportDTO<T, I extends Serializable, 
-		B extends IBaseCrud<T, I>>
+public abstract class BaseViewReportDTO<D, T extends IBaseToDTO<D>, 
+	I extends Serializable, 
+		B extends IBaseCrud<D, T, I>>
 		extends BaseViewReportController implements Serializable {
 	
 	/** The Constant serialVersionUID. */

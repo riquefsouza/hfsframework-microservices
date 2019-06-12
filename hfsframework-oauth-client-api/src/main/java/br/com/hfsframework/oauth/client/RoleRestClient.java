@@ -11,10 +11,10 @@ import org.springframework.web.client.RestClientException;
 
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.base.client.IBaseRestClient;
-import br.com.hfsframework.oauth.client.domain.Role;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
 
 @Service
-public class RoleRestClient extends BaseRestClient<Role, Long> implements IBaseRestClient<Role, Long> {
+public class RoleRestClient extends BaseRestClient<RoleDTO, Long> implements IBaseRestClient<RoleDTO, Long> {
 	
 	private static final Logger log = LoggerFactory.getLogger(RoleRestClient.class);
 	
@@ -24,14 +24,14 @@ public class RoleRestClient extends BaseRestClient<Role, Long> implements IBaseR
 	
 	@Override
 	public boolean init(String serverURL, String accesToken) throws RestClientException {
-		return super.init(serverURL + "/api/v1/role", accesToken, Role.class, 
-				new ParameterizedTypeReference<List<Role>>() {});
+		return super.init(serverURL + "/api/v1/role", accesToken, RoleDTO.class, 
+				new ParameterizedTypeReference<List<RoleDTO>>() {});
 	}
 	
-	public Optional<Role> findByName(String name) throws RestClientException {
+	public Optional<RoleDTO> findByName(String name) throws RestClientException {
 		try {
-			Role obj = restTemplate.getForObject(
-					this.server + "/find?name=" + name, Role.class);
+			RoleDTO obj = restTemplate.getForObject(
+					this.server + "/find?name=" + name, RoleDTO.class);
 
 			return Optional.of(obj);
 			

@@ -11,12 +11,13 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import br.com.hfsframework.base.BaseBusinessService;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 import br.com.hfsframework.oauth.domain.User;
 import br.com.hfsframework.oauth.repository.IUserRepository;
 import br.com.hfsframework.util.exceptions.TransactionException;
 
 @Service
-public class UserService extends BaseBusinessService<User, Long, IUserRepository>
+public class UserService extends BaseBusinessService<UserDTO, User, Long, IUserRepository>
 	implements IUserService {
 
 	/** The Constant serialVersionUID. */
@@ -24,13 +25,13 @@ public class UserService extends BaseBusinessService<User, Long, IUserRepository
 
 	@Override
 	@Cacheable(value = "user.byId", key = "#id", unless = "#result != null")
-	public Optional<User> get(Long id) {
-		return super.get(id);
+	public Optional<UserDTO> getDTO(Long id) {
+		return super.getDTO(id);
 	}
 
 	@Cacheable(value = "user.byUsername", key = "#username", unless = "#username != null)")
-	public Optional<User> findByUsername(String username) {
-		return getRepositorio().findByUsername(username);
+	public Optional<UserDTO> findByUsername(String username) {
+		return Optional.of(getRepositorio().findByUsername(username).get().toDTO());
 	}
 
 	@Override
@@ -50,8 +51,8 @@ public class UserService extends BaseBusinessService<User, Long, IUserRepository
 		super.delete(user);
 	}
 	
-	public Optional<User> findByEmail(String email) {
-		return getRepositorio().findByEmail(email);
+	public Optional<UserDTO> findByEmail(String email) {		
+		return Optional.of(getRepositorio().findByEmail(email).get().toDTO());
 	}
 
 }

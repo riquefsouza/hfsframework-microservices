@@ -16,26 +16,28 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/admParameter")
-public class AdmParameterRestController extends BaseRestController<AdmParameter, Long, IAdmParameterService> {
+public class AdmParameterRestController
+		extends BaseRestController<AdmParameterDTO, AdmParameter, Long, IAdmParameterService> {
 
 	private static final long serialVersionUID = 1L;
 
 	public AdmParameterRestController() {
 		super(true);
 	}
-	
+
 	@ApiOperation("Find by description")
 	@GetMapping("/find")
 	public ResponseEntity<AdmParameterDTO> findByDescription(
 			@RequestParam(name = "description", required = true) String description) {
 
-		//if (AuthenticationUtil.tokenHasRole(request, "ADMIN")) {
-			//return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-		//}
-	
-		//Optional<AdmParameterCategory> obj = this.service.findByDescription(description);
+		// if (AuthenticationUtil.tokenHasRole(request, "ADMIN")) {
+		// return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		// }
+
+		// Optional<AdmParameterCategory> obj =
+		// this.service.findByDescription(description);
 		Optional<AdmParameter> obj = this.service.get(2L);
-		
+
 		if (!obj.isPresent()) {
 			log.info("FIND BY description NOT FOUND: " + description);
 			return ResponseEntity.notFound().build();
@@ -43,5 +45,5 @@ public class AdmParameterRestController extends BaseRestController<AdmParameter,
 
 		return ResponseEntity.ok(obj.get().toDTO());
 	}
-	
+
 }

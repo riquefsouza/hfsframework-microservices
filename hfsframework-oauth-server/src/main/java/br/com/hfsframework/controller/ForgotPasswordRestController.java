@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 import br.com.hfsframework.oauth.service.IUserService;
 import br.com.hfsframework.useful.mail.IMailUtil;
 
@@ -27,7 +27,7 @@ public class ForgotPasswordRestController {
 			@RequestParam(name = "subject", required = true) String subject,
 			@RequestParam(name = "text", required = true) String text) {
 
-		Optional<User> user = userService.findByUsername(username);
+		Optional<UserDTO> user = userService.findByUsername(username);
 
 		try {
 			if (user.isPresent()) {

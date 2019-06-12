@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
-import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 import br.com.hfsframework.oauth.service.IUserService;
 
 public class CustomTokenEnhancer implements TokenEnhancer {
@@ -22,7 +22,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = new HashMap<>();
         
-		Optional<User> obj = userService.findByUsername(authentication.getName());
+		Optional<UserDTO> obj = userService.findByUsername(authentication.getName());
 		
 		if (obj.isPresent()) {
 			additionalInfo.put("email", obj.get().getEmail());

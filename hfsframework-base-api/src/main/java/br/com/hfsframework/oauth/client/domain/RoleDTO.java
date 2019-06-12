@@ -12,7 +12,7 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class Role implements BaseEntityRestClient<Role, Long> {
+public class RoleDTO implements BaseEntityRestClient<RoleDTO, Long> {
 	
 	private String jsonText; 
 	
@@ -22,17 +22,17 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 	@Size(min=4, max=64)
 	private String name;
 
-	public Role() {
+	public RoleDTO() {
 		super();
 		this.clear();
 	}
 	
-	public Role(Long id) {
+	public RoleDTO(Long id) {
 		super();
 		this.id = id;
 	}
 	
-	public Role(String name) {
+	public RoleDTO(String name) {
 		super();
 		this.name = name;
 	}
@@ -74,19 +74,19 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<Role> conv = new JSONConverter<Role>();
+		JSONConverter<RoleDTO> conv = new JSONConverter<RoleDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<Role> fromJSON(String jsonText) {
-		JSONConverter<Role> conv = new JSONConverter<Role>();
-		TypeReference<Role> mapType = new TypeReference<Role>() {};		
+	public Optional<RoleDTO> fromJSON(String jsonText) {
+		JSONConverter<RoleDTO> conv = new JSONConverter<RoleDTO>();
+		TypeReference<RoleDTO> mapType = new TypeReference<RoleDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 
 	@Override
-	public Optional<Role> fromJSON(){
+	public Optional<RoleDTO> fromJSON(){
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -94,15 +94,15 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<Role> list) {
-		JSONListConverter<Role> conv = new JSONListConverter<Role>();
+	public String listToJSON(List<RoleDTO> list) {
+		JSONListConverter<RoleDTO> conv = new JSONListConverter<RoleDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<Role> jsonToLista(String jsonText) {
-		JSONListConverter<Role> conv = new JSONListConverter<Role>();
-		TypeReference<List<Role>> mapType = new TypeReference<List<Role>>() {};
+	public List<RoleDTO> jsonToLista(String jsonText) {
+		JSONListConverter<RoleDTO> conv = new JSONListConverter<RoleDTO>();
+		TypeReference<List<RoleDTO>> mapType = new TypeReference<List<RoleDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 
@@ -122,7 +122,7 @@ public class Role implements BaseEntityRestClient<Role, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Role other = (Role) obj;
+		RoleDTO other = (RoleDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

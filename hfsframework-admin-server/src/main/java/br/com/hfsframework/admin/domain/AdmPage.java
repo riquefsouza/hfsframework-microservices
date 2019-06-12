@@ -28,6 +28,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.hfsframework.admin.client.domain.AdmPageDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.security.model.PageVO;
 
 @Entity
@@ -38,8 +39,8 @@ import br.com.hfsframework.security.model.PageVO;
 	@NamedQuery(name = "AdmPage.countAntigo", query = "SELECT COUNT(c) FROM AdmPage c WHERE LOWER(c.url) <> ?1 AND LOWER(c.url) = ?2"),	
 	@NamedQuery(name = "AdmPage.findPerfisPorPage", query="SELECT distinct p FROM AdmPage pag inner join pag.admProfiles p where pag = ?1")
 })
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class AdmPage implements Serializable {
+//@JsonIdentityInfo(generator = ObjectIdGenerators.ProperatyGenerator.class, property = "id")
+public class AdmPage implements Serializable, IBaseToDTO<AdmPageDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

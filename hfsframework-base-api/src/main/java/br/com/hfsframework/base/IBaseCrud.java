@@ -23,7 +23,8 @@ import br.com.hfsframework.util.exceptions.TransactionException;
  * @param <I>
  *            the generic type
  */
-public interface IBaseCrud<T, I extends Serializable> extends Serializable {
+public interface IBaseCrud<D, T extends IBaseToDTO<D>, 
+	I extends Serializable> extends Serializable {
 
 	/** The Constant ERRO_INSERT. */
 	public static final String ERRO_INSERT = "Erro de Transação ao Incluir: ";
@@ -41,7 +42,9 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 *            the id
 	 * @return the t
 	 */
-	Optional<T> get(I id);	
+	Optional<T> get(I id);
+	
+	Optional<D> getDTO(I id);
 
 	/**
 	 * Get all.
@@ -50,6 +53,8 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 */
 	List<T> getAll();
 	
+	List<D> getAllDTO();
+	
 	/**
 	 * Get all.
 	 *
@@ -57,6 +62,8 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 * @return the page
 	 */
 	Page<T> getAll(Pageable p);
+	
+	Page<D> getAllDTO(Pageable p);
 
 	/**
 	 * Add.
@@ -68,7 +75,7 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 *             the transacao exception
 	 */
 	Optional<T> add(T bean) throws TransactionException;
-
+	
 	/**
 	 * Update.
 	 *
@@ -79,7 +86,7 @@ public interface IBaseCrud<T, I extends Serializable> extends Serializable {
 	 *             the transacao exception
 	 */
 	Optional<T> update(T bean) throws TransactionException;
-
+	
 	/**
 	 * Delete.
 	 *

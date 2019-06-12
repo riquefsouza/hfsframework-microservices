@@ -25,6 +25,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.hfsframework.admin.client.domain.AdmParameterCategoryDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 
 @Entity
 @Table(name="ADM_PARAMETER_CATEGORY")
@@ -35,7 +36,7 @@ import br.com.hfsframework.admin.client.domain.AdmParameterCategoryDTO;
 })	
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //@JsonIgnoreProperties(value = { "admParameters" }, ignoreUnknown = true)
-public class AdmParameterCategory implements Serializable {
+public class AdmParameterCategory implements Serializable, IBaseToDTO<AdmParameterCategoryDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

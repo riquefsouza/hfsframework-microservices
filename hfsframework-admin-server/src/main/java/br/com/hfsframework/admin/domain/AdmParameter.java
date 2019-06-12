@@ -22,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 
 @Entity
 @Table(name="ADM_PARAMETER")
@@ -31,7 +32,7 @@ import br.com.hfsframework.admin.client.domain.AdmParameterDTO;
 	@NamedQuery(name = "AdmParameter.countAntigo", query = "SELECT COUNT(c) FROM AdmParameter c WHERE LOWER(c.description) <> ?1 AND LOWER(c.description) = ?2"),
 	@NamedQuery(name = "AdmParameter.getValueByCode", query = "SELECT c.value FROM AdmParameter c WHERE c.code= ?1")
 })
-public class AdmParameter implements Serializable {
+public class AdmParameter implements Serializable, IBaseToDTO<AdmParameterDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

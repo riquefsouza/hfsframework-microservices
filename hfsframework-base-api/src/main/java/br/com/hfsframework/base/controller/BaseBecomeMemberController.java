@@ -15,8 +15,8 @@ import org.springframework.web.client.RestClientException;
 import com.google.common.collect.Sets;
 
 import br.com.hfsframework.base.client.BaseRestTemplateClient;
-import br.com.hfsframework.oauth.client.domain.Role;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
 //@Controller
 public class BaseBecomeMemberController extends BaseRestTemplateClient {
@@ -42,7 +42,7 @@ public class BaseBecomeMemberController extends BaseRestTemplateClient {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String pwd = passwordEncoder.encode(confirmNewPassword);
 			
-			User user = new User(username, pwd, email, "http://temp", Sets.newHashSet(new Role("USER")));
+			UserDTO user = new UserDTO(username, pwd, email, "http://temp", Sets.newHashSet(new RoleDTO("USER")));
 			user.setCurrentPassword(pwd);
 			user.setNewPassword(newPassword);
 			user.setConfirmNewPassword(confirmNewPassword);

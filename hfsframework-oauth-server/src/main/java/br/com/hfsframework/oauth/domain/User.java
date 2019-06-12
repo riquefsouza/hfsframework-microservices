@@ -21,9 +21,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.URL;
 
+import br.com.hfsframework.base.IBaseToDTO;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
+
 @Entity 
 @Table(name = "AUT_USER")
-public class User implements Serializable {
+public class User implements Serializable, IBaseToDTO<UserDTO> {
 	 
 	private static final long serialVersionUID = 1L;
 	
@@ -166,5 +169,18 @@ public class User implements Serializable {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", urlPhoto=" + urlPhoto + ", roles=" + roles + "]";
 	} 
+	
+	@Override
+	public UserDTO toDTO() {
+		UserDTO dto = new UserDTO();
+		dto.setId(id);
+		dto.setUsername(username); 
+		dto.setPassword(password); 
+		dto.setEmail(email);
+		dto.setUrlPhoto(urlPhoto);
+		this.getRoles().forEach(item -> dto.getRoles().add(item.toDTO()));
+		
+		return dto;
+	}
 	
 }

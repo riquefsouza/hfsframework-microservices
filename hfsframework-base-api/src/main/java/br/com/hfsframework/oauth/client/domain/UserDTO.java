@@ -17,7 +17,7 @@ import br.com.hfsframework.base.client.BaseEntityRestClient;
 import br.com.hfsframework.util.converter.JSONConverter;
 import br.com.hfsframework.util.converter.JSONListConverter;
 
-public class User implements BaseEntityRestClient<User, Long> {
+public class UserDTO implements BaseEntityRestClient<UserDTO, Long> {
 
 	private String jsonText;
 	
@@ -50,15 +50,15 @@ public class User implements BaseEntityRestClient<User, Long> {
 	@Size(min=4, max=64)
 	private String confirmNewPassword;
 
-	private Set<Role> roles;
+	private Set<RoleDTO> roles;
 	
-	public User() {
+	public UserDTO() {
 		super();
-		roles = new HashSet<Role>();
+		roles = new HashSet<RoleDTO>();
 		this.clear();
 	}
 
-	public User(String username, String password, String email, String urlPhoto, Set<Role> roles) {
+	public UserDTO(String username, String password, String email, String urlPhoto, Set<RoleDTO> roles) {
 		this.username = username;
 		this.password=password;
 		this.email=email;
@@ -69,13 +69,13 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.confirmNewPassword = "";
 	}
 
-	public User(Long id, String username, String password, String email, String urlPhoto) {
+	public UserDTO(Long id, String username, String password, String email, String urlPhoto) {
 		this.id = id;
 		this.username = username;
 		this.password=password;
 		this.email=email;
 		this.urlPhoto=urlPhoto;
-		this.roles = new HashSet<Role>();
+		this.roles = new HashSet<RoleDTO>();
 		this.currentPassword = "";
 		this.newPassword = "";
 		this.confirmNewPassword = "";
@@ -147,11 +147,11 @@ public class User implements BaseEntityRestClient<User, Long> {
 		this.urlPhoto = urlPhoto;
 	}
 	
-	public Set<Role> getRoles() {
+	public Set<RoleDTO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Set<RoleDTO> roles) {
 		this.roles = roles;
 	}
 
@@ -181,19 +181,19 @@ public class User implements BaseEntityRestClient<User, Long> {
 
 	@Override
 	public String toJSON() {
-		JSONConverter<User> conv = new JSONConverter<User>();
+		JSONConverter<UserDTO> conv = new JSONConverter<UserDTO>();
 		return conv.toJSON(this);
 	}
 
 	@Override
-	public Optional<User> fromJSON(String jsonText) {
-		JSONConverter<User> conv = new JSONConverter<User>();
-		TypeReference<User> mapType = new TypeReference<User>() {};		
+	public Optional<UserDTO> fromJSON(String jsonText) {
+		JSONConverter<UserDTO> conv = new JSONConverter<UserDTO>();
+		TypeReference<UserDTO> mapType = new TypeReference<UserDTO>() {};		
 		return conv.jsonToObject(jsonText, mapType);
 	}
 	
 	@Override
-	public Optional<User> fromJSON(){
+	public Optional<UserDTO> fromJSON(){
 		if (!this.jsonText.isEmpty()) {
 			return this.fromJSON(this.jsonText);
 		}
@@ -201,15 +201,15 @@ public class User implements BaseEntityRestClient<User, Long> {
 	}
 
 	@Override
-	public String listToJSON(List<User> list) {
-		JSONListConverter<User> conv = new JSONListConverter<User>();
+	public String listToJSON(List<UserDTO> list) {
+		JSONListConverter<UserDTO> conv = new JSONListConverter<UserDTO>();
 		return conv.listToJSON(list);
 	}
 
 	@Override
-	public List<User> jsonToLista(String jsonText) {
-		JSONListConverter<User> conv = new JSONListConverter<User>();
-		TypeReference<List<User>> mapType = new TypeReference<List<User>>() {};
+	public List<UserDTO> jsonToLista(String jsonText) {
+		JSONListConverter<UserDTO> conv = new JSONListConverter<UserDTO>();
+		TypeReference<List<UserDTO>> mapType = new TypeReference<List<UserDTO>>() {};
 		return conv.jsonToList(jsonText, mapType);
 	}
 
@@ -236,7 +236,7 @@ public class User implements BaseEntityRestClient<User, Long> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		UserDTO other = (UserDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

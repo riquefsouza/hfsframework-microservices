@@ -1,6 +1,7 @@
 package br.com.hfsframework.base;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,14 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.hfsframework.ApplicationUtil;
 import br.com.hfsframework.util.exceptions.TransactionException;
 
-public abstract class BaseBusinessService<T, I extends Serializable, C extends JpaRepository<T, I>>
-		implements IBaseBusinessService<T, I, C> {
+public abstract class BaseBusinessService<D, T extends IBaseToDTO<D>,
+	I extends Serializable, C extends JpaRepository<T, I>>
+		implements IBaseBusinessService<D, T, I, C> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -149,4 +152,32 @@ public abstract class BaseBusinessService<T, I extends Serializable, C extends J
 		return repositorio;
 	}
 
+	@Override
+	public Optional<D> getDTO(I id) {
+		Optional<T> obj = repositorio.findById(id);
+		
+		if (obj!=null) {
+			log.info("GET: " + obj.toString());
+			return Optional.of(obj.get().toDTO());
+		} else {
+			log.info("GET EMPTY: " + id);			
+			return Optional.empty();
+		}		
+	}
+	
+	@Override
+	public List<D> getAllDTO() {
+		List<T> iter = repositorio.findAll();		
+		List<D> iterDTO = new ArrayList<D>();
+		iter.forEach(x -> iterDTO.add(x.toDTO()));
+		return iterDTO;
+	}	
+
+	@Override
+	public Page<D> getAllDTO(Pageable p) {
+		List<D> iter = this.getAllDTO();		
+		Page<D> iterDTO = new PageImpl<D>(iter, p, iter.size());		
+		return iterDTO;
+	}
+	
 }

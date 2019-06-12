@@ -11,13 +11,16 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import br.com.hfsframework.admin.client.domain.AdmUserProfileDTO;
+import br.com.hfsframework.base.IBaseToDTO;
+
 @Entity
 @Table(name = "ADM_USER_PROFILE")
 @NamedQueries({
 	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.profileSeq = ?1"),
 	@NamedQuery(name = "AdmUserProfile.deleteByCodUser", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.userSeq = ?1")
 })	
-public class AdmUserProfile implements Serializable {
+public class AdmUserProfile implements Serializable, IBaseToDTO<AdmUserProfileDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -117,5 +120,13 @@ public class AdmUserProfile implements Serializable {
 		return true;
 	}
 
-	
+	public AdmUserProfileDTO toDTO() {
+		AdmUserProfileDTO dto = new AdmUserProfileDTO();
+		dto.setId(Long.parseLong(Integer.toString(id.hashCode())));
+		dto.setUserSeq(id.getUserSeq());
+		dto.setProfileSeq(id.getProfileSeq());
+		dto.setAdmProfile(admProfile.toDTO());
+		
+		return dto;
+	}
 }

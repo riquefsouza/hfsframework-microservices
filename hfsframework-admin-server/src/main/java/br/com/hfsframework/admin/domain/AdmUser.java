@@ -38,6 +38,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.hfsframework.admin.client.domain.AdmUserDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.security.model.UserVO;
 import br.com.hfsframework.util.CPFCNPJUtil;
 
@@ -66,7 +67,7 @@ import br.com.hfsframework.util.CPFCNPJUtil;
 
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @EntityListeners(AuditingEntityListener.class)
-public class AdmUser implements Serializable {
+public class AdmUser implements Serializable, IBaseToDTO<AdmUserDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

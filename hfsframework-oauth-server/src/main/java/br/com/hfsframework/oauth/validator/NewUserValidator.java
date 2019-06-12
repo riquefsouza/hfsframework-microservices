@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import br.com.hfsframework.oauth.domain.User;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 import br.com.hfsframework.oauth.dto.NewUserDTO;
 import br.com.hfsframework.oauth.service.IUserService;
 
@@ -32,7 +32,7 @@ public class NewUserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		NewUserDTO dto = (NewUserDTO) target;
 
-		Optional<User> user = service.findByUsername(dto.getUsername());
+		Optional<UserDTO> user = service.findByUsername(dto.getUsername());
 		if (user.isPresent()) {
 			errors.rejectValue("username", "", messageSource.getMessage("validation.login",
 					new String[] { "user.username" }, Locale.getDefault()));

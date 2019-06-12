@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 import org.apache.commons.lang3.ObjectUtils;
 
 import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 
 @Entity
 @Table(name = "VW_ADM_LOG_VALUE")
@@ -26,7 +27,7 @@ import br.com.hfsframework.admin.client.domain.VwAdmLogValueDTO;
 			+ "ORDER BY v.dateNumber DESC, v.mcolumn ASC")	
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class VwAdmLogValue implements Serializable {
+public class VwAdmLogValue implements Serializable, IBaseToDTO<VwAdmLogValueDTO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

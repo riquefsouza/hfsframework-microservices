@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import br.com.hfsframework.admin.client.domain.AdmProfileDTO;
 import br.com.hfsframework.admin.serializer.AdmPageListSerializer;
 import br.com.hfsframework.admin.serializer.AdmUserListSerializer;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.converter.BooleanToStringConverter;
 import br.com.hfsframework.security.model.PageVO;
 import br.com.hfsframework.security.model.ProfileVO;
@@ -56,7 +57,7 @@ import br.com.hfsframework.security.model.UserVO;
 	@NamedQuery(name = "AdmProfile.findMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order")			
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class AdmProfile implements Serializable {
+public class AdmProfile implements Serializable, IBaseToDTO<AdmProfileDTO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

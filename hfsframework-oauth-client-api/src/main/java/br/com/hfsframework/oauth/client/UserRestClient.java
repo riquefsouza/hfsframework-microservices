@@ -12,10 +12,10 @@ import org.springframework.web.client.RestClientException;
 import br.com.hfsframework.base.client.BaseRestClient;
 import br.com.hfsframework.base.controller.IBaseUserRestClient;
 import br.com.hfsframework.base.security.BaseOAuth2RestUser;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
 @Service
-public class UserRestClient extends BaseRestClient<User, Long> implements IBaseUserRestClient {
+public class UserRestClient extends BaseRestClient<UserDTO, Long> implements IBaseUserRestClient {
 
 	private static final Logger log = LoggerFactory.getLogger(UserRestClient.class);
 	
@@ -25,14 +25,14 @@ public class UserRestClient extends BaseRestClient<User, Long> implements IBaseU
 
 	@Override
 	public boolean init(String serverURL, String sAccesToken) throws RestClientException {
-		return super.init(serverURL + "/api/v1/user", sAccesToken, User.class,
-				new ParameterizedTypeReference<List<User>>() {});
+		return super.init(serverURL + "/api/v1/user", sAccesToken, UserDTO.class,
+				new ParameterizedTypeReference<List<UserDTO>>() {});
 	}
 	
-	public Optional<User> findByUsername(String username) throws RestClientException {
+	public Optional<UserDTO> findByUsername(String username) throws RestClientException {
 		try {
-			User obj = restTemplate.getForObject(
-					this.server + "/find?username=" + username, User.class);
+			UserDTO obj = restTemplate.getForObject(
+					this.server + "/find?username=" + username, UserDTO.class);
 
 			return Optional.of(obj);
 			
@@ -43,11 +43,11 @@ public class UserRestClient extends BaseRestClient<User, Long> implements IBaseU
 		//return Optional.empty();
 	}
 
-	public User getLoggedUser(Optional<BaseOAuth2RestUser> principal) throws RestClientException {
+	public UserDTO getLoggedUser(Optional<BaseOAuth2RestUser> principal) throws RestClientException {
 		if (principal.isPresent()) {
 			String username = principal.get().getUsername();
 
-			Optional<User> user = this.findByUsername(username);
+			Optional<UserDTO> user = this.findByUsername(username);
 			
 			if (user.isPresent()) {
 				return user.get();
@@ -57,10 +57,10 @@ public class UserRestClient extends BaseRestClient<User, Long> implements IBaseU
 		return null;
 	}
 	
-	public Optional<User> findByEmail(String email) throws RestClientException {
+	public Optional<UserDTO> findByEmail(String email) throws RestClientException {
 		try {
-			User obj = restTemplate.getForObject(
-					this.server + "/findemail?email=" + email, User.class);
+			UserDTO obj = restTemplate.getForObject(
+					this.server + "/findemail?email=" + email, UserDTO.class);
 
 			return Optional.of(obj);
 			

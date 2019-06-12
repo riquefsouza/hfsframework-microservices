@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.hfsframework.base.BaseBusinessService;
+import br.com.hfsframework.base.IBaseToDTO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -30,8 +31,8 @@ import br.com.hfsframework.base.BaseBusinessService;
  * @param <L>
  *            the generic type
  */
-public abstract class BaseViewQuery<T, I extends Serializable, 
-		B extends BaseBusinessService<T, I, ? extends JpaRepository<T, I>>>
+public abstract class BaseViewQuery<D, T extends IBaseToDTO<D>, I extends Serializable, 
+		B extends BaseBusinessService<D, T, I, ? extends JpaRepository<T, I>>>
 		extends BaseViewController implements Serializable {
 
 	/** The Constant serialVersionUID. */

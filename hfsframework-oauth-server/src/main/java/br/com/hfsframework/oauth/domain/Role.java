@@ -14,9 +14,12 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import br.com.hfsframework.base.IBaseToDTO;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
+
 @Entity
 @Table(name = "AUT_ROLE")
-public class Role implements Serializable {
+public class Role implements Serializable, IBaseToDTO<RoleDTO> {
 	 
 	private static final long serialVersionUID = 1L;
 	
@@ -89,6 +92,14 @@ public class Role implements Serializable {
 	@Override
 	public String toString() {
 		return "Role [id=" + id + ", name=" + name + "]";
+	}
+
+	@Override
+	public RoleDTO toDTO() {
+		RoleDTO dto = new RoleDTO();
+		dto.setId(id);
+		dto.setName(name);
+		return dto;
 	}
 
 }

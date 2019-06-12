@@ -23,8 +23,9 @@ import org.springframework.util.ReflectionUtils;
  * @param <I> the generic type
  * @param <C> the generic type
  */
-public abstract class BaseResourceSupport<T, I extends Serializable, 
-	C extends BaseResourceRestController<T, I, ?, ?>>
+public abstract class BaseResourceSupport<D, T extends IBaseToDTO<D>,
+	I extends Serializable, 
+	C extends BaseResourceRestController<D, T, I, ?, ?>>
 		extends ResourceSupport {
 
 	/** The Constant LIST_ALL. */

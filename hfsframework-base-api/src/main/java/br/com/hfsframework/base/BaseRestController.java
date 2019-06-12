@@ -40,8 +40,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api
-public abstract class BaseRestController<T, I extends Serializable, 
-	S extends IBaseBusinessService<T, I, ? extends JpaRepository<T, I>>> 
+public abstract class BaseRestController<D, T extends IBaseToDTO<D>, I extends Serializable, 
+	S extends IBaseBusinessService<D, T, I, ? extends JpaRepository<T, I>>> 
 	extends BaseViewReportController {
 
 	/** The Constant serialVersionUID. */
@@ -88,7 +88,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	 */
 	@ApiOperation("Get by id")
 	@GetMapping("/{id}")
-	public ResponseEntity<T> get(@PathVariable I id) {
+	public ResponseEntity<D> get(@PathVariable I id) {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -100,19 +100,17 @@ public abstract class BaseRestController<T, I extends Serializable,
 			return ResponseEntity.notFound().build();
 		}
 
-		return ResponseEntity.ok(obj.get());
+		return ResponseEntity.ok(obj.get().toDTO());
 	}
 
 	@ApiOperation("Get all")
 	@GetMapping
-	public ResponseEntity<List<T>> getAll() {
+	public ResponseEntity<List<D>> getAll() {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 		
-		List<T> iter = service.getAll();
-
-		return ResponseEntity.ok(iter);
+		return ResponseEntity.ok(service.getAllDTO());
 	}
 
 	/**
@@ -125,12 +123,12 @@ public abstract class BaseRestController<T, I extends Serializable,
 	@ApiOperation("Pages")
 	@GetMapping("/pages")
 	@ResponseBody
-	public ResponseEntity<Page<T>> pages(Pageable p) {
+	public ResponseEntity<Page<D>> pages(Pageable p) {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
-		
-		return ResponseEntity.ok(service.getAll(p));
+
+		return ResponseEntity.ok(service.getAllDTO(p));
 	}
 
 	/**
@@ -142,7 +140,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	 */
 	@ApiOperation("Insert bean")
 	@PostMapping
-	public ResponseEntity<T> insert(@Valid @RequestBody T bean) {
+	public ResponseEntity<D> insert(@Valid @RequestBody T bean) {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -150,9 +148,9 @@ public abstract class BaseRestController<T, I extends Serializable,
 		Optional<T> obj = service.add(bean);
 
 		if (obj.isPresent()) {
-			return new ResponseEntity<>(obj.get(), HttpStatus.CREATED);
+			return new ResponseEntity<>(obj.get().toDTO(), HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(obj.get(), HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<>(obj.get().toDTO(), HttpStatus.NOT_MODIFIED);
 		}
 	}
 
@@ -166,7 +164,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	 */
 	@ApiOperation("Update bean")
 	@PutMapping("/{id}")
-	public ResponseEntity<T> update(@PathVariable I id, @Valid @RequestBody T bean) {
+	public ResponseEntity<D> update(@PathVariable I id, @Valid @RequestBody T bean) {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -183,10 +181,10 @@ public abstract class BaseRestController<T, I extends Serializable,
 		try {
 			obj = service.update(bean);
 		} catch (TransactionException e) {
-			return new ResponseEntity<>(obj.get(), HttpStatus.NOT_MODIFIED);
+			return new ResponseEntity<>(obj.get().toDTO(), HttpStatus.NOT_MODIFIED);
 		}
 
-		return ResponseEntity.ok(obj.get());
+		return ResponseEntity.ok(obj.get().toDTO());
 	}
 
 	/**
@@ -198,7 +196,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 	 */
 	@ApiOperation("Delete bean")
 	@DeleteMapping("/{id}")
-	public ResponseEntity<I> delete(@PathVariable I id) {
+	public ResponseEntity<D> delete(@PathVariable I id) {
 		if (validateAuthorization()) {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
@@ -212,7 +210,7 @@ public abstract class BaseRestController<T, I extends Serializable,
 
 		service.delete(obj.get());
 
-		return new ResponseEntity<>(id, HttpStatus.OK);
+		return ResponseEntity.ok(obj.get().toDTO());
 		//return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 

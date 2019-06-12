@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.hfsframework.base.view.BaseViewRegisterRestClient;
 import br.com.hfsframework.oauth.client.RoleRestClient;
-import br.com.hfsframework.oauth.client.domain.Role;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
 
 @Controller
 @RequestMapping(value = "/private/roleView")
-public class AutRoleController extends BaseViewRegisterRestClient<Role, Long, RoleRestClient> {
+public class AutRoleController extends BaseViewRegisterRestClient<RoleDTO, Long, RoleRestClient> {
 
 	private static final long serialVersionUID = 1L;
 

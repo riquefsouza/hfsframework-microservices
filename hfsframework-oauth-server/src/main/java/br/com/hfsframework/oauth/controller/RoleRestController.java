@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.hfsframework.base.BaseRestController;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
 import br.com.hfsframework.oauth.domain.Role;
 import br.com.hfsframework.oauth.service.IRoleService;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/role")
-public class RoleRestController extends BaseRestController<Role, Long, IRoleService> {
+public class RoleRestController extends BaseRestController<RoleDTO, Role, Long, IRoleService> {
 
 	private static final long serialVersionUID = 1L;
 	

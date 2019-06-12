@@ -11,11 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.hfsframework.admin.client.domain.AdmUserIpDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.converter.BooleanToStringConverter;
 
 @Entity
 @Table(name = "ADM_USER_IP")
-public class AdmUserIp implements Serializable {
+public class AdmUserIp implements Serializable, IBaseToDTO<AdmUserIpDTO> {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -148,4 +150,14 @@ public class AdmUserIp implements Serializable {
 		return id.getIp();
 	}
 
+	public AdmUserIpDTO toDTO() {
+		AdmUserIpDTO dto = new AdmUserIpDTO();		
+		dto.setId(Long.parseLong(Integer.toString(id.hashCode())));
+		dto.setUserSeq(id.getUserSeq());
+		dto.setIp(id.getIp());
+		dto.setActive(active);
+		dto.setAdmUser(admUser.toDTO());
+		
+		return dto;
+	}
 }

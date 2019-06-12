@@ -36,20 +36,20 @@ public class AdmUserProfilePK implements Serializable {
 	}
 
 	/**
-	 * Gets the usuario seq.
+	 * Gets the user seq.
 	 *
-	 * @return the usuario seq
+	 * @return the user seq
 	 */
-	public Long getUsuarioSeq() {
+	public Long getUserSeq() {
 		return userSeq;
 	}
 
 	/**
-	 * Sets the usuario seq.
+	 * Sets the user seq.
 	 *
-	 * @param userSeq the new usuario seq
+	 * @param userSeq the new user seq
 	 */
-	public void setUsuarioSeq(Long userSeq) {
+	public void setUserSeq(Long userSeq) {
 		this.userSeq = userSeq;
 	}
 

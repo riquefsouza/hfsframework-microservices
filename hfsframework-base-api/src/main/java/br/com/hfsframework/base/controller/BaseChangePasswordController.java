@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfsframework.base.view.BaseViewController;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
 //@Controller
 //@RequestMapping("/private/changePassword")
@@ -25,7 +25,7 @@ public class BaseChangePasswordController extends BaseViewController {
 	
 	private IBaseUserRestClient restClient;
 	
-	private User userLogged;
+	private UserDTO userLogged;
 	
 	public BaseChangePasswordController(IBaseUserRestClient restClient) {
 		this.listPage = "private/changePassword";
@@ -46,7 +46,7 @@ public class BaseChangePasswordController extends BaseViewController {
 		return mv.get();
 	}
 
-	public boolean prepararParaSalvar(User user, ModelAndView mv) {
+	public boolean prepararParaSalvar(UserDTO user, ModelAndView mv) {
 		if ((user.getNewPassword() == null && user.getConfirmNewPassword() == null && user.getCurrentPassword() == null)
 				|| (user.getNewPassword().equals("") && user.getConfirmNewPassword().equals("") && user.getCurrentPassword().equals(""))) {
 
@@ -74,7 +74,7 @@ public class BaseChangePasswordController extends BaseViewController {
 	}
 	
 	@PostMapping
-	public ModelAndView save(@Valid User user, 
+	public ModelAndView save(@Valid UserDTO user, 
 			BindingResult result, RedirectAttributes attributes) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
 		mv.get().addObject("user", user);

@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import br.com.hfsframework.admin.client.domain.AdmMenuDTO;
 import br.com.hfsframework.admin.serializer.AdmMenuListSerializer;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.security.model.MenuVO;
 
 // TODO: Auto-generated Javadoc
@@ -53,7 +54,7 @@ import br.com.hfsframework.security.model.MenuVO;
 	@NamedQuery(name = "AdmMenu.findPageByMenu", query="SELECT m.admPage FROM AdmMenu m WHERE m.admPage = ?1 AND m.id = ?2")	
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class AdmMenu implements Serializable, Comparable<AdmMenu> {
+public class AdmMenu implements Serializable, Comparable<AdmMenu>, IBaseToDTO<AdmMenuDTO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -486,6 +487,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		return this.getNomeRecursivo(this);
 	}
 
+	@Override
 	public AdmMenuDTO toDTO() {
 		AdmMenuDTO dto = new AdmMenuDTO();
 		dto.setId(id);
@@ -498,6 +500,5 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		
 		return dto;
 	}
-	
-		
+
 }

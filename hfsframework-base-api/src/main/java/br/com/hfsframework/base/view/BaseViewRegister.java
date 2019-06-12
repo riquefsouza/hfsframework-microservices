@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.hfsframework.base.BaseBusinessService;
+import br.com.hfsframework.base.IBaseToDTO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -32,8 +33,9 @@ import br.com.hfsframework.base.BaseBusinessService;
  * @param <I>            the generic type
  * @param <B>            the generic type
  */
-public abstract class BaseViewRegister<T extends Serializable, I extends Serializable, 
-	B extends BaseBusinessService<T, I, ? extends JpaRepository<T, I>>
+public abstract class BaseViewRegister<D, T extends IBaseToDTO<D>, 
+	I extends Serializable, 
+	B extends BaseBusinessService<D, T, I, ? extends JpaRepository<T, I>>
 		> extends BaseViewController implements Serializable {
 	
 	/** The Constant serialVersionUID. */

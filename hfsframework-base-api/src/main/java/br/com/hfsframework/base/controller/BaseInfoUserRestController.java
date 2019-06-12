@@ -6,8 +6,8 @@ import java.util.Set;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.hfsframework.base.view.BaseViewController;
-import br.com.hfsframework.oauth.client.domain.Role;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
 //@RestController
 public class BaseInfoUserRestController extends BaseViewController {
@@ -17,7 +17,7 @@ public class BaseInfoUserRestController extends BaseViewController {
 	}
 
 	@RequestMapping(value = "/private/userinfo")
-	public User getUser() {
+	public UserDTO getUser() {
 		if (getPrincipal().isPresent()) {
 			this.authServerURL = this.getPrincipal().get().getUrlAuthorizationServer();
 			this.accesToken = this.getPrincipal().get().getAccessToken().getValue();
@@ -25,12 +25,12 @@ public class BaseInfoUserRestController extends BaseViewController {
 			String email = this.getPrincipal().get().getEmail();
 			String urlPhoto = this.getPrincipal().get().getUrlPhoto();			
 
-			Set<Role> roles = new HashSet<Role>();
+			Set<RoleDTO> roles = new HashSet<RoleDTO>();
 			
 			this.getPrincipal().get().getAuthorities()
-				.forEach(item -> roles.add(new Role(item.getAuthority())));
+				.forEach(item -> roles.add(new RoleDTO(item.getAuthority())));
 			
-			User user = new User(username, "", email, urlPhoto, roles);
+			UserDTO user = new UserDTO(username, "", email, urlPhoto, roles);
 			
 			return user;
 		}

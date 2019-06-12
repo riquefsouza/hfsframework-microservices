@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.hfsframework.admin.client.domain.VwAdmLogDTO;
+import br.com.hfsframework.base.IBaseToDTO;
 import br.com.hfsframework.util.CalendarUtil;
 
 @Entity
@@ -30,7 +31,7 @@ import br.com.hfsframework.util.CalendarUtil;
 			+ "ORDER BY v.id DESC")	
 })
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class VwAdmLog implements Serializable {
+public class VwAdmLog implements Serializable, IBaseToDTO<VwAdmLogDTO> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

@@ -9,13 +9,13 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import br.com.hfsframework.oauth.client.domain.Role;
-import br.com.hfsframework.oauth.client.domain.User;
+import br.com.hfsframework.oauth.client.domain.RoleDTO;
+import br.com.hfsframework.oauth.client.domain.UserDTO;
 
-public class UserDeserializer extends JsonDeserializer<User> {
+public class UserDeserializer extends JsonDeserializer<UserDTO> {
 
 	@Override
-	public User deserialize(JsonParser jp, DeserializationContext ctxt) 
+	public UserDTO deserialize(JsonParser jp, DeserializationContext ctxt) 
 			throws IOException, JsonProcessingException {
 		ObjectCodec oc = jp.getCodec();
 		JsonNode node = oc.readTree(jp);
@@ -29,10 +29,10 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
 		// Iterator<JsonNode> iter = roles.elements();
 
-		Role role;
-		User pc = new User(id, username, password, email, urlPhoto);
+		RoleDTO role;
+		UserDTO pc = new UserDTO(id, username, password, email, urlPhoto);
 		for (JsonNode item : roles) {
-			role = new Role(item.asLong());
+			role = new RoleDTO(item.asLong());
 			pc.getRoles().add(role);
 		}
 

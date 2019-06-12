@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.hfsframework.base.BaseBusinessService;
+import br.com.hfsframework.base.IBaseToDTO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,8 +27,8 @@ import br.com.hfsframework.base.BaseBusinessService;
  * @param <B>
  *            the generic type
  */
-public abstract class BaseViewReport<T extends Serializable, I extends Serializable, 
-	B extends BaseBusinessService<T, I, ? extends JpaRepository<T, I>>>
+public abstract class BaseViewReport<D, T extends IBaseToDTO<D>, I extends Serializable, 
+	B extends BaseBusinessService<D, T, I, ? extends JpaRepository<T, I>>>
 		extends BaseViewReportController implements Serializable {
 	
 	/** The Constant serialVersionUID. */

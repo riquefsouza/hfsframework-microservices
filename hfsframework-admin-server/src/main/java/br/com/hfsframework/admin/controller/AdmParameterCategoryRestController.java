@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/v1/admParameterCategory")
 public class AdmParameterCategoryRestController
-		extends BaseRestController<AdmParameterCategory, Long, IAdmParameterCategoryService> {
+		extends BaseRestController<AdmParameterCategoryDTO, AdmParameterCategory, Long, IAdmParameterCategoryService> {
 
 	private static final long serialVersionUID = 1L;
 
