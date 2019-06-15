@@ -223,9 +223,21 @@ public abstract class BaseViewController {
 		if (getPrincipal().isPresent()) {
 			ModelAndView mv = new ModelAndView(pagina);
 			
-			//mv.addObject("urlAuthServer", authServerURL);
-			mv.addObject("urlResourceServer", resourceServer);
-			//mv.addObject("authToken", accesToken);
+			//mv.getModelMap().get(key)
+			
+			//if (!mv.getModel().containsKey("urlAuthServer")) {			
+				//mv.addObject("urlAuthServer", authServerURL);
+			//}
+			if (!mv.getModel().containsKey("urlResourceServer")) {
+				mv.addObject("urlResourceServer", resourceServer);
+			}
+			//if (!mv.getModel().containsKey("authToken")) {
+				//mv.addObject("authToken", accesToken);
+			//}
+			//if (!mv.getModel().containsKey("userLogged")) {		
+				//mv.addObject("userLogged", getPrincipal().get());
+			//}
+			
 			return Optional.of(mv);
 		}		
 		return Optional.empty();

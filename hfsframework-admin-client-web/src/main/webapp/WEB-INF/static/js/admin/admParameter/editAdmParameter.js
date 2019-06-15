@@ -5,9 +5,21 @@ class EditAdmParameter extends HFSSystemUtil {
 		
 		this.hideQueryString();
 		
+		//this._dropboxAdmParameterCategory = $('#admParameter_category');
+		
 		this._saveMethod = this.getPersistedItem("saveMethod");
 				
+		//this.buildDropboxAdmParameterCategory();
 	}
+	
+	buildDropboxAdmParameterCategory(){
+		this._dropboxAdmParameterCategory.puidropdown({
+            filter: true,
+            style: "width: 100% !important;",
+            styleClasss: "form-control"
+        });
+	}
+	
 	
 	btnCancelClick(event) {
 		event.preventDefault();

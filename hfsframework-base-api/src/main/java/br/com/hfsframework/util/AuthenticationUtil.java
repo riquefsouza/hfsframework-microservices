@@ -93,7 +93,7 @@ public final class AuthenticationUtil implements Serializable {
 	
 	private static Optional<DecodedJwt> getToken(HttpServletRequest request) {
 		String sToken = request.getHeader("Authorization");
-		String sContentType = request.getHeader("Content-Type");
+		String sContentType = request.getHeader("Accept");
 		
 		if (sToken!=null && sContentType!=null) {
 			if (sContentType.contains("application/json")) {

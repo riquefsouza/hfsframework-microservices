@@ -6,7 +6,28 @@ class EditAdmPage extends HFSSystemUtil {
 		this.hideQueryString();
 		
 		this._saveMethod = this.getPersistedItem("saveMethod");
-				
+	
+		this._admPagePickListProfiles = $('#admPage_pickListProfiles');
+		this._editAdmPageMessageSourceCaptionProfiles = $('#editAdmPage-message-sourceCaptionProfiles').text();
+		this._editAdmPageMessageTargetCaptionProfiles = $('#editAdmPage-message-targetCaptionProfiles').text();
+
+		this.buildPickListProfiles(this._editAdmPageMessageSourceCaptionProfiles, 
+				this._editAdmPageMessageTargetCaptionProfiles);
+
+	}
+
+	buildPickListProfiles(messageSourceCaptionProfiles, messageTargetCaptionProfiles){
+		this._admPagePickListProfiles.puipicklist({
+	        showSourceControls: false,
+	        showTargetControls: false,
+	        sourceCaption: messageSourceCaptionProfiles,
+	        targetCaption: messageTargetCaptionProfiles,
+	        filter: true,
+	        filterMatchMode: "contains",
+	        responsive: true
+	        //sourceData: data
+	    });
+		
 	}
 	
 	btnCancelClick(event) {

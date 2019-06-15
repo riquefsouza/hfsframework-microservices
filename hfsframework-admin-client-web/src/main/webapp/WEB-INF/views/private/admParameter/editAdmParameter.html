@@ -45,22 +45,39 @@
 					<div class="col-md-4 form-group">
 						<input type="hidden" id="admParameter_id" th:field="*{id}" />
 						
+						<label for="divAdmParameter_category"><span th:text="#{editAdmParameter.category}" th:remove="tag"></span></label>
+						<!-- div id="divAdmParameter_category" -->					
+						    <select  id="admParameter_category" class="form-control" th:field="*{admParameterCategory}">
+						        <option th:each="itemCategory : ${listAdmCategories}" 
+						        	th:value="${itemCategory.id}" 
+						        	th:text="${itemCategory.description}" >
+						        </option>
+						    </select>						
+						
+					</div>
+				</div>	
+				<div class="row">	
+					<div class="col-md-4 form-group">
 						<label for="admParameter_code"><span th:text="#{editAdmParameter.code}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admParameter_code" maxlength="64" required="required" th:field="*{code}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
 					</div>
-					<div class="col-md-6 form-group">
-						<label for="admParameter_description"><span th:text="#{editAdmParameter.description}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="admParameter_description" maxlength="255" required="required" th:field="*{description}" />
-						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
-					</div>
-					<div class="col-md-6 form-group">
+				</div>	
+				<div class="row">						
+					<div class="col-md-8 form-group">
 						<label for="admParameter_value"><span th:text="#{editAdmParameter.value}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="admParameter_value" maxlength="4000" required="required" th:field="*{value}" />
+						<textarea class="form-control" id="admParameter_value" rows="6" maxlength="4000" required="required" th:field="*{value}" >
+						</textarea>
 						<span style="color: red;" th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
 					</div>
 				</div>
-				
+				<div class="row">						
+					<div class="col-md-12 form-group">
+						<label for="admParameter_description"><span th:text="#{editAdmParameter.description}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admParameter_description" maxlength="255" required="required" th:field="*{description}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>					
+					</div>
+				</div>					
 			</div>
 		</div>
 	</form>	

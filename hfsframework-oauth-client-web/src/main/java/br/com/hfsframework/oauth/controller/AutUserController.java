@@ -53,7 +53,7 @@ public class AutUserController extends BaseViewRegisterRestClient<UserDTO, Long,
 		//
 	}	
 	
-	private void carregarRoles(ModelAndView mv, UserDTO bean, boolean bEdit) {
+	private void carregarRoles(UserDTO bean, boolean bEdit) {
 		List<RoleDTO> listRolesSelected;		 
 		List<RoleDTO> listRoles = roleClient.getAll();
 		listAllRoles.addAll(listRoles);
@@ -82,7 +82,7 @@ public class AutUserController extends BaseViewRegisterRestClient<UserDTO, Long,
 				
 		if (mv.isPresent()) {
 			roleClient.init(authServerURL, this.accesToken);
-			carregarRoles(mv.get(), bean, false);
+			carregarRoles(bean, false);
 			mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
 			mv.get().addObject("bean", bean);
 		}
@@ -105,7 +105,7 @@ public class AutUserController extends BaseViewRegisterRestClient<UserDTO, Long,
 			
 			if (mv.isPresent()) {
 				roleClient.init(authServerURL, this.accesToken);
-				carregarRoles(mv.get(), bean, true);
+				carregarRoles(bean, true);
 				mv.get().addObject("listSourceRoles", this.dualListRole.getSource());
 				mv.get().addObject("listTargetRoles", this.dualListRole.getTarget());
 				mv.get().addObject("bean", bean);

@@ -42,18 +42,48 @@
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-4 form-group">
+					<div class="col-md-8 form-group">
 						<input type="hidden" id="admPage_id" th:field="*{id}" />
-						
-						<label for="admPage_name"><span th:text="#{editAdmPage.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="admPage_name" maxlength="64" required="required" th:field="*{name}" />
-						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+						<label for="admPage_url"><span th:text="#{editAdmPage.url}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admPage_url" maxlength="255" required="required" th:field="*{url}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></span>						
 					</div>
 				</div>
-				
+				<div class="row">
+					<div class="col-md-8 form-group">
+						<label for="admPage_description"><span th:text="#{editAdmPage.description}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admPage_description" maxlength="255" required="required" th:field="*{description}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+					</div>
+				</div>
+				<div class="row">	
+					<div class="col-md-5">
+						<label for="admPage_pickListProfiles"><span th:text="#{editAdmPage.pickListProfiles}" th:remove="tag"></span></label>
+						<div id="admPage_pickListProfiles" class="picklistBigger">
+						    <select name="admPage_sourceProfiles" multiple="multiple">
+						        <option th:each="itemProfile : ${listSourceProfiles}" 
+						        	th:value="${itemProfile.id}" 
+						        	th:text="${itemProfile.description}" >
+						        </option>
+						    </select>
+						    
+							<select id="admPage_targetProfiles" multiple="multiple" th:field="*{admProfiles}" >
+								<option th:each="profile : ${listTargetProfiles}"
+										th:value="${profile.id}"
+										th:text="${profile.description}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+								
 			</div>
 		</div>
 	</form>	
+ 
+<span id="editAdmPage-message-sourceCaptionProfiles" th:text="#{editAdmPage.sourceCaptionProfiles}" style="display: none"></span>
+<span id="editAdmPage-message-targetCaptionProfiles" th:text="#{editAdmPage.targetCaptionProfiles}" style="display: none"></span>
  
 <script th:src="@{/js/admin/admPage/editAdmPage.js}"></script>
 

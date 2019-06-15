@@ -20,7 +20,7 @@ public class AdmParameterRestClient extends BaseRestClient<AdmParameterDTO, Long
 	
 	@Override
 	public boolean init(String authServerURL, String accesToken) throws RestClientException {
-		return super.init(authServerURL + "/api/v1/AdmParameter", accesToken, AdmParameterDTO.class, 
+		return super.init(authServerURL + "/api/v1/admParameter", accesToken, AdmParameterDTO.class, 
 				new ParameterizedTypeReference<List<AdmParameterDTO>>() {});
 	}	
 
