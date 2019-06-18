@@ -58,11 +58,23 @@ public class AdmPageController extends BaseViewRegisterRestClient<AdmPageDTO, Lo
 		if (bEdit) { 
 			listProfilesSelected = new ArrayList<AdmProfileDTO>();
 			
+			/*
 			bean.getAdmProfiles().forEach(id -> {
 				listProfilesSelected.add(listAllAdmProfiles.stream()
 						.filter(p -> p.getId().equals(id))
 						.findFirst().get());	
 			});
+			*/
+			
+			for (AdmProfileDTO profile : listAllAdmProfiles) {
+				for (AdmPageDTO page : profile.getAdmPages()) {
+					if (page.equals(bean)) {
+						listProfilesSelected.add(profile);
+						break;
+					}
+				}
+			}
+			
 			
 			listProfiles.removeAll(listProfilesSelected);
 		} else {
@@ -122,13 +134,13 @@ public class AdmPageController extends BaseViewRegisterRestClient<AdmPageDTO, Lo
 			public String call() throws Exception {
 				
 				if (mv.isPresent()) {
-					
+					/*
 					bean.getAdmProfiles().forEach(item -> {					
 						listAllAdmProfiles.stream()
 							.filter(p -> p.getId().equals(item))
 							.findFirst();	
 					});
-					
+					*/
 					mv.get().addObject("bean", bean);
 				}
 				

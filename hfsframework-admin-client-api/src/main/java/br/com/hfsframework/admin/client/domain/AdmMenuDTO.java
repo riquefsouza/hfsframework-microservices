@@ -1,6 +1,5 @@
 package br.com.hfsframework.admin.client.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,11 +30,11 @@ public class AdmMenuDTO implements BaseEntityRestClient<AdmMenuDTO, Long> {
 	
 	private AdmMenuDTO admMenuParent;
 	
-	private List<Long> admSubMenus;
+	//private List<Long> admSubMenus;
 
 	public AdmMenuDTO() {
 		super();
-		admSubMenus = new ArrayList<Long>();
+		//admSubMenus = new ArrayList<Long>();
 		admPage = new AdmPageDTO();
 		this.clear();
 	}
@@ -102,7 +101,7 @@ public class AdmMenuDTO implements BaseEntityRestClient<AdmMenuDTO, Long> {
 	public void setAdmMenuParent(AdmMenuDTO admMenuParent) {
 		this.admMenuParent = admMenuParent;
 	}
-
+/*
 	public List<Long> getAdmSubMenus() {
 		return admSubMenus;
 	}
@@ -110,7 +109,7 @@ public class AdmMenuDTO implements BaseEntityRestClient<AdmMenuDTO, Long> {
 	public void setAdmSubMenus(List<Long> admSubMenus) {
 		this.admSubMenus = admSubMenus;
 	}
-	
+*/	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -145,7 +144,7 @@ public class AdmMenuDTO implements BaseEntityRestClient<AdmMenuDTO, Long> {
 		idPage = null;
 		admPage.clear();
 		admMenuParent = null;
-		admSubMenus.clear();		
+		//admSubMenus.clear();		
 	}
 
 	@Override

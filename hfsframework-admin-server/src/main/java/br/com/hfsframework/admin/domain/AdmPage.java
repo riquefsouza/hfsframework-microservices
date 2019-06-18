@@ -288,8 +288,8 @@ public class AdmPage implements Serializable, IBaseToDTO<AdmPageDTO> {
 		dto.setId(id);
 		dto.setDescription(description);
 		dto.setUrl(url);
-		this.getAdmProfiles().forEach(item -> dto.getAdmProfiles().add(item.getId()));
-		this.getAdmMenus().forEach(item -> dto.getAdmMenus().add(item.getId()));
+		//this.getAdmProfiles().forEach(item -> dto.getAdmProfiles().add(item.getId()));
+		//this.getAdmMenus().forEach(item -> dto.getAdmMenus().add(item.getId()));
 		
 		return dto;
 	}

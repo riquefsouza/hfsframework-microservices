@@ -133,12 +133,6 @@ public class AdmParameterDTO implements BaseEntityRestClient<AdmParameterDTO, Lo
 	}
 
 	@Override
-	public String toString() {
-		return "Parameter [id=" + id + ", code=" + code + ", description=" + description + ", value=" + value
-				+ ", idParameterCategory=" + idAdmParameterCategory + ", parameterCategory=" + admParameterCategory + "]";
-	}
-
-	@Override
 	public String getJsonText() {
 		return this.jsonText;
 	}

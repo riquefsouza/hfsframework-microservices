@@ -22,17 +22,17 @@ public class AdmParameterCategoryDTODeserializer extends JsonDeserializer<AdmPar
 		final Long id = node.get("id").asLong();
 		final String description = node.get("description").asText();
 		final Long order = node.get("order").asLong();
-		JsonNode admParameters = node.get("admParameters");
+		//JsonNode admParameters = node.get("admParameters");
 
 		//Iterator<JsonNode> iter = admParameters.elements();
 		
 		//AdmParameter admParameter;
 		AdmParameterCategoryDTO pc = new AdmParameterCategoryDTO(id, description, order);
-		for (JsonNode item : admParameters) {
+		//for (JsonNode item : admParameters) {
 			//admParameter = new AdmParameter(item.asLong());
 			//pc.getAdmParameters().add(admParameter);
-			pc.getAdmParameters().add(item.asLong());
-		}
+			//pc.getAdmParameters().add(item.asLong());
+		//}
 		 
 		return pc;
 	}

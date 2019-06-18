@@ -28,14 +28,14 @@ public class AdmProfileDTO implements BaseEntityRestClient<AdmProfileDTO, Long> 
 	
 	private Boolean general;
 	
-	private Set<Long> admPages;
+	private Set<AdmPageDTO> admPages;
 	
-	private Set<Long> admUsers;
+	private Set<AdmUserDTO> admUsers;
 	
 	public AdmProfileDTO() {
 		super();
-		this.admPages = new HashSet<Long>();
-		this.admUsers = new HashSet<Long>();		
+		this.admPages = new HashSet<AdmPageDTO>();
+		this.admUsers = new HashSet<AdmUserDTO>();		
 		this.clear();
 	}
 
@@ -86,19 +86,19 @@ public class AdmProfileDTO implements BaseEntityRestClient<AdmProfileDTO, Long> 
 		this.general = general;
 	}
 
-	public Set<Long> getAdmPages() {
+	public Set<AdmPageDTO> getAdmPages() {
 		return admPages;
 	}
 
-	public void setAdmPages(Set<Long> admPages) {
+	public void setAdmPages(Set<AdmPageDTO> admPages) {
 		this.admPages = admPages;
 	}
 
-	public Set<Long> getAdmUsers() {
+	public Set<AdmUserDTO> getAdmUsers() {
 		return admUsers;
 	}
 
-	public void setAdmUsers(Set<Long> admUsers) {
+	public void setAdmUsers(Set<AdmUserDTO> admUsers) {
 		this.admUsers = admUsers;
 	}	
 

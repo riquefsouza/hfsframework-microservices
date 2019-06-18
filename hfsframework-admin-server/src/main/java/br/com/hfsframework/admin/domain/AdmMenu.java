@@ -496,7 +496,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu>, IBaseToDTO<Ad
 		dto.setIdPage(idPage);
 		dto.setAdmPage(admPage.toDTO());
 		dto.setAdmMenuParent(admMenuParent.toDTO());
-		this.getAdmSubMenus().forEach(item -> dto.getAdmSubMenus().add(item.getId()));
+		//this.getAdmSubMenus().forEach(item -> dto.getAdmSubMenus().add(item.getId()));
 		
 		return dto;
 	}

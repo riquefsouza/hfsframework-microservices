@@ -342,8 +342,8 @@ public class AdmProfile implements Serializable, IBaseToDTO<AdmProfileDTO> {
 		dto.setDescription(description);
 		dto.setAdministrator(administrator);
 		dto.setGeneral(general);
-		this.getAdmPages().forEach(item -> dto.getAdmPages().add(item.getId()));
-		this.getAdmUsers().forEach(item -> dto.getAdmUsers().add(item.getId()));
+		this.getAdmPages().forEach(item -> dto.getAdmPages().add(item.toDTO()));
+		this.getAdmUsers().forEach(item -> dto.getAdmUsers().add(item.toDTO()));
 		
 		return dto;
 	}

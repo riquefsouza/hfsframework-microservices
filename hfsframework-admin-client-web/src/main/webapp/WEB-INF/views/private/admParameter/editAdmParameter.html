@@ -50,7 +50,8 @@
 						    <select  id="admParameter_category" class="form-control" th:field="*{admParameterCategory}">
 						        <option th:each="itemCategory : ${listAdmCategories}" 
 						        	th:value="${itemCategory.id}" 
-						        	th:text="${itemCategory.description}" >
+						        	th:text="${itemCategory.description}" 
+						        	th:selected="${#lists.contains(bean.admParameterCategory,itemCategory)}">
 						        </option>
 						    </select>						
 						

@@ -1,9 +1,7 @@
 package br.com.hfsframework.admin.client.domain;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -27,11 +25,11 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 	private Long order;
 
 	//@JsonManagedReference("admParameter")
-	private Set<Long> admParameters;
+	//private Set<Long> admParameters;
 
 	public AdmParameterCategoryDTO() {
 		super();
-		this.admParameters = new HashSet<Long>();
+		//this.admParameters = new HashSet<Long>();
 		this.clear();
 	}
 
@@ -47,7 +45,7 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 	public AdmParameterCategoryDTO(Long id) {
 		super();
 		this.id = id;
-		this.admParameters = new HashSet<Long>();
+		//this.admParameters = new HashSet<Long>();
 	}
 
 	public AdmParameterCategoryDTO(Long id, String description, Long order) {
@@ -55,7 +53,7 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 		this.id = id;
 		this.description = description;
 		this.order = order;
-		this.admParameters = new HashSet<Long>();
+		//this.admParameters = new HashSet<Long>();
 	}
 
 	public Long getId() {
@@ -81,7 +79,7 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 	public void setOrder(Long order) {
 		this.order = order;
 	}
-
+/*
 	public Set<Long> getAdmParameters() {
 		return this.admParameters;
 	}
@@ -89,7 +87,7 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 	public void setAdmParameters(Set<Long> admParameters) {
 		this.admParameters = admParameters;
 	}
-
+*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -116,12 +114,6 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 	}
 
 	@Override
-	public String toString() {
-		return "ParameterCategory [id=" + id + ", description=" + description + ", order=" + order + ", parameters="
-				+ admParameters + "]";
-	}
-
-	@Override
 	public String getJsonText() {
 		return this.jsonText;
 	}
@@ -137,7 +129,7 @@ public class AdmParameterCategoryDTO implements BaseEntityRestClient<AdmParamete
 		this.id = null;
 		this.description = null;
 		this.order = null;
-		this.admParameters.clear();
+		//this.admParameters.clear();
 	}
 
 	@Override

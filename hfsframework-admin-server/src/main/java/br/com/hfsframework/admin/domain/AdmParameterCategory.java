@@ -242,7 +242,7 @@ public class AdmParameterCategory implements Serializable, IBaseToDTO<AdmParamet
 		dto.setId(id);
 		dto.setDescription(description);
 		dto.setOrder(order);
-		this.getAdmParameters().forEach(item -> dto.getAdmParameters().add(item.getId()));
+		//this.getAdmParameters().forEach(item -> dto.getAdmParameters().add(item.getId()));
 		
 		return dto;
 	}

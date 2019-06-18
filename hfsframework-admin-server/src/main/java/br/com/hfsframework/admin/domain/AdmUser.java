@@ -613,7 +613,7 @@ public class AdmUser implements Serializable, IBaseToDTO<AdmUserDTO> {
 		dto.setLogin(login);
 		dto.setName(name);
 		dto.setPassword(password);
-		this.getAdmUserIps().forEach(item -> dto.getAdmUserIps().add(item.getId().getIp()));
+		//this.getAdmUserIps().forEach(item -> dto.getAdmUserIps().add(item.getId().getIp()));
 		dto.setCreatedDate(createdDate);
 		dto.setModifiedDate(modifiedDate);
 		dto.setCreatedBy(createdBy);

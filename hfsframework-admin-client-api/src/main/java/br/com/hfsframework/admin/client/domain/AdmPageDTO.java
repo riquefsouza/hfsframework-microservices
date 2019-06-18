@@ -1,9 +1,7 @@
 package br.com.hfsframework.admin.client.domain;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -28,14 +26,14 @@ public class AdmPageDTO implements BaseEntityRestClient<AdmPageDTO, Long> {
 	@Size(min=4, max=255)
 	private String url;
 	
-	private Set<Long> admProfiles;
+	//private Set<Long> admProfiles;
 	
-	private Set<Long> admMenus;
+	//private Set<Long> admMenus;
 		
 	public AdmPageDTO() {
 		super();
-		admProfiles = new HashSet<Long>();
-		admMenus = new HashSet<Long>();
+		//admProfiles = new HashSet<Long>();
+		//admMenus = new HashSet<Long>();
 		this.clear();
 	}
 
@@ -93,8 +91,8 @@ public class AdmPageDTO implements BaseEntityRestClient<AdmPageDTO, Long> {
 		this.id = null;
 		this.description = "";
 		this.url = "";
-		admProfiles.clear();
-		admMenus.clear();
+		//admProfiles.clear();
+		//admMenus.clear();
 	}
 
 	@Override
@@ -146,7 +144,7 @@ public class AdmPageDTO implements BaseEntityRestClient<AdmPageDTO, Long> {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
+/*
 	public Set<Long> getAdmProfiles() {
 		return admProfiles;
 	}
@@ -162,5 +160,5 @@ public class AdmPageDTO implements BaseEntityRestClient<AdmPageDTO, Long> {
 	public void setAdmMenus(Set<Long> admMenus) {
 		this.admMenus = admMenus;
 	}
-
+*/
 }

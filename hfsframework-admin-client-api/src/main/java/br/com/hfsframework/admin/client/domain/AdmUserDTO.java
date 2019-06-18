@@ -2,10 +2,8 @@ package br.com.hfsframework.admin.client.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -47,7 +45,7 @@ public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 	@Size(min=4, max=128)
 	private String password;
 
-	private Set<String> admUserIps;
+	//private Set<String> admUserIps;
 
 	private LocalDateTime createdDate;
  
@@ -59,7 +57,7 @@ public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 
 	public AdmUserDTO() {
 		super();
-		this.admUserIps = new HashSet<String>();
+		//this.admUserIps = new HashSet<String>();
 		this.clear();
 	}
 
@@ -134,7 +132,7 @@ public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+/*	
     public Set<String> getAdmUserIps() {
 		return admUserIps;
 	}
@@ -142,7 +140,7 @@ public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 	public void setAdmUserIps(Set<String> admUserIps) {
 		this.admUserIps = admUserIps;
 	}	
-
+*/
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
@@ -210,7 +208,7 @@ public class AdmUserDTO implements BaseEntityRestClient<AdmUserDTO, Long> {
 		this.login = "";
 		this.name = "";
 		this.password = "";
-		this.admUserIps.clear();
+		//this.admUserIps.clear();
 	}
 
 	@Override
