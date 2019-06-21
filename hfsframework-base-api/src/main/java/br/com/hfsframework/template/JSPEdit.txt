@@ -19,7 +19,7 @@
 				<spring:message code="edit${class}.title" />
 			</div>
 			<div class="card-body">				
-				<div class="form-actions">				
+				<div class="form-actions" style="margin:5px 0;">				
 					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
 						<span class="icon text-white-50">
 							<i class="fa fa-check-circle"></i>
