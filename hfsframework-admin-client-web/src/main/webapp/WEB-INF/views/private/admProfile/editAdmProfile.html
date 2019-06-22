@@ -51,9 +51,57 @@
 					</div>
 				</div>
 				
+				<div class="row">	
+					<div class="col-md-5">
+						<label for="admProfile_pickListAdmUsers"><span th:text="#{editAdmProfile.pickListAdmUsers}" th:remove="tag"></span></label>
+						<div id="admProfile_pickListAdmUsers" class="picklistBigger">
+						    <select name="admProfile_sourceAdmUsers" multiple="multiple">
+						        <option th:each="itemAdmUser : ${listSourceAdmUsers}" 
+						        	th:value="${itemAdmUser.id}" 
+						        	th:text="${itemAdmUser.name}" >
+						        </option>
+						    </select>
+						    
+							<select id="admProfile_targetAdmUsers" multiple="multiple" th:field="*{admUsers}" >
+								<option th:each="admUser : ${listTargetAdmUsers}"
+										th:value="${admUser.id}"
+										th:text="${admUser.name}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+								
+				<div class="row">	
+					<div class="col-md-5">
+						<label for="admProfile_pickListAdmPages"><span th:text="#{editAdmProfile.pickListAdmPages}" th:remove="tag"></span></label>
+						<div id="admProfile_pickListAdmPages" class="picklistBigger">
+						    <select name="admProfile_sourceAdmPages" multiple="multiple">
+						        <option th:each="itemAdmPage : ${listSourceAdmPages}" 
+						        	th:value="${itemAdmPage.id}" 
+						        	th:text="${itemAdmPage.description}" >
+						        </option>
+						    </select>
+						    
+							<select id="admProfile_targetAdmPages" multiple="multiple" th:field="*{admPages}" >
+								<option th:each="page : ${listTargetAdmPages}"
+										th:value="${page.id}"
+										th:text="${page.description}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>				
+				
 			</div>
 		</div>
 	</form>	
+
+<span id="editAdmProfile-message-sourceCaptionUsers" th:text="#{editAdmProfile.sourceCaptionUsers}" style="display: none"></span>
+<span id="editAdmProfile-message-targetCaptionUsers" th:text="#{editAdmProfile.targetCaptionUsers}" style="display: none"></span>
+
+<span id="editAdmProfile-message-sourceCaptionPages" th:text="#{editAdmProfile.sourceCaptionPages}" style="display: none"></span>
+<span id="editAdmProfile-message-targetCaptionPages" th:text="#{editAdmProfile.targetCaptionPages}" style="display: none"></span>
  
 <script th:src="@{/js/admin/admProfile/editAdmProfile.js}"></script>
 
