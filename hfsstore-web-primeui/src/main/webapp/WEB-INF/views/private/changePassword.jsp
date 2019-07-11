@@ -12,7 +12,7 @@
 <jsp:body>    
 
 	<form:form id="formChangePassword" style="max-width: 650px; margin-top: 10px;"
-	 action="${pageContext.request.contextPath}/private/changePassword" method="POST" modelAttribute="user">
+	 action="${pageContext.request.contextPath}/private/changePassword" method="POST" modelAttribute="userDTO">
 	 
 		<div class="card">
 			<div class="card-header" style="font-weight: bold;font-size: large;">

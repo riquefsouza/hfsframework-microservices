@@ -40,7 +40,7 @@ public class BaseChangePasswordController extends BaseViewController {
 		if (mv.isPresent()) {
 			this.restClient.init(authServerURL, accesToken);
 			userLogged = restClient.getLoggedUser(getPrincipal());
-			mv.get().addObject("user", userLogged);
+			mv.get().addObject("userDTO", userLogged);
 		}
 		
 		return mv.get();
@@ -77,7 +77,7 @@ public class BaseChangePasswordController extends BaseViewController {
 	public ModelAndView save(@Valid UserDTO user, 
 			BindingResult result, RedirectAttributes attributes) {
 		Optional<ModelAndView> mv = getPage(this.listPage);
-		mv.get().addObject("user", user);
+		mv.get().addObject("userDTO", user);
 
 		if (result.hasErrors()){
 			//this.showWarningMessage(mv.get(), "changePasswordView.checkFields");
