@@ -35,7 +35,7 @@
 		<org.ehcache.version>3.7.1</org.ehcache.version>
 		<h2database.version>1.4.199</h2database.version>
 		<mysql.version>8.0.15</mysql.version>
-		<postgresql.version>42.2.5</postgresql.version>
+		<postgresql.version>42.2.25</postgresql.version>
 		<springsecurity.version>5.1.5.RELEASE</springsecurity.version>
 		<oauth.version>2.3.5.RELEASE</oauth.version>
 		<jwt.version>1.0.10.RELEASE</jwt.version>
